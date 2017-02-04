@@ -108,5 +108,6 @@ public class InstagramTagFeedResultTag {
     
     public boolean caption_is_edited;
     public boolean photo_of_you;
+    public boolean comments_disabled;
     
 }
