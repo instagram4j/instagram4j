@@ -8,6 +8,25 @@ instagram4j
 
 :camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
 
+(under construction)
+
+Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API)
+
+
+Usage
+--------
+
+```java
+    public static void main(String[] args) throws Exception {
+
+        Instagram4j instagram = Instagram4j.builder().username("username").password("password").build();
+        instagram.setup();
+        
+        instagram.sendRequest(new InstagramUploadPhotoRequest(
+                new File("/tmp/file-to-upload.jpg",
+                "Posted with Instagram4j, how cool is that?"));
+                
+```
 
 
 
