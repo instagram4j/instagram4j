@@ -21,7 +21,7 @@ package org.brunocvcunha.instagram4j;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class Instagram4jConstants {
+public class InstagramConstants {
     
     /**
      * API URL

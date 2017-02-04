@@ -15,25 +15,28 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsersResult;
 
-import org.apache.http.HttpResponse;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
-
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * Fetch Headers Request
+ * Recent Activity Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class InstagramFetchHeadersRequest extends InstagramGetRequest<StatusResult> {
+@AllArgsConstructor
+public class InstagramSearchUsersRequest extends InstagramGetRequest<InstagramSearchUsersResult> {
 
+    private String query;
+    
+    
     @Override
     public String getUrl() {
-        return "si/fetch_headers/?challenge_type=signup&guid=" + InstagramGenericUtil.generateUuid(false);
+        return "users/search/?ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION
+                + "&is_typeahead=true&query="+ query + "&rank_token=" + api.getRankToken();
     }
 
     @Override
@@ -42,14 +45,9 @@ public class InstagramFetchHeadersRequest extends InstagramGetRequest<StatusResu
     }
 
     @Override
-    public boolean requiresLogin() {
-        return false;
-    }
-
-    @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(content, StatusResult.class);
+    public InstagramSearchUsersResult parseResult(int statusCode, String content) {
+        return parseJson(content, InstagramSearchUsersResult.class);
     }
 
 }

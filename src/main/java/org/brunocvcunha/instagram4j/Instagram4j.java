@@ -26,13 +26,19 @@ import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.brunocvcunha.instagram4j.requests.Instagram4jRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramFetchHeadersRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramSyncFeaturesRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
-import org.brunocvcunha.instagram4j.util.Instagram4jGenericUtil;
-import org.brunocvcunha.instagram4j.util.Instagram4jHashUtil;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
+import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
+import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -60,11 +66,17 @@ public class Instagram4j {
     @Getter @Setter
     protected String password;
     
+    @Getter @Setter
+    protected String userId;
+    
+    @Getter @Setter
+    protected String rankToken;
+    
     @Getter
     protected boolean isLoggedIn;
 
-    @Getter
-    protected String lastResponse;
+    @Getter @Setter
+    protected HttpResponse lastResponse;
     
     @Getter @Setter
     protected boolean debug;
@@ -97,8 +109,8 @@ public class Instagram4j {
             throw new IllegalArgumentException("Password is mandatory.");
         }
         
-        this.deviceId = Instagram4jHashUtil.generateDeviceId(this.username, this.password);
-        this.uuid = Instagram4jGenericUtil.generateUuid(true);
+        this.deviceId = InstagramHashUtil.generateDeviceId(this.username, this.password);
+        this.uuid = InstagramGenericUtil.generateUuid(true);
         
         log.info("Device ID is: " + this.deviceId + ", random id: " + this.uuid);
         
@@ -114,25 +126,56 @@ public class Instagram4j {
      * @throws IOException 
      * @throws ClientProtocolException 
      */
-    public boolean login() throws ClientProtocolException, IOException {
+    public InstagramLoginResult login() throws ClientProtocolException, IOException {
         
+        
+        InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
+                .password(password)
+                .guid(uuid)
+                .device_id(deviceId)
+                .phone_id(InstagramGenericUtil.generateUuid(true))
+                .login_attempt_account(0)
+                ._csrftoken(getOrFetchCsrf())
+                .build();
+        
+        InstagramLoginResult loginResult = this.sendRequest(new InstagramLoginRequest(loginRequest));
+        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
+            this.userId = loginResult.getLogged_in_user().get("pk").toString();
+            this.rankToken = this.userId + "_" + this.uuid;
+            this.isLoggedIn = true;
+            
+            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
+                    ._uuid(uuid)
+                    ._csrftoken(getOrFetchCsrf())
+                    ._uid(userId)
+                    .id(userId)
+                    .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
+                    .build();
+            
+            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
+            this.sendRequest(new InstagramAutoCompleteUserListRequest());
+            this.sendRequest(new InstagramTimelineFeedRequest());
+            this.sendRequest(new InstagramGetInboxRequest());
+            this.sendRequest(new InstagramGetRecentActivityRequest());
+        }
+        
+        
+        return loginResult;
+    }
+
+    /**
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    protected String getOrFetchCsrf() throws ClientProtocolException, IOException {
         Optional<Cookie> checkCookie = getCsrfCookie();
         if (!checkCookie.isPresent()) {
             sendRequest(new InstagramFetchHeadersRequest());
             checkCookie = getCsrfCookie();
         }
         String csrfToken = checkCookie.get().getValue();
-        
-        InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
-                .password(password)
-                .guid(uuid)
-                .device_id(deviceId)
-                .phone_id(Instagram4jGenericUtil.generateUuid(true))
-                .login_attempt_account(0)
-                ._csrftoken(csrfToken)
-                .build();
-        
-        return this.sendRequest(new InstagramLoginRequest(loginRequest));
+        return csrfToken;
     }
     
     public Optional<Cookie> getCsrfCookie() {
@@ -146,25 +189,20 @@ public class Instagram4j {
      * @throws IOException 
      * @throws ClientProtocolException 
      */
-    public boolean sendRequest(Instagram4jRequest request) throws ClientProtocolException, IOException {
+    public <T> T sendRequest(InstagramRequest<T> request) throws ClientProtocolException, IOException {
         
+        log.info("Sending request: " + request.getClass().getName());
+
         if (!this.isLoggedIn
-                && !(request instanceof InstagramFetchHeadersRequest)
-                && !(request instanceof InstagramLoginRequest)
-                ) {
+                && request.requiresLogin()) {
             throw new IllegalStateException("Need to login first!");
         }
         
         request.setApi(this);
-        HttpResponse response = request.execute();
+        T response = request.execute();
         
-        String result = EntityUtils.toString(response.getEntity());
-        System.out.println("Result: " + result);
+        log.info("Result: " + response);
         
-        if (response.getStatusLine().getStatusCode() == 200) {
-            return true;
-        }
-        
-        return false;
+        return response;
     }
 }

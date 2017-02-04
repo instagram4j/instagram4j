@@ -18,38 +18,46 @@ package org.brunocvcunha.instagram4j.requests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpResponse;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesResult;
 
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 
 /**
- * Fetch Headers Request
+ * Sync Features Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class InstagramFetchHeadersRequest extends InstagramGetRequest<StatusResult> {
+@AllArgsConstructor
+@Log4j
+public class InstagramSyncFeaturesRequest extends InstagramPostRequest<InstagramSyncFeaturesResult> {
 
+    @NonNull
+    private InstagramSyncFeaturesPayload payload;
+    
     @Override
     public String getUrl() {
-        return "si/fetch_headers/?challenge_type=signup&guid=" + InstagramGenericUtil.generateUuid(false);
-    }
-
-    @Override
-    public String getPayload() {
-        return null;
-    }
-
-    @Override
-    public boolean requiresLogin() {
-        return false;
+        return "qe/sync/";
     }
 
     @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(content, StatusResult.class);
+    public String getPayload() {
+        ObjectMapper mapper = new ObjectMapper();
+        String payloadJson = mapper.writeValueAsString(payload);
+
+        return payloadJson;
     }
+
+    @Override
+    @SneakyThrows
+    public InstagramSyncFeaturesResult parseResult(int statusCode, String content) {
+        return new InstagramSyncFeaturesResult();
+    }
+
 
 }

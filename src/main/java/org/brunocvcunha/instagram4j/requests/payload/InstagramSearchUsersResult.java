@@ -15,26 +15,25 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.List;
+import java.util.Map;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Login Payload
+ * Search Users Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
-@Builder
-public class InstagramLoginPayload {
-    private String username;
-    private String phone_id;
-    private String _csrftoken;
-    private String guid;
-    private String device_id;
-    private String password;
-    private int login_attempt_account = 0;
-    
+public class InstagramSearchUsersResult {
+    private List<InstagramSearchUsersResultUser> users;
+    private String status;
+    private boolean has_more;
+    private int num_results;
+
 
 }

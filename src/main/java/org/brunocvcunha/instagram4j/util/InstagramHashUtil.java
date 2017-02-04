@@ -27,7 +27,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
-import org.brunocvcunha.instagram4j.Instagram4jConstants;
+import org.brunocvcunha.instagram4j.InstagramConstants;
 
 import lombok.SneakyThrows;
 
@@ -37,7 +37,7 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class Instagram4jHashUtil {
+public class InstagramHashUtil {
     /**
      * The characters from a hex-string
      */
@@ -146,9 +146,9 @@ public class Instagram4jHashUtil {
     public static String generateSignature(String payload) {
         String parsedData = URLEncoder.encode(payload, "UTF-8");
 
-        String signedBody = generateHash(Instagram4jConstants.API_KEY, payload);
+        String signedBody = generateHash(InstagramConstants.API_KEY, payload);
 
-        return "ig_sig_key_version=" + Instagram4jConstants.API_KEY_VERSION + "&signed_body=" + signedBody + '.'
+        return "ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION + "&signed_body=" + signedBody + '.'
                 + parsedData;
 
     }

@@ -24,26 +24,21 @@ import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import lombok.SneakyThrows;
 
 /**
- * Fetch Headers Request
+ * Recent Activity Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class InstagramFetchHeadersRequest extends InstagramGetRequest<StatusResult> {
+public class InstagramGetRecentActivityRequest extends InstagramGetRequest<StatusResult> {
 
     @Override
     public String getUrl() {
-        return "si/fetch_headers/?challenge_type=signup&guid=" + InstagramGenericUtil.generateUuid(false);
+        return "news/inbox/?";
     }
 
     @Override
     public String getPayload() {
         return null;
-    }
-
-    @Override
-    public boolean requiresLogin() {
-        return false;
     }
 
     @Override

@@ -21,20 +21,18 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * Login Payload
+ * Sync Features Payload
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
 @Builder
-public class InstagramLoginPayload {
-    private String username;
-    private String phone_id;
+public class InstagramSyncFeaturesPayload {
+    private String _uuid;
+    private String _uid;
+    private String id;
     private String _csrftoken;
-    private String guid;
-    private String device_id;
-    private String password;
-    private int login_attempt_account = 0;
+    private String experiments;
     
 
 }

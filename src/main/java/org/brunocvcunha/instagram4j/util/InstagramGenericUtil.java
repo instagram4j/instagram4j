@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
+package org.brunocvcunha.instagram4j.util;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import lombok.Builder;
-import lombok.Data;
+import com.eaio.uuid.UUID;
 
 /**
- * Login Payload
+ * Generic utils
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@Builder
-public class InstagramLoginPayload {
-    private String username;
-    private String phone_id;
-    private String _csrftoken;
-    private String guid;
-    private String device_id;
-    private String password;
-    private int login_attempt_account = 0;
+public class InstagramGenericUtil {
     
-
+    /**
+     * Generate UUID
+     * @param dash If needs to keep dash
+     * @return UUID
+     */
+    public static String generateUuid(boolean dash) {
+        String uuid = new UUID().toString();
+        
+        if (dash) {
+            return uuid;
+        }
+        
+        return uuid.replaceAll("-", "");
+    }
 }

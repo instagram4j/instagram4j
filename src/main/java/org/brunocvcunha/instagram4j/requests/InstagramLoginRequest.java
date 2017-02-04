@@ -15,48 +15,52 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpResponse;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 /**
+ * Login Request
  * 
- * @author brunovolpato
+ * @author Bruno Candido Volpato da Cunha
  *
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramLoginRequest extends Instagram4jPostRequest {
+public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginResult> {
 
     private InstagramLoginPayload payload;
-    
+
     @Override
-    @JsonIgnore
     public String getUrl() {
         return "accounts/login/";
     }
 
     @Override
-    @JsonIgnore
     @SneakyThrows
     public String getPayload() {
-        
         ObjectMapper mapper = new ObjectMapper();
         String payloadJson = mapper.writeValueAsString(payload);
-        log.info("Payload: " + payloadJson);
-        
+
         return payloadJson;
     }
 
     @Override
-    public void onResponse(HttpResponse response) {
-        
+    @SneakyThrows
+    public InstagramLoginResult parseResult(int statusCode, String content) {
+        return parseJson(content, InstagramLoginResult.class);
     }
-}
 
+    @Override
+    public boolean requiresLogin() {
+        return false;
+    }
+
+}

@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.util;
+package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.eaio.uuid.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Data;
 
 /**
- * Generic utils
+ * Status Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class Instagram4jGenericUtil {
-    
-    /**
-     * Generate UUID
-     * @param dash If needs to keep dash
-     * @return UUID
-     */
-    public static String generateUuid(boolean dash) {
-        String uuid = new UUID().toString();
-        
-        if (dash) {
-            return uuid;
-        }
-        
-        return uuid.replaceAll("-", "");
-    }
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class StatusResult {
+    private String status;
+
 }

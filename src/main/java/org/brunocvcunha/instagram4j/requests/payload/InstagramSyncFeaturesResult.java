@@ -15,26 +15,15 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import lombok.Builder;
 import lombok.Data;
 
 /**
- * Login Payload
+ * Sync Features Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
-@Builder
-public class InstagramLoginPayload {
-    private String username;
-    private String phone_id;
-    private String _csrftoken;
-    private String guid;
-    private String device_id;
-    private String password;
-    private int login_attempt_account = 0;
-    
+public class InstagramSyncFeaturesResult {
+    private String status;
 
 }
