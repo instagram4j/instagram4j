@@ -6,7 +6,9 @@ instagram4j
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j)
 [![Coverage Status](https://coveralls.io/repos/github/brunocvcunha/instagram4j/badge.svg?branch=master)](https://coveralls.io/github/brunocvcunha/instagram4j?branch=master)
 
-:nut_and_bolt: instagram4j.
+:camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
+
+
 
 
 Download

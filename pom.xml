@@ -44,9 +44,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git@github.com:brunocvcunha/inutils4j.git</connection>
-		<developerConnection>scm:git:git@github.com:brunocvcunha/inutils4j.git</developerConnection>
-		<url>git@github.com:brunocvcunha/inutils4j.git</url>
+		<connection>scm:git:git@github.com:brunocvcunha/instagram4j.git</connection>
+		<developerConnection>scm:git:git@github.com:brunocvcunha/instagram4j.git</developerConnection>
+		<url>git@github.com:brunocvcunha/instagram4j.git</url>
 	</scm>
 
 	<properties>
@@ -167,7 +167,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.7.201606060606</version>
+				<version>0.7.8</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -206,13 +206,6 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
-		<!-- Selenium -->
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-			<version>2.53.0</version>
-		</dependency>
-
 		<!-- Jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -229,19 +222,34 @@
 		</dependency>
 
 
-    <!-- Ghost me -->
+		<!-- Ghost me -->
 		<dependency>
 			<groupId>org.brunocvcunha.ghostme4j</groupId>
 			<artifactId>ghostme4j</artifactId>
 			<version>0.2</version>
 		</dependency>
 
-    <!-- Inutils -->
+		<!-- Inutils -->
 		<dependency>
 			<groupId>org.brunocvcunha.inutils4j</groupId>
 			<artifactId>inutils4j</artifactId>
 			<version>0.4</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.eaio.uuid</groupId>
+			<artifactId>uuid</artifactId>
+			<version>3.2</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+		
 
 	</dependencies>
 
