@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import org.junit.Test;
-import static org.junit.Assert.*;
+package org.brunocvcunha.instagram4j.requests.payload;
 
-public class AppTest {
-    
-    //TODO: build tests!
-    @Test
-    public void testSimple() {
-        assertTrue(true);
-    }
+import java.util.List;
+
+import lombok.Data;
+
+/**
+ * Tag Feed Results
+ * 
+ * @author Bruno Candido Volpato da Cunha
+ *
+ */
+@Data
+public class InstagramTagFeedResult {
+
+    private boolean auto_load_more_enabled;
+    private int num_results;
+    private String next_max_id;
+    private String status;
+
+    private List<InstagramTagFeedResultTag> items;
+    private List<InstagramTagFeedResultTag> ranked_items;
+
+    private boolean more_available;
 
 }

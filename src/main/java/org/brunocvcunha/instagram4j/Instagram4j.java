@@ -168,7 +168,7 @@ public class Instagram4j {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    protected String getOrFetchCsrf() throws ClientProtocolException, IOException {
+    public String getOrFetchCsrf() throws ClientProtocolException, IOException {
         Optional<Cookie> checkCookie = getCsrfCookie();
         if (!checkCookie.isPresent()) {
             sendRequest(new InstagramFetchHeadersRequest());
@@ -183,8 +183,7 @@ public class Instagram4j {
     }
     /**
      * Send request to endpoint
-     * @param endpoint Endpoint
-     * @param postData Data to post
+     * @param request Request object
      * @return success flag
      * @throws IOException 
      * @throws ClientProtocolException 
