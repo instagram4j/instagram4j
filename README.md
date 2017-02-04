@@ -23,7 +23,7 @@ Usage
         instagram.setup();
         
         instagram.sendRequest(new InstagramUploadPhotoRequest(
-                new File("/tmp/file-to-upload.jpg",
+                new File("/tmp/file-to-upload.jpg"),
                 "Posted with Instagram4j, how cool is that?"));
                 
 ```
