@@ -9,7 +9,7 @@ instagram4j
 
 (under construction)
 
-Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API)
+Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API) and [Instagram Python Api](https://github.com/LevPasha/Instagram-API-python).
 
 
 Usage
