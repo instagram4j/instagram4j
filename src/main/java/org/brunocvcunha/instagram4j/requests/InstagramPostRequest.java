@@ -50,9 +50,9 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         post.addHeader("Accept-Language", "en-US");
         post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
         
-        log.info("User-Agent: " + InstagramConstants.USER_AGENT);
+        log.debug("User-Agent: " + InstagramConstants.USER_AGENT);
         String parsedData = InstagramHashUtil.generateSignature(getPayload());
-        log.info("Signed data: " + parsedData);
+        log.debug("Signed data: " + parsedData);
         post.setEntity(new StringEntity(parsedData));
         
         HttpResponse response = api.getClient().execute(post);

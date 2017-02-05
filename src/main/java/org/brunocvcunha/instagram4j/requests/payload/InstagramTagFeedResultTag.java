@@ -39,6 +39,7 @@ public class InstagramTagFeedResultTag {
     public int filter_type;
     public boolean has_audio;
     public double video_duration;
+    public Map<String, Object> attribution;
     public List<Object> video_versions;
     public Map<String, Object> image_versions2;
     public Map<String, Object> usertags;

@@ -27,20 +27,20 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 /**
- * Like Request
+ * Unblock Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramLikeRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramUnblockRequest extends InstagramPostRequest<StatusResult> {
 
-    private long mediaId;
+    private long userId;
 
     @Override
     public String getUrl() {
-        return "media/" + mediaId + "/like/";
+        return "friendships/unblock/" + userId + "/";
     }
 
     @Override
@@ -50,8 +50,8 @@ public class InstagramLikeRequest extends InstagramPostRequest<StatusResult> {
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
         likeMap.put("_uid", api.getUserId());
+        likeMap.put("user_id", userId);
         likeMap.put("_csrftoken", api.getOrFetchCsrf());
-        likeMap.put("media_id", mediaId);
         
         ObjectMapper mapper = new ObjectMapper();
         String payloadJson = mapper.writeValueAsString(likeMap);
@@ -64,4 +64,5 @@ public class InstagramLikeRequest extends InstagramPostRequest<StatusResult> {
     public StatusResult parseResult(int statusCode, String content) {
         return parseJson(content, StatusResult.class);
     }
+
 }
