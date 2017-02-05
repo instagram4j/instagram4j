@@ -4,7 +4,6 @@ instagram4j
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/brunocvcunha/instagram4j.svg)](https://travis-ci.org/brunocvcunha/instagram4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j)
-[![Coverage Status](https://coveralls.io/repos/github/brunocvcunha/instagram4j/badge.svg?branch=master)](https://coveralls.io/github/brunocvcunha/instagram4j?branch=master)
 
 :camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
 
