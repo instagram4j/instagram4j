@@ -34,7 +34,8 @@ Usage
               instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
               
               TimeUnit.SECONDS.sleep(45);
-        }       
+        }
+    }
 ```
 
 
