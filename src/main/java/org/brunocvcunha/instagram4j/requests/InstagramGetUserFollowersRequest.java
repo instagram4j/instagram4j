@@ -15,33 +15,41 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.InstagramConstants;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsersResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserFollowersResult;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * Search Users Request
+ * Get User Followers Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
+@RequiredArgsConstructor
 @AllArgsConstructor
-public class InstagramSearchUsersRequest extends InstagramGetRequest<InstagramSearchUsersResult> {
+public class InstagramGetUserFollowersRequest extends InstagramGetRequest<InstagramGetUserFollowersResult> {
 
-    private String query;
-    
+    @NonNull
+    private long userId;
+    private String maxId;
+
     @Override
     public String getUrl() {
-        return "users/search/?ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION
-                + "&is_typeahead=true&query="+ query + "&rank_token=" + api.getRankToken();
+        String baseUrl = "friendships/" + userId + "/followers/?rank_token=" + api.getRankToken();
+        if (maxId != null && !maxId.isEmpty()) {
+            baseUrl += "&max_id=" + maxId;
+        }
+        
+        return baseUrl;
     }
 
     @Override
     @SneakyThrows
-    public InstagramSearchUsersResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramSearchUsersResult.class);
+    public InstagramGetUserFollowersResult parseResult(int statusCode, String content) {
+        return parseJson(content, InstagramGetUserFollowersResult.class);
     }
 
 }

@@ -57,4 +57,10 @@ public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
         return parseResult(resultCode, content);
     }
     
+    @Override
+    public String getPayload() {
+        return null;
+    }
+
+    
 }

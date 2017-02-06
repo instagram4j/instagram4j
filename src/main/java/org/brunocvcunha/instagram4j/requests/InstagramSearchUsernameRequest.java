@@ -15,33 +15,31 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.InstagramConstants;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsersResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsernameResult;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * Search Users Request
+ * Search Username Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @AllArgsConstructor
-public class InstagramSearchUsersRequest extends InstagramGetRequest<InstagramSearchUsersResult> {
+public class InstagramSearchUsernameRequest extends InstagramGetRequest<InstagramSearchUsernameResult> {
 
-    private String query;
-    
+    private String username;
+
     @Override
     public String getUrl() {
-        return "users/search/?ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION
-                + "&is_typeahead=true&query="+ query + "&rank_token=" + api.getRankToken();
+        return "users/" + username + "/usernameinfo/";
     }
 
     @Override
     @SneakyThrows
-    public InstagramSearchUsersResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramSearchUsersResult.class);
+    public InstagramSearchUsernameResult parseResult(int statusCode, String content) {
+        return parseJson(content, InstagramSearchUsernameResult.class);
     }
 
 }
