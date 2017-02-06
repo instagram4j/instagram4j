@@ -16,25 +16,23 @@ Usage
 --------
 
 ```java
-    public static void main(String[] args) throws Exception {
 
-        // Login to instagram
-        Instagram4j instagram = Instagram4j.builder().username("username").password("password").build();
-        instagram.setup();
-        instagram.login();
-        
-        // Uploads a file to your feed
-        instagram.sendRequest(new InstagramUploadPhotoRequest(
-                new File("/tmp/file-to-upload.jpg"),
-                "Posted with Instagram4j, how cool is that?"));
-        
-        // Get all posts with #github tag, and like it
-        InstagramTagFeedResult githubFeed = instagram.sendRequest(new InstagramTagFeedRequest("github"));
-        for (InstagramTagFeedResultTag feedResult : githubFeed.getItems()) {
-              instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
-              
-              TimeUnit.SECONDS.sleep(45);
-        }
+    // Login to instagram
+    Instagram4j instagram = Instagram4j.builder().username("username").password("password").build();
+    instagram.setup();
+    instagram.login();
+
+    // Uploads a file to your feed
+    instagram.sendRequest(new InstagramUploadPhotoRequest(
+            new File("/tmp/file-to-upload.jpg"),
+            "Posted with Instagram4j, how cool is that?"));
+
+    // Get all posts with #github tag, and like it
+    InstagramTagFeedResult githubFeed = instagram.sendRequest(new InstagramTagFeedRequest("github"));
+    for (InstagramTagFeedResultTag feedResult : githubFeed.getItems()) {
+          instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
+
+          TimeUnit.SECONDS.sleep(45);
     }
 ```
 
@@ -43,9 +41,9 @@ Usage
 Building from the source
 --------
 ```
-git clone https://github.com/brunocvcunha/instagram4j
-cd instagram4j
-mvn clean install
+    git clone https://github.com/brunocvcunha/instagram4j
+    cd instagram4j
+    mvn clean install
 ```
 
 Download
