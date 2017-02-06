@@ -105,8 +105,13 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
         StatusResult result = parseResult(resultCode, content);
         
         if (result.getStatus().equalsIgnoreCase("ok")) {
-            api.sendRequest(new InstagramConfigurePhotoRequest(imageFile, uploadId, caption));
-            api.sendRequest(new InstagramExposeRequest());
+            StatusResult statusResult = api.sendRequest(new InstagramConfigurePhotoRequest(imageFile, uploadId, caption));
+            
+            if (statusResult.getStatus().equalsIgnoreCase("ok")) {
+                api.sendRequest(new InstagramExposeRequest());
+            } else {
+                throw new IllegalArgumentException("Failed to post image: " + statusResult.getMessage());
+            }
         }
         
         return result;

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLikeResult;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -34,7 +34,7 @@ import lombok.extern.log4j.Log4j;
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramLikeRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramLikeRequest extends InstagramPostRequest<InstagramLikeResult> {
 
     private long mediaId;
 
@@ -61,7 +61,7 @@ public class InstagramLikeRequest extends InstagramPostRequest<StatusResult> {
 
     @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(content, StatusResult.class);
+    public InstagramLikeResult parseResult(int statusCode, String content) {
+        return parseJson(content, InstagramLikeResult.class);
     }
 }

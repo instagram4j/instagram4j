@@ -26,8 +26,16 @@ import lombok.Data;
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StatusResult {
+public class InstagramLikeResult {
     private String status;
+    private boolean spam;
+    private String feedback_ignore_label;
+    private String feedback_title;
     private String message;
+    private String feedback_message;
+    private String feedback_url;
+    private String feedback_action;
+    private String feedback_appeal_label;
+    
 
 }
