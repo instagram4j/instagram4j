@@ -40,6 +40,14 @@ Usage
 
 
 
+Building from the source
+--------
+```
+git clone https://github.com/brunocvcunha/instagram4j
+cd instagram4j
+mvn clean install
+```
+
 Download
 --------
 
