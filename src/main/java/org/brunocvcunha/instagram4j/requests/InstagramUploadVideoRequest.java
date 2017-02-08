@@ -18,6 +18,7 @@ package org.brunocvcunha.instagram4j.requests;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -127,7 +128,6 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
                     int height = frameGrabber.getImageHeight();
                     long length = frameGrabber.getLengthInTime();
                     
-                    
                     BufferedImage bufferedImage;
                     if (thumbnailFile == null) {
                         bufferedImage = MyImageUtils.deepCopy(converter.convert(frameGrabber.grabImage()));
@@ -139,7 +139,9 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
                         bufferedImage = ImageIO.read(thumbnailFile);
                     }
     
-    
+                    
+                    holdOn();
+                    
                     StatusResult thumbnailResult = api.sendRequest(new InstagramUploadPhotoRequest(thumbnailFile, caption, uploadId));
                     log.info("Thumbnail result: " + thumbnailResult);
                     
@@ -163,6 +165,18 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
         }
         
         return null;
+    }
+
+    /**
+     * 
+     */
+    protected void holdOn() {
+        //sad but helps to prevent Transcode Timeout
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
