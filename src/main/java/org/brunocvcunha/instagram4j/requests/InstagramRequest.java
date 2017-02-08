@@ -21,10 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.Instagram4j;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
 
 import lombok.AllArgsConstructor;
@@ -86,7 +84,7 @@ public abstract class InstagramRequest<T> {
      * @return Result
      */
     @SneakyThrows
-    public T parseJson(String str, Class<T> clazz) {
+    public <U> U parseJson(String str, Class<U> clazz) {
         log.info("Reading " + clazz.getSimpleName() + " from " + str);
         return new ObjectMapper().readValue(str, clazz);
     }

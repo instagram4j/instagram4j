@@ -16,42 +16,43 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
-import org.brunocvcunha.inutils4j.MyStreamUtils;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 /**
- * 
- * @author brunovolpato
+ * Upload photo request
+ * @author Bruno Candido Volpato da Cunha
  *
  */
 @Log4j
 @AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> {
 
+    @NonNull
     private File imageFile;
+    
+    @NonNull
     private String caption;
+    private String uploadId;
     
     @Override
     public String getUrl() {
@@ -81,7 +82,9 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
         
         log.info("User-Agent: " + InstagramConstants.USER_AGENT);
         
-        String uploadId = String.valueOf(System.currentTimeMillis());
+        if (uploadId == null) {
+            uploadId = String.valueOf(System.currentTimeMillis());
+        }
         
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody("upload_id", uploadId);
