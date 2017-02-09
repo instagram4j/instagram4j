@@ -201,7 +201,7 @@ public class Instagram4j {
         request.setApi(this);
         T response = request.execute();
         
-        log.info("Result: " + response);
+        log.info("Result for " + request.getClass().getName() + ": " + response);
         
         return response;
     }

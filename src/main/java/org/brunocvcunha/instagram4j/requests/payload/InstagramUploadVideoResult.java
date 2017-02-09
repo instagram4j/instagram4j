@@ -29,6 +29,7 @@ import lombok.Data;
 @Data
 public class InstagramUploadVideoResult {
     private String status;
+    private String message;
     private String upload_id;
     private List<Map<String, Object>> video_upload_urls;
 

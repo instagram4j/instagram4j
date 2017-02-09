@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.util.EntityUtils;
@@ -36,6 +36,7 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramUploadVideoResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.bytedeco.javacv.Java2DFrameConverter;
 
 import lombok.AllArgsConstructor;
@@ -72,6 +73,121 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
     @Override
     public StatusResult execute() throws ClientProtocolException, IOException {
         
+        HttpPost post = createHttpRequest();
+        
+        String uploadId = String.valueOf(System.currentTimeMillis());
+        
+        post.setEntity(createMultipartEntity(uploadId));
+        
+        try (CloseableHttpResponse response = api.getClient().execute(post)) {
+            api.setLastResponse(response);
+            
+            int resultCode = response.getStatusLine().getStatusCode();
+            String content = EntityUtils.toString(response.getEntity());
+            log.info("First phase result " + resultCode + ": " + content);
+            
+            post.releaseConnection();
+            
+            InstagramUploadVideoResult firstPhaseResult = parseJson(content, InstagramUploadVideoResult.class);
+            
+            if (!firstPhaseResult.getStatus().equalsIgnoreCase("ok")) {
+                throw new RuntimeException("Error happened in video upload session start: " + firstPhaseResult.getMessage());
+            }
+    
+            
+            String uploadUrl = firstPhaseResult.getVideo_upload_urls().get(3).get("url").toString();
+            String uploadJob = firstPhaseResult.getVideo_upload_urls().get(3).get("job").toString();
+            
+            StatusResult uploadJobResult = api.sendRequest(new InstagramUploadVideoJobRequest(uploadId, uploadUrl, uploadJob, videoFile));
+            log.info("Upload result: " + uploadJobResult);
+            
+            if (!uploadJobResult.getStatus().equalsIgnoreCase("ok")) {
+                throw new RuntimeException("Error happened in video upload submit job: " + uploadJobResult.getMessage());
+            }
+            
+                
+            StatusResult thumbnailResult = configureThumbnail(uploadId);
+            
+            if (!thumbnailResult.getStatus().equalsIgnoreCase("ok")) {
+                throw new IllegalArgumentException("Failed to configure thumbnail: " + thumbnailResult.getMessage());
+            }
+            
+            return api.sendRequest(new InstagramExposeRequest());
+
+            
+        }
+    }
+
+    /**
+     * Configures the thumbnails for the given uploadId
+     * @param uploadId The session id
+     * @return Result
+     * @throws Exception
+     * @throws IOException
+     * @throws ClientProtocolException
+     */
+    protected StatusResult configureThumbnail(String uploadId) throws Exception, IOException, ClientProtocolException {
+        try (FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoFile)) {
+            frameGrabber.start();
+            Java2DFrameConverter converter = new Java2DFrameConverter();
+            
+            int width = frameGrabber.getImageWidth();
+            int height = frameGrabber.getImageHeight();
+            long length = frameGrabber.getLengthInTime();
+            
+            BufferedImage bufferedImage;
+            if (thumbnailFile == null) {
+                bufferedImage = MyImageUtils.deepCopy(converter.convert(frameGrabber.grabImage()));
+                thumbnailFile = File.createTempFile("insta", ".jpg");
+                
+                log.info("Generated thumbnail: " + thumbnailFile.getAbsolutePath());
+                ImageIO.write(bufferedImage, "JPG", thumbnailFile);
+            } else {
+                bufferedImage = ImageIO.read(thumbnailFile);
+            }
+
+            
+            holdOn();
+            
+            StatusResult thumbnailResult = api.sendRequest(new InstagramUploadPhotoRequest(thumbnailFile, caption, uploadId));
+            log.info("Thumbnail result: " + thumbnailResult);
+            
+            StatusResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder().uploadId(uploadId)
+                        .caption(caption)
+                        .duration(length)
+                        .width(width)
+                        .height(height)
+                        .build());
+            
+            log.info("Video configure result: " + configureResult);
+
+            return configureResult;
+        }
+    }
+
+    /**
+     * Create the required multipart entity
+     * @param uploadId Session ID
+     * @return Entity to submit to the upload
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    protected HttpEntity createMultipartEntity(String uploadId) throws ClientProtocolException, IOException {
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.addTextBody("upload_id", uploadId);
+        builder.addTextBody("_uuid", api.getUuid());
+        builder.addTextBody("_csrftoken", api.getOrFetchCsrf());
+        builder.addTextBody("media_type", "2");
+        builder.setBoundary(api.getUuid());
+
+        HttpEntity entity = builder.build();
+        return entity;
+    }
+
+    /**
+     * @return http request 
+     */
+    protected HttpPost createHttpRequest() {
         String url = InstagramConstants.API_URL + getUrl();
         log.info("URL Upload: " + url);
         
@@ -84,87 +200,7 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
         post.addHeader("Connection", "close");
         post.addHeader("Content-Type", "multipart/form-data; boundary=" + api.getUuid());
         post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
-        
-        log.info("User-Agent: " + InstagramConstants.USER_AGENT);
-        
-        String uploadId = String.valueOf(System.currentTimeMillis());
-        
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        builder.addTextBody("upload_id", uploadId);
-        builder.addTextBody("_uuid", api.getUuid());
-        builder.addTextBody("_csrftoken", api.getOrFetchCsrf());
-        builder.addTextBody("media_type", "2");
-        builder.setBoundary(api.getUuid());
-
-        HttpEntity entity = builder.build();
-        post.setEntity(entity);
-        
-        HttpResponse response = api.getClient().execute(post);
-        api.setLastResponse(response);
-        
-        int resultCode = response.getStatusLine().getStatusCode();
-        String content = EntityUtils.toString(response.getEntity());
-        
-        post.releaseConnection();
-
-        
-        InstagramUploadVideoResult firstPhaseResult = parseJson(content, InstagramUploadVideoResult.class);
-        log.info("First phase result: " + firstPhaseResult);
-        
-        if (firstPhaseResult.getStatus().equalsIgnoreCase("ok")) {
-            String uploadUrl = firstPhaseResult.getVideo_upload_urls().get(3).get("url").toString();
-            String uploadJob = firstPhaseResult.getVideo_upload_urls().get(3).get("job").toString();
-            
-            StatusResult uploadJobResult = api.sendRequest(new InstagramUploadVideoJobRequest(uploadId, uploadUrl, uploadJob, videoFile));
-            log.info("Upload result: " + uploadJobResult);
-            
-            if (uploadJobResult.getStatus().equalsIgnoreCase("ok")) {
-                
-                try (FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoFile)) {
-                    frameGrabber.start();
-                    Java2DFrameConverter converter = new Java2DFrameConverter();
-                    
-                    int width = frameGrabber.getImageWidth();
-                    int height = frameGrabber.getImageHeight();
-                    long length = frameGrabber.getLengthInTime();
-                    
-                    BufferedImage bufferedImage;
-                    if (thumbnailFile == null) {
-                        bufferedImage = MyImageUtils.deepCopy(converter.convert(frameGrabber.grabImage()));
-                        thumbnailFile = File.createTempFile("insta", ".jpg");
-                        
-                        log.info("Generated thumbnail: " + thumbnailFile.getAbsolutePath());
-                        ImageIO.write(bufferedImage, "JPG", thumbnailFile);
-                    } else {
-                        bufferedImage = ImageIO.read(thumbnailFile);
-                    }
-    
-                    
-                    holdOn();
-                    
-                    StatusResult thumbnailResult = api.sendRequest(new InstagramUploadPhotoRequest(thumbnailFile, caption, uploadId));
-                    log.info("Thumbnail result: " + thumbnailResult);
-                    
-                    StatusResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder().uploadId(uploadId)
-                                .caption(caption)
-                                .duration(length)
-                                .width(width)
-                                .height(height)
-                                .build());
-                    
-                    log.info("Video configure result: " + configureResult);
-    
-                    if (configureResult.getStatus().equalsIgnoreCase("ok")) {
-                        return api.sendRequest(new InstagramExposeRequest());
-                    }
-                    
-                    throw new IllegalArgumentException("Failed to post image: " + configureResult.getMessage());
-                }
-                
-            }
-        }
-        
-        return null;
+        return post;
     }
 
     /**

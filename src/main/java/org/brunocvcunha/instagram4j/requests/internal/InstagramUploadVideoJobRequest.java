@@ -81,51 +81,53 @@ public class InstagramUploadVideoJobRequest extends InstagramRequest<StatusResul
         
         log.info("User-Agent: " + InstagramConstants.USER_AGENT);
 
-        byte[] videoData = MyStreamUtils.readContentBytes(new FileInputStream(videoFile));
-        
-        //TODO: long ranges? need to handle?
-        int requestSize = (int) Math.floor(videoData.length / 4.0);
-        int lastRequestExtra = (int) (videoData.length - (requestSize * 3));
-        
-        
-        for (int i = 0; i < 4; i++) {
+        try (FileInputStream is = new FileInputStream(videoFile)) {
+            byte[] videoData = MyStreamUtils.readContentBytes(is);
             
-            int start = i * requestSize;
-            int end;
-            if (i == 3) {
-                end = i * requestSize + lastRequestExtra;
-            } else {
-                end = (i + 1) * requestSize;
-            }
+            //TODO: long ranges? need to handle?
+            int requestSize = (int) Math.floor(videoData.length / 4.0);
+            int lastRequestExtra = (int) (videoData.length - (requestSize * 3));
             
-            int actualLength = (i == 3 ? lastRequestExtra : requestSize);
             
-            String contentRange = String.format("bytes %s-%s/%s", start, end - 1, videoData.length);
-            //post.setHeader("Content-Length", String.valueOf(end - start));
-            post.setHeader("Content-Range", contentRange);
-            
-            byte[] range = Arrays.copyOfRange(videoData, start, start + actualLength);
-            log.info("Total is " + videoData.length + ", sending " + actualLength + " (starting from " + start + ") -- " + range.length + " bytes.");
-            
-            post.setEntity(EntityBuilder.create().setBinary(range).build());
-
-            try (CloseableHttpResponse response = api.getClient().execute(post)) {
-                int resultCode = response.getStatusLine().getStatusCode();
-                String content = EntityUtils.toString(response.getEntity());
-                log.info("Result of part " + i + ": " + content);
+            for (int i = 0; i < 4; i++) {
                 
-                post.releaseConnection();
-                response.close();
+                int start = i * requestSize;
+                int end;
+                if (i == 3) {
+                    end = i * requestSize + lastRequestExtra;
+                } else {
+                    end = (i + 1) * requestSize;
+                }
                 
-                if (resultCode != 200 && resultCode != 201) {
-                    throw new IllegalStateException("Failed uploading video (" + resultCode + "): " + content);
+                int actualLength = (i == 3 ? lastRequestExtra : requestSize);
+                
+                String contentRange = String.format("bytes %s-%s/%s", start, end - 1, videoData.length);
+                //post.setHeader("Content-Length", String.valueOf(end - start));
+                post.setHeader("Content-Range", contentRange);
+                
+                byte[] range = Arrays.copyOfRange(videoData, start, start + actualLength);
+                log.info("Total is " + videoData.length + ", sending " + actualLength + " (starting from " + start + ") -- " + range.length + " bytes.");
+                
+                post.setEntity(EntityBuilder.create().setBinary(range).build());
+    
+                try (CloseableHttpResponse response = api.getClient().execute(post)) {
+                    int resultCode = response.getStatusLine().getStatusCode();
+                    String content = EntityUtils.toString(response.getEntity());
+                    log.info("Result of part " + i + ": " + content);
+                    
+                    post.releaseConnection();
+                    response.close();
+                    
+                    if (resultCode != 200 && resultCode != 201) {
+                        throw new IllegalStateException("Failed uploading video (" + resultCode + "): " + content);
+                    }
+                    
                 }
                 
             }
             
+            return new StatusResult("ok");
         }
-        
-        return new StatusResult("ok");
     }
 
     @Override

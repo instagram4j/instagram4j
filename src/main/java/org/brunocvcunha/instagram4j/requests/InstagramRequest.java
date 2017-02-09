@@ -54,7 +54,9 @@ public abstract class InstagramRequest<T> {
     /**
      * @return the payload
      */
-    public abstract String getPayload();
+    public String getPayload() {
+        return null;
+    }
     
     /**
      * @return the result
