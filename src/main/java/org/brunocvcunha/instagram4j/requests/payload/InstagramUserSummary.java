@@ -15,9 +15,6 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-import java.util.Map;
-
 import lombok.Data;
 
 /**
