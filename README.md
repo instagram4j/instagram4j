@@ -7,8 +7,6 @@ instagram4j
 
 :camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
 
-(under construction)
-
 Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API) and [Instagram Python Api](https://github.com/LevPasha/Instagram-API-python).
 
 
@@ -87,12 +85,14 @@ instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
 ```
 
 
+#### (More operations to be added)
+
 Building from the source
 --------
 ```
-    git clone https://github.com/brunocvcunha/instagram4j
-    cd instagram4j
-    mvn clean install
+git clone https://github.com/brunocvcunha/instagram4j
+cd instagram4j
+mvn clean install
 ```
 
 Download
