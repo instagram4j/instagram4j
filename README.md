@@ -7,13 +7,28 @@ instagram4j
 
 :camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
 
-(under construction)
-
 Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API) and [Instagram Python Api](https://github.com/LevPasha/Instagram-API-python).
 
 
+Usage
+--------
 
-Supported Operations & Usage
+Download [the latest release JAR][1] or grab via Maven:
+```xml
+<dependency>
+  <groupId>org.brunocvcunha.instagram4j</groupId>
+  <artifactId>instagram4j</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+or Gradle:
+```groovy
+compile 'org.brunocvcunha.instagram4j:instagram4j:1.0'
+```
+
+
+
+Supported Operations & Examples
 --------
 
 #### Login
@@ -87,29 +102,18 @@ instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
 ```
 
 
+#### (More operations to be added)
+
 Building from the source
 --------
 ```
-    git clone https://github.com/brunocvcunha/instagram4j
-    cd instagram4j
-    mvn clean install
+git clone https://github.com/brunocvcunha/instagram4j
+cd instagram4j
+mvn clean install
 ```
 
-Download
---------
 
-Download [the latest release JAR][1] or grab via Maven:
-```xml
-<dependency>
-  <groupId>org.brunocvcunha.instagram4j</groupId>
-  <artifactId>instagram4j</artifactId>
-  <version>1.0</version>
-</dependency>
-```
-or Gradle:
-```groovy
-compile 'org.brunocvcunha.instagram4j:instagram4j:1.0'
-```
+#
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
 
