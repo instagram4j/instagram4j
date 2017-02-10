@@ -18,22 +18,29 @@ package org.brunocvcunha.instagram4j.requests;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * Tag Feed Request
+ * User Feed Request
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @AllArgsConstructor
-public class InstagramTagFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
+@RequiredArgsConstructor
+public class InstagramUserFeedResult extends InstagramGetRequest<InstagramFeedResult> {
 
-    private String tag;
-
+    @NonNull
+    private long userId;
+    private String maxId;
+    private long minTimestamp;
+    
+    
     @Override
     public String getUrl() {
-        return "feed/tag/" + tag + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
+        return "feed/user/" + userId + "/?max_id=" + maxId + "&min_timestamp=" + minTimestamp + "&rank_token=" + api.getRankToken() + "&ranked_content=true&";
     }
 
     @Override

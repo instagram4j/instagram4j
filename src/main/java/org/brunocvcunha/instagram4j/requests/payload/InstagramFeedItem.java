@@ -27,7 +27,7 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramTagFeedResultTag {
+public class InstagramFeedItem {
 
     public long taken_at;
     public long pk;
@@ -66,7 +66,8 @@ public class InstagramTagFeedResultTag {
 
     public String organic_tracking_token;
     public int like_count;
-    public List<Object> likers;
+    public List<String> top_likers;
+    public List<InstagramUserSummary> likers;
     public boolean has_liked;
     public boolean comment_likes_enabled;
     public boolean has_more_comments;

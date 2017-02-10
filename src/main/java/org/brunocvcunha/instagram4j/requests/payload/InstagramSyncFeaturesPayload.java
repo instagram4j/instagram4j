@@ -29,8 +29,8 @@ import lombok.Data;
 @Builder
 public class InstagramSyncFeaturesPayload {
     private String _uuid;
-    private String _uid;
-    private String id;
+    private long _uid;
+    private long id;
     private String _csrftoken;
     private String experiments;
     

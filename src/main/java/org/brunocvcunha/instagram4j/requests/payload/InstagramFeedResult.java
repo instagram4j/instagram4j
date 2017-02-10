@@ -20,21 +20,21 @@ import java.util.List;
 import lombok.Data;
 
 /**
- * Tag Feed Results
+ * Data class for response from feed requests
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
-public class InstagramTagFeedResult {
+public class InstagramFeedResult {
 
     private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;
     private String status;
 
-    private List<InstagramTagFeedResultTag> items;
-    private List<InstagramTagFeedResultTag> ranked_items;
+    private List<InstagramFeedItem> items;
+    private List<InstagramFeedItem> ranked_items;
 
     private boolean more_available;
 
