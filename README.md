@@ -60,7 +60,7 @@ instagram.sendRequest(new InstagramUnfollowRequest(userResult.getUser().getPk())
 #### Get user followers
 ```java
 InstagramGetUserFollowersResult githubFollowers = instagram.sendRequest(new InstagramGetUserFollowersRequest(userResult.getUser().getPk()));
-List<InstagramUserSummary> users = ppfFollowers.getUsers();
+List<InstagramUserSummary> users = githubFollowers.getUsers();
 for (InstagramUserSummary user : users) {
     System.out.println("User " + user.getUsername() + " follows Github!");
 }
