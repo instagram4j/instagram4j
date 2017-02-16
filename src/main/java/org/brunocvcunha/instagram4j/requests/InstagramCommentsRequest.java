@@ -1,4 +1,4 @@
-package weco.main;
+package org.brunocvcunha.instagram4j.requests;
 
 import java.beans.ConstructorProperties;
 import java.io.IOException;
