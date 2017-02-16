@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j;
  *
  */
 
-@AllArgsConstructor
 @Log4j
 public class InstagramCommentsRequest extends InstagramPostRequest<InstagramCommentsResult> {
 
@@ -39,7 +38,6 @@ public class InstagramCommentsRequest extends InstagramPostRequest<InstagramComm
     }
 
     @Override
-    @SneakyThrows
     public String getPayload() {
         
         Map<String, Object> likeMap = new LinkedHashMap<>();
@@ -61,18 +59,16 @@ public class InstagramCommentsRequest extends InstagramPostRequest<InstagramComm
         return payloadJson;
     }
 
-	@ConstructorProperties({ "mediaId" })
 	public InstagramCommentsRequest(long mediaId) {
 		this.mediaId = mediaId;
 	}
-	@ConstructorProperties({ "userId", "maxId" })
+	
 	public InstagramCommentsRequest(long mediaId, String maxId) {
 		this.mediaId = mediaId;
 		this.maxId = maxId;
 	}
 	
     @Override
-    @SneakyThrows
     public InstagramCommentsResult parseResult(int statusCode, String content) {
         return parseJson(content, InstagramCommentsResult.class);
     }
