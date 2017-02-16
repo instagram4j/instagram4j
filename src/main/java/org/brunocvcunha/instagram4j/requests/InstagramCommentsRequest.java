@@ -58,7 +58,6 @@ public class InstagramCommentsRequest extends InstagramPostRequest<InstagramComm
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		System.out.println("PLAYLOAD: " + payloadJson);
         return payloadJson;
     }
 
