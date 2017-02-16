@@ -1,4 +1,4 @@
-package weco.main;
+package org.brunocvcunha.instagram4j.requests.payload;
 
 import java.util.Map;
 
