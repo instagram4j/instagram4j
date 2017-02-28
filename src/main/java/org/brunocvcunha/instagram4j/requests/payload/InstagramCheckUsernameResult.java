@@ -18,15 +18,19 @@ package org.brunocvcunha.instagram4j.requests.payload;
 import lombok.Data;
 
 /**
- * Search Username Result
+ * Data class for response from check username
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
-public class InstagramSearchUsernameResult {
+public class InstagramCheckUsernameResult {
+    
     private String status;
+    private String error;
     private String message;
-    private InstagramUser user;
+    private boolean available;
+    private String username;
+    private String error_type;
 
 }

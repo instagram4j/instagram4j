@@ -49,20 +49,7 @@ public class InstagramFeedItem {
     public int original_width;
     public int original_height;
     public int view_count;
-    public Map<String, Object> user;
-//        "username": "naayarafreitassmakeup",
-//        "has_anonymous_profile_picture": false,
-//        "is_unpublished": false,
-//        "friendship_status": {
-//            "outgoing_request": false,
-//            "following": false
-//        },
-//        "profile_pic_id": "1441364815238182249_227966303",
-//        "profile_pic_url": "http://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-19/s150x150/16465820_383579565337101_5960924374985867264_a.jpg",
-//        "pk": 227966303,
-//        "is_private": false,
-//        "is_favorite": false,
-//        "full_name": "Nayara Freitas Make Up"
+    public InstagramUser user;
 
     public String organic_tracking_token;
     public int like_count;
