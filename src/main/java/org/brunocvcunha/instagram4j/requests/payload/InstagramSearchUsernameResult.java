@@ -26,6 +26,7 @@ import lombok.Data;
 @Data
 public class InstagramSearchUsernameResult {
     private String status;
+    private String message;
     private InstagramUser user;
 
 }
