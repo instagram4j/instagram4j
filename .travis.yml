@@ -1,0 +1,15 @@
+language: java
+jdk: oraclejdk8
+
+install: mvn clean install -q
+
+after_success:
+  - mvn clean test jacoco:report coveralls:report -q
+
+cache:
+  directories:
+    - '$HOME/.m2/repo'
+  
+addons:
+    code_climate:
+        repo_token: f8292ecca78b0d5da4682cc13991c766edab1a45382304a4be9a7eba8f5eb088
