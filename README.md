@@ -90,8 +90,8 @@ instagram.sendRequest(new InstagramUploadVideoRequest(
 
 #### Get feed for a hashtag
 ```java
-InstagramTagFeedResult tagFeed = instagram.sendRequest(new InstagramTagFeedRequest("github"));
-for (InstagramTagFeedResultTag feedResult : tagFeed.getItems()) {
+InstagramFeedResult tagFeed = instagram.sendRequest(new InstagramTagFeedRequest("github"));
+for (InstagramFeedItem feedResult : tagFeed.getItems()) {
     System.out.println("Post ID: " + feedResult.getPk());
 }
 ```
