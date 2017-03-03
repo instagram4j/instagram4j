@@ -18,6 +18,8 @@ package org.brunocvcunha.instagram4j.requests.payload;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 /**
@@ -28,7 +30,38 @@ import lombok.Data;
  */
 @Data
 public class InstagramFeedItem {
-
+    
+	@JsonIgnore
+	public static int PHOTO = 1;
+	@JsonIgnore
+	public static int VIDEO = 2;
+	@JsonIgnore
+	public static int ALBUM = 8;
+	
+	@JsonIgnore
+	public boolean isPhoto(){
+		if(media_type == PHOTO){
+			return true;
+		}
+		return false;
+	}
+	
+	@JsonIgnore
+	public boolean isVideo(){
+		if(media_type == VIDEO){
+			return true;
+		}
+		return false;
+	}
+	
+	@JsonIgnore
+	public boolean isAlbum(){
+		if(media_type == ALBUM){
+			return true;
+		}
+		return false;
+	}
+    
     public long taken_at;
     public long pk;
     public String id;
