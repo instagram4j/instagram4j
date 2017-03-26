@@ -28,6 +28,7 @@ import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import lombok.AllArgsConstructor;
@@ -91,7 +92,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
             }
             
             
-            StatusResult configurePhotoResult = api.sendRequest(new InstagramConfigurePhotoRequest(imageFile, uploadId, caption));
+            InstagramConfigurePhotoResult configurePhotoResult = api.sendRequest(new InstagramConfigurePhotoRequest(imageFile, uploadId, caption));
             
             log.info("Configure photo result: " + configurePhotoResult);
             if (!configurePhotoResult.getStatus().equalsIgnoreCase("ok")) {
@@ -104,7 +105,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
                 throw new IllegalArgumentException("Failed to expose image: " + exposeResult.getMessage());
             }
 
-            return result;
+            return configurePhotoResult;
         }
     }
 

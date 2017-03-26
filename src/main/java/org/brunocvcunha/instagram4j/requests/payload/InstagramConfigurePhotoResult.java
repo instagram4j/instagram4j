@@ -17,21 +17,19 @@ package org.brunocvcunha.instagram4j.requests.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
-import java.util.Map;
-
 import lombok.Data;
 
 /**
- * Upload Video Result
+ * Configure Photo Result
  * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class InstagramUploadVideoResult extends StatusResult {
+public class InstagramConfigurePhotoResult extends StatusResult {
+
+    private InstagramFeedItem media;
     private String upload_id;
-    private List<Map<String, Object>> video_upload_urls;
 
 }

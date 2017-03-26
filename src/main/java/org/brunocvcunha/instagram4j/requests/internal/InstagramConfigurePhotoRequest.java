@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ import lombok.extern.log4j.Log4j;
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramConfigurePhotoRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigurePhotoResult> {
 
     private File mediaFile;
     private String uploadId;
@@ -92,8 +92,8 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<StatusR
 
     @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, StatusResult.class);
+    public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
     }
     
 }
