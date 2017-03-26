@@ -45,7 +45,7 @@ public class InstagramSearchTagsRequest extends InstagramGetRequest<InstagramSea
     @Override
     @SneakyThrows
     public InstagramSearchTagsResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramSearchTagsResult.class);
+        return parseJson(statusCode, content, InstagramSearchTagsResult.class);
     }
 
 }

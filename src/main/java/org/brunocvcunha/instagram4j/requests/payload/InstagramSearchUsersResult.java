@@ -15,13 +15,11 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import java.util.List;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Search Users Result
@@ -29,9 +27,9 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-public class InstagramSearchUsersResult {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramSearchUsersResult extends StatusResult {
     private List<InstagramSearchUsersResultUser> users;
-    private String status;
     private boolean has_more;
     private int num_results;
 

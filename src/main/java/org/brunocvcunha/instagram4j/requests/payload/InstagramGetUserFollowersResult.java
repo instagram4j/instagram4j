@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 import lombok.Data;
@@ -26,8 +28,8 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramGetUserFollowersResult {
-    public String status;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramGetUserFollowersResult extends StatusResult {
     public boolean big_list;
     public String next_max_id;
     public int page_size;

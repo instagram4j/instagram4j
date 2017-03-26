@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 import lombok.Data;
@@ -26,12 +28,12 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramFeedResult {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramFeedResult extends StatusResult {
 
     private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;
-    private String status;
 
     private List<InstagramFeedItem> items;
     private List<InstagramFeedItem> ranked_items;

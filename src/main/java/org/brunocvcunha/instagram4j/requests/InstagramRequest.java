@@ -21,8 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.Instagram4j;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
 
 import lombok.AllArgsConstructor;
@@ -79,6 +81,36 @@ public abstract class InstagramRequest<T> {
         return true;
     }
 
+    /**
+     * Parses Json into type, considering the status code
+     * @param statusCode HTTP Status Code
+     * @param str Entity content
+     * @param clazz Class
+     * @return Result
+     */
+    @SneakyThrows
+    public <U> U parseJson(int statusCode, String str, Class<U> clazz) {
+        
+        if (clazz.isAssignableFrom(StatusResult.class)) {
+            
+            //TODO: implement a better way to handle exceptions
+            if (statusCode == HttpStatus.SC_NOT_FOUND) {
+                StatusResult result = (StatusResult) clazz.newInstance();
+                result.setStatus("error");
+                result.setMessage("SC_NOT_FOUND");
+                return (U) result;
+            } else if (statusCode == HttpStatus.SC_FORBIDDEN) {
+                StatusResult result = (StatusResult) clazz.newInstance();
+                result.setStatus("error");
+                result.setMessage("SC_FORBIDDEN");
+                return (U) result;
+            }
+}
+        
+        log.info("Reading " + clazz.getSimpleName() + " from " + str);
+        return new ObjectMapper().readValue(str, clazz);
+    }
+    
     /**
      * Parses Json into type
      * @param str Entity content

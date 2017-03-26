@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import lombok.Data;
  *
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InstagramFeedItem {
 
     public long taken_at;
@@ -65,36 +68,6 @@ public class InstagramFeedItem {
     public boolean comment_count;
     public Map<String, Object> caption;
 
-//    "caption": {
-//        "content_type": "comment",
-//        "user": {
-//            "username": "naayarafreitassmakeup",
-//            "has_anonymous_profile_picture": false,
-//            "is_unpublished": false,
-//            "friendship_status": {
-//                "outgoing_request": false,
-//                "following": false
-//            },
-//            "profile_pic_id": "1441364815238182249_227966303",
-//            "profile_pic_url": "http://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-19/s150x150/16465820_383579565337101_5960924374985867264_a.jpg",
-//            "pk": 227966303,
-//            "is_private": false,
-//            "is_favorite": false,
-//            "full_name": "Nayara Freitas Make Up"
-//        },
-//        "bit_flags": 0,
-//        "user_id": 227966303,
-//        "type": 1,
-//        "has_translation": true,
-//        "created_at_utc": 1486242818,
-//        "created_at": 1486242818,
-//        "status": "Active",
-//        "media_id": 1443031802759855000,
-//        "text": "Make na Formanda linda de hoje 🎀💄 #Makeup #maquiagemlovers #Maquiagem #Mac #maccosmetics #Formanda #makenoite #boanoite #formatura #marykay #catharinehill #Anastasiabeverlyhills #loucasporbatom #instamake #makeupNayarafreitas",
-//        "pk": 17871452926045222
-//    },
-    
-    
     public boolean caption_is_edited;
     public boolean photo_of_you;
     public boolean comments_disabled;

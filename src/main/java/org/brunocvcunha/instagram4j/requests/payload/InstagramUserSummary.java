@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 /**
@@ -23,6 +25,7 @@ import lombok.Data;
  *
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InstagramUserSummary {
     public boolean is_verified;
     public String profile_pic_id;

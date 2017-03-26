@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,8 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramUploadVideoResult {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramUploadVideoResult extends StatusResult {
     private String status;
     private String message;
     private String upload_id;

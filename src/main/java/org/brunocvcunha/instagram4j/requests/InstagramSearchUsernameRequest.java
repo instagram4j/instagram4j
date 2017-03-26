@@ -39,7 +39,7 @@ public class InstagramSearchUsernameRequest extends InstagramGetRequest<Instagra
     @Override
     @SneakyThrows
     public InstagramSearchUsernameResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramSearchUsernameResult.class);
+        return parseJson(statusCode, content, InstagramSearchUsernameResult.class);
     }
 
 }

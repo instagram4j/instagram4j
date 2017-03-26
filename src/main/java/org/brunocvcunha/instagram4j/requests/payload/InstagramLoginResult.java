@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Map;
 
 import lombok.Data;
@@ -25,8 +27,8 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramLoginResult {
-    private String status;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramLoginResult extends StatusResult {
     private Map<String, Object> logged_in_user;
     
 

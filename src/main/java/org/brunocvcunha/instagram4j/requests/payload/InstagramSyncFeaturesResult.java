@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 /**
@@ -23,7 +25,7 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramSyncFeaturesResult {
-    private String status;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramSyncFeaturesResult extends StatusResult {
 
 }

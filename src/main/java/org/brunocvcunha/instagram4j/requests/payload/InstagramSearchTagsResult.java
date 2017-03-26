@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 import lombok.Data;
@@ -25,9 +27,9 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramSearchTagsResult {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramSearchTagsResult extends StatusResult {
     private List<InstagramSearchTagsResultTag> results;
-    private String status;
     private boolean has_more;
     private int num_results;
 

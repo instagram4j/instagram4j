@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 /**
@@ -24,9 +26,8 @@ import lombok.Data;
  *
  */
 @Data
-public class InstagramSearchUsernameResult {
-    private String status;
-    private String message;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class InstagramSearchUsernameResult extends StatusResult {
     private InstagramUser user;
 
 }

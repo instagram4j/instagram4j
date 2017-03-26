@@ -55,7 +55,7 @@ public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginRe
     @Override
     @SneakyThrows
     public InstagramLoginResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramLoginResult.class);
+        return parseJson(statusCode, content, InstagramLoginResult.class);
     }
 
     @Override

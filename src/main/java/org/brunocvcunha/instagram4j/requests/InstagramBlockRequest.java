@@ -62,7 +62,7 @@ public class InstagramBlockRequest extends InstagramPostRequest<StatusResult> {
     @Override
     @SneakyThrows
     public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(content, StatusResult.class);
+        return parseJson(statusCode, content, StatusResult.class);
     }
 
 }

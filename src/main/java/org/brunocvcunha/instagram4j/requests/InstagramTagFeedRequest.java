@@ -39,7 +39,7 @@ public class InstagramTagFeedRequest extends InstagramGetRequest<InstagramFeedRe
     @Override
     @SneakyThrows
     public InstagramFeedResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramFeedResult.class);
+        return parseJson(statusCode, content, InstagramFeedResult.class);
     }
 
 }

@@ -62,6 +62,6 @@ public class InstagramLikeRequest extends InstagramPostRequest<InstagramLikeResu
     @Override
     @SneakyThrows
     public InstagramLikeResult parseResult(int statusCode, String content) {
-        return parseJson(content, InstagramLikeResult.class);
+        return parseJson(statusCode, content, InstagramLikeResult.class);
     }
 }

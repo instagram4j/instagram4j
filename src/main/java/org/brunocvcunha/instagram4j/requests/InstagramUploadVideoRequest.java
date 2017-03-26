@@ -221,8 +221,8 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
     }
 
     @Override
-    public StatusResult parseResult(int resultCode, String content) {
-        return parseJson(content, StatusResult.class);
+    public StatusResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, StatusResult.class);
     }
 
 }
