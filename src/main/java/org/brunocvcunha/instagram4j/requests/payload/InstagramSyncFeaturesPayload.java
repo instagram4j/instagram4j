@@ -19,13 +19,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Sync Features Payload
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
 @Builder
 public class InstagramSyncFeaturesPayload {
     private String _uuid;

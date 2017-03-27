@@ -17,28 +17,27 @@ package org.brunocvcunha.instagram4j.requests.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+import java.util.Map;
+
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.NonFinal;
 
 /**
- * Status Result
+ * Profile Pic
+ * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
-@RequiredArgsConstructor
-@NoArgsConstructor
-public class StatusResult {
-    @NonNull
-    private String status;
-    private String message;
+public class InstagramProfilePic {
+
+    public String url;
+    public int width;
+    public int height;
 
 }

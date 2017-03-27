@@ -16,6 +16,7 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -107,8 +108,7 @@ public abstract class InstagramRequest<T> {
             }
 }
         
-        log.info("Reading " + clazz.getSimpleName() + " from " + str);
-        return new ObjectMapper().readValue(str, clazz);
+        return parseJson(str, clazz);
     }
     
     /**
@@ -120,7 +120,9 @@ public abstract class InstagramRequest<T> {
     @SneakyThrows
     public <U> U parseJson(String str, Class<U> clazz) {
         log.info("Reading " + clazz.getSimpleName() + " from " + str);
-        return new ObjectMapper().readValue(str, clazz);
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        
+        return objectMapper.readValue(str, clazz);
     }
     
     /**

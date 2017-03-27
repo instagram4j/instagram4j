@@ -18,8 +18,13 @@ package org.brunocvcunha.instagram4j.requests.payload;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramSearchUsersResultUser {
 
     public int unseen_count;

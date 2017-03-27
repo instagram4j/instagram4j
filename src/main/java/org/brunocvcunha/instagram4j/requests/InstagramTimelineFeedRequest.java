@@ -15,11 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.http.HttpResponse;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import lombok.SneakyThrows;
 

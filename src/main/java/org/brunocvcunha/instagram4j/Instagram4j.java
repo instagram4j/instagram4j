@@ -141,7 +141,7 @@ public class Instagram4j {
         
         InstagramLoginResult loginResult = this.sendRequest(new InstagramLoginRequest(loginRequest));
         if (loginResult.getStatus().equalsIgnoreCase("ok")) {
-            this.userId = Long.valueOf(loginResult.getLogged_in_user().get("pk").toString());
+            this.userId = loginResult.getLogged_in_user().getPk();
             this.rankToken = this.userId + "_" + this.uuid;
             this.isLoggedIn = true;
             

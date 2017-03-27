@@ -16,8 +16,13 @@
 package org.brunocvcunha.instagram4j.requests.payload;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramSearchTagsResultTag {
 
     public String name;

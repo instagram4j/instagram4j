@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Tag Feed Results
@@ -28,8 +31,9 @@ import lombok.Data;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramFeedItem {
 
     public long taken_at;

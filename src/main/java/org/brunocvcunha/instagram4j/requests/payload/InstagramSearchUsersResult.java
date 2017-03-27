@@ -20,14 +20,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Search Users Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramSearchUsersResult extends StatusResult {
     private List<InstagramSearchUsersResultUser> users;
     private boolean has_more;

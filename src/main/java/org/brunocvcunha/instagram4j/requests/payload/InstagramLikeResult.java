@@ -17,15 +17,18 @@ package org.brunocvcunha.instagram4j.requests.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Status Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramLikeResult extends StatusResult {
     private boolean spam;
     private String feedback_ignore_label;

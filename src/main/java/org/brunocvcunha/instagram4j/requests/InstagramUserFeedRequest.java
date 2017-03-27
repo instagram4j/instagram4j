@@ -30,7 +30,7 @@ import lombok.SneakyThrows;
  */
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class InstagramUserFeedResult extends InstagramGetRequest<InstagramFeedResult> {
+public class InstagramUserFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
 
     @NonNull
     private long userId;

@@ -19,26 +19,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.NonFinal;
 
 /**
- * Status Result
+ * Logged User VO
+ * 
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
-@RequiredArgsConstructor
-@NoArgsConstructor
-public class StatusResult {
-    @NonNull
-    private String status;
-    private String message;
+public class InstagramLoggedUser {
+    public String profile_pic_url;
+    public boolean allow_contacts_sync;
+    public String username;
+    public String full_name;
+    public boolean is_private;
+    public String profile_pic_id;
+    public long pk;
+    public boolean is_verified;
+    public boolean has_anonymous_profile_picture;
 
 }

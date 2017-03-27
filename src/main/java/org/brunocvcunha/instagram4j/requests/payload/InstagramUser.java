@@ -18,17 +18,20 @@ package org.brunocvcunha.instagram4j.requests.payload;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
-import java.util.Map;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * User VO
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramUser {
     public boolean is_private;
     public boolean is_verified;
@@ -56,8 +59,8 @@ public class InstagramUser {
     public String business_contact_method;
     public String biography;
     public int follower_count;
-    public List<Map<String, Object>> hd_profile_pic_versions;
-    public Map<String, Object> hd_profile_pic_url_info;
+    public List<InstagramProfilePic> hd_profile_pic_versions;
+    public InstagramProfilePic hd_profile_pic_url_info;
     public String external_lynx_url;
     public int following_count;
     public float latitude;

@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Upload Video Result
@@ -28,8 +31,9 @@ import lombok.Data;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class InstagramUploadVideoResult extends StatusResult {
     private String upload_id;
     private List<Map<String, Object>> video_upload_urls;

@@ -17,7 +17,6 @@ package org.brunocvcunha.instagram4j.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.http.HttpResponse;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesResult;
 
