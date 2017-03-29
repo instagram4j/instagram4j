@@ -46,7 +46,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> {
+public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfigurePhotoResult> {
 
     @NonNull
     private File imageFile;
@@ -66,7 +66,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
     }
     
     @Override
-    public StatusResult execute() throws ClientProtocolException, IOException {
+    public InstagramConfigurePhotoResult execute() throws ClientProtocolException, IOException {
         
         if (uploadId == null) {
             uploadId = String.valueOf(System.currentTimeMillis());
@@ -149,8 +149,8 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<StatusResult> 
     }
 
     @Override
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, StatusResult.class);
+    public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
     }
 
 }
