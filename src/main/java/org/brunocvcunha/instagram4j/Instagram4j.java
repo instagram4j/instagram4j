@@ -128,7 +128,7 @@ public class Instagram4j {
      */
     public InstagramLoginResult login() throws ClientProtocolException, IOException {
         
-        log.info("Logging with user " + username + " and password " + password);
+        log.info("Logging with user " + username + " and password " + password.replaceAll(".", "*"));
         
         InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
                 .password(password)
