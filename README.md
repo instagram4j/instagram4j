@@ -106,6 +106,16 @@ instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
 InstagramGetMediaCommentsResult commentsResult = instagram.sendRequest(new InstagramGetMediaCommentsRequest(mediaId, maxCommentId));
 ```
 
+#### Share message
+```java
+instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MESSAGE, recipients).message(message).build());
+```
+
+#### Share media
+```java
+instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MEDIA, recipients).mediaId(mid).message(message).build());
+```
+
 #### (More operations to be added)
 
 Building from the source
