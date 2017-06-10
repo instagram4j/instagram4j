@@ -22,7 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Get Followers Result
+ * Get Media Likers Result
  * 
  * @author Bruno Candido Volpato da Cunha
  *
@@ -30,10 +30,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramGetUserFollowersResult extends StatusResult {
-    public boolean big_list;
-    public String next_max_id;
-    public int page_size;
+public class InstagramGetMediaLikersResult extends StatusResult {
+    public int user_count;
     
     public List<InstagramUserSummary> users;
 
