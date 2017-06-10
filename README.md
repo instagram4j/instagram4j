@@ -116,6 +116,13 @@ instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MESSAGE, rec
 instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MEDIA, recipients).mediaId(mid).message(message).build());
 ```
 
+#### Edit media
+```java
+InstagramEditMediaRequest r = new InstagramEditMediaRequest(mediaId, caption);
+r.setUserTag(tagList, UserTagAction.ADD);
+instagram.sendRequest(r);
+```
+
 #### (More operations to be added)
 
 Building from the source
