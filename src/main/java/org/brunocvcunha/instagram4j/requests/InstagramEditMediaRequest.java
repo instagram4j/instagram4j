@@ -29,6 +29,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
+/**
+ * Request for editing media.
+ * 
+ * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
+ *
+ */
 @RequiredArgsConstructor
 public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult> {
 	private final String mediaId;
