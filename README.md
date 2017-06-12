@@ -116,6 +116,18 @@ instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MESSAGE, rec
 instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MEDIA, recipients).mediaId(mid).message(message).build());
 ```
 
+#### Edit media
+```java
+InstagramEditMediaRequest r = new InstagramEditMediaRequest(mediaId, caption);
+UserTags tags = r.new UserTags();
+tags.getTagsToAdd().add(r.new UserTag(userId, posX, posY));
+tags.getTagsToAdd().add(r.new UserTag(userId2, posX2, posY2));
+tags.getUserIdsToRemoveTag().add("1231231231");
+tags.getUserIdsToRemoveTag().add("3213213213");
+r.setUserTags(tags);
+instagram.sendRequest(r);
+```
+
 #### (More operations to be added)
 
 Building from the source
