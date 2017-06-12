@@ -18,6 +18,7 @@ package org.brunocvcunha.instagram4j.requests;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
@@ -28,18 +29,22 @@ import lombok.SneakyThrows;
  */
 @AllArgsConstructor
 public class InstagramTagFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
+	@NonNull
+	private String tag;
+	private String maxId;
 
-    private String tag;
+	@Override
+	public String getUrl() {
+		String url = "feed/tag/" + tag + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
+		if (maxId != null && !maxId.isEmpty()) {
+			url += "max_id=" + maxId;
+		}
+		return url;
+	}
 
-    @Override
-    public String getUrl() {
-        return "feed/tag/" + tag + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
-    }
-
-    @Override
-    @SneakyThrows
-    public InstagramFeedResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramFeedResult.class);
-    }
-
+	@Override
+	@SneakyThrows
+	public InstagramFeedResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramFeedResult.class);
+	}
 }
