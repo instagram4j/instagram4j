@@ -119,7 +119,12 @@ instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MEDIA, recip
 #### Edit media
 ```java
 InstagramEditMediaRequest r = new InstagramEditMediaRequest(mediaId, caption);
-r.setUserTag(tagList, UserTagAction.ADD);
+UserTags tags = r.new UserTags();
+tags.getTagsToAdd().add(r.new UserTag(userId, posX, posY));
+tags.getTagsToAdd().add(r.new UserTag(userId2, posX2, posY2));
+tags.getUserIdsToRemoveTag().add("1231231231");
+tags.getUserIdsToRemoveTag().add("3213213213");
+r.setUserTags(tags);
 instagram.sendRequest(r);
 ```
 

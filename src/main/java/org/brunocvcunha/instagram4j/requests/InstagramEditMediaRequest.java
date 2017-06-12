@@ -15,12 +15,14 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Getter;
@@ -37,11 +39,14 @@ import lombok.SneakyThrows;
  */
 @RequiredArgsConstructor
 public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult> {
+	@NonNull
 	private final String mediaId;
 	@NonNull
 	private final String captionText;
-	private List<UserTag> userTag;
-	private UserTagAction action;
+	@Getter
+	@Setter
+	@JsonProperty("usertags")
+	private UserTags userTags;
 
 	@Override
 	public String getUrl() {
@@ -51,39 +56,18 @@ public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult
 	@Override
 	@SneakyThrows
 	public String getPayload() {
-
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("_uuid", api.getUuid());
 		map.put("_uid", api.getUserId());
 		map.put("_csrftoken", api.getOrFetchCsrf());
 		map.put("caption_text", captionText);
 
-		if (userTag != null && userTag.size() > 0) {
-			StringBuilder sb = new StringBuilder();
-
-			if (action == UserTagAction.ADD) {
-				sb.append("{\"removed\":[],\"in\":[");
-				for (UserTag ut : userTag) {
-					sb.append("{\"position\":[").append(ut.getPositionX()).append(",").append(ut.getPositionY()).append("],\"user_id\":\"")
-							.append(ut.getUserId()).append("\"},");
-				}
-				sb.deleteCharAt(sb.length() - 1);
-				sb.append("]}");
-			} else {
-				sb.append("{\"removed\":[");
-				for (UserTag ut : userTag) {
-					sb.append("\"").append(ut.getUserId()).append("\",");
-				}
-				sb.deleteCharAt(sb.length() - 1);
-				sb.append("],\"in\":[]}");
-			}
-
-			map.put("usertags", sb.toString());
+		ObjectMapper mapper = new ObjectMapper();
+		if (userTags != null) {
+			map.put("usertags", mapper.writeValueAsString(userTags));
 		}
 
-		ObjectMapper mapper = new ObjectMapper();
-		String payloadJson = mapper.writeValueAsString(map);
-		return payloadJson;
+		return mapper.writeValueAsString(map);
 	}
 
 	@Override
@@ -91,26 +75,39 @@ public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult
 		return parseJson(resultCode, content, StatusResult.class);
 	}
 
-	public void setUserTag(List<UserTag> userTag, UserTagAction action) {
-		this.userTag = userTag;
-		this.action = action;
-	}
+	@Getter
+	@Setter
+	public class UserTag {
+		@NonNull
+		@JsonProperty("user_id")
+		private String userId;
+		private float[] position = { 0, 0 };
 
-	public enum UserTagAction {
-		ADD, REMOVE
+		public UserTag(String userId) {
+			this.userId = userId;
+		}
+
+		public UserTag(String userId, float positionX, float positionY) {
+			this(userId);
+			this.position[0] = positionX;
+			this.position[1] = positionY;
+		}
+
+		public void setPosition(float positionX, float positionY) {
+			this.position[0] = positionX;
+			this.position[1] = positionY;
+		}
+
 	}
 
 	@Getter
 	@Setter
-	public class UserTag {
-		private String userId;
-		private float positionX;
-		private float positionY;
-
-		public UserTag(String userId, float positionX, float positionY) {
-			this.userId = userId;
-			this.positionX = positionX;
-			this.positionY = positionY;
-		}
+	public class UserTags {
+		@NonNull
+		@JsonProperty("removed")
+		private List<String> userIdsToRemoveTag = new ArrayList<String>();
+		@NonNull
+		@JsonProperty("in")
+		private List<UserTag> tagsToAdd = new ArrayList<UserTag>();
 	}
 }
