@@ -19,6 +19,7 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
@@ -27,10 +28,11 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class InstagramTagFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
 	@NonNull
-	private String tag;
+	private final String tag;
 	private String maxId;
 
 	@Override
