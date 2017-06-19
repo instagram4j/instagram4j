@@ -119,7 +119,21 @@ public abstract class InstagramRequest<T> {
      */
     @SneakyThrows
     public <U> U parseJson(String str, Class<U> clazz) {
-        log.info("Reading " + clazz.getSimpleName() + " from " + str);
+        
+        if (log.isInfoEnabled()) {
+            
+            if (log.isDebugEnabled()) {
+                log.debug("Reading " + clazz.getSimpleName() + " from " + str);
+            } else {
+                String printStr = str;
+                if (printStr.length() > 128) {
+                    printStr = printStr.substring(0, 128);
+                }
+                log.info("Reading " + clazz.getSimpleName() + " from " + printStr);
+            }
+            
+        }
+        
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         
         return objectMapper.readValue(str, clazz);

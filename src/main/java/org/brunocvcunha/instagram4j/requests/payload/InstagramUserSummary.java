@@ -29,7 +29,7 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class InstagramUserSummary {
     public boolean is_verified;
     public String profile_pic_id;

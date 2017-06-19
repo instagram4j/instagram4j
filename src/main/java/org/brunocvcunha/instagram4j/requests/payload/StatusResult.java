@@ -33,7 +33,7 @@ import lombok.experimental.NonFinal;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class StatusResult {

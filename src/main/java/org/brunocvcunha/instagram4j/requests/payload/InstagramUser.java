@@ -31,7 +31,7 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class InstagramUser {
     public boolean is_private;
     public boolean is_verified;
