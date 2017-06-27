@@ -101,6 +101,12 @@ for (InstagramFeedItem feedResult : tagFeed.getItems()) {
 instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
 ```
 
+#### Add a comment for a media
+```java
+instagram.sendRequest(new iInstagramPostCommentRequest(feedResult.getPk(), "Hello! How are you?"));
+```
+
+
 #### Get comments from media
 ```java
 InstagramGetMediaCommentsResult commentsResult = instagram.sendRequest(new InstagramGetMediaCommentsRequest(mediaId, maxCommentId));
