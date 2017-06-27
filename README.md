@@ -141,6 +141,12 @@ mvn clean install
 
 #
 
+**Do you like this project? Support it by donating**
+
+- ![btc](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/bitcoin.png) Bitcoin: 1GQT7r8p5CHT1VzN4nC9UAQy7HXexeTsFg
+
+#
+
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
 
 instagram4j requires at minimum Java 8.
