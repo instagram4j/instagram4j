@@ -40,5 +40,10 @@ public class StatusResult {
     @NonNull
     private String status;
     private String message;
+    
+    private boolean spam;
+    private String feedback_title;
+    private String feedback_message;
+    
 
 }
