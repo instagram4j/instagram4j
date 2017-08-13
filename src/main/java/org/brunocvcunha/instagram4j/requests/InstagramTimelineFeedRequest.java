@@ -27,9 +27,16 @@ import lombok.SneakyThrows;
  */
 public class InstagramTimelineFeedRequest extends InstagramGetRequest<StatusResult> {
 
+    private String maxId;
+    
     @Override
     public String getUrl() {
-        return "feed/timeline/";
+        String url = "feed/timeline/";
+        if (maxId != null && !maxId.isEmpty()) {
+            url += "&max_id=" + maxId;
+        }
+        
+        return url;
     }
 
     @Override
