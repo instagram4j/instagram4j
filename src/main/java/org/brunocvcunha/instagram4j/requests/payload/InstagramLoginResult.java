@@ -32,6 +32,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramLoginResult extends StatusResult {
     private InstagramLoggedUser logged_in_user;
-    
 
 }
