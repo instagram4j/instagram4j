@@ -232,7 +232,7 @@
 		<dependency>
 			<groupId>org.brunocvcunha.inutils4j</groupId>
 			<artifactId>inutils4j</artifactId>
-			<version>0.4</version>
+			<version>0.6</version>
 		</dependency>
 
 		<dependency>
