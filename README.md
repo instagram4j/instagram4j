@@ -114,11 +114,13 @@ InstagramGetMediaCommentsResult commentsResult = instagram.sendRequest(new Insta
 
 #### Share message
 ```java
+recipients - List of recipients IDs (i.e. "1234567890")
 instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MESSAGE, recipients).message(message).build());
 ```
 
 #### Share media
 ```java
+recipients - List of recipients IDs (i.e. "1234567890")
 instagram.sendRequest(InstagramDirectShareRequest.builder(ShareType.MEDIA, recipients).mediaId(mid).message(message).build());
 ```
 
