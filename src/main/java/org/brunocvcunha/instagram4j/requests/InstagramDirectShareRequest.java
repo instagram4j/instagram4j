@@ -46,6 +46,9 @@ import lombok.extern.log4j.Log4j;
 public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> {
 	@NonNull
 	private ShareType shareType;
+	/**
+	 * List of recipients IDs (i.e. "1234567890")
+	 */
 	@NonNull
 	private List<String> recipients;
 	/**
@@ -154,8 +157,9 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		StringBuilder sb = new StringBuilder();
 		String newLine = "\r\n";
 		for (Map<String, String> b : bodies) {
-			sb.append("--").append(boundary).append(newLine).append("Content-Disposition: ").append(b.get("type")).append("; name=\"")
-					.append(b.get("name")).append("\"").append(newLine).append(newLine).append(b.get("data")).append(newLine);
+			sb.append("--").append(boundary).append(newLine).append("Content-Disposition: ").append(b.get("type"))
+					.append("; name=\"").append(b.get("name")).append("\"").append(newLine).append(newLine)
+					.append(b.get("data")).append(newLine);
 		}
 		sb.append("--").append(boundary).append("--");
 		String body = sb.toString();
