@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
@@ -82,17 +83,35 @@ public class Instagram4j {
     protected boolean debug;
     
     @Getter
+    protected CookieStore cookieStore;
+
+    @Getter
     protected DefaultHttpClient client;
     
     /**
      * @param username Username
      * @param password Password
      */
-    @Builder
     public Instagram4j(String username, String password) {
         super();
         this.username = username;
         this.password = password;
+    }
+    
+    /**
+     * @param username Username
+     * @param password Password
+     * @param uuid UUID
+     * @param cookieStore Cookie Store
+     */
+    @Builder
+    public Instagram4j(String username, String password, String uuid, CookieStore cookieStore) {
+        super();
+        this.username = username;
+        this.password = password;
+        this.uuid = uuid;
+        this.cookieStore = cookieStore;
+        this.isLoggedIn = true;
     }
     
     /**
@@ -110,13 +129,20 @@ public class Instagram4j {
         }
         
         this.deviceId = InstagramHashUtil.generateDeviceId(this.username, this.password);
-        this.uuid = InstagramGenericUtil.generateUuid(true);
+        
+        if (StringUtils.isEmpty(this.uuid)) {
+            this.uuid = InstagramGenericUtil.generateUuid(true);
+        }
+        
+        if (this.cookieStore == null) {
+            this.cookieStore = new BasicCookieStore();
+        }
         
         log.info("Device ID is: " + this.deviceId + ", random id: " + this.uuid);
         
         this.client = new DefaultHttpClient();
         this.client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
-        this.client.setCookieStore(new BasicCookieStore());
+        this.client.setCookieStore(this.cookieStore);
 
     }
     
