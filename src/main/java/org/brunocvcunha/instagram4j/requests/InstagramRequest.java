@@ -150,5 +150,11 @@ public abstract class InstagramRequest<T> {
         return this.parseJson(MyStreamUtils.readContent(is), clazz);
     }
 
+    /**
+     * @return payload should be signed
+     */
+    public boolean isSigned() {
+        return true;
+    }
     
 }

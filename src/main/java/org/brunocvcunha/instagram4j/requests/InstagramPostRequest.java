@@ -51,9 +51,14 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
         
         log.debug("User-Agent: " + InstagramConstants.USER_AGENT);
-        String parsedData = InstagramHashUtil.generateSignature(getPayload());
-        log.debug("Signed data: " + parsedData);
-        post.setEntity(new StringEntity(parsedData));
+        String payload = getPayload();
+        log.debug("Base Payload: " + payload);
+        
+        if (isSigned()) {
+            payload = InstagramHashUtil.generateSignature(payload);
+        }
+        log.debug("Final Payload: " + payload);
+        post.setEntity(new StringEntity(payload));
         
         HttpResponse response = api.getClient().execute(post);
         api.setLastResponse(response);
