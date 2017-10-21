@@ -15,42 +15,34 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.SneakyThrows;
 
 /**
- * Request for editing media.
+ * Request for deleting media.
  * 
- * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
+ * @author Bruno Candido Volpato da Cunha
  *
  */
 @RequiredArgsConstructor
-public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramDeleteMediaRequest extends InstagramPostRequest<StatusResult> {
 	private final long mediaId;
 	
 	@NonNull
-	private final String captionText;
-	@Getter
-	@Setter
-	@JsonProperty("usertags")
-	private UserTags userTags;
-
+	private final InstagramMediaTypeEnum mediaType;
+	
 	@Override
 	public String getUrl() {
-		return "media/" + mediaId + "/edit_media/";
+		return "media/" + mediaId + "/delete/?media_type=" + mediaType.name();
 	}
 
 	@Override
@@ -60,14 +52,9 @@ public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult
 		map.put("_uuid", api.getUuid());
 		map.put("_uid", api.getUserId());
 		map.put("_csrftoken", api.getOrFetchCsrf());
-		map.put("caption_text", captionText);
+		map.put("media_id", mediaId);
 
-		ObjectMapper mapper = new ObjectMapper();
-		if (userTags != null) {
-			map.put("usertags", mapper.writeValueAsString(userTags));
-		}
-
-		return mapper.writeValueAsString(map);
+		return new ObjectMapper().writeValueAsString(map);
 	}
 
 	@Override
@@ -75,39 +62,4 @@ public class InstagramEditMediaRequest extends InstagramPostRequest<StatusResult
 		return parseJson(resultCode, content, StatusResult.class);
 	}
 
-	@Getter
-	@Setter
-	public class UserTag {
-		@NonNull
-		@JsonProperty("user_id")
-		private String userId;
-		private float[] position = { 0, 0 };
-
-		public UserTag(String userId) {
-			this.userId = userId;
-		}
-
-		public UserTag(String userId, float positionX, float positionY) {
-			this(userId);
-			this.position[0] = positionX;
-			this.position[1] = positionY;
-		}
-
-		public void setPosition(float positionX, float positionY) {
-			this.position[0] = positionX;
-			this.position[1] = positionY;
-		}
-
-	}
-
-	@Getter
-	@Setter
-	public class UserTags {
-		@NonNull
-		@JsonProperty("removed")
-		private List<String> userIdsToRemoveTag = new ArrayList<String>();
-		@NonNull
-		@JsonProperty("in")
-		private List<UserTag> tagsToAdd = new ArrayList<UserTag>();
-	}
 }
