@@ -15,12 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -49,7 +46,7 @@ public class InstagramFeedItem {
     public Map<String, Object> attribution;
     public List<Object> video_versions;
     public Map<String, Object> image_versions2;
-    public Map<String, Object> usertags;
+    public List<InstagramFeedUserTag> usertags;
     public Map<String, Object> location;
     public float lng;
     public float lat;
