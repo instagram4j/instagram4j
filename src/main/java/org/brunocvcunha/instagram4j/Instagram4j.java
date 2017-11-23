@@ -16,6 +16,7 @@
 package org.brunocvcunha.instagram4j;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,10 +41,12 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
+import org.brunocvcunha.inutils4j.MyNumberUtils;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -87,7 +90,7 @@ public class Instagram4j {
 
     @Getter
     protected DefaultHttpClient client;
-    
+
     /**
      * @param username Username
      * @param password Password
@@ -224,11 +227,19 @@ public class Instagram4j {
             throw new IllegalStateException("Need to login first!");
         }
         
+        // wait to simulate real human interaction
+        randomWait();
+        
         request.setApi(this);
         T response = request.execute();
         
         log.debug("Result for " + request.getClass().getName() + ": " + response);
         
         return response;
+    }
+    
+    @SneakyThrows
+    private void randomWait() {
+        Thread.sleep(MyNumberUtils.randomLongBetween(100, 250));
     }
 }
