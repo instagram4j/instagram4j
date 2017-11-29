@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramGetReelsTrayResult extends StatusResult {
+public class InstagramGetReelsTrayFeedResult extends StatusResult {
     private List<InstagramStoryTray> tray;
     private List<InstagramBroadcast> broadcasts;
     private InstagramPostLive post_live;

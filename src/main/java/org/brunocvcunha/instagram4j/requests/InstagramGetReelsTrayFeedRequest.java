@@ -15,9 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaInfoResult;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetReelsTrayResult;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetReelsTrayFeedResult;
 
 import lombok.SneakyThrows;
 
@@ -27,7 +25,7 @@ import lombok.SneakyThrows;
  * @author Ozan Karaali
  *
  */
-public class InstagramGetReelsTrayRequest extends InstagramGetRequest<InstagramGetReelsTrayResult>{
+public class InstagramGetReelsTrayFeedRequest extends InstagramGetRequest<InstagramGetReelsTrayFeedResult>{
     @Override
     public String getPayload() {
         return null;
@@ -40,7 +38,7 @@ public class InstagramGetReelsTrayRequest extends InstagramGetRequest<InstagramG
 
     @Override
     @SneakyThrows
-    public InstagramGetReelsTrayResult parseResult(int resultCode, String content) {
-        return parseJson(resultCode, content, InstagramGetReelsTrayResult.class);
+    public InstagramGetReelsTrayFeedResult parseResult(int resultCode, String content) {
+        return parseJson(resultCode, content, InstagramGetReelsTrayFeedResult.class);
     }
 }
