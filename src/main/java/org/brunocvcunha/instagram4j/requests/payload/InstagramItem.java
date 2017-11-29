@@ -20,19 +20,38 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+/**
+ * InstagramItem
+ *
+ * @author Ozan Karaali
+ *
+ */
 
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramReel extends StatusResult{
+public class InstagramItem extends StatusResult{
+    private final int PHOTO = 1;
+    private final int VIDEO = 2;
+    private final int ALBUM = 8;
+    private String pk;
     private String id;
-    private List<InstagramItem> items; //item
+    private String media_type;
+    private String code;
+    private String visibility;
+    private String taken_at;
+    private String device_timestamp;
+    private String client_cache_key;
+    private String filter_type;
     private InstagramUser user;
-    private long expiring_at;
-    private int seen; //boolean?
-    private boolean can_reply; //boolean
-    private String location;
-    private String latest_reel_media;
-    private int prefetch_count;
-    private InstagramBroadcast broadcast;
+    //private InstagramFeedUserTag usertags;
+    //private InstagramMedia media;
+    //private InstagramStory stories;
+    private List<Integer> media_ids;
+    private int media_id;
+    private String thumbnail_urls;
+    private String large_urls;
+    private String media_infos;
+    private String value;
+    private String collapse_comments;
 }

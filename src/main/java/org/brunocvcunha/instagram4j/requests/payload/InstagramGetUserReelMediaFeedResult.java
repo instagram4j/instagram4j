@@ -26,7 +26,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class InstagramGetUserReelMediaFeedResult extends StatusResult {
     private String id;
-    private Object[] items; //item
+    private List<InstagramItem> items; //item
     private InstagramUser user;
     private long expiring_at;
     private int seen; //boolean?
