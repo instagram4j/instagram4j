@@ -26,13 +26,13 @@ import java.util.List;
 @ToString(callSuper = true)
 public class InstagramGetUserReelMediaFeedResult extends StatusResult {
     private String id;
-    private List<String> items; //item
+    private Object[] items; //item
     private InstagramUser user;
     private long expiring_at;
-    private Object seen; //boolean?
-    private Object can_reply; //boolean
-    private Object location;
-    private Object latest_reel_media;
-    private Object prefetch_count;
+    private int seen; //boolean?
+    private boolean can_reply; //boolean
+    private String location;
+    private String latest_reel_media;
+    private int prefetch_count;
     private InstagramBroadcast broadcast;
 }

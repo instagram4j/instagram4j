@@ -29,7 +29,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramPostLive {
+public class InstagramPostLive extends StatusResult{
     List<InstagramPostLiveItem> post_live_items;
 }
 

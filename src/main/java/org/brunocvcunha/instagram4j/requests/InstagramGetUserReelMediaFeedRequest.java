@@ -15,6 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserReelMediaFeedResult;
 
@@ -25,7 +26,10 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserReelMediaFe
  *
  */
 
+@AllArgsConstructor
 public class InstagramGetUserReelMediaFeedRequest extends InstagramGetRequest<InstagramGetUserReelMediaFeedResult>{
+    private long userId;
+
     @Override
     public String getPayload() {
         return null;
@@ -33,7 +37,7 @@ public class InstagramGetUserReelMediaFeedRequest extends InstagramGetRequest<In
 
     @Override
     public String getUrl() {
-        return "feed/user/{$userId}/reel_media/?";
+        return "feed/user/" + userId + "/reel_media/?";
     }
 
     @Override
