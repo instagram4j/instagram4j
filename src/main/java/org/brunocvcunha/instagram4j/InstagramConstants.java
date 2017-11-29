@@ -31,7 +31,7 @@ public class InstagramConstants {
     /**
      * API Key (extracted from the apk)
      */
-    public static final String API_KEY = "012a54f51c49aa8c5c322416ab1410909add32c966bbaa0fe3dc58ac43fd7ede";
+    public static final String API_KEY = "b4946d296abf005163e72346a6d33dd083cadde638e6ad9c5eb92e381b35784a";
     
     /**
      * API Key Version
@@ -68,8 +68,7 @@ public class InstagramConstants {
     /**
      * Android Release
      */
-    public static final String USER_AGENT = String.format("Instagram 9.2.0 Android (%s/%s; 320dpi; 720x1280; %s; %s; armani; qcom; en_US)",
-            DEVICE_ANDROID_VERSION, DEVICE_ANDROID_RELEASE, DEVICE_MANUFACTURER, DEVICE_MODEL);
-    
+    public static final String USER_AGENT = String.format("Instagram 12.0.0.7.91 Android (%s/%s; 320dpi; 720x1280; %s; %s; armani; qcom; en_US)",
+            DEVICE_ANDROID_VERSION, DEVICE_ANDROID_RELEASE, DEVICE_MANUFACTURER, DEVICE_MODEL);    
     
 }
