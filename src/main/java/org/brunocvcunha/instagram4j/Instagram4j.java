@@ -28,16 +28,11 @@ import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramSyncFeaturesRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
+import org.brunocvcunha.instagram4j.requests.*;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramFetchHeadersRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginTwoFactorPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
@@ -90,6 +85,8 @@ public class Instagram4j {
 
     @Getter
     protected DefaultHttpClient client;
+
+    protected String identifier;
 
     /**
      * @param username Username
@@ -155,10 +152,9 @@ public class Instagram4j {
      * @throws IOException 
      * @throws ClientProtocolException 
      */
-    public InstagramLoginResult login() throws ClientProtocolException, IOException {
+    public InstagramLoginResult login(String verificationCode) throws ClientProtocolException, IOException {
         
         log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
-        
         InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
                 .password(password)
                 .guid(uuid)
@@ -167,13 +163,30 @@ public class Instagram4j {
                 .login_attempt_account(0)
                 ._csrftoken(getOrFetchCsrf())
                 .build();
-        
-        InstagramLoginResult loginResult = this.sendRequest(new InstagramLoginRequest(loginRequest));
+        InstagramLoginRequest req = new InstagramLoginRequest(loginRequest);
+        InstagramLoginResult loginResult = this.sendRequest(req);
+        identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
+        return  finishTwoFactorLogin(verificationCode, identifier);
+    }
+    public InstagramLoginResult login() throws ClientProtocolException, IOException {
+
+        log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
+
+        InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
+                .password(password)
+                .guid(uuid)
+                .device_id(deviceId)
+                .phone_id(InstagramGenericUtil.generateUuid(true))
+                .login_attempt_account(0)
+                ._csrftoken(getOrFetchCsrf())
+                .build();
+        InstagramLoginRequest req = new InstagramLoginRequest(loginRequest);
+        InstagramLoginResult loginResult = this.sendRequest(req);
         if (loginResult.getStatus().equalsIgnoreCase("ok")) {
             this.userId = loginResult.getLogged_in_user().getPk();
             this.rankToken = this.userId + "_" + this.uuid;
             this.isLoggedIn = true;
-            
+
             InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
                     ._uuid(uuid)
                     ._csrftoken(getOrFetchCsrf())
@@ -181,18 +194,50 @@ public class Instagram4j {
                     .id(userId)
                     .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
                     .build();
-            
+
             this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
             this.sendRequest(new InstagramAutoCompleteUserListRequest());
             this.sendRequest(new InstagramTimelineFeedRequest());
             this.sendRequest(new InstagramGetInboxRequest());
             this.sendRequest(new InstagramGetRecentActivityRequest());
         }
-        
-        
+        identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
         return loginResult;
     }
+    public InstagramLoginResult finishTwoFactorLogin(String verificationCode, String twoFactorIdentifier) throws ClientProtocolException, IOException {
+        InstagramLoginTwoFactorPayload loginRequest = InstagramLoginTwoFactorPayload.builder().username(username)
+                .verification_code(verificationCode)
+                .two_factor_identifier(twoFactorIdentifier)
+                .password(password)
+                .guid(uuid)
+                .device_id(deviceId)
+                .phone_id(InstagramGenericUtil.generateUuid(true))
+                .login_attempt_account(0)
+                ._csrftoken(getOrFetchCsrf())
+                .build();
+        InstagramLoginTwoFactorRequest req = new InstagramLoginTwoFactorRequest(loginRequest);
+        InstagramLoginResult loginResult = this.sendRequest(req);
+        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
+            this.userId = loginResult.getLogged_in_user().getPk();
+            this.rankToken = this.userId + "_" + this.uuid;
+            this.isLoggedIn = true;
 
+            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
+                    ._uuid(uuid)
+                    ._csrftoken(getOrFetchCsrf())
+                    ._uid(userId)
+                    .id(userId)
+                    .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
+                    .build();
+
+            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
+            this.sendRequest(new InstagramAutoCompleteUserListRequest());
+            this.sendRequest(new InstagramTimelineFeedRequest());
+            this.sendRequest(new InstagramGetInboxRequest());
+            this.sendRequest(new InstagramGetRecentActivityRequest());
+        }
+        return loginResult;
+    }
     /**
      * @return
      * @throws ClientProtocolException
