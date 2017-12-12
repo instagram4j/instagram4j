@@ -19,6 +19,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+
 /**
  * Post Comment Result
  * @author Bruno Candido Volpato da Cunha
@@ -30,5 +32,6 @@ import lombok.ToString;
 public class InstagramPostCommentResult extends StatusResult {
 
     private InstagramComment comment;
+    private ArrayList<InstagramUser> users;
 
 }
