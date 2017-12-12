@@ -18,6 +18,7 @@ package org.brunocvcunha.instagram4j;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Optional;
+import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -87,6 +88,7 @@ public class Instagram4j {
     protected DefaultHttpClient client;
 
     protected String identifier;
+    protected String verificationCode;
 
     /**
      * @param username Username
@@ -152,22 +154,6 @@ public class Instagram4j {
      * @throws IOException 
      * @throws ClientProtocolException 
      */
-    public InstagramLoginResult login(String verificationCode) throws ClientProtocolException, IOException {
-        
-        log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
-        InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
-                .password(password)
-                .guid(uuid)
-                .device_id(deviceId)
-                .phone_id(InstagramGenericUtil.generateUuid(true))
-                .login_attempt_account(0)
-                ._csrftoken(getOrFetchCsrf())
-                .build();
-        InstagramLoginRequest req = new InstagramLoginRequest(loginRequest);
-        InstagramLoginResult loginResult = this.sendRequest(req);
-        identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
-        return  finishTwoFactorLogin(verificationCode, identifier);
-    }
     public InstagramLoginResult login() throws ClientProtocolException, IOException {
 
         log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
@@ -201,13 +187,19 @@ public class Instagram4j {
             this.sendRequest(new InstagramGetInboxRequest());
             this.sendRequest(new InstagramGetRecentActivityRequest());
         }
-        identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
+        else{
+            identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
+        }
         return loginResult;
     }
-    public InstagramLoginResult finishTwoFactorLogin(String verificationCode, String twoFactorIdentifier) throws ClientProtocolException, IOException {
+
+    public InstagramLoginResult login(String verificationCode) throws ClientProtocolException, IOException {
+        if(identifier==null){
+            login();
+        }
         InstagramLoginTwoFactorPayload loginRequest = InstagramLoginTwoFactorPayload.builder().username(username)
                 .verification_code(verificationCode)
-                .two_factor_identifier(twoFactorIdentifier)
+                .two_factor_identifier(identifier)
                 .password(password)
                 .guid(uuid)
                 .device_id(deviceId)
@@ -238,6 +230,7 @@ public class Instagram4j {
         }
         return loginResult;
     }
+
     /**
      * @return
      * @throws ClientProtocolException
