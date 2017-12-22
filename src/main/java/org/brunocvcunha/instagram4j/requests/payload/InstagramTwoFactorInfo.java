@@ -15,23 +15,21 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
+/**
+ * TwoFactor Info
+ *
+ * @author Ozan Karaali
+ *
+ */
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * Login Result
- * @author Bruno Candido Volpato da Cunha
- *
- */
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramLoginResult extends StatusResult {
-    private InstagramLoggedUser logged_in_user;
-    private InstagramTwoFactorInfo two_factor_info;
-
+public class InstagramTwoFactorInfo {
+    private String two_factor_identifier;
 }
