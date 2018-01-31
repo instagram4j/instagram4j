@@ -4,6 +4,7 @@ instagram4j
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/brunocvcunha/instagram4j.svg)](https://travis-ci.org/brunocvcunha/instagram4j)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Code Climate](https://codeclimate.com/github/brunocvcunha/instagram4j/badges/gpa.svg)](https://codeclimate.com/github/brunocvcunha/instagram4j)
 
 :camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
 
@@ -18,12 +19,12 @@ Download [the latest release JAR][1] or grab via Maven:
 <dependency>
   <groupId>org.brunocvcunha.instagram4j</groupId>
   <artifactId>instagram4j</artifactId>
-  <version>1.5</version>
+  <version>1.6</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'org.brunocvcunha.instagram4j:instagram4j:1.5'
+compile 'org.brunocvcunha.instagram4j:instagram4j:1.6'
 ```
 
 
@@ -151,7 +152,7 @@ mvn clean install
 
 **Do you like this project? Support it by donating**
 
-- ![btc](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/bitcoin.png) Bitcoin: 1GQT7r8p5CHT1VzN4nC9UAQy7HXexeTsFg
+- ![btc](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/bitcoin.png) Bitcoin: 3EN9KCzKunc1PQppBXUSa8UCBoncMXii5C
 
 #
 
