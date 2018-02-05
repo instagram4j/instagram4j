@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests;
+package org.brunocvcunha.instagram4j.requests.internal;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesResult;
-
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 
@@ -33,30 +35,37 @@ import lombok.extern.log4j.Log4j;
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramSyncFeaturesRequest extends InstagramPostRequest<InstagramSyncFeaturesResult> {
+public class InstagramLogAttributionRequest extends InstagramPostRequest<StatusResult> {
 
-    @NonNull
-    private InstagramSyncFeaturesPayload payload;
-    
     @Override
     public String getUrl() {
-        return "qe/sync/";
+        return "attribution/log_attribution/";
     }
 
     @Override
     @SneakyThrows
     public String getPayload() {
+        
+        Map<String, Object> likeMap = new LinkedHashMap<>();
+        likeMap.put("advertising_id", api.getAdvertisingId());
+        
         ObjectMapper mapper = new ObjectMapper();
-        String payloadJson = mapper.writeValueAsString(payload);
+        String payloadJson = mapper.writeValueAsString(likeMap);
 
         return payloadJson;
     }
 
     @Override
     @SneakyThrows
-    public InstagramSyncFeaturesResult parseResult(int statusCode, String content) {
-        return new InstagramSyncFeaturesResult();
+    public StatusResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, StatusResult.class);
     }
 
-
+    /**
+     * @return if request must be logged in
+     */
+    @Override
+    public boolean requiresLogin() {
+        return false;
+    }
 }

@@ -15,29 +15,23 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Sync Features Payload
+ * Login Result
  * @author Bruno Candido Volpato da Cunha
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-@Builder
-public class InstagramSyncFeaturesPayload {
-    private String _uuid;
-    private long _uid;
-    private long id;
-    private String _csrftoken;
-    private String experiments;
+@ToString
+public class InstagramChallenge {
+    private String url;
+    private String api_path;
     
-
 }

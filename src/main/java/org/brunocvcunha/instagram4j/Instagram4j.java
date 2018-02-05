@@ -16,9 +16,7 @@
 package org.brunocvcunha.instagram4j;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.Optional;
-import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -29,12 +27,21 @@ import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.brunocvcunha.instagram4j.requests.*;
+import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramLoginTwoFactorRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramRequest;
+import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramFetchHeadersRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramLogAttributionRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramReadMsisdnHeaderRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramSyncFeaturesRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramZeroRatingTokenRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginTwoFactorPayload;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesPayload;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 import org.brunocvcunha.inutils4j.MyNumberUtils;
@@ -59,6 +66,9 @@ public class Instagram4j {
     
     @Getter
     protected String uuid;
+    
+    @Getter
+    protected String advertisingId;
     
     @Getter @Setter
     protected String username;
@@ -89,6 +99,7 @@ public class Instagram4j {
 
     protected String identifier;
     protected String verificationCode;
+    protected String challengeUrl;
 
     /**
      * @param username Username
@@ -136,6 +147,10 @@ public class Instagram4j {
             this.uuid = InstagramGenericUtil.generateUuid(true);
         }
         
+        if (StringUtils.isEmpty(this.advertisingId)) {
+            this.advertisingId = InstagramGenericUtil.generateUuid(true);
+        }
+        
         if (this.cookieStore == null) {
             this.cookieStore = new BasicCookieStore();
         }
@@ -158,6 +173,13 @@ public class Instagram4j {
 
         log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
 
+
+        this.sendRequest(new InstagramReadMsisdnHeaderRequest());
+        this.sendRequest(new InstagramSyncFeaturesRequest(true));
+        this.sendRequest(new InstagramZeroRatingTokenRequest());
+        this.sendRequest(new InstagramLogAttributionRequest());
+
+        
         InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
                 .password(password)
                 .guid(uuid)
@@ -173,28 +195,23 @@ public class Instagram4j {
             this.rankToken = this.userId + "_" + this.uuid;
             this.isLoggedIn = true;
 
-            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
-                    ._uuid(uuid)
-                    ._csrftoken(getOrFetchCsrf())
-                    ._uid(userId)
-                    .id(userId)
-                    .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
-                    .build();
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
+            this.sendRequest(new InstagramSyncFeaturesRequest(false));
             this.sendRequest(new InstagramAutoCompleteUserListRequest());
             this.sendRequest(new InstagramTimelineFeedRequest());
             this.sendRequest(new InstagramGetInboxRequest());
             this.sendRequest(new InstagramGetRecentActivityRequest());
-        }
-        else{
+        } else if (loginResult.getTwo_factor_info() != null) {
             identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
+        } else if (loginResult.getChallenge() != null) {
+            // logic for challenge
+            log.info("Challenge required: " + loginResult.getChallenge());
         }
+        
         return loginResult;
     }
 
     public InstagramLoginResult login(String verificationCode) throws ClientProtocolException, IOException {
-        if(identifier==null){
+        if (identifier == null) {
             login();
         }
         InstagramLoginTwoFactorPayload loginRequest = InstagramLoginTwoFactorPayload.builder().username(username)
@@ -214,15 +231,7 @@ public class Instagram4j {
             this.rankToken = this.userId + "_" + this.uuid;
             this.isLoggedIn = true;
 
-            InstagramSyncFeaturesPayload syncFeatures = InstagramSyncFeaturesPayload.builder()
-                    ._uuid(uuid)
-                    ._csrftoken(getOrFetchCsrf())
-                    ._uid(userId)
-                    .id(userId)
-                    .experiments(InstagramConstants.DEVICE_EXPERIMENTS)
-                    .build();
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(syncFeatures));
+            this.sendRequest(new InstagramSyncFeaturesRequest(false));
             this.sendRequest(new InstagramAutoCompleteUserListRequest());
             this.sendRequest(new InstagramTimelineFeedRequest());
             this.sendRequest(new InstagramGetInboxRequest());
