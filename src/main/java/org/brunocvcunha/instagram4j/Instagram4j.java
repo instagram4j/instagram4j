@@ -92,6 +92,7 @@ public class Instagram4j {
     protected boolean debug;
     
     @Getter
+    @Setter
     protected CookieStore cookieStore;
 
     @Getter
@@ -114,14 +115,16 @@ public class Instagram4j {
     /**
      * @param username Username
      * @param password Password
+     * @param userId UserId
      * @param uuid UUID
      * @param cookieStore Cookie Store
      */
     @Builder
-    public Instagram4j(String username, String password, String uuid, CookieStore cookieStore) {
+    public Instagram4j(String username, String password, long userId, String uuid, CookieStore cookieStore) {
         super();
         this.username = username;
         this.password = password;
+        this.userId = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
         this.isLoggedIn = true;
