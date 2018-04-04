@@ -66,7 +66,7 @@ public class InstagramFeedItem {
     public int max_num_visible_preview_comments;
     public List<Object> preview_comments;
     public List<Object> comments;
-    public boolean comment_count;
+    public int comment_count;
     public Map<String, Object> caption;
 
     public boolean caption_is_edited;
