@@ -35,14 +35,14 @@ import lombok.SneakyThrows;
  */
 @RequiredArgsConstructor
 public class InstagramDeleteMediaRequest extends InstagramPostRequest<StatusResult> {
-	private final long mediaId;
+	private final String mediaId;
 	
 	@NonNull
 	private final InstagramMediaTypeEnum mediaType;
 	
 	@Override
 	public String getUrl() {
-		return "media/" + mediaId + "/delete/?media_type=" + mediaType.name();
+		return "media/" + mediaId + "/delete/";
 	}
 
 	@Override
@@ -52,6 +52,7 @@ public class InstagramDeleteMediaRequest extends InstagramPostRequest<StatusResu
 		map.put("_uuid", api.getUuid());
 		map.put("_uid", api.getUserId());
 		map.put("_csrftoken", api.getOrFetchCsrf());
+		map.put("media_type", mediaType.name());
 		map.put("media_id", mediaId);
 
 		return new ObjectMapper().writeValueAsString(map);
