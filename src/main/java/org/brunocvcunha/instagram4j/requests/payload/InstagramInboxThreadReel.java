@@ -13,35 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests;
+package org.brunocvcunha.instagram4j.requests.payload;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxResult;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import lombok.SneakyThrows;
-
+import java.util.List;
 /**
- * Inbox Request
+ * Inbox Thread Reel
  * 
  * @author Krisnamourt da Silva C. Filho
  *
  */
-public class InstagramGetInboxRequest extends InstagramGetRequest<InstagramInboxResult> {
-
-    @Override
-    public String getUrl() {
-        return "direct_v2/inbox/";
-    }
-
-    @Override
-    public String getPayload() {
-        return null;
-    }
-
-    @Override
-    @SneakyThrows
-    public InstagramInboxResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramInboxResult.class);
-    }
-
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class InstagramInboxThreadReel{
+	public String text;
+	public String type;
+	public String mentioned_user_id;
+	public String can_repost;
+	public InstagramFeedItem media;
 }
