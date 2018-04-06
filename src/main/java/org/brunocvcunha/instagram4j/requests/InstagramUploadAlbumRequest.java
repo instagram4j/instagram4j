@@ -36,6 +36,7 @@ import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 /**
  * InstagramUploadAlbumRequest
@@ -44,6 +45,7 @@ import lombok.RequiredArgsConstructor;
  *
  */
 
+@Log4j
 @RequiredArgsConstructor
 public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramConfigureAlbumResult> {
     @NonNull
@@ -78,7 +80,7 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
                 int resultCode = response.getStatusLine().getStatusCode();
                 String content = EntityUtils.toString(response.getEntity());
                 
-                System.out.println("Photo Upload result: " + resultCode + ", " + content);
+                log.info("Photo Upload result: " + resultCode + ", " + content);
                 
                 post.releaseConnection();
         
