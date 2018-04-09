@@ -55,6 +55,8 @@ public class InstagramFeedItem {
     public int view_count;
     public InstagramUser user;
 
+    private List<InstagramCarouselMediaItem> carousel_media;
+    
     public String organic_tracking_token;
     public int like_count;
     public List<String> top_likers;
