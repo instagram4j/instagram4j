@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,6 +32,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramInboxResult extends StatusResult  {
 
+	public String seq_id;
+	public int pending_requests_total;
+	public List<InstagramUser> pending_requests_users;
     public InstagramInbox inbox;
+    public String status;
     
 }

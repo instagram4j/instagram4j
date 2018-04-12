@@ -31,6 +31,11 @@ import lombok.ToString;
 @ToString
 public class InstagramInbox {
 
+	public boolean has_older;
+    public int unseen_count;
+    public String unseen_count_ts;
+    public String oldest_cursor;
+    public boolean blended_inbox_enabled;
     public List<InstagramInboxThread> threads;
 
     

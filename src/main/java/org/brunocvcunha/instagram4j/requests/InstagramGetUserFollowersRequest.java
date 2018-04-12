@@ -48,7 +48,7 @@ public class InstagramGetUserFollowersRequest extends InstagramGetRequest<Instag
 
     @Override
     @SneakyThrows
-    public InstagramGetUserFollowersResult parseResult(int statusCode, String content) {
+    public InstagramGetUserFollowersResult parseResult(int statusCode, String content) {    	
         return parseJson(statusCode, content, InstagramGetUserFollowersResult.class);
     }
 
