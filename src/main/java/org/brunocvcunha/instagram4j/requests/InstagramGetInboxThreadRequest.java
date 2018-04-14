@@ -15,49 +15,43 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxResult;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxThreadResult;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
- * Inbox Request
+ * Inbox Thread Request
  * 
- * @author Bruno Candido Volpato da Cunha
+ * @author Krisnamourt da Silva C. Filho
  *
  */
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class InstagramGetInboxRequest extends InstagramGetRequest<InstagramInboxResult> {
+public class InstagramGetInboxThreadRequest extends InstagramGetRequest<InstagramInboxThreadResult> {
 
+	@NonNull
+	private String threadId;
 	private String cursor;
 
 	@Override
 	public String getUrl() {
-
-		String baseUrl = "direct_v2/inbox/?";
+		String baseUrl = "direct_v2/threads/" + threadId + "/?";
 		if (cursor != null && !cursor.isEmpty()) {
-            baseUrl += "&cursor=" + cursor;
-        }
+			baseUrl += "&cursor=" + cursor;
+		}
 		return baseUrl;
 	}
 
 	@Override
-	@SneakyThrows
 	public String getPayload() {
 		return null;
 	}
 
 	@Override
 	@SneakyThrows
-	public InstagramInboxResult parseResult(int statusCode, String content) {
-		return parseJson(statusCode, content, InstagramInboxResult.class);
+	public InstagramInboxThreadResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramInboxThreadResult.class);
 	}
 
 }
