@@ -33,6 +33,9 @@ public class InstagramInboxThreadReel{
 	public String text;
 	public String type;
 	public String mentioned_user_id;
-	public String can_repost;
+	public Boolean can_repost;
 	public InstagramFeedItem media;
+	public InstagramFeedItem media_share;
+	
+	
 }

@@ -31,23 +31,27 @@ import lombok.SneakyThrows;
 public class InstagramGetInboxThreadRequest extends InstagramGetRequest<InstagramInboxThreadResult> {
 
 	@NonNull
-    private String threadId;
-	
-    @Override
-    public String getUrl() {
-        return "direct_v2/threads/"+threadId+"/";        
-    }
+	private String threadId;
+	private String cursor;
 
-    @Override
-    public String getPayload() {
-        return null;
-    }
+	@Override
+	public String getUrl() {
+		String baseUrl = "direct_v2/threads/" + threadId + "/?";
+		if (cursor != null && !cursor.isEmpty()) {
+			baseUrl += "&cursor=" + cursor;
+		}
+		return baseUrl;
+	}
 
-    @Override
-    @SneakyThrows
-    public InstagramInboxThreadResult parseResult(int statusCode, String content) {
-    	System.out.print("V "+content);
-        return parseJson(statusCode, content, InstagramInboxThreadResult.class);
-    }
+	@Override
+	public String getPayload() {
+		return null;
+	}
+
+	@Override
+	@SneakyThrows
+	public InstagramInboxThreadResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramInboxThreadResult.class);
+	}
 
 }

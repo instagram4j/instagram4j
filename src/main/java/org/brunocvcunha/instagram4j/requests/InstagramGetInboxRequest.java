@@ -42,31 +42,21 @@ public class InstagramGetInboxRequest extends InstagramGetRequest<InstagramInbox
 	public String getUrl() {
 
 		String baseUrl = "direct_v2/inbox/?";
+		if (cursor != null && !cursor.isEmpty()) {
+            baseUrl += "&cursor=" + cursor;
+        }
 		return baseUrl;
 	}
 
 	@Override
 	@SneakyThrows
 	public String getPayload() {
-		String payloadJson = null;
-		Map<String, Object> likeMap = new LinkedHashMap<>();
-		likeMap.put("persistentBadging", true);
-		likeMap.put("use_unified_inbox", true);
-		
-		if (cursor != null && !cursor.isEmpty()) {			
-			likeMap.put("cursor", cursor);			
-		}
-
-		ObjectMapper mapper = new ObjectMapper();
-		payloadJson = mapper.writeValueAsString(likeMap);
-		System.out.println(payloadJson);
-		return payloadJson;
+		return null;
 	}
 
 	@Override
 	@SneakyThrows
 	public InstagramInboxResult parseResult(int statusCode, String content) {
-		System.out.println(content);
 		return parseJson(statusCode, content, InstagramInboxResult.class);
 	}
 

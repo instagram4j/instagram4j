@@ -35,5 +35,6 @@ public class InstagramInboxThreadItem {
 	public long timestamp;
 	public String item_type;
 	public String like;
+	public String text;
 	public InstagramInboxThreadReel reel_share;
 }
