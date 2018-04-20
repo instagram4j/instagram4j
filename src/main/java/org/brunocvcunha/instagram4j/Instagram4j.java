@@ -16,6 +16,7 @@
 package org.brunocvcunha.instagram4j;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -59,7 +60,7 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @Log4j
-public class Instagram4j {
+public class Instagram4j implements Serializable {
     
     @Getter
     protected String deviceId;
