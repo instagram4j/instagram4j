@@ -69,6 +69,6 @@ public class InstagramConstants {
      * Android Release
      */
     public static final String USER_AGENT = String.format("Instagram 22.0.0.15.68 Android (%s/%s; 320dpi; 720x1280; %s; %s; armani; qcom; en_US)",
-            DEVICE_ANDROID_VERSION, DEVICE_ANDROID_RELEASE, DEVICE_MANUFACTURER, DEVICE_MODEL);    
+            DEVICE_ANDROID_VERSION, DEVICE_ANDROID_RELEASE, DEVICE_MANUFACTURER, DEVICE_MODEL);
     
 }

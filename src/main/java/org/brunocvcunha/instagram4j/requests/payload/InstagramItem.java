@@ -15,11 +15,13 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import java.util.List;
+
+import com.gmail.mcraftworldmc.Instagram4j.Story.StoryPollItem;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
 /**
  * InstagramItem
  *
@@ -48,6 +50,7 @@ public class InstagramItem extends StatusResult{
     //private InstagramMedia media;
     //private InstagramStory stories;
     private List<Integer> media_ids;
+    private List<StoryPollItem> story_polls;
     private int media_id;
     private String thumbnail_urls;
     private String large_urls;
