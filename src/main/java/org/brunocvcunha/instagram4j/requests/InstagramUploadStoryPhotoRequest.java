@@ -17,7 +17,7 @@ package org.brunocvcunha.instagram4j.requests;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -46,12 +46,12 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Log4j
-public class InstagramStoryPhotoUploadRequest extends InstagramPostRequest<InstagramConfigureStoryResult> {
+public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<InstagramConfigureStoryResult> {
 
     @NonNull
     private File imageFile;
 
-    private List<StoryMetadata> metadata = null;
+    private Collection<StoryMetadata> metadata = null;
 
     @Override
     public String getUrl() {

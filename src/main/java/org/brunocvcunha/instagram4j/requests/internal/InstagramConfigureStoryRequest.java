@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,7 +49,7 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     @NonNull
     private String uploadId;
     
-    private List<StoryMetadata> metadata;
+    private Collection<StoryMetadata> metadata;
 
     @Override
     public String getUrl() {
