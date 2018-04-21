@@ -17,7 +17,7 @@ package org.brunocvcunha.instagram4j.requests.payload;
 
 import java.util.List;
 
-import com.gmail.mcraftworldmc.Instagram4j.Story.StoryPollItem;
+import org.brunocvcunha.instagram4j.storymetadata.StoryPollItem;
 
 import lombok.Getter;
 import lombok.Setter;
