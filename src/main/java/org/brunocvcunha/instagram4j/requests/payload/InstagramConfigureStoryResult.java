@@ -15,6 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import java.util.List;
+
 import org.brunocvcunha.instagram4j.requests.payload.InstagramItem;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
@@ -30,4 +32,5 @@ import lombok.Setter;
 @Setter
 public class InstagramConfigureStoryResult extends StatusResult {
     private InstagramItem media;
+    private List<Object> message_metadata;
 }

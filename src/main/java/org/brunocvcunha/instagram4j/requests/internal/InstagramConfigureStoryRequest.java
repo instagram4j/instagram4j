@@ -49,6 +49,8 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     @NonNull
     private String uploadId;
     
+    private String threadId;
+    
     private Collection<StoryMetadata> metadata;
 
     @Override
@@ -64,6 +66,9 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     @Override
     @SneakyThrows
     public String getPayload() {
+        
+        boolean direct = threadId != null;
+        long time = System.currentTimeMillis();
         
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_csrftoken", api.getOrFetchCsrf());
@@ -91,15 +96,18 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
         extraMap.put("source_height", image.getHeight());
         likeMap.put("extra", extraMap);
         
-        long time = System.currentTimeMillis()/1000;
         likeMap.put("client_shared_at", Long.toString(time - ThreadLocalRandom.current().nextInt(3, 10)));
         likeMap.put("source_type", "3");
-        likeMap.put("configure_mode", "1");
+        likeMap.put("configure_mode", direct ? "2" : "1");
         likeMap.put("story_media_creation_date", time - ThreadLocalRandom.current().nextInt(11, 20));
         likeMap.put("client_timestamp", Long.toString((time)));
         
         if(metadata != null) {
             applyMetadata(likeMap, metadata);
+        }
+        
+        if(direct) {
+            likeMap.put("thread_ids", new ObjectMapper().writeValueAsString(Arrays.asList(threadId)));
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -111,7 +119,6 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     @Override
     @SneakyThrows
     public InstagramConfigureStoryResult parseResult(int statusCode, String content) {
-        System.out.println(content);
         return parseJson(statusCode, content, InstagramConfigureStoryResult.class);
     }
     

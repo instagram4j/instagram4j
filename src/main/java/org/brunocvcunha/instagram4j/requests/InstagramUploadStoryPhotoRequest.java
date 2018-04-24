@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 /**
- * InstagramUploadStoryPhotoRequest
+ * InstagramStoryPhotoUploadRequest
  * @author Justin Vo
  *
  */
@@ -50,9 +50,16 @@ public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<Insta
 
     @NonNull
     private File imageFile;
-
+    
     private Collection<StoryMetadata> metadata = null;
-
+    
+    private String threadId = null;
+    
+    public InstagramUploadStoryPhotoRequest(File img, Collection<StoryMetadata> meta) {
+        this.imageFile = img;
+        this.metadata = meta;
+    }
+    
     @Override
     public String getUrl() {
         return "upload/photo/";
@@ -92,7 +99,7 @@ public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<Insta
                 throw new RuntimeException("Error happened in photo upload: " + result.getMessage());
             }
             
-            InstagramConfigureStoryResult configurePhotoResult = api.sendRequest(new InstagramConfigureStoryRequest(imageFile, uploadId, metadata));
+            InstagramConfigureStoryResult configurePhotoResult = api.sendRequest(new InstagramConfigureStoryRequest(imageFile, uploadId, threadId, metadata));
             
             log.info("Configure photo result: " + configurePhotoResult);
             if (!configurePhotoResult.getStatus().equalsIgnoreCase("ok")) {
