@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+package org.brunocvcunha.instagram4j.storymetadata;
 
 /**
- * InstagramConfigureAlbumResult
- * 
+ * StoryMetadata
  * @author Justin Vo
  *
  */
-
-@Getter
-@Setter
-@ToString(callSuper = true)
-public class InstagramConfigureAlbumResult extends InstagramConfigurePhotoResult {
-    private String client_sidecar_id;
+public abstract class StoryMetadata {
+    
+    public abstract String key();
+    
+    public abstract String metadata();
+    
+    public abstract boolean check() throws IllegalArgumentException;
+    
 }

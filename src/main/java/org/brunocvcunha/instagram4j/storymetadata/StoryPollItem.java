@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
+package org.brunocvcunha.instagram4j.storymetadata;
+
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * InstagramConfigureAlbumResult
- * 
+ * StoryPollItem
  * @author Justin Vo
  *
  */
-
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramConfigureAlbumResult extends InstagramConfigurePhotoResult {
-    private String client_sidecar_id;
+public class StoryPollItem {
+    private String x;
+    private String y;
+    private String z;
+    private double width;
+    private double height;
+    private double rotation;
+    private Map<String, Object> poll_sticker;
 }

@@ -15,20 +15,20 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import java.util.List;
+
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * InstagramConfigureAlbumResult
- * 
- * @author Justin Vo
+ * InstagramStickerRequestResult
+ * @author Justin
  *
  */
-
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramConfigureAlbumResult extends InstagramConfigurePhotoResult {
-    private String client_sidecar_id;
+public class InstagramStickerRequestResult extends StatusResult {
+    List<InstagramSticker> static_stickers;
 }

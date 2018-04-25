@@ -17,18 +17,21 @@ package org.brunocvcunha.instagram4j.requests.payload;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * InstagramConfigureAlbumResult
- * 
- * @author Justin Vo
+ * InstagramStickerMetadata
+ * @author Justin
  *
  */
-
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramConfigureAlbumResult extends InstagramConfigurePhotoResult {
-    private String client_sidecar_id;
+public class InstagramStickerMetadata {
+    private String id;
+    private String type;
+    private String name;
+    private String image_url;
+    private double image_width_ratio;
+    private double tray_image_width_ratio;
+    private double image_width;
+    private double image_height;
 }
