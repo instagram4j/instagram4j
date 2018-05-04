@@ -18,7 +18,6 @@ package org.brunocvcunha.instagram4j.requests.internal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,7 +25,6 @@ import java.util.Map;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
-import org.brunocvcunha.inutils4j.MyImageUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -42,10 +40,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigurePhotoResult> {
 
-    private File mediaFile;
+    BufferedImage image;
     private String uploadId;
     private String caption;
-    
+
     @Override
     public String getUrl() {
         return "media/configure/?";
@@ -70,9 +68,7 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
         deviceMap.put("android_version", InstagramConstants.DEVICE_ANDROID_VERSION);
         deviceMap.put("android_release", InstagramConstants.DEVICE_ANDROID_RELEASE);
         likeMap.put("device", deviceMap);
-        
-        BufferedImage image = MyImageUtils.getImage(mediaFile);
-        
+
         Map<String, Object> editsMap = new LinkedHashMap<>();
         editsMap.put("crop_original_size", Arrays.asList((double) image.getWidth(), (double) image.getHeight()));
         editsMap.put("crop_center", Arrays.asList((double) 0, (double) 0));
@@ -95,5 +91,5 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
     public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
         return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
     }
-    
+
 }
