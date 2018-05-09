@@ -46,15 +46,15 @@ public class InstagramItem extends StatusResult{
     private String client_cache_key;
     private String filter_type;
     private InstagramUser user;
-    //private InstagramFeedUserTag usertags;
+    private InstagramFeedUserTag usertags;
     //private InstagramMedia media;
-    //private InstagramStory stories;
+   //private InstagramStory stories;
     private List<Integer> media_ids;
     private List<StoryPollItem> story_polls;
     private int media_id;
-    private String thumbnail_urls;
-    private String large_urls;
-    private String media_infos;
+    private List<String> thumbnail_urls;
+    private List<String> large_urls;
+    private List<String> media_infos;
     private String value;
     private String collapse_comments;
 }
