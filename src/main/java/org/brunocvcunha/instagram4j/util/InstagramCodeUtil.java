@@ -1,12 +1,12 @@
 /**
- * Copyright (C) 2018 Mark Kunitsky (iwinside@gmail.com)
- * <p>
+ * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.util;
 
+/**
+ * Instagram Code Utils
+ * @author WinSide (Mark Kunitsky)
+ */
 public class InstagramCodeUtil {
 
     private static final String BASE64URL_CHARMAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
