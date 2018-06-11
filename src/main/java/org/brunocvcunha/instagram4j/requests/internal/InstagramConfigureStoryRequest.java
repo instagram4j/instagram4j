@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
@@ -55,7 +54,7 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
 
     @Override
     public String getUrl() {
-        return "media/configure_to_story/?";
+        return "media/configure_to_story/";
     }
     
     @Override
@@ -96,11 +95,8 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
         extraMap.put("source_height", image.getHeight());
         likeMap.put("extra", extraMap);
         
-        likeMap.put("client_shared_at", Long.toString(time - ThreadLocalRandom.current().nextInt(3, 10)));
         likeMap.put("source_type", "3");
         likeMap.put("configure_mode", direct ? "2" : "1");
-        likeMap.put("story_media_creation_date", time - ThreadLocalRandom.current().nextInt(11, 20));
-        likeMap.put("client_timestamp", Long.toString((time)));
         
         if(metadata != null) {
             applyMetadata(likeMap, metadata);
