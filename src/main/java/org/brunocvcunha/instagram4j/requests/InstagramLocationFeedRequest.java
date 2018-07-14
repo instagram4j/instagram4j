@@ -15,49 +15,37 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxResult;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
 
 /**
- * Inbox Request
+ * Location Feed Request
  * 
- * @author Bruno Candido Volpato da Cunha
+ * @author Yumaev
  *
  */
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class InstagramGetInboxRequest extends InstagramGetRequest<InstagramInboxResult> {
-
-	private String cursor;
+public class InstagramLocationFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
+	@NonNull
+	private final String location;
+	private String maxId;
 
 	@Override
 	public String getUrl() {
-
-		String baseUrl = "direct_v2/inbox/?";
-		if (cursor != null && !cursor.isEmpty()) {
-            baseUrl += "&cursor=" + cursor;
-        }
-		return baseUrl;
+		String url = "feed/location/" + location + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
+		if (maxId != null && !maxId.isEmpty()) {
+			url += "max_id=" + maxId;
+		}
+		return url;
 	}
 
 	@Override
 	@SneakyThrows
-	public String getPayload() {
-		return null;
+	public InstagramFeedResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramFeedResult.class);
 	}
-
-	@Override
-	@SneakyThrows
-	public InstagramInboxResult parseResult(int statusCode, String content) {
-		return parseJson(statusCode, content, InstagramInboxResult.class);
-	}
-
 }

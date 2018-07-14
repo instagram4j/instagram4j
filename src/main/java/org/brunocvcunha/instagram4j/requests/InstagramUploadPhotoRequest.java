@@ -15,8 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -31,11 +32,9 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.inutils4j.MyImageUtils;
+import javax.imageio.ImageIO;
 
 /**
  * Upload photo request
@@ -43,15 +42,10 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @Log4j
-@AllArgsConstructor
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfigurePhotoResult> {
 
-    @NonNull
-    private File imageFile;
+    private BufferedImage imageFile;
     
-    @NonNull
     private String caption;
     private String uploadId;
     
@@ -63,6 +57,30 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
     @Override
     public String getMethod() {
         return "POST";
+    }
+
+    public InstagramUploadPhotoRequest() {}
+  
+    public InstagramUploadPhotoRequest(File imageFile, String caption) throws IOException {
+        this(imageFile, caption, null);
+    }
+  
+    public InstagramUploadPhotoRequest(File imageFile, String caption, String uploadId) throws IOException {
+        this(MyImageUtils.getImage(imageFile), caption, uploadId);
+    }
+  
+    public InstagramUploadPhotoRequest(URL remoteMediaFileURL, String caption) throws IOException {
+        this(remoteMediaFileURL, caption, null);
+    }
+  
+    public InstagramUploadPhotoRequest(URL remoteMediaFileURL, String caption, String uploadId) throws IOException {
+        this(ImageIO.read(remoteMediaFileURL), caption, uploadId);
+    }
+  
+    public InstagramUploadPhotoRequest(BufferedImage imageFile, String caption, String uploadId) throws IOException {
+        this.imageFile = imageFile;
+        this.caption = caption;
+        this.uploadId = uploadId;
     }
     
     @Override
@@ -121,7 +139,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
         builder.addTextBody("_uuid", api.getUuid());
         builder.addTextBody("_csrftoken", api.getOrFetchCsrf());
         builder.addTextBody("image_compression", "{\"lib_name\":\"jt\",\"lib_version\":\"1.3.0\",\"quality\":\"87\"}");
-        builder.addBinaryBody("photo", imageFile, ContentType.APPLICATION_OCTET_STREAM, "pending_media_" + uploadId + ".jpg");
+        builder.addBinaryBody("photo", bufferedImageToByteArray(imageFile), ContentType.APPLICATION_OCTET_STREAM, "pending_media_" + uploadId + ".jpg");
         builder.setBoundary(api.getUuid());
 
         HttpEntity entity = builder.build();
@@ -151,6 +169,14 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
     @Override
     public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
         return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
+    }
+
+    private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            ImageIO.write(image, "jpg", baos);
+            baos.flush();
+            return baos.toByteArray();
+        }
     }
 
 }

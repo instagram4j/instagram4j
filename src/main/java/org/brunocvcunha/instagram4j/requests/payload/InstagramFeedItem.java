@@ -15,12 +15,12 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-import java.util.Map;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Tag Feed Results
@@ -55,7 +55,7 @@ public class InstagramFeedItem {
     public int view_count;
     public InstagramUser user;
 
-    private List<InstagramCarouselMediaItem> carousel_media;
+    public List<InstagramCarouselMediaItem> carousel_media;
     
     public String organic_tracking_token;
     public int like_count;
@@ -68,7 +68,7 @@ public class InstagramFeedItem {
     public int max_num_visible_preview_comments;
     public List<Object> preview_comments;
     public List<Object> comments;
-    public boolean comment_count;
+    public int comment_count;
     public Map<String, Object> caption;
 
     public boolean caption_is_edited;
