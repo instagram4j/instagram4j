@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 package org.brunocvcunha.instagram4j.requests;
-
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
 import lombok.SneakyThrows;
 
 /**
@@ -25,9 +22,16 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class InstagramTimelineFeedRequest extends InstagramGetRequest<StatusResult> {
+public class InstagramTimelineFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
 
     private String maxId;
+    
+    public InstagramTimelineFeedRequest() {
+    }
+
+    public InstagramTimelineFeedRequest(String maxId) {
+        this.maxId = maxId;
+    }
     
     @Override
     public String getUrl() {
@@ -45,9 +49,12 @@ public class InstagramTimelineFeedRequest extends InstagramGetRequest<StatusResu
     }
 
     @Override
-    @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, StatusResult.class);
+    public InstagramFeedResult parseResult(int statusCode, String content) {
+        try {
+            return this.parseJson(statusCode, content, InstagramFeedResult.class);
+        } catch (Throwable var4) {
+            throw var4;
+        }
     }
 
 }
