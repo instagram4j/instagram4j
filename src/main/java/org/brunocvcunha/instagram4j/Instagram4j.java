@@ -20,14 +20,17 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
 import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
@@ -76,6 +79,9 @@ public class Instagram4j implements Serializable {
     
     @Getter @Setter
     protected String password;
+
+    @Getter
+    protected HttpHost proxy;
     
     @Getter @Setter
     protected long userId;
@@ -121,13 +127,14 @@ public class Instagram4j implements Serializable {
      * @param cookieStore Cookie Store
      */
     @Builder
-    public Instagram4j(String username, String password, long userId, String uuid, CookieStore cookieStore) {
+    public Instagram4j(String username, String password, long userId, String uuid, CookieStore cookieStore, HttpHost proxy) {
         super();
         this.username = username;
         this.password = password;
         this.userId = userId;
         this.uuid = uuid;
         this.cookieStore = cookieStore;
+        this.proxy = proxy;
         this.isLoggedIn = true;
     }
     
@@ -162,9 +169,12 @@ public class Instagram4j implements Serializable {
         log.info("Device ID is: " + this.deviceId + ", random id: " + this.uuid);
         
         this.client = new DefaultHttpClient();
-        this.client.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        HttpParams params = client.getParams();
+        params.setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        if (proxy != null) {
+           params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+        }
         this.client.setCookieStore(this.cookieStore);
-
     }
     
     
@@ -194,17 +204,9 @@ public class Instagram4j implements Serializable {
                 .build();
         InstagramLoginRequest req = new InstagramLoginRequest(loginRequest);
         InstagramLoginResult loginResult = this.sendRequest(req);
-        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
-            this.userId = loginResult.getLogged_in_user().getPk();
-            this.rankToken = this.userId + "_" + this.uuid;
-            this.isLoggedIn = true;
+        emulateUserLoggedIn(loginResult);
 
-            this.sendRequest(new InstagramSyncFeaturesRequest(false));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
-        } else if (loginResult.getTwo_factor_info() != null) {
+        if (loginResult.getTwo_factor_info() != null) {
             identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
         } else if (loginResult.getChallenge() != null) {
             // logic for challenge
@@ -230,17 +232,7 @@ public class Instagram4j implements Serializable {
                 .build();
         InstagramLoginTwoFactorRequest req = new InstagramLoginTwoFactorRequest(loginRequest);
         InstagramLoginResult loginResult = this.sendRequest(req);
-        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
-            this.userId = loginResult.getLogged_in_user().getPk();
-            this.rankToken = this.userId + "_" + this.uuid;
-            this.isLoggedIn = true;
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(false));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
-        }
+        emulateUserLoggedIn(loginResult);
         return loginResult;
     }
 
@@ -287,6 +279,20 @@ public class Instagram4j implements Serializable {
         log.debug("Result for " + request.getClass().getName() + ": " + response);
         
         return response;
+    }
+
+    private void emulateUserLoggedIn(InstagramLoginResult loginResult) throws IOException {
+        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
+            this.userId = loginResult.getLogged_in_user().getPk();
+            this.rankToken = this.userId + "_" + this.uuid;
+            this.isLoggedIn = true;
+
+            this.sendRequest(new InstagramSyncFeaturesRequest(false));
+            this.sendRequest(new InstagramAutoCompleteUserListRequest());
+            this.sendRequest(new InstagramTimelineFeedRequest());
+            this.sendRequest(new InstagramGetInboxRequest());
+            this.sendRequest(new InstagramGetRecentActivityRequest());
+        }
     }
     
     @SneakyThrows
