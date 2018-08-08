@@ -143,6 +143,9 @@
 					<excludes>
 						<exclude>src/test/resources/**</exclude>
 						<exclude>src/main/resources/**</exclude>
+						<exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
+						<exclude>mvnw.cmd</exclude>
+						<exclude>mvnw</exclude>
 						<exclude>LICENSE</exclude>
 					</excludes>
 				</configuration>

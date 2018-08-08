@@ -1,10 +1,10 @@
 language: java
 jdk: oraclejdk8
 
-install: mvn clean install -q
+install: ./mvnw clean install -q
 
 after_success:
-  - mvn clean test jacoco:report coveralls:report -q
+  - ./mvnw clean test jacoco:report coveralls:report -q
 
 cache:
   directories:
