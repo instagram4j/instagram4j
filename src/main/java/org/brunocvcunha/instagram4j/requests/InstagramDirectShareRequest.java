@@ -49,8 +49,11 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 	/**
 	 * List of recipients IDs (i.e. "1234567890")
 	 */
-	@NonNull
 	private List<String> recipients;
+	/**
+	 * The thread ID to share to
+	 */
+	private String threadId;
 	/**
 	 * The media ID in instagram's internal format (ie "223322332233_22332").
 	 */
@@ -80,7 +83,11 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 
 	@Override
 	public StatusResult execute() throws ClientProtocolException, IOException {
-		String recipients = "\"" + String.join("\",\"", this.recipients.toArray(new String[0])) + "\"";
+		String recipients = "";
+		if (this.recipients != null) {
+			recipients = "\"" + String.join("\",\"", this.recipients.toArray(new String[0])) + "\"";
+		}
+		
 		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
 		Map<String, String> map = new HashMap<String, String>();
@@ -106,7 +113,7 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		map = new HashMap<String, String>();
 		map.put("type", "form-data");
 		map.put("name", "thread_ids");
-		map.put("data", "[]");
+		map.put("data", "[" + (threadId != null ? threadId : "") + "]");
 		data.add(map);
 
 		map = new HashMap<String, String>();
@@ -185,6 +192,12 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		}
 	}
 
+	public static Builder builder(ShareType shareType) {
+		Builder b = new Builder();
+		b.shareType(shareType);
+		return b;
+	}
+	
 	public static Builder builder(ShareType shareType, List<String> recipients) {
 		Builder b = new Builder();
 		b.shareType(shareType).recipients(recipients);
