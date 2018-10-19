@@ -15,7 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.util;
 
-import com.eaio.uuid.UUID;
+import java.util.UUID;
 
 /**
  * Generic utils
@@ -30,7 +30,7 @@ public class InstagramGenericUtil {
      * @return UUID
      */
     public static String generateUuid(boolean dash) {
-        String uuid = new UUID().toString();
+        String uuid = UUID.randomUUID().toString();
         
         if (dash) {
             return uuid;
