@@ -42,7 +42,7 @@ public class InstagramGetMediaInfoRequest extends InstagramPostRequest<Instagram
 
     @Override
     public String getUrl() {
-        return "media/" + mediaId + "/likers/";
+        return "media/" + mediaId + "/info/";
     }
 
     @Override

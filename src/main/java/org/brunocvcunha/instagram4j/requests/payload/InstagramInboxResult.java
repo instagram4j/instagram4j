@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.util;
+package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.UUID;
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Generic utils
- * @author Bruno Candido Volpato da Cunha
+ * Inbox Result
+ * 
+ * @author Krisnamourt da Silva C. Filho
  *
  */
-public class InstagramGenericUtil {
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class InstagramInboxResult extends StatusResult  {
+
+	public String seq_id;
+	public int pending_requests_total;
+	public List<InstagramUser> pending_requests_users;
+    public InstagramInbox inbox;
+    public String status;
     
-    /**
-     * Generate UUID
-     * @param dash If needs to keep dash
-     * @return UUID
-     */
-    public static String generateUuid(boolean dash) {
-        String uuid = UUID.randomUUID().toString();
-        
-        if (dash) {
-            return uuid;
-        }
-        
-        return uuid.replaceAll("-", "");
-    }
 }
