@@ -52,6 +52,8 @@
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<plexus.errorprone.version>2.7</plexus.errorprone.version>
 		<google.errorprone.version>2.0.9</google.errorprone.version>
+		<http.core.version>4.4.10</http.core.version>
+		<http.client.version>4.5.6</http.client.version>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -208,27 +210,12 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
-		<!-- Jsoup -->
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.7.3</version>
-		</dependency>
-
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.20</version>
 			<scope>provided</scope>
-		</dependency>
-
-
-		<!-- Ghost me -->
-		<dependency>
-			<groupId>org.brunocvcunha.ghostme4j</groupId>
-			<artifactId>ghostme4j</artifactId>
-			<version>0.2</version>
 		</dependency>
 
 		<!-- Inutils -->
@@ -244,24 +231,44 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>[2.8.11.1,)</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.0</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
+			<version>${http.client.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
-			<version>4.5.2</version>
+			<version>${http.client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>${http.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
 		</dependency>
 
 		<!-- javacv -->
 		<dependency>
 			<groupId>org.bytedeco</groupId>
-			<artifactId>javacv-platform</artifactId>
+			<artifactId>javacv</artifactId>
 			<version>1.3.1</version>
 		</dependency>
 	
