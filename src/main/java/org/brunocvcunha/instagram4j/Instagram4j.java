@@ -29,7 +29,9 @@ import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.params.HttpParams;
 import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
@@ -99,11 +101,10 @@ public class Instagram4j implements Serializable {
     protected boolean debug;
     
     @Getter
-    @Setter
     protected CookieStore cookieStore;
 
     @Getter
-    protected DefaultHttpClient client;
+    protected CloseableHttpClient client;
 
     protected String identifier;
     protected String verificationCode;
@@ -167,17 +168,14 @@ public class Instagram4j implements Serializable {
         }
         
         log.info("Device ID is: " + this.deviceId + ", random id: " + this.uuid);
-        
-        this.client = new DefaultHttpClient();
-        HttpParams params = client.getParams();
-        params.setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        HttpClientBuilder builder = HttpClientBuilder.create();
         if (proxy != null) {
-           params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+            builder.setProxy(proxy);
         }
-        this.client.setCookieStore(this.cookieStore);
+        builder.setDefaultCookieStore(this.cookieStore);
+        this.client = builder.build();
     }
-    
-    
+
     /**
      * @return
      * @throws IOException 
@@ -252,7 +250,7 @@ public class Instagram4j implements Serializable {
     }
     
     public Optional<Cookie> getCsrfCookie() {
-        return client.getCookieStore().getCookies().stream().filter(cookie -> cookie.getName().equalsIgnoreCase("csrftoken")).findFirst();
+        return cookieStore.getCookies().stream().filter(cookie -> cookie.getName().equalsIgnoreCase("csrftoken")).findFirst();
     }
     /**
      * Send request to endpoint
