@@ -45,7 +45,7 @@ public class InstagramFeedItem {
     public double video_duration;
     public Map<String, Object> attribution;
     public List<Object> video_versions;
-    public Map<String, Object> image_versions2;
+    public ImageVersions image_versions2;
     public List<InstagramFeedUserTag> usertags;
     public Map<String, Object> location;
     public float lng;
@@ -66,13 +66,16 @@ public class InstagramFeedItem {
     public boolean has_more_comments;
     public long next_max_id;
     public int max_num_visible_preview_comments;
-    public List<Object> preview_comments;
+    public List<InstagramComment> preview_comments;
     public List<Object> comments;
     public int comment_count;
-    public Map<String, Object> caption;
+    public InstagramComment caption;
 
+    public boolean can_viewer_reshare;
     public boolean caption_is_edited;
     public boolean photo_of_you;
     public boolean comments_disabled;
+    public boolean can_viewer_save;
+    public boolean has_viewer_saved;
     
 }

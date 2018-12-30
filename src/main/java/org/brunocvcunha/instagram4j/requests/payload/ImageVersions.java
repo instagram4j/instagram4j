@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
+ * Copyright (C) 2018 Zsombor Gegesy (gzsombor@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,29 +15,16 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
- *
- */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramComment {
-	private long pk;
-	private long user_id;
-	private String text;
-	private int type;
-	private long created_at;
-	private long created_at_utc;
-	private String content_type;
-	private String status;
-	private int bit_flags;
-	private InstagramUser user;
-	private boolean did_report_as_spam;
-	private boolean share_enabled;
-	private long media_id;
+@ToString
+public class ImageVersions {
+
+    public List<ImageMeta> candidates;
 }
