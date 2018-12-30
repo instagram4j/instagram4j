@@ -133,34 +133,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.mycila</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
-					<properties>
-						<owner>Bruno Candido Volpato da Cunha</owner>
-						<email>brunocvcunha@gmail.com</email>
-					</properties>
-					<excludes>
-						<exclude>src/test/resources/**</exclude>
-						<exclude>src/main/resources/**</exclude>
-						<exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
-						<exclude>mvnw.cmd</exclude>
-						<exclude>mvnw</exclude>
-						<exclude>LICENSE</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
 				<version>4.2.0</version>
