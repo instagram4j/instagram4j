@@ -65,5 +65,6 @@ public class InstagramUser {
     public int following_count;
     public float latitude;
     public float longitude;
+    public String category;
     
 }
