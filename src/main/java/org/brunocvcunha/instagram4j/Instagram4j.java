@@ -15,36 +15,22 @@
  */
 package org.brunocvcunha.instagram4j;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Optional;
-
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.HttpParams;
-import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramLoginTwoFactorRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramFetchHeadersRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramLogAttributionRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramReadMsisdnHeaderRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramSyncFeaturesRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramZeroRatingTokenRequest;
+import org.brunocvcunha.instagram4j.requests.*;
+import org.brunocvcunha.instagram4j.requests.internal.*;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginTwoFactorPayload;
@@ -52,11 +38,9 @@ import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 import org.brunocvcunha.inutils4j.MyNumberUtils;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * 

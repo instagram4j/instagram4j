@@ -16,13 +16,11 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 
 /**
  * Login Request

@@ -15,11 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.InstagramConstants;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaCommentsResult;
-
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaCommentsResult;
 
 /**
  * Get media comments request

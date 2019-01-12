@@ -15,25 +15,23 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureStoryResult;
 import org.brunocvcunha.instagram4j.storymetadata.StoryMetadata;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * InstagramConfigureStoryPhotoRequest

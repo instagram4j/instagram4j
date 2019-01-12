@@ -15,13 +15,13 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
+
+import java.io.IOException;
 
 /**
  * 

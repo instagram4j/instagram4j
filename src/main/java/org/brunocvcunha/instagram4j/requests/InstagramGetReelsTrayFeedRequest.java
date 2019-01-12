@@ -15,9 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetReelsTrayFeedResult;
-
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetReelsTrayFeedResult;
 
 /**
  * Get Story Request

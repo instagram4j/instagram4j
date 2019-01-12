@@ -15,18 +15,16 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramSyncFeaturesResult;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Sync Features Request

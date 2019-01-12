@@ -15,13 +15,12 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-
-import org.brunocvcunha.instagram4j.storymetadata.StoryPollItem;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.brunocvcunha.instagram4j.storymetadata.StoryPollItem;
+
+import java.util.List;
 /**
  * InstagramItem
  *

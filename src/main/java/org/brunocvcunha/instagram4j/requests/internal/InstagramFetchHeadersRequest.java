@@ -15,14 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.http.HttpResponse;
+import lombok.SneakyThrows;
 import org.brunocvcunha.instagram4j.requests.InstagramGetRequest;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
-
-import lombok.SneakyThrows;
 
 /**
  * Fetch Headers Request

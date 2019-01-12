@@ -15,21 +15,15 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.*;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.SneakyThrows;
 
 /**
  * Request for editing media.

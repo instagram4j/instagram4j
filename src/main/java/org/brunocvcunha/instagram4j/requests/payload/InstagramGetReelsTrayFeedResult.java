@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 package org.brunocvcunha.instagram4j.requests.payload;
-import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * Get Reels Tray Result (Story)

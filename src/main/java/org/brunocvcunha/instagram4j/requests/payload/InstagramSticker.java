@@ -15,10 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * InstagramSticker

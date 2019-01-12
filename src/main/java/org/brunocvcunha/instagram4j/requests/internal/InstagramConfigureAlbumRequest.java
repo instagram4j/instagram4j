@@ -15,23 +15,15 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * InstagramConfigureAlbumRequest

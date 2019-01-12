@@ -15,10 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -33,10 +33,9 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureStoryResu
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.storymetadata.StoryMetadata;
 
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * InstagramStoryPhotoUploadRequest

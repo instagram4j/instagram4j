@@ -16,18 +16,16 @@
 package org.brunocvcunha.instagram4j.requests.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.InstagramConstants;
-import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Like Request

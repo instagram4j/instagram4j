@@ -15,11 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.SavedFeedResult;
-
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.SavedFeedResult;
 
 /**
  * Request to get the saved images for the User

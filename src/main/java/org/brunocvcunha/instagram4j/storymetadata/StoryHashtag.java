@@ -15,15 +15,14 @@
  */
 package org.brunocvcunha.instagram4j.storymetadata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Builder;
+import lombok.SneakyThrows;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Builder;
-import lombok.SneakyThrows;
 
 /**
  * StoryHashtag

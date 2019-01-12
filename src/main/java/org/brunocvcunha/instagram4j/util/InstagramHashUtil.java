@@ -15,21 +15,17 @@
  */
 package org.brunocvcunha.instagram4j.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
+import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Hex;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 
-import lombok.SneakyThrows;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Utilities related to hash

@@ -15,14 +15,12 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramStickerRequestResult;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.SneakyThrows;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * InstagramStickerRequest

@@ -15,12 +15,11 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.Map;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Map;
 
 @Getter
 @Setter

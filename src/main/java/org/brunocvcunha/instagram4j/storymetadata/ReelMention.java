@@ -15,10 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.storymetadata;
 
+import lombok.Builder;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import lombok.Builder;
 
 /**
  * ReelMention

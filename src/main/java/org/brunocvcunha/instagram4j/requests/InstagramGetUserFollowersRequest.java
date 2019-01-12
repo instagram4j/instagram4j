@@ -15,12 +15,11 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserFollowersResult;
-
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserFollowersResult;
 
 /**
  * Get User Followers Request

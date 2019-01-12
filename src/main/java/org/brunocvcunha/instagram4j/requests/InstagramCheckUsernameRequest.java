@@ -16,16 +16,14 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramCheckUsernameResult;
-
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramCheckUsernameResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Sync Features Request

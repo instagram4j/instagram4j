@@ -15,11 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaLikersResult;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaLikersResult;
 
 /**
  * Like Request

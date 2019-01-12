@@ -15,12 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -34,9 +31,11 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * InstagramUploadAlbumRequest

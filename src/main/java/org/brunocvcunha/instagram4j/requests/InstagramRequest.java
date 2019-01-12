@@ -18,22 +18,16 @@ package org.brunocvcunha.instagram4j.requests;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.io.InputStream;
-
+import lombok.*;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.Instagram4j;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
+import java.io.IOException;
+import java.io.InputStream;
 
 @AllArgsConstructor
 @NoArgsConstructor

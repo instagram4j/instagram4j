@@ -15,11 +15,11 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * Response from media comments request

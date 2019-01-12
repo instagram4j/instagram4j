@@ -15,13 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -31,9 +27,12 @@ import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.extern.log4j.Log4j;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Direct-share request.

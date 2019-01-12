@@ -15,11 +15,8 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
-
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,8 +27,10 @@ import org.brunocvcunha.instagram4j.requests.InstagramRequest;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Upload photo job request

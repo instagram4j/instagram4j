@@ -15,18 +15,14 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaInfoResult;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaLikersResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetMediaInfoResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Like Request

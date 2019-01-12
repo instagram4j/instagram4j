@@ -15,8 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.io.IOException;
-
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -25,7 +24,7 @@ import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 
-import lombok.extern.log4j.Log4j;
+import java.io.IOException;
 
 /**
  * 

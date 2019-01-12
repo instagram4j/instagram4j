@@ -15,10 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.InstagramGetRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
-
-import lombok.SneakyThrows;
 
 /**
  * Timeline Feed Request

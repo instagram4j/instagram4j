@@ -15,17 +15,15 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Request for deleting media.

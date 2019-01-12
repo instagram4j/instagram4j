@@ -15,11 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxThreadResult;
-
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramInboxThreadResult;
 
 /**
  * Inbox Thread Request

@@ -15,10 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsernameResult;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchUsernameResult;
 
 /**
  * Search Username Request

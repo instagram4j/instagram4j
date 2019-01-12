@@ -15,16 +15,14 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.brunocvcunha.instagram4j.requests.payload.InstagramPostCommentResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramPostCommentResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Comment Post Request

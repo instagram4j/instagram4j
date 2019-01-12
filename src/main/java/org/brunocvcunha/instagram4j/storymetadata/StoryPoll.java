@@ -15,16 +15,15 @@
  */
 package org.brunocvcunha.instagram4j.storymetadata;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Builder;
+import lombok.SneakyThrows;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Builder;
-import lombok.SneakyThrows;
 
 /**
  * StoryPoll

@@ -15,13 +15,10 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
-
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -39,10 +36,11 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.bytedeco.javacv.Java2DFrameConverter;
 
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Upload Video request

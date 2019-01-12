@@ -15,10 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URL;
-
+import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -31,10 +28,14 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoReq
 import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
-import lombok.extern.log4j.Log4j;
 import org.brunocvcunha.inutils4j.MyImageUtils;
+
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Upload photo request

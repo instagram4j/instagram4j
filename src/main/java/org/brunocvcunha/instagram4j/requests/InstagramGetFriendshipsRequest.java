@@ -15,19 +15,17 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetFriendshipsResult;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang3.StringUtils;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetFriendshipsResult;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Get Friendships Request
