@@ -36,29 +36,13 @@ import lombok.extern.log4j.Log4j;
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramGetMediaInfoRequest extends InstagramPostRequest<InstagramGetMediaInfoResult> {
+public class InstagramGetMediaInfoRequest extends InstagramGetRequest<InstagramGetMediaInfoResult> {
 
     private long mediaId;
 
     @Override
     public String getUrl() {
         return "media/" + mediaId + "/info/";
-    }
-
-    @Override
-    @SneakyThrows
-    public String getPayload() {
-        ObjectMapper mapper = new ObjectMapper();
-        
-        Map<String, Object> payloadMap = new LinkedHashMap<>();
-        payloadMap.put("_uuid", api.getUuid());
-        payloadMap.put("_uid", api.getUserId());
-        payloadMap.put("_csrftoken", api.getOrFetchCsrf());
-        payloadMap.put("media_id", mediaId);
-        
-        String payloadJson = mapper.writeValueAsString(payloadMap);
-
-        return payloadJson;
     }
 
     @Override
