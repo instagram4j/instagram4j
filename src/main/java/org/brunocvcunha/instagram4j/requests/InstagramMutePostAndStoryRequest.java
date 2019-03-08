@@ -16,31 +16,29 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramPostCommentResult;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
-
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
-
 /**
- * Follow Request
- * 
- * @author Bruno Candido Volpato da Cunha
+ * Comment Post Request
+ *
+ * @author Malloum LAYA & Stephane Sabalot
  *
  */
 @AllArgsConstructor
 @Log4j
-public class InstagramFollowRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramMutePostAndStoryRequest extends InstagramPostRequest<InstagramPostCommentResult> {
 
-    private long userId;
+    private Long userId;
 
     @Override
     public String getUrl() {
-        return "friendships/create/" + userId + "/";
+        return "friendships/mute_posts_or_story_from_follow/";
     }
 
     @Override
@@ -50,22 +48,24 @@ public class InstagramFollowRequest extends InstagramPostRequest<StatusResult> {
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
         likeMap.put("_uid", api.getUserId());
-        likeMap.put("user_id", userId);
         likeMap.put("_csrftoken", api.getOrFetchCsrf());
-        
+        likeMap.put("target_reel_author_id", userId);
+        likeMap.put("target_posts_author_id", userId);
         ObjectMapper mapper = new ObjectMapper();
         String payloadJson = mapper.writeValueAsString(likeMap);
+
+
+
+
 
         return payloadJson;
     }
 
     @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, StatusResult.class);
+    public InstagramPostCommentResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramPostCommentResult.class);
     }
-
-
 
 
 }
