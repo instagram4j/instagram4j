@@ -137,6 +137,27 @@ r.setUserTags(tags);
 instagram.sendRequest(r);
 ```
 
+
+
+#### Mute Post and Story
+```java
+instagram.sendRequest(new InstagramMuteStoryAnPostRequest(userResult.getUser().getPk()));
+
+```
+
+
+#### Mute Post 
+```java
+instagram.sendRequest(new InstagramMutePostRequest(userResult.getUser().getPk()));
+
+```
+
+#### Mute Story 
+```java
+instagram.sendRequest(new InstagramMuteStoryRequest(userResult.getUser().getPk()));
+
+```
+
 #### (More operations to be added)
 
 Building from the source
