@@ -19,7 +19,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.brunocvcunha.instagram4j</groupId>
 	<artifactId>instagram4j</artifactId>
-	<version>1.10</version>
+	<version>1.11-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>instagram4j</name>
 	<description>instagram4j</description>
