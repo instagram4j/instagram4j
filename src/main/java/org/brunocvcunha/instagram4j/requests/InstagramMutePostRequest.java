@@ -26,8 +26,8 @@ import java.util.Map;
 
 /**
  * Comment Post Request
- * 
- * @author Malloum LAYA & Stephane Sabalot
+ *
+ * @author Malloum LAYA &amp; Stephane Sabalot
  *
  */
 @AllArgsConstructor
@@ -44,7 +44,7 @@ public class InstagramMutePostRequest extends InstagramPostRequest<InstagramPost
     @Override
     @SneakyThrows
     public String getPayload() {
-        
+
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_uuid", api.getUuid());
         likeMap.put("_uid", api.getUserId());
