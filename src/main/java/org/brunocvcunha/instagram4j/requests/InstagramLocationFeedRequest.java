@@ -15,37 +15,64 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramLocationFeedResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Location Feed Request
- * 
- * @author Yumaev
- *
+ * @author jpleorx
  */
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class InstagramLocationFeedRequest extends InstagramGetRequest<InstagramFeedResult> {
+public class InstagramLocationFeedRequest extends InstagramPostRequest<InstagramLocationFeedResult> {
 	@NonNull
-	private final String location;
+	private final String locationId;
 	private String maxId;
 
 	@Override
 	public String getUrl() {
-		String url = "feed/location/" + location + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
-		if (maxId != null && !maxId.isEmpty()) {
-			url += "max_id=" + maxId;
-		}
-		return url;
+		return "locations/" + locationId + "/sections/";
 	}
 
 	@Override
 	@SneakyThrows
-	public InstagramFeedResult parseResult(int statusCode, String content) {
-		return parseJson(statusCode, content, InstagramFeedResult.class);
+	public String getPayload() {
+		/*
+		 * TODO: Fix tabs somehow
+		 * Supposedly tab field should accept either "recent" or "ranked" value, just as your actual location feed tabs on instagram.
+		 * When testing both of these options returned the ranked tab's feed.
+		 * As of now I have no clue what's wrong and how to fix it. Needs investigating.
+		 */
+		Map<String, Object> map = new LinkedHashMap<>();
+		map.put("rank_token", api.getRankToken());
+		map.put("_uuid", api.getUuid());
+		map.put("_uid", api.getUserId());
+		map.put("_csrftoken", api.getOrFetchCsrf());
+		map.put("tab", "recent");
+		if (maxId != null && !maxId.isEmpty())
+			map.put("max_id", maxId);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String payloadJson = mapper.writeValueAsString(map);
+
+		return payloadJson;
+	}
+
+	@Override
+	public boolean isSigned() {
+		return false;
+	}
+
+	@Override
+	@SneakyThrows
+	public InstagramLocationFeedResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramLocationFeedResult.class);
 	}
 }
