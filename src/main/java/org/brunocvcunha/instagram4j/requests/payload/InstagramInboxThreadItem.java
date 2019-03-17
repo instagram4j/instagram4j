@@ -38,4 +38,5 @@ public class InstagramInboxThreadItem {
 	public String text;
 	public InstagramInboxThreadReel reel_share;
 	public InstagramFeedItem media_share;
+	public StoryShare story_share;
 }
