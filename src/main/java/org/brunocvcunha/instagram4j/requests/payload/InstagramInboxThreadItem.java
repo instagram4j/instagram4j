@@ -37,4 +37,5 @@ public class InstagramInboxThreadItem {
 	public String like;
 	public String text;
 	public InstagramInboxThreadReel reel_share;
+	public InstagramFeedItem media_share;
 }
