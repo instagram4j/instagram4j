@@ -44,10 +44,10 @@ public class InstagramFeedItem {
     public boolean has_audio;
     public double video_duration;
     public Map<String, Object> attribution;
-    public List<Object> video_versions;
+    public List<ImageMeta> video_versions;
     public ImageVersions image_versions2;
     public List<InstagramFeedUserTag> usertags;
-    public Map<String, Object> location;
+    public FeedItemLocation location;
     public float lng;
     public float lat;
     public int original_width;
