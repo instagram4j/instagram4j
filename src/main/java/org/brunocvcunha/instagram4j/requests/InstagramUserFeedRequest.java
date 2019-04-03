@@ -36,11 +36,12 @@ public class InstagramUserFeedRequest extends InstagramGetRequest<InstagramFeedR
     private long userId;
     private String maxId;
     private long minTimestamp;
+    private long maxTimestamp;
     
     
     @Override
     public String getUrl() {
-        return "feed/user/" + userId + "/?max_id=" + maxId + "&min_timestamp=" + minTimestamp + "&rank_token=" + api.getRankToken() + "&ranked_content=true&";
+        return "feed/user/" + userId + "/?max_id=" + maxId + "&min_timestamp=" + minTimestamp + "&max_timestamp=" + maxTimestamp + "&rank_token=" + api.getRankToken() + "&ranked_content=true&";
     }
 
     @Override
