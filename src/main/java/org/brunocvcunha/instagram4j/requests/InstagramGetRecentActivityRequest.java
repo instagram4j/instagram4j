@@ -15,6 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import org.brunocvcunha.instagram4j.requests.payload.InstagramGetRecentActivityResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import lombok.SneakyThrows;
@@ -25,7 +26,7 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-public class InstagramGetRecentActivityRequest extends InstagramGetRequest<StatusResult> {
+public class InstagramGetRecentActivityRequest extends InstagramGetRequest<InstagramGetRecentActivityResult> {
 
     @Override
     public String getUrl() {
@@ -39,8 +40,8 @@ public class InstagramGetRecentActivityRequest extends InstagramGetRequest<Statu
 
     @Override
     @SneakyThrows
-    public StatusResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, StatusResult.class);
+    public InstagramGetRecentActivityResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramGetRecentActivityResult.class);
     }
 
 }
