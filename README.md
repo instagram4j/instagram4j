@@ -39,6 +39,37 @@ Supported Operations & Examples
 Instagram4j instagram = Instagram4j.builder().username("username").password("password").build();
 instagram.setup();
 instagram.login();
+
+```
+
+#### Login with proxy without authentication
+
+```java
+// Login to instagram
+
+HttpHost proxy = new HttpHost("host", "port", "http");
+Instagram4j instagram = Instagram4j.builder().username("username").password("password").proxy(proxy).build();
+instagram.setup();
+instagram.login();
+
+```
+
+
+#### Login with proxy with authentication
+
+```java
+// Login to instagram
+
+HttpHost proxy = new HttpHost("host", "port", "http");
+CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(new AuthScope(AuthScope.ANY),
+                new UsernamePasswordCredentials("login", "password"));
+        
+        
+Instagram4j instagram = Instagram4j.builder().username("username").password("password").proxy(proxy).credentialsProvider(credentialsProvider).build();
+instagram.setup();
+instagram.login();
+
 ```
 
 #### Search user by handle
