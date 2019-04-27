@@ -39,4 +39,5 @@ public class InstagramInboxThreadItem {
 	public InstagramInboxThreadReel reel_share;
 	public InstagramFeedItem media_share;
 	public StoryShare story_share;
+	public DirectLink link;
 }
