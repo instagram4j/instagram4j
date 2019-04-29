@@ -75,14 +75,14 @@ System.out.println("ID for @github is " + userResult.getUser().getPk());
 System.out.println("Number of followers: " + userResult.getUser().follower_count);
 ```
 
-#### Upload a photo your feed
+#### Upload a photo to your feed
 ```java
 instagram.sendRequest(new InstagramUploadPhotoRequest(
         new File("/tmp/file-to-upload.jpg"),
         "Posted with Instagram4j, how cool is that?"));
 ```
 
-#### Upload a video your feed
+#### Upload a video to your feed
 ```java
 instagram.sendRequest(new InstagramUploadVideoRequest(
         new File("/tmp/file-to-upload.mp4"),
