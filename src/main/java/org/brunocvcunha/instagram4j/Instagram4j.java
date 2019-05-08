@@ -24,15 +24,11 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.HttpParams;
 import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
@@ -83,6 +79,9 @@ public class Instagram4j implements Serializable {
     protected String password;
 
     @Getter
+    protected CredentialsProvider credentialsProvider;
+
+    @Getter @Setter
     protected HttpHost proxy;
     
     @Getter @Setter
@@ -126,9 +125,11 @@ public class Instagram4j implements Serializable {
      * @param userId UserId
      * @param uuid UUID
      * @param cookieStore Cookie Store
+     * @param proxy proxy
+     * @param credentialsProvider proxy credential
      */
     @Builder
-    public Instagram4j(String username, String password, long userId, String uuid, CookieStore cookieStore, HttpHost proxy) {
+    public Instagram4j(String username, String password, long userId, String uuid, CookieStore cookieStore, HttpHost proxy, CredentialsProvider credentialsProvider) {
         super();
         this.username = username;
         this.password = password;
@@ -136,6 +137,7 @@ public class Instagram4j implements Serializable {
         this.uuid = uuid;
         this.cookieStore = cookieStore;
         this.proxy = proxy;
+        this.credentialsProvider = credentialsProvider;
         this.isLoggedIn = true;
     }
     
@@ -172,6 +174,10 @@ public class Instagram4j implements Serializable {
         if (proxy != null) {
             builder.setProxy(proxy);
         }
+
+        if(credentialsProvider != null)
+            builder.setDefaultCredentialsProvider(credentialsProvider);
+
         builder.setDefaultCookieStore(this.cookieStore);
         this.client = builder.build();
     }
