@@ -19,23 +19,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 /**
- * Inbox Thread Item
+ * Inbox Thread Links
  * 
- * @author Krisnamourt da Silva C. Filho
+ * @author Jaydeep Gohel
  *
  */
-@Getter	
+@Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramInboxThreadItem {
-
-	public String item_id;
-	public String user_id;
-	public long timestamp;
-	public String item_type;
-	public String like;
-	public String link;
+public class InstagramInboxThreadLink{
 	public String text;
-	public InstagramInboxThreadReel reel_share;
+	
 }
