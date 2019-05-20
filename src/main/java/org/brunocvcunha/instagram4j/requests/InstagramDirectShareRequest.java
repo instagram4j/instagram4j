@@ -18,21 +18,24 @@ package org.brunocvcunha.instagram4j.requests;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Direct-share request.
@@ -59,6 +62,8 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
     private String message;
     private List<String> link_urls;
     private String link_text;
+    private File file;
+    private String fileName;
 
     @Override
     public String getUrl() throws IllegalArgumentException {
@@ -75,6 +80,9 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
             case LINK:
                 result = "direct_v2/threads/broadcast/link/";
                 break;
+            case PHOTO:
+                result = "direct_v2/threads/broadcast/upload_photo/";
+                break;
             default:
                 throw new IllegalArgumentException("Invalid shareType parameter value: " + shareType);
         }
@@ -88,60 +96,53 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 
     @Override
     public StatusResult execute() throws ClientProtocolException, IOException {
+
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        builder.setBoundary(api.getUuid());
+
+        if (shareType == ShareType.MEDIA) {
+            StringBody mediaIdBody = new StringBody(mediaId, ContentType.MULTIPART_FORM_DATA);
+            builder.addPart("media_id", mediaIdBody);
+        }
+
+        if (shareType == ShareType.LINK) {
+            // this is the same array formatting magic as with the recipients
+            String link_urls = "";
+            link_urls = "\"" + String.join("\",\"", this.link_urls.toArray(new String[0])) + "\"";
+
+            StringBody linkUrlsBody = new StringBody(link_urls, ContentType.MULTIPART_FORM_DATA);
+            builder.addPart("link_urls", linkUrlsBody);
+            StringBody linkTextBody = new StringBody(link_text, ContentType.MULTIPART_FORM_DATA);
+            builder.addPart("link_text", linkTextBody);
+        }
+
+        if (shareType == ShareType.PHOTO) {
+            FileBody fileBody = new FileBody(file, ContentType.DEFAULT_BINARY);
+            builder.addPart("photo", fileBody);
+        }
+
         String recipients = "";
         if (this.recipients != null) {
             recipients = "\"" + String.join("\",\"", this.recipients.toArray(new String[0])) + "\"";
         }
+        StringBody recipientsBody = new StringBody("[[" + recipients + "]]");
+        builder.addPart("recipient_users", recipientsBody);
 
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        StringBody clientContextBody = new StringBody(InstagramGenericUtil.generateUuid(true));
+        builder.addPart("client_context", clientContextBody);
 
-        Map<String, String> map = new HashMap<String, String>();
-        if (shareType == ShareType.MEDIA) {
-            map.put("type", "form-data");
-            map.put("name", "media_id");
-            map.put("data", mediaId);
-            data.add(map);
-        }
+        // TODO actually support multiple threadIds
+        StringBody threadIdsBody = new StringBody("[" + (threadId != null ? threadId : "") + "]");
+        builder.addPart("thread_ids", threadIdsBody);
 
-        if (shareType == ShareType.LINK) {
-            String link_urls = "";
-            link_urls = "\"" + String.join("\",\"", this.link_urls.toArray(new String[0])) + "\"";
-            map.put("type", "form-data");
-            map.put("name", "link_urls");
-            map.put("data", "[" + link_urls + "]");
-            data.add(map);
-            map = new HashMap<>();
-            map.put("name", "link_text");
-            map.put("data", link_text);
-            data.add(map);
-        }
+        StringBody messageBody = new StringBody(message == null ? "" : message);
+        builder.addPart("text", messageBody);
 
-        map = map.size() > 0 ? new HashMap<String, String>() : map;
-        map.put("type", "form-data");
-        map.put("name", "recipient_users");
-        map.put("data", "[[" + recipients + "]]");
-        data.add(map);
-
-        map = new HashMap<String, String>();
-        map.put("type", "form-data");
-        map.put("name", "client_context");
-        map.put("data", InstagramGenericUtil.generateUuid(true));
-        data.add(map);
-
-        map = new HashMap<String, String>();
-        map.put("type", "form-data");
-        map.put("name", "thread_ids");
-        map.put("data", "[" + (threadId != null ? threadId : "") + "]");
-        data.add(map);
-
-        map = new HashMap<String, String>();
-        map.put("type", "form-data");
-        map.put("name", "text");
-        map.put("data", message == null ? "" : message);
-        data.add(map);
 
         HttpPost post = createHttpRequest();
-        post.setEntity(new ByteArrayEntity(buildBody(data, api.getUuid()).getBytes(StandardCharsets.UTF_8)));
+        HttpEntity entity = builder.build();
+        post.setEntity(entity);
 
         try (CloseableHttpResponse response = api.getClient().execute(post)) {
             api.setLastResponse(response);
@@ -178,21 +179,6 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
         return post;
     }
 
-    protected String buildBody(List<Map<String, String>> bodies, String boundary) {
-        StringBuilder sb = new StringBuilder();
-        String newLine = "\r\n";
-        for (Map<String, String> b : bodies) {
-            sb.append("--").append(boundary).append(newLine).append("Content-Disposition: ").append(b.get("type"))
-                    .append("; name=\"").append(b.get("name")).append("\"").append(newLine).append(newLine)
-                    .append(b.get("data")).append(newLine);
-        }
-        sb.append("--").append(boundary).append("--");
-        String body = sb.toString();
-
-        log.debug("Direct-share message body: " + body);
-        return body;
-    }
-
     protected void init() {
         switch (shareType) {
             case MEDIA:
@@ -210,6 +196,13 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
                 if (link_urls == null || link_urls.size() == 0) {
                     throw new IllegalArgumentException("link url cannot be empty");
                 }
+                break;
+            case PHOTO:
+                if(file == null)
+                    throw new IllegalArgumentException("file can not be null");
+                if(!file.exists())
+                    // not using FileNotFoundException because technically, the argument is still invalid
+                    throw new IllegalArgumentException("file " + file.getAbsolutePath() + " was not found");
                 break;
             default:
                 break;
