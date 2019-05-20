@@ -110,6 +110,7 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
             // this is the same array formatting magic as with the recipients
             String link_urls = "";
             link_urls = "\"" + String.join("\",\"", this.link_urls.toArray(new String[0])) + "\"";
+            link_urls = "[" + link_urls + "]";
 
             StringBody linkUrlsBody = new StringBody(link_urls, ContentType.MULTIPART_FORM_DATA);
             builder.addPart("link_urls", linkUrlsBody);
