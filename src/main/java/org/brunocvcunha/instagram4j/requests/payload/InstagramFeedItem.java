@@ -46,7 +46,7 @@ public class InstagramFeedItem {
     public Map<String, Object> attribution;
     public List<Object> video_versions;
     public ImageVersions image_versions2;
-    public List<InstagramFeedUserTag> usertags;
+    public InstagramUserTagsContainer usertags;
     public Map<String, Object> location;
     public float lng;
     public float lat;
