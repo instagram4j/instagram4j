@@ -22,9 +22,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.Instagram4j;
+import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
 
@@ -39,6 +43,14 @@ import lombok.extern.log4j.Log4j;
 @NoArgsConstructor
 @Log4j
 public abstract class InstagramRequest<T> {
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    protected static class HttpResponseContainer {
+        private int statusCode;
+        private String content;
+    }
 
     @Getter @Setter
     @JsonIgnore
@@ -158,5 +170,36 @@ public abstract class InstagramRequest<T> {
     public boolean isSigned() {
         return true;
     }
-    
+
+    /**
+     * Common HTTP request preparation
+     * @param request Get/Post request
+     */
+    protected void prepareRequest(HttpRequestBase request) {
+        request.addHeader("Connection", "close");
+        request.addHeader("Accept", "*/*");
+        request.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        request.addHeader("Cookie2", "$Version=1");
+        request.addHeader("Accept-Language", "en-US");
+        request.addHeader("User-Agent", InstagramConstants.USER_AGENT);
+    }
+
+    /**
+     * Get/Post request execution
+     * @param request Get/Post request
+     * @return Container with status code and content
+     * @throws IOException
+     */
+    protected HttpResponseContainer performHttpRequest(HttpRequestBase request) throws IOException {
+        HttpResponse response = api.getClient().execute(request);
+        api.setLastResponse(response);
+
+        int resultCode = response.getStatusLine().getStatusCode();
+        String content = EntityUtils.toString(response.getEntity());
+
+        request.releaseConnection();
+
+        HttpResponseContainer container = new HttpResponseContainer(resultCode, content);
+        return container;
+    }
 }

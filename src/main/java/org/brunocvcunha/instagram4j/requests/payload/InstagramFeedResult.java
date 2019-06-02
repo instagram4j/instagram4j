@@ -23,6 +23,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.brunocvcunha.instagram4j.storymetadata.Story;
 
 /**
  * Data class for response from feed requests
@@ -44,4 +45,9 @@ public class InstagramFeedResult extends StatusResult {
 
     private boolean more_available;
 
+    private int media_count;
+
+    private InstagramLocation location;
+
+    private Story story;
 }

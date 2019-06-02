@@ -29,7 +29,7 @@ public class InstagramGetRecentActivityRequest extends InstagramGetRequest<Statu
 
     @Override
     public String getUrl() {
-        return "news/inbox/?";
+        return "news/inbox/";
     }
 
     @Override

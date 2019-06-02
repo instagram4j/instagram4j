@@ -24,12 +24,13 @@ import java.util.List;
 /**
  * Search Locations Result
  *
- * @author Yumaev
- *
+ * @author Yumaev, bvn13
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
 public class InstagramSearchLocationsResult extends StatusResult {
-	private List<InstagramLocation> venues;
+	private boolean has_more;
+	private String rank_token;
+	private List<InstagramLocationContainer> items;
 }

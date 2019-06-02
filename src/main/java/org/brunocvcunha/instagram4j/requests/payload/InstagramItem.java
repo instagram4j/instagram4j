@@ -32,7 +32,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramItem extends StatusResult{
+public class InstagramItem extends StatusResult {
     private final int PHOTO = 1;
     private final int VIDEO = 2;
     private final int ALBUM = 8;
@@ -48,7 +48,7 @@ public class InstagramItem extends StatusResult{
     private InstagramUser user;
     //private InstagramFeedUserTag usertags;
     //private InstagramMedia media;
-    //private InstagramStory stories;
+    //private InstagramStoryItem stories;
     private List<Integer> media_ids;
     private List<StoryPollItem> story_polls;
     private int media_id;

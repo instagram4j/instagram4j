@@ -36,9 +36,9 @@ public class InstagramLocationFeedRequest extends InstagramGetRequest<InstagramF
 
 	@Override
 	public String getUrl() {
-		String url = "feed/location/" + location + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
+		String url = "feed/location/" + location + "/?rank_token=" + api.getRankToken() + "&ranked_content=true";
 		if (maxId != null && !maxId.isEmpty()) {
-			url += "max_id=" + maxId;
+			url += "&max_id=" + maxId;
 		}
 		return url;
 	}

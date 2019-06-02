@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.NonFinal;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramContent;
 
 /**
  * Status Result
@@ -36,7 +37,7 @@ import lombok.experimental.NonFinal;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class StatusResult {
+public class StatusResult extends InstagramContent {
     @NonNull
     private String status;
     private String message;
@@ -47,6 +48,4 @@ public class StatusResult {
     private String feedback_message;
     private String error_type;
     private String checkpoint_url;
-    
-
 }

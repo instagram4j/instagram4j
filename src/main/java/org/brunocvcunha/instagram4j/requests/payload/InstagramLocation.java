@@ -28,13 +28,15 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class InstagramLocation {
+	private long pk;
 	private double lat;
 	private double lng;
 	private String address;
-	private String external_id;
-	private String external_id_source;
+	private String city;
+	private String external_source;
+	private String facebook_places_id;
 	private String name;
-	private String minimum_age;
+	private String short_name;
 }

@@ -24,24 +24,26 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramSearchLocationsRes
 /**
  * Search Locations Request
  *
- * @author Yumaev
+ * @author Yumaev, bvn13
  */
 @RequiredArgsConstructor
 public class InstagramSearchLocationsRequest extends InstagramGetRequest<InstagramSearchLocationsResult> {
 
-	@NonNull private final String latitude;
-	@NonNull private final String longitude;
+	//@NonNull private final String latitude;
+	//@NonNull private final String longitude;
 	@NonNull private final String query;
-	private final String timestamp = String.valueOf(System.currentTimeMillis());
+	//private final String timestamp = String.valueOf(System.currentTimeMillis());
 
 	@Override
 	public String getUrl() {
-		return "location_search/?ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION
-				+ "&search_query=" + query
-				+ "&rank_token=" + api.getRankToken()
-				+ "&latitude=" + latitude
-				+ "&longitude=" + longitude
-				+ "&timestamp=" + timestamp;
+		return "fbsearch/places/?rank_token=" + api.getRankToken() + "&query=" + query;
+
+//		return "location_search/?ig_sig_key_version=" + InstagramConstants.API_KEY_VERSION
+//				+ "&search_query=" + query
+//				+ "&rank_token=" + api.getRankToken()
+//				+ "&latitude=" + latitude
+//				+ "&longitude=" + longitude
+//				+ "&timestamp=" + String.valueOf(System.currentTimeMillis());
 	}
 
 	@Override

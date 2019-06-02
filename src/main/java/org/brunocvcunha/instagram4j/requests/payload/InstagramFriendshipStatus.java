@@ -18,6 +18,7 @@ package org.brunocvcunha.instagram4j.requests.payload;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramContent;
 
 /**
  * Friendship Status VO
@@ -28,7 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramFriendshipStatus {
+public class InstagramFriendshipStatus extends InstagramContent {
     public boolean following;
     public boolean followed_by;
     public boolean incoming_request;

@@ -53,10 +53,6 @@ public class InstagramMuteStoryRequest extends InstagramPostRequest<InstagramPos
         ObjectMapper mapper = new ObjectMapper();
         String payloadJson = mapper.writeValueAsString(likeMap);
 
-
-
-
-
         return payloadJson;
     }
 

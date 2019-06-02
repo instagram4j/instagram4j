@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Builder;
 import lombok.SneakyThrows;
+import org.brunocvcunha.instagram4j.requests.payload.Hashtag;
 
 /**
  * StoryHashtag
@@ -33,6 +34,11 @@ import lombok.SneakyThrows;
  */
 @Builder
 public class StoryHashtag extends StoryMetadata {
+
+    /**
+     * Hashtag data
+     */
+    private Hashtag hashtag;
     /**
      * Hashtag name without '#'
      */

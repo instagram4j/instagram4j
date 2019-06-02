@@ -36,9 +36,9 @@ public class InstagramGetInboxThreadRequest extends InstagramGetRequest<Instagra
 
 	@Override
 	public String getUrl() {
-		String baseUrl = "direct_v2/threads/" + threadId + "/?";
+		String baseUrl = "direct_v2/threads/" + threadId + "/";
 		if (cursor != null && !cursor.isEmpty()) {
-			baseUrl += "&cursor=" + cursor;
+			baseUrl += "?cursor=" + cursor;
 		}
 		return baseUrl;
 	}

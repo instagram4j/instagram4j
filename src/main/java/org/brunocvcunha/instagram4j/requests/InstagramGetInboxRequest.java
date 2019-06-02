@@ -41,9 +41,9 @@ public class InstagramGetInboxRequest extends InstagramGetRequest<InstagramInbox
 	@Override
 	public String getUrl() {
 
-		String baseUrl = "direct_v2/inbox/?";
+		String baseUrl = "direct_v2/inbox/";
 		if (cursor != null && !cursor.isEmpty()) {
-            baseUrl += "&cursor=" + cursor;
+            baseUrl += "?cursor=" + cursor;
         }
 		return baseUrl;
 	}

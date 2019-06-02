@@ -37,9 +37,9 @@ public class InstagramTagFeedRequest extends InstagramGetRequest<InstagramFeedRe
 
 	@Override
 	public String getUrl() {
-		String url = "feed/tag/" + tag + "/?rank_token=" + api.getRankToken() + "&ranked_content=true&";
+		String url = "feed/tag/" + tag + "/?rank_token=" + api.getRankToken() + "&ranked_content=true";
 		if (maxId != null && !maxId.isEmpty()) {
-			url += "max_id=" + maxId;
+			url += "&max_id=" + maxId;
 		}
 		return url;
 	}

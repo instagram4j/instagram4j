@@ -17,12 +17,11 @@ package org.brunocvcunha.instagram4j.requests;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramContent;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 
 import lombok.extern.log4j.Log4j;
@@ -33,7 +32,7 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @Log4j
-public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
+public abstract class InstagramPostRequest<T extends InstagramContent> extends InstagramRequest<T> {
 
     @Override
     public String getMethod() {
@@ -43,13 +42,8 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
     @Override
     public T execute() throws ClientProtocolException, IOException {
         HttpPost post = new HttpPost(InstagramConstants.API_URL + getUrl());
-        post.addHeader("Connection", "close");
-        post.addHeader("Accept", "*/*");
-        post.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        post.addHeader("Cookie2", "$Version=1");
-        post.addHeader("Accept-Language", "en-US");
-        post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
-        
+        prepareRequest(post);
+
         log.debug("User-Agent: " + InstagramConstants.USER_AGENT);
         String payload = getPayload();
         log.debug("Base Payload: " + payload);
@@ -59,16 +53,13 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         }
         log.debug("Final Payload: " + payload);
         post.setEntity(new StringEntity(payload));
-        
-        HttpResponse response = api.getClient().execute(post);
-        api.setLastResponse(response);
-        
-        int resultCode = response.getStatusLine().getStatusCode();
-        String content = EntityUtils.toString(response.getEntity());
-        
-        post.releaseConnection();
 
-        return parseResult(resultCode, content);
+        HttpResponseContainer container = performHttpRequest(post);
+
+        T result = parseResult(container.getStatusCode(), container.getContent());
+        result.setResponseContent(container.getContent());
+
+        return result;
     }
 
 }

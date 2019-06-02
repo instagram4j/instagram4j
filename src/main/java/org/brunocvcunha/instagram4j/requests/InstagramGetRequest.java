@@ -17,18 +17,21 @@ package org.brunocvcunha.instagram4j.requests;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramContent;
 
 /**
  * 
  * @author brunovolpato
  *
  */
-public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
+public abstract class InstagramGetRequest<T extends InstagramContent> extends InstagramRequest<T> {
+
+    protected String getApiUrl() {
+        return InstagramConstants.API_URL;
+    }
 
     @Override
     public String getMethod() {
@@ -37,23 +40,14 @@ public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
     
     @Override
     public T execute() throws ClientProtocolException, IOException {
-        HttpGet get = new HttpGet(InstagramConstants.API_URL + getUrl());
-        get.addHeader("Connection", "close");
-        get.addHeader("Accept", "*/*");
-        get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        get.addHeader("Cookie2", "$Version=1");
-        get.addHeader("Accept-Language", "en-US");
-        get.addHeader("User-Agent", InstagramConstants.USER_AGENT);
-        
-        HttpResponse response = api.getClient().execute(get);
-        api.setLastResponse(response);
-        
-        int resultCode = response.getStatusLine().getStatusCode();
-        String content = EntityUtils.toString(response.getEntity());
-        
-        get.releaseConnection();
+        HttpGet get = new HttpGet(getApiUrl() + getUrl());
+        prepareRequest(get);
 
-        return parseResult(resultCode, content);
+        HttpResponseContainer container = performHttpRequest(get);
+
+        T result = parseResult(container.getStatusCode(), container.getContent());
+        result.setResponseContent(container.getContent());
+        return result;
     }
     
     @Override
