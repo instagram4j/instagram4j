@@ -4,6 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramGetStoryViewersResult;
 
+/**
+ *
+ * {@link InstagramGetRequest} class to get story viewers of a certain story id
+ *
+ * @author Daniele Pancottini
+ *
+ */
+
 @AllArgsConstructor
 public class InstagramGetStoryViewersRequest extends InstagramGetRequest<InstagramGetStoryViewersResult> {
 

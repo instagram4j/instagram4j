@@ -7,6 +7,15 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ *
+ * Data class which represents response of {@link org.brunocvcunha.instagram4j.requests.InstagramGetUserReelMediaFeedRequest} (users's story/ies)
+ *
+ * @author Daniele Pancottini
+ *
+ *
+ */
+
 @Getter
 @Setter
 @ToString(callSuper = true)

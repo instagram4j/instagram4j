@@ -2,8 +2,15 @@ package org.brunocvcunha.instagram4j.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramGetReelsTrayFeedResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramUserReelMediaFeedResult;
+
+/**
+ *
+ * {@link InstagramGetRequest} class to get stories of a certain user pk
+ *
+ * @author Daniele Pancottini
+ *
+ */
 
 @AllArgsConstructor
 public class InstagramGetUserReelMediaFeedRequest extends InstagramGetRequest<InstagramUserReelMediaFeedResult> {
