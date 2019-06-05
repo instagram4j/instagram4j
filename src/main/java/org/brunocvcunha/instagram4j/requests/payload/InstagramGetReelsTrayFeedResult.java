@@ -37,5 +37,6 @@ public class InstagramGetReelsTrayFeedResult extends StatusResult {
     private int face_filter_nux_version;
     private boolean has_new_nux_story;
     private String story_ranking_token;
+    private boolean stories_viewer_gestures_nux_eligible;
 
 }

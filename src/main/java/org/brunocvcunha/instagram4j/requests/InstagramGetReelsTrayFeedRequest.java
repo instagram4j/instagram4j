@@ -33,7 +33,7 @@ public class InstagramGetReelsTrayFeedRequest extends InstagramGetRequest<Instag
 
     @Override
     public String getUrl() {
-        return "feed/reels_tray/?";
+        return "feed/reels_tray/";
     }
 
     @Override
