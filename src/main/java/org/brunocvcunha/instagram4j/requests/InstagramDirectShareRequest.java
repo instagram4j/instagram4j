@@ -15,21 +15,23 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
+import org.brunocvcunha.inutils4j.MyImageUtils;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -49,16 +51,90 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 	/**
 	 * List of recipients IDs (i.e. "1234567890")
 	 */
+	@NonNull
 	private List<String> recipients;
 	/**
 	 * The thread ID to share to
 	 */
 	private String threadId;
 	/**
-	 * The media ID in instagram's internal format (ie "223322332233_22332").
+	 * Text field that if is populated will be appended to share request as message
+	 */
+	private String text;
+	/**
+	 * {@link ShareType#VIDEO} fields
+	 * 
+	 * mediaId {@link NonNull}
+	 * videoResult
 	 */
 	private String mediaId;
+	private String videoResult;
+	/**
+	 * {@link ShareType#MESSAGE} fields
+	 * 
+	 * message {@link NonNull}
+	 */
 	private String message;
+	
+	/**
+	 * {@link ShareType#HASHTAG} fields
+	 * 
+	 * hashtag {@link NonNull}
+	 */
+	private String hashtag;
+	/**
+	 * {@link ShareType#LOCATION} fields
+	 * 
+	 * venueId {@link NonNull}
+	 */
+	private String venueId;
+	/**
+	 * {@link ShareType#PROFILE} fields
+	 * 
+	 * userId {@link NonNull}
+	 */
+	private String userId;
+	/**
+	 * {@link ShareType#PHOTO} fields
+	 * 
+	 * photoFilePath {@link NonNull}
+	 * photoFile
+	 * photoArray
+	 * uploadId
+	 */
+	private String photoFilePath;
+	private File photoFile;
+	private byte[] photoArray;
+	private String uploadId;
+	/**
+	 * 
+	 * {@link ShareType#LINKS} fields
+	 * 
+	 * link_urls {@link NonNull}
+	 * link_text 
+	 */
+	private List<String> linkUrls;
+	private String linkText;
+	/**
+	 * 
+	 * {@link ShareType#LIVE} fields
+	 * 
+	 * broadcastId {@link NonNull}
+	 */
+	private String broadcastId;
+	/**
+	 * 
+	 * {@link ShareType#REACTION} fields
+	 * 
+	 * reactionType
+	 * reactionStatus
+	 * itemId
+	 * nodeType
+	 */
+	private String reactionType;
+	private String reactionStatus;
+	private String itemId;
+	private String nodeType;
 
 	@Override
 	public String getUrl() throws IllegalArgumentException {
@@ -69,6 +145,33 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 			break;
 		case MEDIA:
 			result = "direct_v2/threads/broadcast/media_share/?media_type=photo";
+			break;
+		case LIKE:
+			result = "direct_v2/threads/broadcast/like/";
+			break;
+		case HASHTAG:
+			result = "direct_v2/threads/broadcast/hashtag/";
+			break;
+		case LOCATION:
+			result = "direct_v2/threads/broadcast/location/";
+			break;
+		case PROFILE:
+			result = "direct_v2/threads/broadcast/profile/";
+			break;
+		case PHOTO:
+			result = "direct_v2/threads/broadcast/upload_photo/";
+			break;
+		case VIDEO:
+			result = "direct_v2/threads/broadcast/configure_video/";
+			break;
+		case LINKS:
+			result = "direct_v2/threads/broadcast/link/";
+			break;
+		case REACTION:
+			result = "direct_v2/threads/broadcast/reaction/";
+			break;
+		case LIVE:
+			result = "direct_v2/threads/broadcast/live_viewer_invite/";
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid shareType parameter value: " + shareType);
@@ -88,43 +191,68 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 			recipients = "\"" + String.join("\",\"", this.recipients.toArray(new String[0])) + "\"";
 		}
 		
-		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
-		Map<String, String> map = new HashMap<String, String>();
-		if (shareType == ShareType.MEDIA) {
-			map.put("type", "form-data");
-			map.put("name", "media_id");
-			map.put("data", mediaId);
-			data.add(map);
+		switch(shareType) {
+			case MEDIA:
+				builder.addTextBody("media_id", mediaId);
+				break;
+			case MESSAGE:
+		        builder.addTextBody("text", message);
+				break;
+			case HASHTAG:
+				builder.addTextBody("hashtag", hashtag);
+				break;
+			case LOCATION:
+				builder.addTextBody("venue_id", venueId);
+				break;
+			case PROFILE:
+				builder.addTextBody("profile_user_id", userId);
+				break;
+			case PHOTO:
+			    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			            ImageIO.write(MyImageUtils.getImage(photoFile), "jpg", baos);
+			            baos.flush();
+			            photoArray = baos.toByteArray();
+			            this.uploadId = String.valueOf(System.currentTimeMillis());
+			    }
+				builder.addBinaryBody("photo", photoArray, ContentType.APPLICATION_OCTET_STREAM, "pending_media_" + uploadId + ".jpg");
+				break;
+			case VIDEO:
+				builder.addTextBody("upload_id", mediaId);
+				if(videoResult != null)
+					builder.addTextBody("video_result", videoResult);
+				break;
+			case LINKS:
+				String linkUrlsAsString = "\"" + String.join("\",\"", this.linkUrls.toArray(new String[0])) + "\"";
+				
+				builder.addTextBody("link_urls", "[" + linkUrlsAsString + "]");
+		        builder.addTextBody("link_text", linkText);
+				break;
+			case REACTION:
+				builder.addTextBody("reaction_type", reactionType);
+				builder.addTextBody("reaction_status", reactionStatus);
+				builder.addTextBody("item_id", itemId);
+				builder.addTextBody("node_type", nodeType);
+				break;
+			case LIVE:
+				builder.addTextBody("broadcast_id", broadcastId);
+				break;
+			default:
+				break;
 		}
-
-		map = map.size() > 0 ? new HashMap<String, String>() : map;
-		map.put("type", "form-data");
-		map.put("name", "recipient_users");
-		map.put("data", "[[" + recipients + "]]");
-		data.add(map);
-
-		map = new HashMap<String, String>();
-		map.put("type", "form-data");
-		map.put("name", "client_context");
-		map.put("data", InstagramGenericUtil.generateUuid(true));
-		data.add(map);
-
-		map = new HashMap<String, String>();
-		map.put("type", "form-data");
-		map.put("name", "thread_ids");
-		map.put("data", "[" + (threadId != null ? threadId : "") + "]");
-		data.add(map);
-
-		map = new HashMap<String, String>();
-		map.put("type", "form-data");
-		map.put("name", "text");
-		map.put("data", message == null ? "" : message);
-		data.add(map);
-
+		
+		if(this.text != null)
+			builder.addTextBody("text", text);
+		
+		builder.addTextBody("recipient_users", "[[" + recipients + "]]");
+		builder.addTextBody("client_context", InstagramGenericUtil.generateUuid(true));		
+		builder.addTextBody("thread_ids", "[" + (threadId != null ? threadId : "") + "]");
+		builder.setBoundary(api.getUuid());
+		
 		HttpPost post = createHttpRequest();
-		post.setEntity(new ByteArrayEntity(buildBody(data, api.getUuid()).getBytes(StandardCharsets.UTF_8)));
-
+		post.setEntity(builder.build());
+		
 		try (CloseableHttpResponse response = api.getClient().execute(post)) {
 			api.setLastResponse(response);
 
@@ -160,22 +288,8 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		return post;
 	}
 
-	protected String buildBody(List<Map<String, String>> bodies, String boundary) {
-		StringBuilder sb = new StringBuilder();
-		String newLine = "\r\n";
-		for (Map<String, String> b : bodies) {
-			sb.append("--").append(boundary).append(newLine).append("Content-Disposition: ").append(b.get("type"))
-					.append("; name=\"").append(b.get("name")).append("\"").append(newLine).append(newLine)
-					.append(b.get("data")).append(newLine);
-		}
-		sb.append("--").append(boundary).append("--");
-		String body = sb.toString();
-
-		log.debug("Direct-share message body: " + body);
-		return body;
-	}
-
 	protected void init() {
+		
 		switch (shareType) {
 		case MEDIA:
 			if (mediaId == null || mediaId.isEmpty()) {
@@ -187,9 +301,63 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 				throw new IllegalArgumentException("message cannot be null or empty.");
 			}
 			break;
+		case HASHTAG:
+			if (hashtag == null || hashtag.isEmpty()) {
+				throw new IllegalArgumentException("hashtag cannot be null or empty.");
+			}
+			break;
+		case LOCATION:
+			if (venueId == null || venueId.isEmpty()) {
+				throw new IllegalArgumentException("venueId cannot be null or empty.");
+			}
+			break;
+		case PROFILE:
+			if (userId == null || userId.isEmpty()) {
+				throw new IllegalArgumentException("userId cannot be null or empty.");
+			}
+			break;
+		case PHOTO:
+			if (photoFilePath == null || photoFilePath.isEmpty()) {
+				throw new IllegalArgumentException("photoFilePath cannot be null or empty.");
+			}
+			this.photoFile = new File(this.photoFilePath);
+			break;
+		case VIDEO:
+			if (mediaId == null || mediaId.isEmpty()) {
+				throw new IllegalArgumentException("mediaId cannot be null or empty.");
+			}
+			break;
+		case LINKS:
+			if (linkUrls == null || linkUrls.isEmpty()) {
+				throw new IllegalArgumentException("linkUrls cannot be null or empty.");
+			}
+			if(linkText == null || linkText.isEmpty()) {
+				throw new IllegalArgumentException("linkText cannot be null or empty.");
+			}
+			break;
+		case REACTION:
+			if(reactionType == null || reactionType.isEmpty()) {
+				throw new IllegalArgumentException("reactionType cannot be null or empty.");
+			}
+			if(reactionStatus == null || reactionStatus.isEmpty()) {
+				throw new IllegalArgumentException("reactionStatus cannot be null or empty.");
+			}
+			if(itemId == null || itemId.isEmpty()) {
+				throw new IllegalArgumentException("itemId cannot be null or empty.");
+			}
+			if(nodeType == null || nodeType.isEmpty()) {
+				throw new IllegalArgumentException("nodeType cannot be null or empty.");
+			}
+			break;
+		case LIVE:
+			if (broadcastId == null || broadcastId.isEmpty()) {
+				throw new IllegalArgumentException("broadcastId cannot be null or empty.");
+			}
+			break;
 		default:
 			break;
 		}
+		
 	}
 
 	public static Builder builder(ShareType shareType) {
@@ -218,6 +386,16 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 	}
 
 	public enum ShareType {
-		MESSAGE, MEDIA
+		MEDIA,
+		MESSAGE,
+		LIKE,
+		HASHTAG,
+		LOCATION,
+		PROFILE,
+		PHOTO,
+		VIDEO,
+		LINKS,
+		REACTION,
+		LIVE 
 	}
 }
