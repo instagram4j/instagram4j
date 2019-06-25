@@ -53,7 +53,7 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         log.debug("User-Agent: " + InstagramConstants.USER_AGENT);
         String payload = getPayload();
         log.debug("Base Payload: " + payload);
-        
+
         if (isSigned()) {
             payload = InstagramHashUtil.generateSignature(payload);
         }

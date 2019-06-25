@@ -33,21 +33,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.params.HttpParams;
-import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramLoginTwoFactorRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
+import org.brunocvcunha.instagram4j.requests.*;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramFetchHeadersRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramLogAttributionRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramReadMsisdnHeaderRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramSyncFeaturesRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramZeroRatingTokenRequest;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginTwoFactorPayload;
+import org.brunocvcunha.instagram4j.requests.payload.*;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 import org.brunocvcunha.inutils4j.MyNumberUtils;
@@ -105,6 +97,21 @@ public class Instagram4j implements Serializable {
 
     @Getter
     protected CloseableHttpClient client;
+
+    @Getter
+    protected String Challenge;
+    @Getter
+    protected String LoginStatus;
+    @Getter
+    protected String LoginResult;
+    @Getter
+    protected int Followings;
+    @Getter
+    protected  int Followers;
+    @Getter
+    protected  int posts;
+    @Getter
+    protected String ProfilePic;
 
     protected String identifier;
     protected String verificationCode;
@@ -208,9 +215,28 @@ public class Instagram4j implements Serializable {
             identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
         } else if (loginResult.getChallenge() != null) {
             // logic for challenge
-            log.info("Challenge required: " + loginResult.getChallenge());
+
+            InstagramGetChallengeRequest getChallange = new InstagramGetChallengeRequest(loginResult.getChallenge().getApi_path().substring(1));
+            InstagramGetChallengeResult getChallengeResult = this.sendRequest(getChallange);
+            this.Challenge = getChallengeResult.toString();
+            log.info("Challenge required: " + getChallengeResult);
         }
-        
+
+        this.LoginResult = loginResult.getMessage();
+        this.LoginStatus = loginResult.getStatus();
+
+        try {
+            if (this.LoginStatus.equalsIgnoreCase("ok")) {
+                InstagramSearchUsernameResult userResult = this.sendRequest(new InstagramSearchUsernameRequest(username));
+                this.Followers = userResult.getUser().follower_count;
+                this.Followings = userResult.getUser().following_count;
+                this.posts = userResult.getUser().media_count;
+                this.ProfilePic = userResult.getUser().profile_pic_url;
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return loginResult;
     }
 
@@ -286,10 +312,10 @@ public class Instagram4j implements Serializable {
             this.isLoggedIn = true;
 
             this.sendRequest(new InstagramSyncFeaturesRequest(false));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
+          //  this.sendRequest(new InstagramAutoCompleteUserListRequest());
+        //    this.sendRequest(new InstagramTimelineFeedRequest());
+         // this.sendRequest(new InstagramGetInboxRequest());
+         //  this.sendRequest(new InstagramGetRecentActivityRequest());
         }
     }
     
