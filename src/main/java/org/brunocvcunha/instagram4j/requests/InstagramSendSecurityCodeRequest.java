@@ -63,6 +63,6 @@ public class InstagramSendSecurityCodeRequest extends InstagramPostRequest<Insta
     @Override
     @SneakyThrows
     public InstagramLoginResult parseResult(int statusCode, String content) {
-        return (InstagramLoginResult) this.parseJson(statusCode, content, InstagramLoginResult.class);
+        return this.parseJson(statusCode, content, InstagramLoginResult.class);
     }
 }
