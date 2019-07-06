@@ -85,7 +85,7 @@ public class StoryCountdown extends StoryMetadata {
      * Color of digit card
      */
     @Builder.Default
-    private String digit_card_color = "#FFFFFFF";
+    private String digit_card_color = "#FFFFFF";
     /**
      * Allow viewers to subscribe to a notification when the countdown ends
      */
