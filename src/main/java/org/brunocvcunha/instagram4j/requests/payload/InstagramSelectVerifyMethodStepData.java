@@ -30,7 +30,9 @@ import lombok.ToString;
 public class InstagramSelectVerifyMethodStepData {
 
     public String security_code;
+    public int sms_resend_delay;
     public int resend_delay;
     public String contact_point;
     public String form_type;
+    public String phone_number_preview;
 }

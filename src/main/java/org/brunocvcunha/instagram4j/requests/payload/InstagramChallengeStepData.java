@@ -34,4 +34,5 @@ public class InstagramChallengeStepData {
     private String big_blue_token;
     private boolean google_oauth_token;
     private String phone_number;
+    private String email;
 }

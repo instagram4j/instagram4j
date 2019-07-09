@@ -29,6 +29,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramSelectVerifyMethodResult extends StatusResult {
 
+    private String action;
     private String step_name;
     private InstagramSelectVerifyMethodStepData step_data;
     private long user_id;
