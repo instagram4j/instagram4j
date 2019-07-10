@@ -29,8 +29,9 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramGetChallengeResult extends StatusResult {
 
+    private String action;
     private String step_name;
-    private InstagramChallengeStepData step_data;
+    private InstagramStepData step_data;
     private long user_id;
     private String nonce_code;
 }

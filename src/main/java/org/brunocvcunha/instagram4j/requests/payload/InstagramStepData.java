@@ -20,19 +20,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * InstagramSelectVerifyMethodStepData
+ * InstagramStepData
  *
  * @author evosystem
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramSelectVerifyMethodStepData {
+public class InstagramStepData {
 
-    public String security_code;
-    public int sms_resend_delay;
-    public int resend_delay;
-    public String contact_point;
-    public String form_type;
-    public String phone_number_preview;
+    private int choice;
+    private String fb_access_token;
+    private String big_blue_token;
+    private boolean google_oauth_token;
+    private String phone_number;
+    private String email;
+    private String security_code;
+    private int resend_delay;
+    private int sms_resend_delay;
+    private String contact_point;
+    private String form_type;
+    private String phone_number_preview;
 }
