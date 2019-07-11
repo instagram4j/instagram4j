@@ -25,6 +25,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.SneakyThrows;
 
+/**
+ * StorySlider
+ * @author Justin Vo
+ *
+ */
 @Builder
 public class StorySlider extends StoryMetadata {
     /**
@@ -101,13 +106,11 @@ public class StorySlider extends StoryMetadata {
     @Override
     @SneakyThrows
     public String metadata() {
-        // TODO Auto-generated method stub
         return new ObjectMapper().writeValueAsString(this.map());
     }
 
     @Override
     public boolean check() throws IllegalArgumentException {
-        // TODO Auto-generated method stub
         return true;
     }
 
