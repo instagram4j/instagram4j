@@ -41,4 +41,12 @@ public class InstagramStepData {
     private String contact_point;
     private String form_type;
     private String phone_number_preview;
+    private String country;
+    private long enrollment_time;
+    private String enrollment_date;
+    private double latitude;
+    private double longitude;
+    private String city;
+    private String platform;
+    private String user_agent;
 }

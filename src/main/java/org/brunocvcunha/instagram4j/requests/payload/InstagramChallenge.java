@@ -15,9 +15,6 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,5 +30,9 @@ import lombok.ToString;
 public class InstagramChallenge {
     private String url;
     private String api_path;
-    
+    private Boolean hide_webview_header;
+    private Boolean lock;
+    private Boolean logout;
+    private Boolean native_flow;
+
 }
