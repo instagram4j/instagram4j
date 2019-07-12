@@ -125,7 +125,5 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
                 toApplyTo.put(metadata.key(), metadata.metadata());
         }
         
-        toApplyTo.put("mas_opt_in", "NOT_PROMPTED");
-        
     }
 }
