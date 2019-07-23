@@ -16,8 +16,7 @@
 package org.brunocvcunha.instagram4j.requests.payload;
 
 import java.util.List;
-
-import org.brunocvcunha.instagram4j.storymetadata.StoryPollItem;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,28 +32,34 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class InstagramItem extends StatusResult{
-    private final int PHOTO = 1;
-    private final int VIDEO = 2;
-    private final int ALBUM = 8;
-    private String pk;
-    private String id;
-    private String media_type;
-    private String code;
+    public static final int PHOTO = 1;
+    public static final int VIDEO = 2;
+    public static final int ALBUM = 8;
+    public long taken_at;
+    public long pk;
+    public String id;
+    public long device_timestamp;
+    public int media_type;
+    public String code;
+    public String client_cache_key;
+    public int filter_type;
+    public boolean has_audio;
+    public double video_duration;
+    public Map<String, Object> attribution;
+    public List<ImageMeta> video_versions;
+    public ImageVersions image_versions2;
+    public int original_width;
+    public int original_height;
+    public int number_of_qualities;
+    public InstagramUser user;
+    public String organic_tracking_token;
+    public boolean can_viewer_reshare;
+    public boolean caption_is_edited;
+    public InstagramComment caption;
+    public boolean photo_of_you;
+    public boolean comments_disabled;
+    public boolean can_viewer_save;
+    public boolean has_viewer_saved;
     private String visibility;
-    private String taken_at;
-    private String device_timestamp;
-    private String client_cache_key;
-    private String filter_type;
-    private InstagramUser user;
-    //private InstagramFeedUserTag usertags;
-    //private InstagramMedia media;
-    //private InstagramStory stories;
-    private List<Integer> media_ids;
-    private List<StoryPollItem> story_polls;
-    private int media_id;
-    private String thumbnail_urls;
-    private String large_urls;
-    private String media_infos;
-    private String value;
-    private String collapse_comments;
+    private boolean is_reel_media;
 }
