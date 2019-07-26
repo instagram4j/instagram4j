@@ -24,6 +24,9 @@ import org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
@@ -32,22 +35,17 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class InstagramTimelineFeedRequest extends InstagramPostRequest<InstagramFeedResult> {
-
+    @NonNull
     private String maxId;
-    
-    public InstagramTimelineFeedRequest() {
-    }
 
-    public InstagramTimelineFeedRequest(String maxId) {
-        this.maxId = maxId;
-    }
-    
     @Override
     public String getUrl() {
-        return "feed/timeline/";
+	return "feed/timeline/";
     }
-    
+
     @Override
     public boolean isSigned() {
 	return false;
@@ -59,36 +57,36 @@ public class InstagramTimelineFeedRequest extends InstagramPostRequest<Instagram
 	ObjectMapper mapper = new ObjectMapper();
 	Map<String, Object> payload = new LinkedHashMap<>();
 	payload.put("_csrftoken", api.getOrFetchCsrf());
-        payload.put("_uuid", api.getUuid());
-        payload.put("is_prefetch", 0);
-        payload.put("phone_id", api.getDeviceId());
-        payload.put("device_id", api.getUuid());
-        payload.put("battery_level", ThreadLocalRandom.current().nextInt(25, 100));
-        payload.put("is_charging", 0);
-        payload.put("will_sound_on", 1);
-        payload.put("is_on_screen", true);
-        payload.put("timezone_offset", ZonedDateTime.now().getOffset().getTotalSeconds());
-        if(maxId != null  && !maxId.isEmpty()) {
-            payload.put("reason", "pagination");
-            payload.put("max_id", maxId);
-            payload.put("is_pull_to_refresh", 0);
-        }else {
-            payload.put("reason", "cold_start_fetch");
-            payload.put("is_pull_to_refresh", 0);
-        }
-        payload.put("seen_posts", "");
-        payload.put("unseen_posts", "");
-        payload.put("feed_view_info", "");
-        return mapper.writeValueAsString(payload);
+	payload.put("_uuid", api.getUuid());
+	payload.put("is_prefetch", 0);
+	payload.put("phone_id", api.getDeviceId());
+	payload.put("device_id", api.getUuid());
+	payload.put("battery_level", ThreadLocalRandom.current().nextInt(25, 100));
+	payload.put("is_charging", 0);
+	payload.put("will_sound_on", 1);
+	payload.put("is_on_screen", true);
+	payload.put("timezone_offset", ZonedDateTime.now().getOffset().getTotalSeconds());
+	if (maxId != null && !maxId.isEmpty()) {
+	    payload.put("reason", "pagination");
+	    payload.put("max_id", maxId);
+	    payload.put("is_pull_to_refresh", 0);
+	} else {
+	    payload.put("reason", "cold_start_fetch");
+	    payload.put("is_pull_to_refresh", 0);
+	}
+	payload.put("seen_posts", "");
+	payload.put("unseen_posts", "");
+	payload.put("feed_view_info", "");
+	return mapper.writeValueAsString(payload);
     }
 
     @Override
     public InstagramFeedResult parseResult(int statusCode, String content) {
-        try {
-            return this.parseJson(statusCode, content, InstagramFeedResult.class);
-        } catch (Throwable var4) {
-            throw var4;
-        }
+	try {
+	    return this.parseJson(statusCode, content, InstagramFeedResult.class);
+	} catch (Throwable var4) {
+	    throw var4;
+	}
     }
 
 }
