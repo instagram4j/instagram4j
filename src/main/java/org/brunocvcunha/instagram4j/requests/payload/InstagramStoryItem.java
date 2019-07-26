@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramReelMediaItem extends InstagramItem {
+public class InstagramStoryItem extends InstagramItem {
     private String adaction;
     private String link_text;
     private List<StoryCta> story_cta;

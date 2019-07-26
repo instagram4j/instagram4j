@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramReel extends StatusResult{
     private String id;
-    private List<InstagramReelMediaItem> items; //item
+    private List<InstagramStoryItem> items; //item
     private InstagramUser user;
     private long expiring_at;
     private int seen; //boolean?
