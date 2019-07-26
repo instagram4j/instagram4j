@@ -27,7 +27,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class InstagramComment {
-	private long pk;
+	private String pk;
 	private long user_id;
 	private String text;
 	private int type;
