@@ -19,8 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Tally
@@ -28,8 +26,6 @@ import lombok.Setter;
  *
  */
 @Builder
-@Getter
-@Setter
 public class Tally {
     /**
      * String to be displayed on tally

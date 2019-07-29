@@ -41,10 +41,18 @@ public class StoryPollItem {
     
     @Getter
     @Setter
-    private static class PollStickerItem {
+    public static class PollStickerItem {
 	private String id;
 	private long poll_id;
 	private String question;
-	private List<Tally> tallies;
+	private List<TallyItem> tallies;
+	
+	@Getter
+	@Setter
+	public static class TallyItem {
+	    private String text;
+	    private int count;
+	    private int font_size;
+	}
     }
 }
