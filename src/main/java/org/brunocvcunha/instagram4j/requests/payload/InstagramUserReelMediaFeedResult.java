@@ -28,7 +28,7 @@ public class InstagramUserReelMediaFeedResult extends StatusResult{
     public boolean can_reshare;
     public String reel_type;
     public InstagramUser user;
-    public List<InstagramItem> items;
+    public List<InstagramStoryItem> items;
     public String ranked_position;
     public String seen_ranked_position;
     public String expiring_at;
