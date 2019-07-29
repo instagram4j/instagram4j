@@ -42,7 +42,7 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @Log4j
-@Builder(builderClassName = "DirectShareRequestBuilder", builderMethodName = "internalBuilder")
+@Builder
 public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> {
 	@NonNull
 	private ShareType shareType;
@@ -189,31 +189,6 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 			break;
 		default:
 			break;
-		}
-	}
-
-	public static Builder builder(ShareType shareType) {
-		Builder b = new Builder();
-		b.shareType(shareType);
-		return b;
-	}
-	
-	public static Builder builder(ShareType shareType, List<String> recipients) {
-		Builder b = new Builder();
-		b.shareType(shareType).recipients(recipients);
-		return b;
-	}
-
-	public static class Builder extends DirectShareRequestBuilder {
-		Builder() {
-			super();
-		}
-
-		@Override
-		public InstagramDirectShareRequest build() {
-			InstagramDirectShareRequest i = super.build();
-			i.init();
-			return i;
 		}
 	}
 
