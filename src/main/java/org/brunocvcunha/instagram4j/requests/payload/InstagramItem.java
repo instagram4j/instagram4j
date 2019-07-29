@@ -62,4 +62,5 @@ public class InstagramItem extends StatusResult{
     public boolean has_viewer_saved;
     private String visibility;
     private boolean is_reel_media;
+    private boolean can_reply;
 }
