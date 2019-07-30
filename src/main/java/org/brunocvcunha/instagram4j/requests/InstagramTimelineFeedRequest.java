@@ -39,9 +39,9 @@ public class InstagramTimelineFeedRequest extends InstagramGetRequest<InstagramF
     
     @Override
     public String getUrl() {
-        String url = "feed/timeline/";
+        String url = "feed/timeline";
         if (maxId != null && !maxId.isEmpty()) {
-            url += "&max_id=" + maxId;
+            url += "?max_id=" + maxId;
         }
         
         return url;

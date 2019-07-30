@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
+ * Copyright (C) 2018 Zsombor Gegesy (gzsombor@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,20 +19,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
+/**
+ * Representation of a location in a Feed, used in {@link InstagramFeedItem}
+ */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramGetUserReelMediaFeedResult extends StatusResult {
-    private String id;
-    private List<InstagramFeedItem> items; //item
-    private InstagramUser user;
-    private long expiring_at;
-    private int seen; //boolean?
-    private boolean can_reply; //boolean
-    private String location;
-    private String latest_reel_media;
-    private int prefetch_count;
-    private InstagramBroadcast broadcast;
+@ToString
+public class FeedItemLocation {
+    private long pk;
+    private String name;
+    private String address;
+    private String city;
+    private String short_name;
+    private double lat;
+    private double lng;
+    private long facebook_places_id;
+    private String external_source;
+
 }

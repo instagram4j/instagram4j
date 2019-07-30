@@ -6,7 +6,7 @@ instagram4j
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.brunocvcunha.instagram4j/instagram4j) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Code Climate](https://codeclimate.com/github/brunocvcunha/instagram4j/badges/gpa.svg)](https://codeclimate.com/github/brunocvcunha/instagram4j)
 
-:camera: Java client to Instagram's private API. Allows access to all the features that Instagram app provides.
+:camera: Java client to Instagram's private API. Allows access to all features that the Instagram app provides.
 
 Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API) and [Instagram Python Api](https://github.com/LevPasha/Instagram-API-python).
 
@@ -19,12 +19,12 @@ Download [the latest release JAR][1] or grab via Maven:
 <dependency>
   <groupId>org.brunocvcunha.instagram4j</groupId>
   <artifactId>instagram4j</artifactId>
-  <version>1.8</version>
+  <version>1.12</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'org.brunocvcunha.instagram4j:instagram4j:1.8'
+compile 'org.brunocvcunha.instagram4j:instagram4j:1.12'
 ```
 
 
@@ -39,6 +39,37 @@ Supported Operations & Examples
 Instagram4j instagram = Instagram4j.builder().username("username").password("password").build();
 instagram.setup();
 instagram.login();
+
+```
+
+#### Login with proxy without authentication
+
+```java
+// Login to instagram
+
+HttpHost proxy = new HttpHost("host", "port", "http");
+Instagram4j instagram = Instagram4j.builder().username("username").password("password").proxy(proxy).build();
+instagram.setup();
+instagram.login();
+
+```
+
+
+#### Login with proxy with authentication
+
+```java
+// Login to instagram
+
+HttpHost proxy = new HttpHost("host", "port", "http");
+CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(new AuthScope(AuthScope.ANY),
+                new UsernamePasswordCredentials("login", "password"));
+        
+        
+Instagram4j instagram = Instagram4j.builder().username("username").password("password").proxy(proxy).credentialsProvider(credentialsProvider).build();
+instagram.setup();
+instagram.login();
+
 ```
 
 #### Search user by handle
@@ -75,14 +106,14 @@ System.out.println("ID for @github is " + userResult.getUser().getPk());
 System.out.println("Number of followers: " + userResult.getUser().follower_count);
 ```
 
-#### Upload a photo your feed
+#### Upload a photo to your feed
 ```java
 instagram.sendRequest(new InstagramUploadPhotoRequest(
         new File("/tmp/file-to-upload.jpg"),
         "Posted with Instagram4j, how cool is that?"));
 ```
 
-#### Upload a video your feed
+#### Upload a video to your feed
 ```java
 instagram.sendRequest(new InstagramUploadVideoRequest(
         new File("/tmp/file-to-upload.mp4"),
@@ -167,13 +198,6 @@ git clone https://github.com/brunocvcunha/instagram4j
 cd instagram4j
 mvn clean install
 ```
-
-
-#
-
-**Do you like this project? Support it by donating**
-
-- ![btc](https://raw.githubusercontent.com/reek/anti-adblock-killer/gh-pages/images/bitcoin.png) Bitcoin: 3EN9KCzKunc1PQppBXUSa8UCBoncMXii5C
 
 #
 

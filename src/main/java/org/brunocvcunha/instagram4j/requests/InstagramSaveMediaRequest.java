@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
+ * Copyright (C) 2018 Zsombor Gegesy (gzsombor@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,46 +15,51 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 
 /**
- * Login Request
- * 
- * @author Bruno Candido Volpato da Cunha
+ * Request to save a media into the saved media list by it's numerical id.
  *
+ * @author zsombor
  */
 @AllArgsConstructor
-@Log4j
-public class InstagramLoginRequest extends InstagramPostRequest<InstagramLoginResult> {
+public class InstagramSaveMediaRequest extends InstagramPostRequest<StatusResult> {
 
-    private InstagramLoginPayload payload;
+    protected long mediaId;
 
     @Override
     public String getUrl() {
-        return "accounts/login/";
+        return "media/" + mediaId +"/save/";
     }
 
     @Override
     @SneakyThrows
     public String getPayload() {
+        
+        Map<String, Object> likeMap = new LinkedHashMap<>();
+        likeMap.put("_uuid", api.getUuid());
+        likeMap.put("_uid", api.getUserId());
+        likeMap.put("_csrftoken", api.getOrFetchCsrf());
+        likeMap.put("media_id", mediaId);
+        
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(payload);
+        String payloadJson = mapper.writeValueAsString(likeMap);
+
+        return payloadJson;
     }
 
     @Override
     @SneakyThrows
-    public InstagramLoginResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramLoginResult.class);
-    }
-
-    @Override
-    public boolean requiresLogin() {
-        return false;
+    public StatusResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, StatusResult.class);
     }
 
 }

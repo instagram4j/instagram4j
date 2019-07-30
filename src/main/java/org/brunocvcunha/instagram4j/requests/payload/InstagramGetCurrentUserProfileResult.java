@@ -15,24 +15,26 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
+/**
+ * @author Alexander Kohonovsky
+ * @since 2019-04-28
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramGetUserReelMediaFeedResult extends StatusResult {
-    private String id;
-    private List<InstagramFeedItem> items; //item
-    private InstagramUser user;
-    private long expiring_at;
-    private int seen; //boolean?
-    private boolean can_reply; //boolean
-    private String location;
-    private String latest_reel_media;
-    private int prefetch_count;
-    private InstagramBroadcast broadcast;
+public class InstagramGetCurrentUserProfileResult extends StatusResult {
+
+    private InstagramCurrentUserProfile user;
+
+    /**
+     * Can be a nested object or string
+     */
+    @JsonProperty("message")
+    private Object messages;
+
 }
