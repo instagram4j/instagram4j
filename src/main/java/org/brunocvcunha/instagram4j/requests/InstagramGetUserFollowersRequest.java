@@ -15,6 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import lombok.Setter;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramGetUserFollowersResult;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class InstagramGetUserFollowersRequest extends InstagramGetRequest<Instag
 
     @NonNull
     private long userId;
+    @Setter
     private String maxId;
 
     @Override
