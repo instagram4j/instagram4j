@@ -22,6 +22,6 @@ package org.brunocvcunha.instagram4j.requests.payload;
  */
 public enum InstagramMediaTypeEnum {
 
-    PHOTO, VIDEO, ALBUM;
+    PHOTO, VIDEO, ALBUM
 
 }

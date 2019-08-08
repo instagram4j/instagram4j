@@ -39,11 +39,11 @@ public class InstagramCodeUtil {
         int padAmount = (int) Math.ceil((double) base2.length() / 6);
         base2 = String.format("%" + padAmount * 6 + "s", base2).replace(' ', '0');
 
-        String encoded = "";
+        StringBuilder encoded = new StringBuilder();
         for (int i = 0; i < padAmount; i++)
-            encoded += BASE64URL_CHARMAP.charAt(Integer.parseInt(base2.substring(6 * i, 6 * i + 6)));
+            encoded.append(BASE64URL_CHARMAP.charAt(Integer.parseInt(base2.substring(6 * i, 6 * i + 6))));
 
-        return encoded;
+        return encoded.toString();
     }
 
     /**
@@ -58,11 +58,11 @@ public class InstagramCodeUtil {
         if (code == null || code.matches("/[^A-Za-z0-9\\-_]/"))
             throw new IllegalArgumentException("Input must be a valid Instagram shortcode.");
 
-        String base2 = "";
+        StringBuilder base2 = new StringBuilder();
         for (char c : code.toCharArray()) {
             int base64 = BASE64URL_CHARMAP.indexOf(c);
-            base2 += String.format("%6s", Integer.toBinaryString(base64)).replace(' ', '0');
+            base2.append(String.format("%6s", Integer.toBinaryString(base64)).replace(' ', '0'));
         }
-        return Long.parseLong(base2, 2);
+        return Long.parseLong(base2.toString(), 2);
     }
 }

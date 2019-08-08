@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,25 +15,21 @@
  */
 package org.brunocvcunha.instagram4j.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
+import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Hex;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 
-import lombok.SneakyThrows;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Utilities related to hash
- * 
+ *
  * @author Bruno Candido Volpato da Cunha
  *
  */
@@ -45,7 +41,7 @@ public class InstagramHashUtil {
 
     /**
      * Digest a string using the given codec and input
-     * 
+     *
      * @param codec
      *            Codec to use
      * @param source
@@ -64,7 +60,7 @@ public class InstagramHashUtil {
 
     /**
      * Get the MD5 (in hexadecimal presentation) for the given source
-     * 
+     *
      * @param source
      *            The string to hash
      * @return MD5 hex presentation
@@ -75,7 +71,7 @@ public class InstagramHashUtil {
 
     /**
      * Convert the byte array to a hexadecimal presentation (String)
-     * 
+     *
      * @param bytes
      *            byte array
      * @param initialCount
@@ -104,7 +100,7 @@ public class InstagramHashUtil {
 
     /**
      * Generates Instagram Device ID
-     * 
+     *
      * @param username
      *            Username to generate
      * @param password
@@ -128,9 +124,9 @@ public class InstagramHashUtil {
         SecretKeySpec object = new SecretKeySpec(key.getBytes(), "HmacSHA256");
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init((Key) object);
-            byte[] byteArray = mac.doFinal(string.getBytes("UTF-8"));
-            return new String(new Hex().encode(byteArray), "ISO-8859-1");
+            mac.init(object);
+            byte[] byteArray = mac.doFinal(string.getBytes(StandardCharsets.UTF_8));
+            return new String(new Hex().encode(byteArray), StandardCharsets.ISO_8859_1);
         } catch (Exception e) {
             e.printStackTrace();
         }

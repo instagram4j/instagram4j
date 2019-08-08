@@ -71,7 +71,7 @@ public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<Insta
     }
     
     @Override
-    public InstagramConfigureStoryResult execute() throws ClientProtocolException, IOException {
+    public InstagramConfigureStoryResult execute() throws IOException {
         
         String uploadId = null;
         

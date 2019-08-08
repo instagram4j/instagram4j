@@ -77,14 +77,14 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
         this(ImageIO.read(remoteMediaFileURL), caption, uploadId);
     }
   
-    public InstagramUploadPhotoRequest(BufferedImage imageFile, String caption, String uploadId) throws IOException {
+    public InstagramUploadPhotoRequest(BufferedImage imageFile, String caption, String uploadId) {
         this.imageFile = imageFile;
         this.caption = caption;
         this.uploadId = uploadId;
     }
     
     @Override
-    public InstagramConfigurePhotoResult execute() throws ClientProtocolException, IOException {
+    public InstagramConfigurePhotoResult execute() throws IOException {
         
         if (uploadId == null) {
             uploadId = String.valueOf(System.currentTimeMillis());
