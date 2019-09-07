@@ -23,13 +23,19 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 
  * @author brunovolpato
  *
  */
 public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
-
+    @Getter
+    @Setter
+    private HttpGet getRequest = new HttpGet(InstagramConstants.API_URL + getUrl());
+    
     @Override
     public String getMethod() {
         return "GET";
@@ -37,7 +43,7 @@ public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
     
     @Override
     public T execute() throws ClientProtocolException, IOException {
-        HttpGet get = new HttpGet(InstagramConstants.API_URL + getUrl());
+        HttpGet get = this.getGetRequest();
         get.addHeader("Connection", "close");
         get.addHeader("Accept", "*/*");
         get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");

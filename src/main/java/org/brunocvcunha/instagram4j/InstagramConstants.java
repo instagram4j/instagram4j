@@ -77,4 +77,8 @@ public class InstagramConstants {
     public static final String USER_AGENT = String.format("Instagram 22.0.0.15.68 Android (%s/%s; 640dpi; 1440x2560; %s; %s; hero2lte; samsungexynos8890; en_US)",
             DEVICE_ANDROID_VERSION, DEVICE_ANDROID_RELEASE, DEVICE_MANUFACTURER, DEVICE_MODEL);
 
+    /**
+     * Capabilities 
+     */
+    public static final String CAPABILITIES = "3brTvw==";
 }

@@ -16,6 +16,7 @@
 package org.brunocvcunha.instagram4j.requests.payload;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,18 @@ public class InstagramFeedResult extends StatusResult {
     private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;
-    private List<InstagramFeedItem> items;
+    private List<org.brunocvcunha.instagram4j.requests.payload.InstagramFeedResult.InstagramFeedItem> feed_items;
     private boolean more_available;
+    
+    public List<org.brunocvcunha.instagram4j.requests.payload.InstagramFeedItem> getItems() {
+	return this.getFeed_items().stream().filter(item -> item.getMedia_or_ad() != null).map(item -> item.getMedia_or_ad()).collect(Collectors.toList());
+    }
+    
+    @Getter
+    @Setter
+    public static class InstagramFeedItem {
+	private org.brunocvcunha.instagram4j.requests.payload.InstagramFeedItem media_or_ad;
+	private Object suggested_users;
+	private Object end_of_feed_demarcator;
+    }
 }

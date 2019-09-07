@@ -25,6 +25,8 @@ import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.util.InstagramHashUtil;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -34,7 +36,10 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
-
+    @Getter
+    @Setter
+    private HttpPost postRequest = new HttpPost(InstagramConstants.API_URL + getUrl());
+    
     @Override
     public String getMethod() {
         return "POST";
@@ -42,7 +47,7 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
     
     @Override
     public T execute() throws ClientProtocolException, IOException {
-        HttpPost post = new HttpPost(InstagramConstants.API_URL + getUrl());
+        HttpPost post = this.getPostRequest();
         post.addHeader("Connection", "close");
         post.addHeader("Accept", "*/*");
         post.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
