@@ -5,16 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StoryCountdownItem {
-    private double x;
-    private double y;
-    private double z;
-    private double width;
-    private double height;
-    private double rotation;
-    private int is_pinned;
-    private int is_hidden;
-    private int is_sticker;
+public class StoryCountdownItem extends StoryItem {
     private CountdownSticker countdown_sticker;
     
     @Getter

@@ -27,13 +27,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class StoryPollItem {
-    private String x;
-    private String y;
-    private String z;
-    private double width;
-    private double height;
-    private double rotation;
+public class StoryPollItem extends StoryItem {
     private PollStickerItem poll_sticker;
     private boolean viewer_can_vote;
     private boolean is_shared_result;
