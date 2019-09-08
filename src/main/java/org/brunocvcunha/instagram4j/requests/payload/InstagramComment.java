@@ -40,4 +40,5 @@ public class InstagramComment {
 	private boolean did_report_as_spam;
 	private boolean share_enabled;
 	private long media_id;
+	private int comment_like_count;
 }
