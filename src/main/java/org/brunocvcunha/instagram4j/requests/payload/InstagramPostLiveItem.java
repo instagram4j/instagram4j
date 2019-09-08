@@ -15,7 +15,6 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-import java.util.List;
 /**
  * PostLiveItem
  *
