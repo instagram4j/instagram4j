@@ -33,3 +33,4 @@ public class InstagramUserPresenceItem {
 	private boolean is_active;
 	private long last_activity_at_ms;
 }
+
