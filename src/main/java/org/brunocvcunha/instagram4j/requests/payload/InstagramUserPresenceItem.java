@@ -30,7 +30,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class InstagramUserPresenceItem {
-	private Boolean is_active;
+	private Boolean is_active; // Boolean not boolean
 	private long last_activity_at_ms;
 }
 
