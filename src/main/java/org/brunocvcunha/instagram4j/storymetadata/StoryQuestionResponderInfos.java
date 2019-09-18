@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
+
+package org.brunocvcunha.instagram4j.storymetadata;
+
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * User Summary VO
- * @author Bruno Candido Volpato da Cunha &
+ * Story Question Responder Infos
+ * 
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString
-public class InstagramUserSummary {
-    public boolean is_verified;
-    public String profile_pic_id;
-    public boolean is_favorite;
-    public boolean is_private;
-    public String username;
-    public long pk;
-    public String profile_pic_url;
-    public boolean has_anonymous_profile_picture;
-    public String full_name;
+public class StoryQuestionResponderInfos {
+	private long question_id;
+	private String question;
+	private String question_type;
+	private String background_color;
+	private String text_color;
+	
+	private List<StoryResponder> responders;
+	
+	private long max_id; // null?
+	private Boolean more_available;
+	private int question_response_count;
+	private int unanswered_response_count;
+	private long latest_question_response_time;
+	
+	
 }

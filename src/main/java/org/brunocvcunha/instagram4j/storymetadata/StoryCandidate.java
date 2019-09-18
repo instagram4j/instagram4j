@@ -13,28 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
+
+package org.brunocvcunha.instagram4j.storymetadata;
+
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * User Summary VO
- * @author Bruno Candido Volpato da Cunha &
+ * Story Candidate
+ * 
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString
-public class InstagramUserSummary {
-    public boolean is_verified;
-    public String profile_pic_id;
-    public boolean is_favorite;
-    public boolean is_private;
-    public String username;
-    public long pk;
-    public String profile_pic_url;
-    public boolean has_anonymous_profile_picture;
-    public String full_name;
+public class StoryCandidate {
+
+	private int width;
+	private int height;
+	private String url;
+	private List<Integer> estimated_scans_sizes; // ? not sure, btw i am new to java and i am in hurry 
 }

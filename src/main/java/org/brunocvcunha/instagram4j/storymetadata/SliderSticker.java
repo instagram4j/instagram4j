@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
+
+package org.brunocvcunha.instagram4j.storymetadata;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * User Summary VO
- * @author Bruno Candido Volpato da Cunha &
+ * Ask Extend
+ * 
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString
-public class InstagramUserSummary {
-    public boolean is_verified;
-    public String profile_pic_id;
-    public boolean is_favorite;
-    public boolean is_private;
-    public String username;
-    public long pk;
-    public String profile_pic_url;
-    public boolean has_anonymous_profile_picture;
-    public String full_name;
+public class SliderSticker {
+	private long slider_id;
+	private String question;
+	private String emoji;
+	private String text_color;
+	private String background_color;
+	private Boolean viewer_can_vote;
+	private double slider_vote_average;
+	private int slider_vote_count;
+	private double viewer_vote;
 }
