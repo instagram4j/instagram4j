@@ -31,8 +31,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
+public class InstagramUsersPresenceResult extends StatusResult  {
 
 	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+    
 }

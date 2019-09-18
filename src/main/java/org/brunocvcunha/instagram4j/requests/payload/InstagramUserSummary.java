@@ -21,7 +21,7 @@ import lombok.ToString;
 
 /**
  * User Summary VO
- * @author Bruno Candido Volpato da Cunha &
+ * @author Bruno Candido Volpato da Cunha
  *
  */
 @Getter
@@ -37,4 +37,5 @@ public class InstagramUserSummary {
     public String profile_pic_url;
     public boolean has_anonymous_profile_picture;
     public String full_name;
+    
 }
