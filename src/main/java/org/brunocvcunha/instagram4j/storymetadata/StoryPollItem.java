@@ -15,26 +15,24 @@
  */
 package org.brunocvcunha.instagram4j.storymetadata;
 
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * StoryPollItem
- * @author Justin Vo &
- * @author George Chousos 💛 gxousos@gmail.com
+ * @author Justin Vo
  *
  */
 @Getter
 @Setter
-public class StoryPollItem extends AskAndMediaExtend{
-
-    //private Map<String, Object> poll_sticker;
-    private PollStickerItem poll_sticker;
-    private final Object promotion_tallies = null; // #?
-    private Boolean viewer_can_vote;
-    private Boolean is_shared_result;
-    private Boolean finished;
-    
-
-    
+public class StoryPollItem {
+    private String x;
+    private String y;
+    private String z;
+    private double width;
+    private double height;
+    private double rotation;
+    private Map<String, Object> poll_sticker;
 }
