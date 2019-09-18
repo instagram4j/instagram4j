@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
 
-
-import java.util.Map;
+package org.brunocvcunha.instagram4j.storymetadata;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * Presence Result
+ * Question Sticker
  * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
+public class QuestionSticker {
 
-	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+	private String question_type;
+	private long question_id;
+	private String question;
+	private long media_id;
+	private String text_color;
+	private String background_color;
+	private Boolean viewer_can_interact;
+	private String profile_pic_url;
+	
 }

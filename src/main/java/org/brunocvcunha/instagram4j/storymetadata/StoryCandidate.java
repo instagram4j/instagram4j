@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
 
+package org.brunocvcunha.instagram4j.storymetadata;
 
-import java.util.Map;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * Presence Result
+ * Story Candidate
  * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
+public class StoryCandidate {
 
-	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+	private int width;
+	private int height;
+	private String url;
+	private List<Integer> estimated_scans_sizes; // ? not sure, btw i am new to java and i am in hurry 
 }

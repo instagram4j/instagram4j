@@ -13,26 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
-
-
-import java.util.Map;
+package org.brunocvcunha.instagram4j.storymetadata;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * Presence Result
+ * TalliesItem
  * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
-
-	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+public class TalliesItem {
+	
+	private String text;
+	private double font_size;
+	private int count;
+	
 }

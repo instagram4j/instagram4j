@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
 
+package org.brunocvcunha.instagram4j.storymetadata;
 
-import java.util.Map;
+import java.util.List;
+
+import org.brunocvcunha.instagram4j.requests.payload.InstagramUserSummaryExtended;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
- * Presence Result
+ * Story Voter
  * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
-
-	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+public class StoryVoter {
+	private List<InstagramUserSummaryExtended> user;
+	private int vote; // boolean?
+	private long ts;
+	
 }

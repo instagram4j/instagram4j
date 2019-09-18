@@ -37,5 +37,4 @@ public class InstagramUserSummary {
     public String profile_pic_url;
     public boolean has_anonymous_profile_picture;
     public String full_name;
-    
 }

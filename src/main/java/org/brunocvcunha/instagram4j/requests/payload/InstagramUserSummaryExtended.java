@@ -1,3 +1,4 @@
+
 /**
  * Copyright (C) 2016 Bruno Candido Volpato da Cunha (brunocvcunha@gmail.com)
  *
@@ -15,24 +16,18 @@
  */
 package org.brunocvcunha.instagram4j.requests.payload;
 
-
-import java.util.Map;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Presence Result
- * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * User Summary Extended
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
-
-	private Map<Long, InstagramUserPresenceItem> user_presence;
-
+@ToString
+public class InstagramUserSummaryExtended extends InstagramUserSummary {
+	public InstagramFriendshipStatus  friendship_status;
 }

@@ -13,26 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.brunocvcunha.instagram4j.requests.payload;
-
-
-import java.util.Map;
+package org.brunocvcunha.instagram4j.storymetadata;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Presence Result
+ * Ask And Media Extend
  * 
- * @author George Chousos (gxousos@gmail.com) [...]
+ * @author George Chousos 💛 gxousos@gmail.com
  *
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class InstagramUsersPresenceResult extends StatusResult {
+@ToString
+public class AskAndMediaExtend {
 
-	private Map<Long, InstagramUserPresenceItem> user_presence;
+    private double x;
+    private double y;
+    private double z;
+    private double width;
+    private double height;
+    private double rotation;
+    
+    private int is_pinned; // byte would be better or boolean conversion? i am in hurry and i am not used to java 
+    private int is_hidden;
+    private int is_sticker;
 
 }
