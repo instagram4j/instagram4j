@@ -135,7 +135,7 @@ instagram.sendRequest(new InstagramLikeRequest(feedResult.getPk()));
 
 #### Add a comment for a media
 ```java
-instagram.sendRequest(new iInstagramPostCommentRequest(feedResult.getPk(), "Hello! How are you?"));
+instagram.sendRequest(new InstagramPostCommentRequest(feedResult.getPk(), "Hello! How are you?"));
 ```
 
 
