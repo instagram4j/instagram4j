@@ -22,7 +22,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
- * InstagramGetChallengeRequest
+ * InstagramGetChallengeRequest.
  *
  * @author evosystem
  */

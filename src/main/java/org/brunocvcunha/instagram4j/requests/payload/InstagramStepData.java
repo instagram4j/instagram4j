@@ -20,13 +20,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * InstagramStepData
+ * InstagramStepData.
  *
  * @author evosystem
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class InstagramStepData {
 
     private int choice;

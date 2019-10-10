@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * InstagramRestChallengeRequest.
+ * InstagramResetChallengeRequest.
  *
  * @author evosystem
  */

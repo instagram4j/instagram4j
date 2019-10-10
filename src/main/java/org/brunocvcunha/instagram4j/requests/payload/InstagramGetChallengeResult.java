@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * InstagramGetChallengeResult
+ * InstagramGetChallengeResult.
  *
  * @author evosystem
  */

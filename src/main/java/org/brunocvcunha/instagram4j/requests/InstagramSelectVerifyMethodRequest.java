@@ -27,7 +27,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
- * InstagramSelectVerifyMethodRequest
+ * InstagramSelectVerifyMethodRequest.
  *
  * @author evosystem
  */
