@@ -20,19 +20,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Login Result
- * @author Bruno Candido Volpato da Cunha
+ * InstagramSelectVerifyMethodResult.
  *
+ * @author evosystem
  */
 @Getter
 @Setter
-@ToString
-public class InstagramChallenge {
-    private String url;
-    private String api_path;
-    private Boolean hide_webview_header;
-    private Boolean lock;
-    private Boolean logout;
-    private Boolean native_flow;
+@ToString(callSuper = true)
+public class InstagramSelectVerifyMethodResult extends StatusResult {
 
+    private String action;
+    private String step_name;
+    private InstagramStepData step_data;
+    private long user_id;
+    private String nonce_code;
 }
