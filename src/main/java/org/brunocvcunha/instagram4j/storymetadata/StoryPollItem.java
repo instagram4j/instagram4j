@@ -15,7 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.storymetadata;
 
-import java.util.Map;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,12 +27,26 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class StoryPollItem {
-    private String x;
-    private String y;
-    private String z;
-    private double width;
-    private double height;
-    private double rotation;
-    private Map<String, Object> poll_sticker;
+public class StoryPollItem extends StoryItem {
+    private PollStickerItem poll_sticker;
+    private boolean viewer_can_vote;
+    private boolean is_shared_result;
+    private boolean finished;
+    
+    @Getter
+    @Setter
+    public static class PollStickerItem {
+	private String id;
+	private long poll_id;
+	private String question;
+	private List<TallyItem> tallies;
+	
+	@Getter
+	@Setter
+	public static class TallyItem {
+	    private String text;
+	    private int count;
+	    private int font_size;
+	}
+    }
 }

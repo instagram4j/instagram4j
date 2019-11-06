@@ -33,7 +33,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class InstagramStoryTray extends StatusResult {
     private String id;
-    private List<InstagramItem> items; //Item[]
+    private List<InstagramStoryItem> items; //Item[]
     private InstagramUser user;
     private boolean can_reply;
     private long expiring_at;
