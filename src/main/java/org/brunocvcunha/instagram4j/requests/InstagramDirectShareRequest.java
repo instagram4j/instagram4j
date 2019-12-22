@@ -37,7 +37,7 @@ import lombok.extern.log4j.Log4j;
 
 /**
  * Direct-share request.
- * 
+ *
  * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
  *
  */
@@ -60,6 +60,8 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 	private String mediaId;
 	private String message;
 
+	private String link;
+
 	@Override
 	public String getUrl() throws IllegalArgumentException {
 		String result;
@@ -70,6 +72,8 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		case MEDIA:
 			result = "direct_v2/threads/broadcast/media_share/?media_type=photo";
 			break;
+		case LINK:
+			result = "direct_v2/threads/broadcast/link/";
 		default:
 			throw new IllegalArgumentException("Invalid shareType parameter value: " + shareType);
 		}
@@ -87,7 +91,7 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		if (this.recipients != null) {
 			recipients = "\"" + String.join("\",\"", this.recipients.toArray(new String[0])) + "\"";
 		}
-		
+
 		List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
 		Map<String, String> map = new HashMap<String, String>();
@@ -95,6 +99,28 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 			map.put("type", "form-data");
 			map.put("name", "media_id");
 			map.put("data", mediaId);
+			data.add(map);
+		}
+
+		if (shareType == ShareType.LINK) {
+			map = new HashMap();
+			map.put("type", "form-data");
+			map.put("name", "link_text");
+			map.put("data", this.link == null ? "" : this.link);
+			data.add(map);
+
+			map = new HashMap();
+			map.put("type", "form-data");
+			map.put("name", "link_urls");
+			map.put("data", "[\"" + this.link + "\"]");
+			data.add(map);
+		}
+
+		if (shareType == ShareType.MESSAGE) {
+			map = new HashMap<String, String>();
+			map.put("type", "form-data");
+			map.put("name", "text");
+			map.put("data", message == null ? "" : message);
 			data.add(map);
 		}
 
@@ -114,12 +140,6 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		map.put("type", "form-data");
 		map.put("name", "thread_ids");
 		map.put("data", "[" + (threadId != null ? threadId : "") + "]");
-		data.add(map);
-
-		map = new HashMap<String, String>();
-		map.put("type", "form-data");
-		map.put("name", "text");
-		map.put("data", message == null ? "" : message);
 		data.add(map);
 
 		HttpPost post = createHttpRequest();
@@ -187,12 +207,17 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 				throw new IllegalArgumentException("message cannot be null or empty.");
 			}
 			break;
+		case LINK:
+			if (link == null || link.isEmpty()) {
+				throw new IllegalArgumentException("link cannot be null or empty.");
+			}
+			break;
 		default:
 			break;
 		}
 	}
 
 	public enum ShareType {
-		MESSAGE, MEDIA
+		MESSAGE, MEDIA, LINK
 	}
 }
