@@ -44,13 +44,11 @@ import lombok.SneakyThrows;
 public class InstagramConfigureAlbumRequest extends InstagramPostRequest<InstagramConfigureAlbumResult> {
     @NonNull
     private Collection<String> uploadIds;
-    
     @NonNull
     private String caption;
     
     @Override
     public String getUrl() {
-        // TODO Auto-generated method stub
         return "media/configure_sidecar/";
     }
     
@@ -66,7 +64,6 @@ public class InstagramConfigureAlbumRequest extends InstagramPostRequest<Instagr
         pMap.put("_csrftoken", api.getOrFetchCsrf());
         pMap.put("_uid", api.getUserId());
         pMap.put("_uuid", api.getUuid());
-        //
         pMap.put("client_sidecar_id", System.currentTimeMillis());
         pMap.put("caption", caption);
         List<Object> children = new LinkedList<>();
