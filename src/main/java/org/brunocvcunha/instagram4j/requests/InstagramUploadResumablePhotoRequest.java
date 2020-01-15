@@ -12,7 +12,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
-import org.brunocvcunha.instagram4j.requests.InstagramResumablePhotoUploadRequest.InstagramPhotoUploadResult;
+import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Log4j
-public class InstagramResumablePhotoUploadRequest extends InstagramPostRequest<InstagramPhotoUploadResult> {
+public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<InstagramUploadPhotoResult> {
 	@NonNull
 	private File file;
 	@NonNull
@@ -38,7 +38,7 @@ public class InstagramResumablePhotoUploadRequest extends InstagramPostRequest<I
 	}
 
 	@Override
-	public InstagramPhotoUploadResult execute() throws ClientProtocolException, IOException {
+	public InstagramUploadPhotoResult execute() throws ClientProtocolException, IOException {
 		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
 		String name = uploadId + "_0_" + file.hashCode();
 		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType), name, this.createFileEntity());
@@ -50,13 +50,13 @@ public class InstagramResumablePhotoUploadRequest extends InstagramPostRequest<I
 	}
 
 	@Override
-	public InstagramPhotoUploadResult parseResult(int resultCode, String content) {
-		return this.parseJson(resultCode, content, InstagramPhotoUploadResult.class);
+	public InstagramUploadPhotoResult parseResult(int resultCode, String content) {
+		return this.parseJson(resultCode, content, InstagramUploadPhotoResult.class);
 	}
 
 	private HttpPost createUploadPostRequest(String rparam, String name, HttpEntity entity) {
-		HttpPost post = new HttpPost("https://i.instagram.com/" + getUrl() + name);
-		log.debug("Photo upload url: " + "https://i.instagram.com/" + getUrl() + name);
+		HttpPost post = new HttpPost(InstagramConstants.BASE_API_URL + getUrl() + name);
+		log.debug("Photo upload url: " + post.getURI());
 		post.addHeader("X-IG-Capabilities", InstagramConstants.DEVICE_CAPABILITIES);
 		post.addHeader("X-IG-Connection-Type", "WIFI");
 		post.addHeader("X-Instagram-Rupload-Params", rparam);
@@ -87,7 +87,7 @@ public class InstagramResumablePhotoUploadRequest extends InstagramPostRequest<I
 	
 	@Getter
 	@Setter
-	public static class InstagramPhotoUploadResult extends StatusResult {
+	public static class InstagramUploadPhotoResult extends StatusResult {
 		private String upload_id;
 	}
 

@@ -64,9 +64,7 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     @Override
     @SneakyThrows
     public String getPayload() {
-        
         boolean direct = threadId != null;
-        long time = System.currentTimeMillis();
         
         Map<String, Object> likeMap = new LinkedHashMap<>();
         likeMap.put("_csrftoken", api.getOrFetchCsrf());

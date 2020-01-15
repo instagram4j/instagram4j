@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.apache.http.client.ClientProtocolException;
-import org.brunocvcunha.instagram4j.requests.InstagramResumablePhotoUploadRequest.InstagramPhotoUploadResult;
+import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureStoryRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureStoryResult;
 import org.brunocvcunha.instagram4j.storymetadata.StoryMetadata;
@@ -61,7 +61,7 @@ public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<Insta
 
 	@Override
 	public InstagramConfigureStoryResult execute() throws ClientProtocolException, IOException {
-		InstagramPhotoUploadResult uploadResult = api.sendRequest(new InstagramResumablePhotoUploadRequest(file, "1"));
+		InstagramUploadPhotoResult uploadResult = api.sendRequest(new InstagramUploadResumablePhotoRequest(file, "1"));
 		String uploadId = uploadResult.getUpload_id();
 		InstagramConfigureStoryResult configureResult = api
 				.sendRequest(new InstagramConfigureStoryRequest(file, uploadId, threadId, metadata));

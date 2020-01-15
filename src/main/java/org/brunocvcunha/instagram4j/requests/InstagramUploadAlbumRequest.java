@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
-import org.brunocvcunha.instagram4j.requests.InstagramResumablePhotoUploadRequest.InstagramPhotoUploadResult;
+import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureAlbumRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
 
@@ -74,7 +74,7 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 		long count = 0;
 		for (File f : imageFiles) {
 			String uploadId = String.valueOf(System.currentTimeMillis()) + String.valueOf(count);
-			InstagramPhotoUploadResult res = api.sendRequest(new InstagramResumablePhotoUploadRequest(f, "1", uploadId));
+			InstagramUploadPhotoResult res = api.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId));
 			if (!res.getStatus().equals("ok")) {
 				log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
 			} else {
