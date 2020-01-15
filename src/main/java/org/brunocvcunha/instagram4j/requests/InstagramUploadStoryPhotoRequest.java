@@ -19,18 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.util.EntityUtils;
-import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.InstagramResumablePhotoUploadRequest.InstagramPhotoUploadResult;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureStoryRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramExposeRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureStoryResult;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.storymetadata.StoryMetadata;
 
 import lombok.AllArgsConstructor;
@@ -40,124 +32,50 @@ import lombok.extern.log4j.Log4j;
 
 /**
  * InstagramStoryPhotoUploadRequest
+ * 
  * @author Justin Vo
- *
  */
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Log4j
 public class InstagramUploadStoryPhotoRequest extends InstagramPostRequest<InstagramConfigureStoryResult> {
+	@NonNull
+	private File file;
+	private Collection<StoryMetadata> metadata = null;
+	private String threadId = null;
 
-    @NonNull
-    private File imageFile;
-    
-    private Collection<StoryMetadata> metadata = null;
-    
-    private String threadId = null;
-    
-    public InstagramUploadStoryPhotoRequest(File img, Collection<StoryMetadata> meta) {
-        this.imageFile = img;
-        this.metadata = meta;
-    }
-    
-    @Override
-    public String getUrl() {
-        return "upload/photo/";
-    }
+	public InstagramUploadStoryPhotoRequest(File img, Collection<StoryMetadata> meta) {
+		this.file = img;
+		this.metadata = meta;
+	}
 
-    @Override
-    public String getMethod() {
-        return "POST";
-    }
-    
-    @Override
-    public InstagramConfigureStoryResult execute() throws ClientProtocolException, IOException {
-        
-        String uploadId = null;
-        
-        if (uploadId == null) {
-            uploadId = String.valueOf(System.currentTimeMillis());
-        }
-        
-        HttpPost post = createHttpRequest();
-        post.setEntity(createMultipartEntity(uploadId));
-        
-        try (CloseableHttpResponse response = api.getClient().execute(post)) {
-            api.setLastResponse(response);
-            
-            int resultCode = response.getStatusLine().getStatusCode();
-            String content = EntityUtils.toString(response.getEntity());
-            
-            log.info("Photo Upload result: " + resultCode + ", " + content);
-            
-            
-            post.releaseConnection();
-    
-            StatusResult result = parseResult(resultCode, content);
-            
-            if (!result.getStatus().equalsIgnoreCase("ok")) {
-                throw new RuntimeException("Error happened in photo upload: " + result.getMessage());
-            }
-            
-            InstagramConfigureStoryResult configurePhotoResult = api.sendRequest(new InstagramConfigureStoryRequest(imageFile, uploadId, threadId, metadata));
-            
-            log.info("Configure photo result: " + configurePhotoResult);
-            if (!configurePhotoResult.getStatus().equalsIgnoreCase("ok")) {
-                throw new IllegalArgumentException("Failed to configure image: " + configurePhotoResult.getMessage());
-            }
-            
-            StatusResult exposeResult = api.sendRequest(new InstagramExposeRequest());
-            log.info("Expose result: " + exposeResult);
-            if (!exposeResult.getStatus().equalsIgnoreCase("ok")) {
-                throw new IllegalArgumentException("Failed to expose image: " + exposeResult.getMessage());
-            }
+	@Override
+	public String getUrl() {
+		return "upload/photo/";
+	}
 
-            return configurePhotoResult;
-        }
-    }
+	@Override
+	public String getMethod() {
+		return "post";
+	}
 
-    /**
-     * Creates required multipart entity with the image binary
-     * @return HttpEntity to send on the post
-     * @throws ClientProtocolException
-     * @throws IOException
-     */
-    protected HttpEntity createMultipartEntity(String uploadId) throws ClientProtocolException, IOException {
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        builder.addTextBody("upload_id", uploadId);
-        builder.addTextBody("_uuid", api.getUuid());
-        builder.addTextBody("_csrftoken", api.getOrFetchCsrf());
-        builder.addTextBody("image_compression", "{\"lib_name\":\"jt\",\"lib_version\":\"1.3.0\",\"quality\":\"87\"}");
-        builder.addBinaryBody("photo", imageFile, ContentType.APPLICATION_OCTET_STREAM, "pending_media_" + uploadId + ".jpg");
-        builder.setBoundary(api.getUuid());
+	@Override
+	public InstagramConfigureStoryResult execute() throws ClientProtocolException, IOException {
+		InstagramPhotoUploadResult uploadResult = api.sendRequest(new InstagramResumablePhotoUploadRequest(file, "1"));
+		String uploadId = uploadResult.getUpload_id();
+		InstagramConfigureStoryResult configureResult = api
+				.sendRequest(new InstagramConfigureStoryRequest(file, uploadId, threadId, metadata));
 
-        HttpEntity entity = builder.build();
-        return entity;
-    }
+		if (!configureResult.getStatus().equals("ok")) {
+			log.error(
+					"Photo configure failed: " + configureResult.getError_type() + " " + configureResult.getMessage());
+		}
+		return configureResult;
+	}
 
-    /**
-     * Creates the Post Request
-     * @return Request
-     */
-    protected HttpPost createHttpRequest() {
-        String url = InstagramConstants.API_URL + getUrl();
-        log.info("URL Upload: " + url);
+	@Override
+	public InstagramConfigureStoryResult parseResult(int resultCode, String content) {
+		return null;
+	}
 
-        HttpPost post = new HttpPost(url);
-        post.addHeader("X-IG-Capabilities", "3Q4=");
-        post.addHeader("X-IG-Connection-Type", "WIFI");
-        post.addHeader("Cookie2", "$Version=1");
-        post.addHeader("Accept-Language", "en-US");
-        post.addHeader("Accept-Encoding", "gzip, deflate");
-        post.addHeader("Connection", "close");
-        post.addHeader("Content-Type", "multipart/form-data; boundary=" + api.getUuid());
-        post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
-        return post;
-    }
-
-    @Override
-    public InstagramConfigureStoryResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramConfigureStoryResult.class);
-    }
-    
 }

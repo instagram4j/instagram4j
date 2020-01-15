@@ -47,7 +47,6 @@ public class InstagramConfigureStoryRequest extends InstagramPostRequest<Instagr
     private File mediaFile;
     @NonNull
     private String uploadId;
-    
     private String threadId;
     
     private Collection<StoryMetadata> metadata;
