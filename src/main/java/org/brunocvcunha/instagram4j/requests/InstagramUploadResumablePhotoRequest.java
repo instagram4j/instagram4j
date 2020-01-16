@@ -31,7 +31,7 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 	@NonNull
 	private String mediaType;
 	private String uploadId;
-
+	private boolean isSideCar;
 	@Override
 	public String getUrl() {
 		return "rupload_igphoto/";
@@ -41,7 +41,7 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 	public InstagramUploadPhotoResult execute() throws ClientProtocolException, IOException {
 		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
 		String name = uploadId + "_0_" + file.hashCode();
-		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType), name, this.createFileEntity());
+		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType, isSideCar), name, this.createFileEntity());
 		try (CloseableHttpResponse res = api.getClient().execute(post)) {
 			api.setLastResponse(res);
 			
@@ -75,10 +75,10 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 		return post;
 	}
 
-	protected static String rUploadParams(String uploadId, String mediaType) {
+	protected static String rUploadParams(String uploadId, String mediaType, boolean isSideCar) {
 		return String.format(
-				"{\"retry_context\":{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0},\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":[],\" image_compression\":{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}}",
-				mediaType, uploadId);
+				"{\"retry_context\":{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0},\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":[],\" image_compression\":{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"} %s}",
+				mediaType, uploadId, isSideCar ? ", is_sidecar:\"1\"" : "");
 	}
 
 	private HttpEntity createFileEntity() {

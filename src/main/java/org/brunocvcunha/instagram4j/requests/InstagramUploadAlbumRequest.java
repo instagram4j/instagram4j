@@ -74,7 +74,7 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 		long count = 0;
 		for (File f : imageFiles) {
 			String uploadId = String.valueOf(System.currentTimeMillis()) + String.valueOf(count);
-			InstagramUploadPhotoResult res = api.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId));
+			InstagramUploadPhotoResult res = api.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId, true));
 			if (!res.getStatus().equals("ok")) {
 				log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
 			} else {
