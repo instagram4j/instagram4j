@@ -20,8 +20,9 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.apache.http.client.ClientProtocolException;
-import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureStoryRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureStoryResult;
 import org.brunocvcunha.instagram4j.storymetadata.StoryMetadata;
 

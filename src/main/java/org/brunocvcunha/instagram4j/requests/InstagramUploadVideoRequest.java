@@ -29,6 +29,8 @@ import javax.imageio.ImageIO;
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureVideoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadMediaFinishRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumableVideoRequest;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 import org.bytedeco.javacv.FFmpegFrameGrabber;

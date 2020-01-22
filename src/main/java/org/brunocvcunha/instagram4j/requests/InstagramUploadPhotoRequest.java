@@ -19,8 +19,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
-import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
 
 import lombok.NonNull;

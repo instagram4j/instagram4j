@@ -1,4 +1,4 @@
-package org.brunocvcunha.instagram4j.requests;
+package org.brunocvcunha.instagram4j.requests.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
+import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
