@@ -38,12 +38,8 @@ public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
     @Override
     public T execute() throws ClientProtocolException, IOException {
         HttpGet get = new HttpGet(InstagramConstants.API_URL + getUrl());
-        get.addHeader("Connection", "close");
-        get.addHeader("Accept", "*/*");
-        get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        get.addHeader("Cookie2", "$Version=1");
-        get.addHeader("Accept-Language", "en-US");
-        get.addHeader("User-Agent", InstagramConstants.USER_AGENT);
+        
+        this.applyHeaders(get);
         
         HttpResponse response = api.getClient().execute(get);
         api.setLastResponse(response);

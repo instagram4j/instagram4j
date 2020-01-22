@@ -16,7 +16,9 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -43,24 +45,15 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
     @Override
     public T execute() throws ClientProtocolException, IOException {
         HttpPost post = new HttpPost(InstagramConstants.API_URL + getUrl());
-        post.addHeader("Connection", "close");
-        post.addHeader("Accept", "*/*");
-        post.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        post.addHeader("Cookie2", "$Version=1");
-        post.addHeader("Accept-Language", "en-US");
-        post.addHeader("User-Agent", InstagramConstants.USER_AGENT);
+        
+        this.applyHeaders(post);
         
         log.debug("User-Agent: " + InstagramConstants.USER_AGENT);
-        String payload = getPayload();
-        log.debug("Base Payload: " + payload);
         
-        if (isSigned()) {
-            payload = InstagramHashUtil.generateSignature(payload);
-        }
-        log.debug("Final Payload: " + payload);
-        post.setEntity(new StringEntity(payload));
+        post.setEntity(getPayloadEntity());
         
         HttpResponse response = api.getClient().execute(post);
+        
         api.setLastResponse(response);
         
         int resultCode = response.getStatusLine().getStatusCode();
@@ -69,6 +62,19 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         post.releaseConnection();
 
         return parseResult(resultCode, content);
+    }
+    
+    @Override
+    public HttpEntity getPayloadEntity() throws UnsupportedEncodingException {
+    	String payload = getPayload();
+        log.debug("Base Payload: " + payload);
+        
+        if (isSigned()) {
+            payload = InstagramHashUtil.generateSignature(payload);
+        }
+        log.debug("Final Payload: " + payload);
+        
+        return new StringEntity(payload);
     }
 
 }

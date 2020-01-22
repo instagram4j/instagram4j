@@ -15,18 +15,24 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.Instagram4j;
+import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.brunocvcunha.inutils4j.MyStreamUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,6 +65,10 @@ public abstract class InstagramRequest<T> {
      */
     public String getPayload() {
         return null;
+    }
+    
+    public HttpEntity getPayloadEntity() throws UnsupportedEncodingException {
+    	return null;
     }
     
     /**
@@ -157,6 +167,35 @@ public abstract class InstagramRequest<T> {
      */
     public boolean isSigned() {
         return true;
+    }
+    
+    public <E extends HttpRequest> E applyHeaders(E  req) {
+    	
+    	req.addHeader("Connection", "close");
+        req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        req.addHeader("Accept-Language", "en-US");
+        req.addHeader("X-IG-Capabilities", InstagramConstants.DEVICE_CAPABILITIES);
+        req.addHeader("X-IG-App-ID", InstagramConstants.APP_ID);
+        req.addHeader("User-Agent", InstagramConstants.USER_AGENT);
+        req.addHeader("X-IG-Connection-Type", "WIFI");
+        req.addHeader("X-Ads-Opt-Out", "0");
+		req.addHeader("X-CM-Bandwidth-KBPS", "-1.000");
+		req.addHeader("X-CM-Latency", "-1.000");
+		req.addHeader("X-IG-App-Locale", "en_US");
+		req.addHeader("X-IG-Device-Locale", "en_US");
+		req.addHeader("X-Pigeon-Session-Id", InstagramGenericUtil.generateUuid(true));
+		req.addHeader("X-Pigeon-Rawclienttime", System.currentTimeMillis() + "");
+		req.addHeader("X-IG-Connection-Speed", ThreadLocalRandom.current().nextInt(2000, 4000) + "kbps");
+		req.addHeader("X-IG-Bandwidth-Speed-KBPS", "-1.000");
+		req.addHeader("X-IG-Bandwidth-TotalBytes-B", "0");
+		req.addHeader("X-IG-Bandwidth-TotalTime-MS", "0");
+		req.addHeader("X-IG-EU-DC-ENABLED", null);
+		req.addHeader("X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value", "1000");
+		req.addHeader("X-MID", api.getX_MID());
+		req.addHeader("X-IG-WWW-Claim", api.getWWW_CLAIM());
+		req.addHeader("X-FB-HTTP-engine", "Liger");
+		
+    	return req;
     }
     
 }

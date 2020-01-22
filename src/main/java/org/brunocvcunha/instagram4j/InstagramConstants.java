@@ -40,7 +40,7 @@ public class InstagramConstants {
 	/**
 	 * API Key (extracted from the apk)
 	 */
-	public static final String API_KEY = "c36436a942ea1dbb40d7f2d7d45280a620d991ce8c62fb4ce600f0a048c32c11";
+	public static final String API_KEY = "a86109795736d73c9a94172cd9b736917d7d94ca61c9101164894b3f0d43bef4";
 
 	/**
 	 * API Key Version
@@ -90,7 +90,12 @@ public class InstagramConstants {
 	/**
 	 * Instagram App Version
 	 */
-	public static final String APP_VERSION = "107.0.0.27.121";
+	public static final String APP_VERSION = "117.0.0.28.123";
+	
+	/**
+	 * Instagram App Id
+	 */
+	public static final String APP_ID = "567067343352427";
 
 	/**
 	 * User Locale

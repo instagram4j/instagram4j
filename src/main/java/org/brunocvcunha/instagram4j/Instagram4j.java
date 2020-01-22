@@ -29,18 +29,9 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.brunocvcunha.instagram4j.requests.InstagramAutoCompleteUserListRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetInboxRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramGetRecentActivityRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramLoginRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramLoginTwoFactorRequest;
 import org.brunocvcunha.instagram4j.requests.InstagramRequest;
-import org.brunocvcunha.instagram4j.requests.InstagramTimelineFeedRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramFetchHeadersRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramLogAttributionRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramReadMsisdnHeaderRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramSyncFeaturesRequest;
-import org.brunocvcunha.instagram4j.requests.internal.InstagramZeroRatingTokenRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginPayload;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramLoginTwoFactorPayload;
@@ -104,6 +95,18 @@ public class Instagram4j implements Serializable {
 
     @Getter
     protected CloseableHttpClient client;
+    
+    @Getter
+    @Setter
+    private String AUTH_VALUE = "0";
+    
+    @Getter
+    @Setter
+    private String X_MID = "0";
+    
+    @Getter
+    @Setter
+    private String WWW_CLAIM = "0";
 
     protected String identifier;
     protected String verificationCode;
@@ -190,13 +193,6 @@ public class Instagram4j implements Serializable {
     public InstagramLoginResult login() throws ClientProtocolException, IOException {
 
         log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
-
-
-        this.sendRequest(new InstagramReadMsisdnHeaderRequest());
-        this.sendRequest(new InstagramSyncFeaturesRequest(true));
-        this.sendRequest(new InstagramZeroRatingTokenRequest());
-        this.sendRequest(new InstagramLogAttributionRequest());
-
         
         InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username)
                 .password(password)
@@ -204,12 +200,13 @@ public class Instagram4j implements Serializable {
                 .device_id(deviceId)
                 .phone_id(InstagramGenericUtil.generateUuid(true))
                 .login_attempt_account(0)
-                ._csrftoken(getOrFetchCsrf())
+                ._csrftoken("missing")
                 .build();
         InstagramLoginRequest req = new InstagramLoginRequest(loginRequest);
         InstagramLoginResult loginResult = this.sendRequest(req);
-        emulateUserLoggedIn(loginResult);
-
+        
+        this.emulateUserLoggedIn(loginResult);
+        
         if (loginResult.getTwo_factor_info() != null) {
             identifier = loginResult.getTwo_factor_info().getTwo_factor_identifier();
         } else if (loginResult.getChallenge() != null) {
@@ -236,6 +233,7 @@ public class Instagram4j implements Serializable {
                 .build();
         InstagramLoginTwoFactorRequest req = new InstagramLoginTwoFactorRequest(loginRequest);
         InstagramLoginResult loginResult = this.sendRequest(req);
+        
         emulateUserLoggedIn(loginResult);
         return loginResult;
     }
@@ -248,8 +246,7 @@ public class Instagram4j implements Serializable {
     public String getOrFetchCsrf() throws ClientProtocolException, IOException {
         Optional<Cookie> checkCookie = getCsrfCookie();
         if (!checkCookie.isPresent()) {
-            sendRequest(new InstagramFetchHeadersRequest());
-            checkCookie = getCsrfCookie();
+            return "0";
         }
         String csrfToken = checkCookie.get().getValue();
         return csrfToken;
@@ -280,23 +277,32 @@ public class Instagram4j implements Serializable {
         request.setApi(this);
         T response = request.execute();
         
+        this.setHeaders();
+        
         log.debug("Result for " + request.getClass().getName() + ": " + response);
         
         return response;
     }
-
+    
+    private void setHeaders() {
+    	InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "ig-set-authorization").ifPresent(this::setAUTH_VALUE);
+    	InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "x-ig-set-www-claim").ifPresent(this::setAUTH_VALUE);
+    	InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "ig-set-x-mid").ifPresent(this::setAUTH_VALUE);
+    }
+    
     private void emulateUserLoggedIn(InstagramLoginResult loginResult) throws IOException {
-        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
-            this.userId = loginResult.getLogged_in_user().getPk();
-            this.rankToken = this.userId + "_" + this.uuid;
-            this.isLoggedIn = true;
-
-            this.sendRequest(new InstagramSyncFeaturesRequest(false));
-            this.sendRequest(new InstagramAutoCompleteUserListRequest());
-            this.sendRequest(new InstagramTimelineFeedRequest());
-            this.sendRequest(new InstagramGetInboxRequest());
-            this.sendRequest(new InstagramGetRecentActivityRequest());
-        }
+    	this.isLoggedIn = true;
+//        if (loginResult.getStatus().equalsIgnoreCase("ok")) {
+//            this.userId = loginResult.getLogged_in_user().getPk();
+//            this.rankToken = this.userId + "_" + this.uuid;
+//            this.isLoggedIn = true;
+//
+//            this.sendRequest(new InstagramSyncFeaturesRequest(false));
+//            this.sendRequest(new InstagramAutoCompleteUserListRequest());
+//            this.sendRequest(new InstagramTimelineFeedRequest());
+//            this.sendRequest(new InstagramGetInboxRequest());
+//            this.sendRequest(new InstagramGetRecentActivityRequest());
+//        }
     }
     
     @SneakyThrows

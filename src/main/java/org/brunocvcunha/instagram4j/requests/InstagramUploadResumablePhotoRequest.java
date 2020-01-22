@@ -2,14 +2,15 @@ package org.brunocvcunha.instagram4j.requests;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
@@ -32,6 +33,7 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 	private String mediaType;
 	private String uploadId;
 	private boolean isSideCar;
+	
 	@Override
 	public String getUrl() {
 		return "rupload_igphoto/";
@@ -40,13 +42,17 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 	@Override
 	public InstagramUploadPhotoResult execute() throws ClientProtocolException, IOException {
 		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
-		String name = uploadId + "_0_" + file.hashCode();
+		log.info("The upload id is " + uploadId);
+		String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1000000000, 9999999999l);
 		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType, isSideCar), name, this.createFileEntity());
-		try (CloseableHttpResponse res = api.getClient().execute(post)) {
+		try {
+			HttpResponse res = api.getClient().execute(post);
 			api.setLastResponse(res);
 			
 			return this.parseResult(res.getStatusLine().getStatusCode(), EntityUtils.toString(res.getEntity()));
-		}
+		}catch(Exception e) {}
+		
+		return null;
 	}
 
 	@Override
@@ -77,12 +83,12 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 
 	protected static String rUploadParams(String uploadId, String mediaType, boolean isSideCar) {
 		return String.format(
-				"{\"retry_context\":{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0},\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":[],\" image_compression\":{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"} %s}",
-				mediaType, uploadId, isSideCar ? ", is_sidecar:\"1\"" : "");
+				"{\"retry_context\":\"{\\\"num_step_auto_retry\\\":0,\\\"num_reupload\\\":0,\\\"num_step_manual_retry\\\":0}\",\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":\"[]\",\" image_compression\":\"{\\\"lib_name\\\":\\\"moz\\\",\\\"lib_version\\\":\\\"3.1.m\\\",\\\"quality\\\":\\\"80\\\"}\"%s}",
+				mediaType, uploadId, isSideCar ? ", \"is_sidecar\":\"1\"" : "");
 	}
 
-	private HttpEntity createFileEntity() {
-		return new FileEntity(file, ContentType.APPLICATION_OCTET_STREAM);
+	private HttpEntity createFileEntity() throws IOException {
+		return new ByteArrayEntity(Files.readAllBytes(file.toPath()));
 	}
 	
 	@Getter
