@@ -45,14 +45,9 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 		log.info("The upload id is " + uploadId);
 		String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1000000000, 9999999999l);
 		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType, isSideCar), name, this.createFileEntity());
-		try {
-			HttpResponse res = api.getClient().execute(post);
-			api.setLastResponse(res);
-			
-			return this.parseResult(res.getStatusLine().getStatusCode(), EntityUtils.toString(res.getEntity()));
-		}catch(Exception e) {}
+		HttpResponse res = api.executeHttpRequest(post);
 		
-		return null;
+		return this.parseResult(res.getStatusLine().getStatusCode(), EntityUtils.toString(res.getEntity()));
 	}
 
 	@Override

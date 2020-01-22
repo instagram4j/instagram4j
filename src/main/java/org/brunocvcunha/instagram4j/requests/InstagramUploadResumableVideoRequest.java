@@ -34,6 +34,7 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 	private String[] videoInfo;
 	private String uploadId;
 	private final String uuid = InstagramGenericUtil.generateUuid(true);
+
 	@Override
 	public String getUrl() {
 		return "rupload_igvideo/";
@@ -46,23 +47,18 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 		String duration = videoInfo[0], height = videoInfo[1], width = videoInfo[2];
 		String rupload = rUploadParams(uploadId, height, width, duration, false);
 		HttpGet req = this.initUploadRequest(name, rupload);
-		try {
-			HttpResponse res = api.getClient().execute(req);
-			api.setLastResponse(res);
-			InstagramInitVideoResult resVr = this.parseJson(res.getStatusLine().getStatusCode(),
-					EntityUtils.toString(res.getEntity()), InstagramInitVideoResult.class);
-			HttpPost postReq = this.createUploadPostRequest(name, rupload, String.valueOf(resVr.getOffset()), this.createFileEntity());
-			try {
-				HttpResponse postRes = api.getClient().execute(postReq);
-				api.setLastResponse(postRes);
-				log.info(rupload);
-				StatusResult resVu = this.parseResult(postRes.getStatusLine().getStatusCode(), EntityUtils.toString(postRes.getEntity()));
-				
-				return resVu;
-			}catch(Exception ex) {}
-		}catch(Exception e) {}
-		
-		return null;
+		HttpResponse res = api.executeHttpRequest(req);
+		InstagramInitVideoResult resVr = this.parseJson(res.getStatusLine().getStatusCode(),
+				EntityUtils.toString(res.getEntity()), InstagramInitVideoResult.class);
+		HttpPost postReq = this.createUploadPostRequest(name, rupload, String.valueOf(resVr.getOffset()),
+				this.createFileEntity());
+		HttpResponse postRes = api.executeHttpRequest(postReq);
+
+		log.info(rupload);
+		StatusResult resVu = this.parseResult(postRes.getStatusLine().getStatusCode(),
+				EntityUtils.toString(postRes.getEntity()));
+
+		return resVu;
 	}
 
 	@Override
@@ -73,19 +69,19 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 
 	private HttpGet initUploadRequest(String name, String rupload) {
 		HttpGet get = new HttpGet(InstagramConstants.BASE_API_URL + getUrl() + name);
-		
+
 		get.addHeader("X-Instagram-Rupload-Params", rupload);
 		get.addHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
 		get.addHeader("Accept-Encoding", "gzip");
 		get.addHeader("X-Entity-Type", "video/mp4");
-		
+
 		return get;
 	}
 
 	private HttpPost createUploadPostRequest(String name, String rupload, String offset, HttpEntity entity) {
 		HttpPost post = new HttpPost(InstagramConstants.BASE_API_URL + getUrl() + name);
 		this.applyHeaders(post);
-		
+
 		post.addHeader("Accept-Encoding", "gzip");
 		post.addHeader("X-Instagram-Rupload-Params", rupload);
 		post.addHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
@@ -95,7 +91,7 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 		post.addHeader("X-Entity-Length", String.valueOf(entity.getContentLength()));
 		post.addHeader("Content-Type", "application/octet-stream");
 		post.setEntity(entity);
-		
+
 		return post;
 	}
 
@@ -113,15 +109,16 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 	protected static class InstagramInitVideoResult {
 		private long offset;
 	}
-	
+
 	public String[] getVideoInfo() {
 		try (FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoFile)) {
 			frameGrabber.start();
-			
-			return new String[]{String.valueOf(frameGrabber.getLengthInTime()/1000l), String.valueOf(frameGrabber.getImageHeight()), String.valueOf(frameGrabber.getImageWidth())};
+
+			return new String[] { String.valueOf(frameGrabber.getLengthInTime() / 1000l),
+					String.valueOf(frameGrabber.getImageHeight()), String.valueOf(frameGrabber.getImageWidth()) };
 		} catch (Exception e) {
 			log.error("Exception occured when trying to grab video information: " + e.getMessage());
-			return new String[] {"0", "0", "0"};
+			return new String[] { "0", "0", "0" };
 		}
 	}
 

@@ -41,8 +41,7 @@ public abstract class InstagramGetRequest<T> extends InstagramRequest<T> {
         
         this.applyHeaders(get);
         
-        HttpResponse response = api.getClient().execute(get);
-        api.setLastResponse(response);
+        HttpResponse response = api.executeHttpRequest(get);
         
         int resultCode = response.getStatusLine().getStatusCode();
         String content = EntityUtils.toString(response.getEntity());

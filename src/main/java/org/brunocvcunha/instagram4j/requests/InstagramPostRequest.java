@@ -52,9 +52,7 @@ public abstract class InstagramPostRequest<T> extends InstagramRequest<T> {
         
         post.setEntity(getPayloadEntity());
         
-        HttpResponse response = api.getClient().execute(post);
-        
-        api.setLastResponse(response);
+        HttpResponse response = api.executeHttpRequest(post);
         
         int resultCode = response.getStatusLine().getStatusCode();
         String content = EntityUtils.toString(response.getEntity());
