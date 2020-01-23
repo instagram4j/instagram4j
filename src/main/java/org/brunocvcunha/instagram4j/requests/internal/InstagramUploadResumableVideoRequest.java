@@ -19,21 +19,21 @@ import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Builder
 public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<StatusResult> {
 	@NonNull
 	private File videoFile;
 	@NonNull
 	private String[] videoInfo;
 	private String uploadId;
+	@Builder.Default
+	private boolean isSidecar = false;
 	private final String uuid = InstagramGenericUtil.generateUuid(true);
 
 	@Override
@@ -46,7 +46,7 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
 		String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1000000000, 9999999999l);
 		String duration = videoInfo[0], height = videoInfo[1], width = videoInfo[2];
-		String rupload = rUploadParams(uploadId, height, width, duration, false);
+		String rupload = rUploadParams(uploadId, height, width, duration, isSidecar);
 		HttpGet req = this.initUploadRequest(name, rupload);
 		HttpResponse res = api.executeHttpRequest(req);
 		InstagramInitVideoResult resVr = this.parseJson(res.getStatusLine().getStatusCode(),

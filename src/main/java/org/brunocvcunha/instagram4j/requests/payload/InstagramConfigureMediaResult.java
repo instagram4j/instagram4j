@@ -10,5 +10,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class InstagramConfigureMediaResult extends StatusResult {
 	private InstagramFeedItem media;
-	private String uploadId;
+	private String upload_id;
 }

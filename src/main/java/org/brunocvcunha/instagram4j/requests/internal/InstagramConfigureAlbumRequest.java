@@ -72,7 +72,7 @@ public class InstagramConfigureAlbumRequest extends InstagramPostRequest<Instagr
             photoConfig.put("upload_id", id.getUploadId());
             photoConfig.put("height", id.getHeight());
             photoConfig.put("width", id.getWidth());
-            if(!id.isVideo()) {
+            if(id.isVideo()) {
             	photoConfig.put("length", id.getDuration());
             }
             children.add(photoConfig);

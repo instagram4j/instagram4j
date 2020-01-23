@@ -28,6 +28,7 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureAlbumReq
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import lombok.NonNull;
@@ -77,13 +78,41 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 		List<AlbumChildrenMetadata> uploadIds = new ArrayList<>();
 		long count = 0;
 		for (File f : imageFiles) {
-			String uploadId = String.valueOf(System.currentTimeMillis()) + String.valueOf(count);
-			InstagramUploadPhotoResult res = api.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId, true));
-			if (!res.getStatus().equals("ok")) {
-				log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
+			String uploadId = String.valueOf(System.currentTimeMillis()) + String.valueOf(count++);
+			if(count >= 10) {
+				log.info("Only 10 items are allowed in album upload. Skipping the rest. . .");
+				return uploadIds;
+			}
+			if (InstagramGenericUtil.isImageFile(f.toPath())) {
+				InstagramUploadPhotoResult res = api
+						.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId, true));
+				if (!res.getStatus().equals("ok")) {
+					log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
+				} else {
+					Dimension dimensions = InstagramGenericUtil.getImageDimension(f);
+					uploadIds.add(AlbumChildrenMetadata.builder()
+							.uploadId(res.getUpload_id())
+							.height(dimensions.getHeight())
+							.width(dimensions.getWidth())
+							.build());
+				}
+			} else if (InstagramGenericUtil.isVideoFile(f.toPath())) {
+				InstagramUploadVideoRequest req = InstagramUploadVideoRequest.builder().forAlbum(true).videoFile(f)
+						.uploadId(uploadId).build();
+				InstagramConfigureMediaResult res = api.sendRequest(req);
+				if (!res.getStatus().equals("ok")) {
+					log.error("Video upload failed: " + res.getError_type() + " " + res.getMessage());
+				} else {
+					uploadIds.add(AlbumChildrenMetadata.builder()
+							.uploadId(res.getUpload_id())
+							.height(Double.valueOf(req.getVidInfo()[1]))
+							.width(Double.valueOf(req.getVidInfo()[2]))
+							.isVideo(true)
+							.duration(Integer.valueOf(req.getVidInfo()[0]))
+							.build());
+				}
 			} else {
-				Dimension dimensions = InstagramGenericUtil.getImageDimension(f);
-				uploadIds.add(AlbumChildrenMetadata.builder().uploadId(res.getUpload_id()).height(dimensions.getHeight()).width(dimensions.getWidth()).build());
+				log.info("MIME type indeterminate. Skipping. . . " + f.getAbsolutePath());
 			}
 		}
 

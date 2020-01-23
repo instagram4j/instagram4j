@@ -38,10 +38,9 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.bytedeco.javacv.Java2DFrameConverter;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -51,14 +50,17 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @Log4j
-@AllArgsConstructor
-@RequiredArgsConstructor
+@Builder
 public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfigureMediaResult> {
 	@NonNull
 	private File videoFile;
-	@NonNull
 	private String caption;
 	private File thumbnailFile;
+	private String uploadId;
+	@Builder.Default
+	private boolean forAlbum = false;
+	@Getter
+	private String[] vidInfo;
 
 	@Override
 	public String getUrl() {
@@ -72,12 +74,12 @@ public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfi
 
 	@Override
 	public InstagramConfigureMediaResult execute() throws ClientProtocolException, IOException {
-		String uploadId = String.valueOf(System.currentTimeMillis());
-		String[] vidInfo = this.preparePreVideoProcessing();
+		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
+		vidInfo = this.preparePreVideoProcessing();
 		InstagramConfigureMediaResult fail = new InstagramConfigureMediaResult();
-		
-		StatusResult uploadRes = api
-				.sendRequest(new InstagramUploadResumableVideoRequest(videoFile, vidInfo, uploadId));
+
+		StatusResult uploadRes = api.sendRequest(InstagramUploadResumableVideoRequest.builder().uploadId(uploadId)
+				.videoFile(videoFile).videoInfo(vidInfo).isSidecar(forAlbum).build());
 		if (!uploadRes.getStatus().equals("ok")) {
 			log.error("An error has occured during video upload");
 			StatusResult.setValues(fail, uploadRes);
@@ -86,27 +88,34 @@ public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfi
 
 		StatusResult uploadThumbnailRes = api
 				.sendRequest(new InstagramUploadResumablePhotoRequest(thumbnailFile, "1", uploadId, false));
-		if(!uploadThumbnailRes.getStatus().equals("ok")) {
+		if (!uploadThumbnailRes.getStatus().equals("ok")) {
 			log.error("An error has occured during thumbnail upload");
 			StatusResult.setValues(fail, uploadThumbnailRes);
 			return fail;
 		}
-		
+
+		if (forAlbum) {
+			log.info("Request was used to upload video for album.");
+			StatusResult.setValues(fail, uploadThumbnailRes);
+			fail.setUpload_id(uploadId);
+			return fail;
+		}
+
 		StatusResult finishRes = api.sendRequest(this.createFinishRequest(uploadId, vidInfo[0]));
-		if(!finishRes.getStatus().equals("ok")) {
+		if (!finishRes.getStatus().equals("ok")) {
 			log.error("An error has occured during finishing upload");
 			StatusResult.setValues(fail, finishRes);
 			return fail;
 		}
-		
-		InstagramConfigureMediaResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder().uploadId(uploadId)
-				.caption(caption).duration(Long.valueOf(vidInfo[0])).build());
-		
+
+		InstagramConfigureMediaResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder()
+				.uploadId(uploadId).caption(caption).duration(Long.valueOf(vidInfo[0])).build());
+
 		return configureResult;
 	}
-	
+
 	private InstagramUploadMediaFinishRequest createFinishRequest(String uploadId, String len) {
-		List<Entry<String, Object>>	 params = new ArrayList<>();
+		List<Entry<String, Object>> params = new ArrayList<>();
 		params.add(new SimpleEntry<>("length", len));
 		List<Object> clips = Arrays.asList(new Object() {
 			@Getter
@@ -117,7 +126,7 @@ public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfi
 		params.add(new SimpleEntry<>("clips", clips));
 		params.add(new SimpleEntry<>("poster_frame_index", 0));
 		params.add(new SimpleEntry<>("audio_muted", false));
-		
+
 		return new InstagramUploadMediaFinishRequest(uploadId, "4", params);
 	}
 

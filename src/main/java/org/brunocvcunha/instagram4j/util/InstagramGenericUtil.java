@@ -18,6 +18,9 @@ package org.brunocvcunha.instagram4j.util;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
@@ -86,6 +89,16 @@ public class InstagramGenericUtil {
 		}
 
 		throw new IOException("Not a known image file: " + imgFile.getAbsolutePath());
+	}
+	
+	public static boolean isImageFile(Path path) throws IOException {
+	    String mimeType = Files.probeContentType(path);
+	    return mimeType != null && mimeType.startsWith("image");
+	}
+	
+	public static boolean isVideoFile(Path path) throws IOException {
+	    String mimeType = Files.probeContentType(path);
+	    return mimeType != null && mimeType.startsWith("video");
 	}
 
 	public static Optional<String> getFirstHeaderValue(HttpMessage req, String name) {
