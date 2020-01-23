@@ -22,7 +22,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 @RequiredArgsConstructor
-public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfigurePhotoResult> {
+public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfigureMediaResult> {
 	@NonNull
 	private File file;
 	@NonNull
@@ -59,7 +59,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
 	}
 
 	@Override
-	public InstagramConfigurePhotoResult execute() throws ClientProtocolException, IOException {
+	public InstagramConfigureMediaResult execute() throws ClientProtocolException, IOException {
 		InstagramUploadPhotoResult uploadResult = api.sendRequest(new InstagramUploadResumablePhotoRequest(file, "1"));
 		log.debug("Upload response code: " + uploadResult.getStatus());
 		log.info("Upload photo result: " + uploadResult);
@@ -68,7 +68,7 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
 		}
 		uploadId = uploadResult.getUpload_id();
 		
-		InstagramConfigurePhotoResult configureResult = api.sendRequest(new InstagramConfigurePhotoRequest(file, uploadId, caption));
+		InstagramConfigureMediaResult configureResult = api.sendRequest(new InstagramConfigurePhotoRequest(file, uploadId, caption));
 		log.info("Configure photo result: " + configureResult);
 		if(!configureResult.getStatus().equals("ok")) {
 			log.error("Photo configure failed: " + configureResult.getError_type() + " " + configureResult.getMessage());
@@ -78,9 +78,9 @@ public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfi
 	}
 
 	@Override
-	public InstagramConfigurePhotoResult parseResult(int resultCode, String content) {
+	public InstagramConfigureMediaResult parseResult(int resultCode, String content) {
 		log.info("Reading from: " + content);
-		return parseJson(resultCode, content, InstagramConfigurePhotoResult.class);
+		return parseJson(resultCode, content, InstagramConfigureMediaResult.class);
 	}
 
 }

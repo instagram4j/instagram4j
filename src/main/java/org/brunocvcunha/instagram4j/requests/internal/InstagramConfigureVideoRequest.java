@@ -23,7 +23,7 @@ import java.util.TimeZone;
 
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,7 +40,7 @@ import lombok.SneakyThrows;
  */
 @AllArgsConstructor
 @Builder
-public class InstagramConfigureVideoRequest extends InstagramPostRequest<StatusResult> {
+public class InstagramConfigureVideoRequest extends InstagramPostRequest<InstagramConfigureMediaResult> {
 
 	private String uploadId;
 	private String caption;
@@ -96,8 +96,8 @@ public class InstagramConfigureVideoRequest extends InstagramPostRequest<StatusR
 
 	@Override
 	@SneakyThrows
-	public StatusResult parseResult(int statusCode, String content) {
-		return parseJson(statusCode, content, StatusResult.class);
+	public InstagramConfigureMediaResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramConfigureMediaResult.class);
 	}
 
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +38,7 @@ import lombok.SneakyThrows;
  *
  */
 @AllArgsConstructor
-public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigurePhotoResult> {
+public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigureMediaResult> {
     private File file;
     private String uploadId;
     private String caption;
@@ -88,8 +88,8 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
 
     @Override
     @SneakyThrows
-    public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
+    public InstagramConfigureMediaResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramConfigureMediaResult.class);
     }
 
 }

@@ -29,6 +29,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class InstagramConfigureAlbumResult extends InstagramConfigurePhotoResult {
+public class InstagramConfigureAlbumResult extends InstagramConfigureMediaResult {
     private String client_sidecar_id;
 }

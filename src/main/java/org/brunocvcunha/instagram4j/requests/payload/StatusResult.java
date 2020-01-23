@@ -44,5 +44,14 @@ public class StatusResult {
     private String error_type;
     private String checkpoint_url;
     
-
+    public static void setValues(StatusResult to, StatusResult from) {
+    	to.setStatus(from.getStatus());
+    	to.setMessage(from.getMessage());
+    	to.setSpam(from.isSpam());
+    	to.setLock(from.isLock());
+    	to.setFeedback_title(from.getFeedback_title());
+    	to.setFeedback_message(from.getFeedback_message());
+    	to.setError_type(from.getError_type());
+    	to.setCheckpoint_url(from.getCheckpoint_url());
+    }
 }

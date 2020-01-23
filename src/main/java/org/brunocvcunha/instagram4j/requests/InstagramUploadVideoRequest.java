@@ -31,6 +31,7 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureVideoReq
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadMediaFinishRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumableVideoRequest;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -52,7 +53,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> {
+public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfigureMediaResult> {
 	@NonNull
 	private File videoFile;
 	@NonNull
@@ -70,31 +71,35 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
 	}
 
 	@Override
-	public StatusResult execute() throws ClientProtocolException, IOException {
+	public InstagramConfigureMediaResult execute() throws ClientProtocolException, IOException {
 		String uploadId = String.valueOf(System.currentTimeMillis());
 		String[] vidInfo = this.preparePreVideoProcessing();
-
+		InstagramConfigureMediaResult fail = new InstagramConfigureMediaResult();
+		
 		StatusResult uploadRes = api
 				.sendRequest(new InstagramUploadResumableVideoRequest(videoFile, vidInfo, uploadId));
 		if (!uploadRes.getStatus().equals("ok")) {
 			log.error("An error has occured during video upload");
-			return uploadRes;
+			StatusResult.setValues(fail, uploadRes);
+			return fail;
 		}
 
 		StatusResult uploadThumbnailRes = api
 				.sendRequest(new InstagramUploadResumablePhotoRequest(thumbnailFile, "1", uploadId, false));
 		if(!uploadThumbnailRes.getStatus().equals("ok")) {
 			log.error("An error has occured during thumbnail upload");
-			return uploadThumbnailRes;
+			StatusResult.setValues(fail, uploadThumbnailRes);
+			return fail;
 		}
 		
 		StatusResult finishRes = api.sendRequest(this.createFinishRequest(uploadId, vidInfo[0]));
 		if(!finishRes.getStatus().equals("ok")) {
 			log.error("An error has occured during finishing upload");
-			return finishRes;
+			StatusResult.setValues(fail, finishRes);
+			return fail;
 		}
 		
-		StatusResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder().uploadId(uploadId)
+		InstagramConfigureMediaResult configureResult = api.sendRequest(InstagramConfigureVideoRequest.builder().uploadId(uploadId)
 				.caption(caption).duration(Long.valueOf(vidInfo[0])).build());
 		
 		return configureResult;
@@ -148,8 +153,8 @@ public class InstagramUploadVideoRequest extends InstagramRequest<StatusResult> 
 	}
 
 	@Override
-	public StatusResult parseResult(int statusCode, String content) {
-		return parseJson(statusCode, content, StatusResult.class);
+	public InstagramConfigureMediaResult parseResult(int statusCode, String content) {
+		return parseJson(statusCode, content, InstagramConfigureMediaResult.class);
 	}
 
 }
