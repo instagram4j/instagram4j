@@ -179,6 +179,7 @@ public abstract class InstagramRequest<T> {
 		req.addHeader("Connection", "close");
 		req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		req.addHeader("Accept-Language", "en-US");
+		req.addHeader("Authorization", api.getAUTH_VALUE());
 		req.addHeader("X-IG-Capabilities", InstagramConstants.DEVICE_CAPABILITIES);
 		req.addHeader("X-IG-App-ID", InstagramConstants.APP_ID);
 		req.addHeader("User-Agent", InstagramConstants.USER_AGENT);

@@ -273,14 +273,13 @@ public class Instagram4j implements Serializable {
 
 		request.setApi(this);
 		T response = request.execute();
-
 		this.setHeaders();
-
+		
 		log.debug("Result for " + request.getClass().getName() + ": " + response);
 
 		return response;
 	}
-	
+
 	@SneakyThrows
 	public HttpResponse executeHttpRequest(HttpUriRequest req) {
 		lastResponse = client.execute(req);
@@ -288,11 +287,10 @@ public class Instagram4j implements Serializable {
 	}
 
 	private void setHeaders() {
-		InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "ig-set-authorization")
+		InstagramGenericUtil.getFirstHeaderValue(getLastResponse(), "ig-set-authorization")
 				.ifPresent(this::setAUTH_VALUE);
-		InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "x-ig-set-www-claim")
-				.ifPresent(this::setAUTH_VALUE);
-		InstagramGenericUtil.getFirstHeaderValue(this.getLastResponse(), "ig-set-x-mid").ifPresent(this::setAUTH_VALUE);
+		InstagramGenericUtil.getFirstHeaderValue(getLastResponse(), "x-ig-set-www-claim").ifPresent(this::setWWW_CLAIM);
+		InstagramGenericUtil.getFirstHeaderValue(getLastResponse(), "ig-set-x-mid").ifPresent(this::setX_MID);
 	}
 
 	private void emulateUserLoggedIn(InstagramLoginResult loginResult) throws IOException {
