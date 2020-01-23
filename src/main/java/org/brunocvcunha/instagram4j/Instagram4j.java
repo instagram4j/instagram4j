@@ -25,7 +25,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -281,12 +280,11 @@ public class Instagram4j implements Serializable {
 
 		return response;
 	}
-
-	public HttpResponse executeHttpRequest(HttpUriRequest req) throws ClientProtocolException, IOException {
-		try (CloseableHttpResponse res = client.execute(req)) {
-			lastResponse = res;
-			return res;
-		}
+	
+	@SneakyThrows
+	public HttpResponse executeHttpRequest(HttpUriRequest req) {
+		lastResponse = client.execute(req);
+		return lastResponse;
 	}
 
 	private void setHeaders() {
