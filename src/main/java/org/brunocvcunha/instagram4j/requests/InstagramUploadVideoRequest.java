@@ -38,6 +38,7 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 import org.bytedeco.javacv.Java2DFrameConverter;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -51,6 +52,7 @@ import lombok.extern.log4j.Log4j;
  */
 @Log4j
 @Builder
+@AllArgsConstructor
 public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfigureMediaResult> {
 	@NonNull
 	private File videoFile;
@@ -62,6 +64,16 @@ public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfi
 	@Getter
 	private String[] vidInfo;
 
+	public InstagramUploadVideoRequest(File videoFile, String caption) {
+		this.videoFile = videoFile;
+		this.caption = caption;
+	}
+	
+	public InstagramUploadVideoRequest(File videoFile, String caption, File thumbnail) {
+		this(videoFile, caption);
+		this.thumbnailFile = thumbnail;
+	}
+	
 	@Override
 	public String getUrl() {
 		return "upload/video/";
