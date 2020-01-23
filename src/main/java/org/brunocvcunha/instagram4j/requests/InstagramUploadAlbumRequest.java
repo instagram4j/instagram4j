@@ -15,6 +15,7 @@
  */
 package org.brunocvcunha.instagram4j.requests;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,9 +24,11 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureAlbumRequest;
+import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigureAlbumRequest.AlbumChildrenMetadata;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
+import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +61,7 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 
 	@Override
 	public InstagramConfigureAlbumResult execute() throws ClientProtocolException, IOException {
-		List<String> uploadIds = this.uploadPhotos();
+		List<AlbumChildrenMetadata> uploadIds = this.uploadPhotos();
 		InstagramConfigureAlbumResult configurePhotoResult = api
 				.sendRequest(new InstagramConfigureAlbumRequest(uploadIds, caption));
 
@@ -70,8 +73,8 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 
 	}
 
-	private List<String> uploadPhotos() throws ClientProtocolException, IOException {
-		List<String> uploadIds = new ArrayList<>();
+	private List<AlbumChildrenMetadata> uploadPhotos() throws ClientProtocolException, IOException {
+		List<AlbumChildrenMetadata> uploadIds = new ArrayList<>();
 		long count = 0;
 		for (File f : imageFiles) {
 			String uploadId = String.valueOf(System.currentTimeMillis()) + String.valueOf(count);
@@ -79,7 +82,8 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 			if (!res.getStatus().equals("ok")) {
 				log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
 			} else {
-				uploadIds.add(res.getUpload_id());
+				Dimension dimensions = InstagramGenericUtil.getImageDimension(f);
+				uploadIds.add(AlbumChildrenMetadata.builder().uploadId(res.getUpload_id()).height(dimensions.getHeight()).width(dimensions.getWidth()).build());
 			}
 		}
 
