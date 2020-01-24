@@ -176,30 +176,30 @@ public abstract class InstagramRequest<T> {
 
 	public <E extends HttpRequest> E applyHeaders(E req) {
 
-		req.addHeader("Connection", "close");
-		req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		req.addHeader("Accept-Language", "en-US");
-		req.addHeader("Authorization", api.getAUTH_VALUE());
-		req.addHeader("X-IG-Capabilities", InstagramConstants.DEVICE_CAPABILITIES);
-		req.addHeader("X-IG-App-ID", InstagramConstants.APP_ID);
-		req.addHeader("User-Agent", InstagramConstants.USER_AGENT);
-		req.addHeader("X-IG-Connection-Type", "WIFI");
-		req.addHeader("X-Ads-Opt-Out", "0");
-		req.addHeader("X-CM-Bandwidth-KBPS", "-1.000");
-		req.addHeader("X-CM-Latency", "-1.000");
-		req.addHeader("X-IG-App-Locale", "en_US");
-		req.addHeader("X-IG-Device-Locale", "en_US");
-		req.addHeader("X-Pigeon-Session-Id", InstagramGenericUtil.generateUuid(true));
-		req.addHeader("X-Pigeon-Rawclienttime", System.currentTimeMillis() + "");
-		req.addHeader("X-IG-Connection-Speed", ThreadLocalRandom.current().nextInt(2000, 4000) + "kbps");
-		req.addHeader("X-IG-Bandwidth-Speed-KBPS", "-1.000");
-		req.addHeader("X-IG-Bandwidth-TotalBytes-B", "0");
-		req.addHeader("X-IG-Bandwidth-TotalTime-MS", "0");
-		req.addHeader("X-IG-EU-DC-ENABLED", null);
-		req.addHeader("X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value", "1000");
-		req.addHeader("X-MID", api.getX_MID());
-		req.addHeader("X-IG-WWW-Claim", api.getWWW_CLAIM());
-		req.addHeader("X-FB-HTTP-engine", "Liger");
+		req.setHeader("Connection", "close");
+		req.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		req.setHeader("Accept-Language", "en-US");
+		req.setHeader("Authorization", api.getAUTH_VALUE());
+		req.setHeader("X-IG-Capabilities", InstagramConstants.DEVICE_CAPABILITIES);
+		req.setHeader("X-IG-App-ID", InstagramConstants.APP_ID);
+		req.setHeader("User-Agent", InstagramConstants.USER_AGENT);
+		req.setHeader("X-IG-Connection-Type", "WIFI");
+		req.setHeader("X-Ads-Opt-Out", "0");
+		req.setHeader("X-CM-Bandwidth-KBPS", "-1.000");
+		req.setHeader("X-CM-Latency", "-1.000");
+		req.setHeader("X-IG-App-Locale", "en_US");
+		req.setHeader("X-IG-Device-Locale", "en_US");
+		req.setHeader("X-Pigeon-Session-Id", InstagramGenericUtil.generateUuid(true));
+		req.setHeader("X-Pigeon-Rawclienttime", System.currentTimeMillis() + "");
+		req.setHeader("X-IG-Connection-Speed", ThreadLocalRandom.current().nextInt(2000, 4000) + "kbps");
+		req.setHeader("X-IG-Bandwidth-Speed-KBPS", "-1.000");
+		req.setHeader("X-IG-Bandwidth-TotalBytes-B", "0");
+		req.setHeader("X-IG-Bandwidth-TotalTime-MS", "0");
+		req.setHeader("X-IG-EU-DC-ENABLED", null);
+		req.setHeader("X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value", "1000");
+		req.setHeader("X-MID", api.getX_MID());
+		req.setHeader("X-IG-WWW-Claim", api.getWWW_CLAIM());
+		req.setHeader("X-FB-HTTP-engine", "Liger");
 
 		return req;
 	}

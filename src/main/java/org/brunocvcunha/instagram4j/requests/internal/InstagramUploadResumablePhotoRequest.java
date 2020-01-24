@@ -60,14 +60,14 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 		HttpPost post = new HttpPost(InstagramConstants.BASE_API_URL + getUrl() + name);
 		log.debug("Photo upload url: " + post.getURI());
 		this.applyHeaders(post);
-		post.addHeader("X-Instagram-Rupload-Params", rparam);
-		post.addHeader("X_FB_WATERFALL_ID", UUID.randomUUID().toString());
-		post.addHeader("Accept-Encoding", "gzip");
-		post.addHeader("X-Entity-Name", name);
-		post.addHeader("X-Entity-Type", "image/jpeg");
-		post.addHeader("X-Entity-Length", String.valueOf(entity.getContentLength()));
-		post.addHeader("Offset", "0");
-		post.addHeader("Content-Type", "application/octet-stream");
+		post.setHeader("X-Instagram-Rupload-Params", rparam);
+		post.setHeader("X_FB_WATERFALL_ID", UUID.randomUUID().toString());
+		post.setHeader("Accept-Encoding", "gzip");
+		post.setHeader("X-Entity-Name", name);
+		post.setHeader("X-Entity-Type", "image/jpeg");
+		post.setHeader("X-Entity-Length", String.valueOf(entity.getContentLength()));
+		post.setHeader("Offset", "0");
+		post.setHeader("Content-Type", "application/octet-stream");
 		post.setEntity(entity);
 
 		return post;

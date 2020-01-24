@@ -71,10 +71,10 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 	private HttpGet initUploadRequest(String name, String rupload) {
 		HttpGet get = new HttpGet(InstagramConstants.BASE_API_URL + getUrl() + name);
 		this.applyHeaders(get);
-		get.addHeader("X-Instagram-Rupload-Params", rupload);
-		get.addHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
-		get.addHeader("Accept-Encoding", "gzip");
-		get.addHeader("X-Entity-Type", "video/mp4");
+		get.setHeader("X-Instagram-Rupload-Params", rupload);
+		get.setHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
+		get.setHeader("Accept-Encoding", "gzip");
+		get.setHeader("X-Entity-Type", "video/mp4");
 
 		return get;
 	}
@@ -83,14 +83,14 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 		HttpPost post = new HttpPost(InstagramConstants.BASE_API_URL + getUrl() + name);
 		this.applyHeaders(post);
 
-		post.addHeader("Accept-Encoding", "gzip");
-		post.addHeader("X-Instagram-Rupload-Params", rupload);
-		post.addHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
-		post.addHeader("X-Entity-Type", "video/mp4");
-		post.addHeader("Offset", offset);
-		post.addHeader("X-Entity-Name", name);
-		post.addHeader("X-Entity-Length", String.valueOf(entity.getContentLength()));
-		post.addHeader("Content-Type", "application/octet-stream");
+		post.setHeader("Accept-Encoding", "gzip");
+		post.setHeader("X-Instagram-Rupload-Params", rupload);
+		post.setHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
+		post.setHeader("X-Entity-Type", "video/mp4");
+		post.setHeader("Offset", offset);
+		post.setHeader("X-Entity-Name", name);
+		post.setHeader("X-Entity-Length", String.valueOf(entity.getContentLength()));
+		post.setHeader("Content-Type", "application/octet-stream");
 		post.setEntity(entity);
 
 		return post;
