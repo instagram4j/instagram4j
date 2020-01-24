@@ -70,7 +70,7 @@ public class InstagramUploadResumableVideoRequest extends InstagramPostRequest<S
 
 	private HttpGet initUploadRequest(String name, String rupload) {
 		HttpGet get = new HttpGet(InstagramConstants.BASE_API_URL + getUrl() + name);
-
+		this.applyHeaders(get);
 		get.addHeader("X-Instagram-Rupload-Params", rupload);
 		get.addHeader("X_FB_VIDEO_WATERFALL_ID", uuid);
 		get.addHeader("Accept-Encoding", "gzip");
