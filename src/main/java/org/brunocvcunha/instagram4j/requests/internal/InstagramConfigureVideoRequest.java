@@ -69,10 +69,10 @@ public class InstagramConfigureVideoRequest extends InstagramPostRequest<Instagr
 		likeMap.put("_uuid", api.getUuid());
 		likeMap.put("upload_id", uploadId);
 		Map<String, Object> deviceMap = new LinkedHashMap<>();
-		deviceMap.put("manufacturer", InstagramConstants.DEVICE_MANUFACTURER);
-		deviceMap.put("model", InstagramConstants.DEVICE_MODEL);
-		deviceMap.put("android_version", InstagramConstants.DEVICE_ANDROID_VERSION);
-		deviceMap.put("android_release", InstagramConstants.DEVICE_ANDROID_RELEASE);
+		deviceMap.put("manufacturer", InstagramConstants.getDevice().getDEVICE_MANUFACTURER());
+        deviceMap.put("model", InstagramConstants.getDevice().getDEVICE_MODEL());
+        deviceMap.put("android_version", InstagramConstants.getDevice().getDEVICE_ANDROID_VERSION());
+        deviceMap.put("android_release", InstagramConstants.getDevice().getDEVICE_ANDROID_RELEASE());
 		likeMap.put("device", deviceMap);
 		likeMap.put("length", duration);
 		List<Object> clips = Arrays.asList(new Object() {
@@ -84,7 +84,7 @@ public class InstagramConfigureVideoRequest extends InstagramPostRequest<Instagr
 		likeMap.put("clips", clips);
 		likeMap.put("poster_frame_index", 0);
 		likeMap.put("audio_muted", false);
-		if (caption != null && caption.isEmpty()) {
+		if (caption != null && !caption.isEmpty()) {
 			likeMap.put("caption", caption);
 		}
 
