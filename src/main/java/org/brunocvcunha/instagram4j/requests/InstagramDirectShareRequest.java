@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.util.EntityUtils;
@@ -125,20 +125,18 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 		HttpPost post = createHttpRequest();
 		post.setEntity(new ByteArrayEntity(buildBody(data, api.getUuid()).getBytes(StandardCharsets.UTF_8)));
 
-		try (CloseableHttpResponse response = api.getClient().execute(post)) {
-			api.setLastResponse(response);
+		HttpResponse response = api.executeHttpRequest(post);
 
-			int resultCode = response.getStatusLine().getStatusCode();
-			String content = EntityUtils.toString(response.getEntity());
+		int resultCode = response.getStatusLine().getStatusCode();
+		String content = EntityUtils.toString(response.getEntity());
 
-			log.info("Direct-share request result: " + resultCode + ", " + content);
+		log.info("Direct-share request result: " + resultCode + ", " + content);
 
-			post.releaseConnection();
+		post.releaseConnection();
 
-			StatusResult result = parseResult(resultCode, content);
+		StatusResult result = parseResult(resultCode, content);
 
-			return result;
-		}
+		return result;
 	}
 
 	@Override

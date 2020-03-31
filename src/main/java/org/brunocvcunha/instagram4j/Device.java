@@ -103,5 +103,10 @@ public class Device {
 	 * Device CPU
 	 */
 	private final String CPU;
+	
+	/**
+	 * Device Capabilities
+	 */
+	private final String CAPABILITIES = InstagramConstants.DEVICE_CAPABILITIES;
 
 }

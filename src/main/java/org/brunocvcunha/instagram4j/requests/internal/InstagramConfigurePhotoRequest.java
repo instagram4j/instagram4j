@@ -15,20 +15,21 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.awt.image.BufferedImage;
+import java.awt.Dimension;
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
-import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigurePhotoResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
+import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
 
 /**
  * Like Request
@@ -37,10 +38,8 @@ import lombok.extern.log4j.Log4j;
  *
  */
 @AllArgsConstructor
-@Log4j
-public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigurePhotoResult> {
-
-    BufferedImage image;
+public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigureMediaResult> {
+    private File file;
     private String uploadId;
     private String caption;
 
@@ -63,13 +62,14 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
         likeMap.put("upload_id", uploadId);
         
         Map<String, Object> deviceMap = new LinkedHashMap<>();
-        deviceMap.put("manufacturer", InstagramConstants.DEVICE_MANUFACTURER);
-        deviceMap.put("model", InstagramConstants.DEVICE_MODEL);
-        deviceMap.put("android_version", InstagramConstants.DEVICE_ANDROID_VERSION);
-        deviceMap.put("android_release", InstagramConstants.DEVICE_ANDROID_RELEASE);
+        deviceMap.put("manufacturer", InstagramConstants.getDevice().getDEVICE_MANUFACTURER());
+        deviceMap.put("model", InstagramConstants.getDevice().getDEVICE_MODEL());
+        deviceMap.put("android_version", InstagramConstants.getDevice().getDEVICE_ANDROID_VERSION());
+        deviceMap.put("android_release", InstagramConstants.getDevice().getDEVICE_ANDROID_RELEASE());
         likeMap.put("device", deviceMap);
 
         Map<String, Object> editsMap = new LinkedHashMap<>();
+        Dimension image = InstagramGenericUtil.getImageDimension(file);
         editsMap.put("crop_original_size", Arrays.asList((double) image.getWidth(), (double) image.getHeight()));
         editsMap.put("crop_center", Arrays.asList((double) 0, (double) 0));
         editsMap.put("crop_zoom", 1.0);
@@ -88,8 +88,8 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
 
     @Override
     @SneakyThrows
-    public InstagramConfigurePhotoResult parseResult(int statusCode, String content) {
-        return parseJson(statusCode, content, InstagramConfigurePhotoResult.class);
+    public InstagramConfigureMediaResult parseResult(int statusCode, String content) {
+        return parseJson(statusCode, content, InstagramConfigureMediaResult.class);
     }
 
 }
