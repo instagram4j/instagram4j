@@ -11,6 +11,10 @@ instagram4j
 Based on the [Instagram PHP Api](https://github.com/mgp25/Instagram-API) and [Instagram Python Api](https://github.com/LevPasha/Instagram-API-python).
 
 
+#### :warning: The API was built for research and learning purposes only. The contributors are not responsible for any usage of this application. 
+#### :warning: Issues and pull requests are welcome, but they are delayed. Many questions have been asked already, so please try to search for your problem first.
+
+
 Usage
 --------
 
