@@ -23,12 +23,12 @@ Download [the latest release JAR][1] or grab via Maven:
 <dependency>
   <groupId>org.brunocvcunha.instagram4j</groupId>
   <artifactId>instagram4j</artifactId>
-  <version>1.13</version>
+  <version>1.14</version>
 </dependency>
 ```
 or Gradle:
 ```groovy
-compile 'org.brunocvcunha.instagram4j:instagram4j:1.13'
+compile 'org.brunocvcunha.instagram4j:instagram4j:1.14'
 ```
 
 
