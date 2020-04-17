@@ -15,8 +15,9 @@
  */
 package org.brunocvcunha.instagram4j.requests.internal;
 
-import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,12 +25,11 @@ import java.util.Map;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
-import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+
+import javax.imageio.ImageIO;
 
 /**
  * Like Request
@@ -37,11 +37,21 @@ import lombok.SneakyThrows;
  * @author Bruno Candido Volpato da Cunha
  *
  */
-@AllArgsConstructor
 public class InstagramConfigurePhotoRequest extends InstagramPostRequest<InstagramConfigureMediaResult> {
-    private File file;
+
+    private BufferedImage bufferedImage;
     private String uploadId;
     private String caption;
+
+    public InstagramConfigurePhotoRequest(BufferedImage bufferedImage, String uploadId, String caption) {
+        this.bufferedImage = bufferedImage;
+        this.uploadId = uploadId;
+        this.caption = caption;
+    }
+
+    public InstagramConfigurePhotoRequest(File file, String uploadId, String caption) throws IOException {
+        this(ImageIO.read(file), uploadId, caption);
+    }
 
     @Override
     public String getUrl() {
@@ -69,15 +79,14 @@ public class InstagramConfigurePhotoRequest extends InstagramPostRequest<Instagr
         likeMap.put("device", deviceMap);
 
         Map<String, Object> editsMap = new LinkedHashMap<>();
-        Dimension image = InstagramGenericUtil.getImageDimension(file);
-        editsMap.put("crop_original_size", Arrays.asList((double) image.getWidth(), (double) image.getHeight()));
+        editsMap.put("crop_original_size", Arrays.asList((double) bufferedImage.getWidth(), (double) bufferedImage.getHeight()));
         editsMap.put("crop_center", Arrays.asList((double) 0, (double) 0));
         editsMap.put("crop_zoom", 1.0);
         likeMap.put("edits", editsMap);
         
         Map<String, Object> extraMap = new LinkedHashMap<>();
-        extraMap.put("source_width", image.getWidth());
-        extraMap.put("source_height", image.getHeight());
+        extraMap.put("source_width", bufferedImage.getWidth());
+        extraMap.put("source_height", bufferedImage.getHeight());
         likeMap.put("extra", extraMap);
 
         ObjectMapper mapper = new ObjectMapper();

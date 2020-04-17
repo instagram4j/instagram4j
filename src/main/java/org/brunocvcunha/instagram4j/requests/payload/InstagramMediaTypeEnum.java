@@ -16,12 +16,24 @@
 package org.brunocvcunha.instagram4j.requests.payload;
 
 /**
- * Media Types
- * @author Bruno Candido Volpato da Cunha
+ * Enum represent the Instagram Media Types
  *
+ * @author Bruno Candido Volpato da Cunha
  */
 public enum InstagramMediaTypeEnum {
 
-    PHOTO, VIDEO, ALBUM;
+    PHOTO("1"),
+    VIDEO("2"),
+    ALBUM("8");
 
+    private String value;
+
+    InstagramMediaTypeEnum(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

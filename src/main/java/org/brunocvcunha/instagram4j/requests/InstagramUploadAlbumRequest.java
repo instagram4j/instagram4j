@@ -29,6 +29,7 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePh
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureAlbumResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
 import org.brunocvcunha.instagram4j.util.InstagramGenericUtil;
 
 import lombok.NonNull;
@@ -85,7 +86,7 @@ public class InstagramUploadAlbumRequest extends InstagramPostRequest<InstagramC
 			}
 			if (InstagramGenericUtil.isImageFile(f.toPath())) {
 				InstagramUploadPhotoResult res = api
-						.sendRequest(new InstagramUploadResumablePhotoRequest(f, "1", uploadId, true));
+						.sendRequest(new InstagramUploadResumablePhotoRequest(f, InstagramMediaTypeEnum.PHOTO, true, uploadId));
 				if (!res.getStatus().equals("ok")) {
 					log.error("Photo upload failed: " + res.getError_type() + " " + res.getMessage());
 				} else {

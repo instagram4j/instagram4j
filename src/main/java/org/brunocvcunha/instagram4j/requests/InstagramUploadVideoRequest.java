@@ -32,6 +32,7 @@ import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadMediaFinish
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumableVideoRequest;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramConfigureMediaResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.inutils4j.MyImageUtils;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -99,7 +100,7 @@ public class InstagramUploadVideoRequest extends InstagramRequest<InstagramConfi
 		}
 
 		StatusResult uploadThumbnailRes = api
-				.sendRequest(new InstagramUploadResumablePhotoRequest(thumbnailFile, "1", uploadId, false));
+				.sendRequest(new InstagramUploadResumablePhotoRequest(thumbnailFile, InstagramMediaTypeEnum.PHOTO, false, uploadId));
 		if (!uploadThumbnailRes.getStatus().equals("ok")) {
 			log.error("An error has occured during thumbnail upload");
 			StatusResult.setValues(fail, uploadThumbnailRes);

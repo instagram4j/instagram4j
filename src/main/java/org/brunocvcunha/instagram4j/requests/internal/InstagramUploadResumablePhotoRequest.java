@@ -1,8 +1,9 @@
 package org.brunocvcunha.instagram4j.requests.internal;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,26 +16,44 @@ import org.apache.http.util.EntityUtils;
 import org.brunocvcunha.instagram4j.InstagramConstants;
 import org.brunocvcunha.instagram4j.requests.InstagramPostRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
+import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-@RequiredArgsConstructor
-@AllArgsConstructor
+import javax.imageio.ImageIO;
+
 @Log4j
 public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<InstagramUploadPhotoResult> {
-	@NonNull
-	private File file;
-	@NonNull
-	private String mediaType;
+
+	private BufferedImage bufferedImage;
+	private InstagramMediaTypeEnum mediaType;
 	private String uploadId;
 	private boolean isSideCar;
-	
+
+	public InstagramUploadResumablePhotoRequest(@NonNull BufferedImage bufferedImage, @NonNull InstagramMediaTypeEnum mediaType,
+																							boolean isSideCar, String uploadId) {
+		this.bufferedImage = bufferedImage;
+		this.mediaType = mediaType;
+		this.uploadId = uploadId;
+		this.isSideCar = isSideCar;
+	}
+
+	public InstagramUploadResumablePhotoRequest(@NonNull BufferedImage bufferedImage, @NonNull InstagramMediaTypeEnum mediaType, boolean isSideCar) {
+		this(bufferedImage, mediaType, isSideCar, null);
+	}
+
+	public InstagramUploadResumablePhotoRequest(@NonNull File file, @NonNull InstagramMediaTypeEnum mediaType, boolean isSideCar, String uploadId) throws IOException {
+		this(ImageIO.read(file), mediaType, isSideCar, uploadId);
+	}
+
+	public InstagramUploadResumablePhotoRequest(@NonNull File file, @NonNull InstagramMediaTypeEnum mediaType, boolean isSideCar) throws IOException {
+		this(file, mediaType, isSideCar, null);
+	}
+
 	@Override
 	public String getUrl() {
 		return "rupload_igphoto/";
@@ -42,7 +61,7 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 
 	@Override
 	public InstagramUploadPhotoResult execute() throws ClientProtocolException, IOException {
-		uploadId = uploadId == null ? String.valueOf(System.currentTimeMillis()) : uploadId;
+		uploadId = (uploadId == null || "".equals(uploadId)) ? String.valueOf(System.currentTimeMillis()) : uploadId;
 		log.info("The upload id is " + uploadId);
 		String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1000000000, 9999999999l);
 		HttpPost post = this.createUploadPostRequest(rUploadParams(uploadId, mediaType, isSideCar), name, this.createFileEntity());
@@ -73,20 +92,28 @@ public class InstagramUploadResumablePhotoRequest extends InstagramPostRequest<I
 		return post;
 	}
 
-	protected static String rUploadParams(String uploadId, String mediaType, boolean isSideCar) {
+	protected static String rUploadParams(String uploadId, InstagramMediaTypeEnum mediaType, boolean isSideCar) {
 		return String.format(
 				"{\"retry_context\":\"{\\\"num_step_auto_retry\\\":0,\\\"num_reupload\\\":0,\\\"num_step_manual_retry\\\":0}\",\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":\"[]\",\" image_compression\":\"{\\\"lib_name\\\":\\\"moz\\\",\\\"lib_version\\\":\\\"3.1.m\\\",\\\"quality\\\":\\\"80\\\"}\"%s}",
 				mediaType, uploadId, isSideCar ? ", \"is_sidecar\":\"1\"" : "");
 	}
 
 	private HttpEntity createFileEntity() throws IOException {
-		return new ByteArrayEntity(Files.readAllBytes(file.toPath()));
+		return new ByteArrayEntity(bufferedImageToByteArray(bufferedImage));
 	}
 	
 	@Getter
 	@Setter
 	public static class InstagramUploadPhotoResult extends StatusResult {
 		private String upload_id;
+	}
+
+	private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException {
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			ImageIO.write(image, "jpg", baos);
+			baos.flush();
+			return baos.toByteArray();
+		}
 	}
 
 }
