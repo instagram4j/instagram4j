@@ -19,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import com.sun.istack.internal.NotNull;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramConfigurePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest;
 import org.brunocvcunha.instagram4j.requests.internal.InstagramUploadResumablePhotoRequest.InstagramUploadPhotoResult;
@@ -39,9 +38,7 @@ import javax.imageio.ImageIO;
 @Log4j
 public class InstagramUploadPhotoRequest extends InstagramRequest<InstagramConfigureMediaResult> {
 
-	@NotNull
 	private final BufferedImage bufferedImage;
-	@NotNull
 	private final String caption;
 	private String uploadId;
 
