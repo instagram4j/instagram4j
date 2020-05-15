@@ -41,7 +41,7 @@ public class InstagramCodeUtil {
 
         String encoded = "";
         for (int i = 0; i < padAmount; i++)
-            encoded += BASE64URL_CHARMAP.charAt(Integer.parseInt(base2.substring(6 * i, 6 * i + 6)));
+            encoded += BASE64URL_CHARMAP.charAt(Integer.parseInt(base2.substring(6 * i, 6 * i + 6), 2));
 
         return encoded;
     }
