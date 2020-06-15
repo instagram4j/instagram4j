@@ -67,6 +67,8 @@ public class Instagram4j implements Serializable {
 	@Getter
 	private String deviceId;
 
+	int a;
+
 	@Getter
 	private String uuid;
 
