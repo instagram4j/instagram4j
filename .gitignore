@@ -19,3 +19,9 @@ target/
 .classpath
 *.iml
 .idea
+
+src/test/*
+build
+.gradle
+/.gitattributes
+/lombok.config
