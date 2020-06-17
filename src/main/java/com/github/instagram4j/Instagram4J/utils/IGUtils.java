@@ -1,10 +1,13 @@
 package com.github.instagram4j.Instagram4J.utils;
 
+import java.net.CookieStore;
+import java.net.HttpCookie;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.crypto.Mac;
@@ -147,4 +150,8 @@ public class IGUtils {
 		return WRITER.writeValueAsString(obj);
 	}
 
+	public static Optional<String> getCookieValue(CookieStore store, String key) {
+		return store.getCookies().stream().filter(cookie -> cookie.getName().equalsIgnoreCase(key))
+				.map(HttpCookie::getValue).findAny();
+	}
 }

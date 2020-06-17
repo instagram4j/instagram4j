@@ -15,12 +15,12 @@ public class IGConstants {
 	/**
 	 * Base API URL
 	 */
-	public static final String BASE_API_URL = "https://i.instagram.com/";
+	public static final String BASE_API_URL = "https://i.instagram.com";
 
 	/**
 	 * API v1 URL
 	 */
-	public static final String API_URL = BASE_API_URL + "api/v1/";
+	public static final String API_URL = BASE_API_URL + "/api/v1";
 	
 	/**
 	 * API Key (extracted from the apk)

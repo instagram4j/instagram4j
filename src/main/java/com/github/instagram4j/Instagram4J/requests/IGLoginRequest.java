@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests;
 
+import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
@@ -18,21 +19,18 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 
 	@Override
 	public String getUrl() {
-		return "accounts/login/";
+		return "/accounts/login/";
 	}
 
 	@Override
-	public String getPayload() {
+	public IGPayload getPayload() {
 		LoginPayload payload = LoginPayload.builder()
 				.username(username)
 				.password(password)
-				._csrftoken("missing")
-				.guid(client.getUuid())
-				.device_id(client.getDeviceId())
 				.phone_id(IGUtils.randomUuid())
 				.build();
 
-		return IGUtils.objectToJson(payload);
+		return payload;
 	}
 	
 	@Override
@@ -43,12 +41,9 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 	@Getter
 	@Setter
 	@Builder
-	private static class LoginPayload {
+	public static class LoginPayload extends IGPayload {
 		private String username;
 		private String phone_id;
-		private String _csrftoken;
-		private String guid;
-		private String device_id;
 		private String password;
 		@Builder.Default
 		private int login_attempt_account = 0;

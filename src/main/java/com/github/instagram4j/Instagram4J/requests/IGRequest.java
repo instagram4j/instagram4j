@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.instagram4j.Instagram4J.Instagram4J;
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
+import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Setter;
@@ -13,11 +14,9 @@ import okhttp3.Request;
 
 public abstract class IGRequest<T> {
 	@Setter
-	protected Instagram4J client;
+	protected IGClient client;
 
 	public abstract String getUrl();
-
-	public abstract String getPayload();
 
 	public abstract Request formRequest();
 
