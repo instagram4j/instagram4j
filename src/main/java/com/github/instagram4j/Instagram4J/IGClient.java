@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.With;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -28,7 +28,7 @@ import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 
-@Log4j
+@Slf4j
 public class IGClient {
 	private final String username;
 	private final String password;

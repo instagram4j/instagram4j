@@ -15,9 +15,9 @@ import com.github.instagram4j.Instagram4J.responses.IGChallengeStateResponse;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 public class IGChallengeUtil {
 	
 	public static IGChallengeStateResponse requestState(IGClient client, IGChallenge challenge) throws IGResponseException {
