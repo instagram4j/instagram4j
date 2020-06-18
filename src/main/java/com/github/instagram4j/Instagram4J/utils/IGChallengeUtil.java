@@ -1,12 +1,13 @@
 package com.github.instagram4j.Instagram4J.utils;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeInvalidCodeException;
+import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
+import com.github.instagram4j.Instagram4J.requests.IGChallengeResetRequest;
 import com.github.instagram4j.Instagram4J.requests.IGChallengeSelectVerifyMethodRequest;
 import com.github.instagram4j.Instagram4J.requests.IGChallengeSendCodeRequest;
 import com.github.instagram4j.Instagram4J.requests.IGChallengeStateGetRequest;
@@ -20,26 +21,24 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class IGChallengeUtil {
 	
-	public static IGChallengeStateResponse requestState(IGClient client, IGChallenge challenge) throws IGResponseException, IOException {
-		IGChallengeStateGetRequest request = new IGChallengeStateGetRequest(challenge.getApi_path());
-		
-		return client.sendRequest(request);
+	public static IGChallengeStateResponse requestState(IGClient client, IGChallenge challenge) throws IGResponseException {
+		return client.sendRequest(new IGChallengeStateGetRequest(challenge.getApi_path()));
 	}
 	
-	public static IGChallengeStateResponse selectVerifyMethod(IGClient client, IGChallenge challenge, String method, boolean resend) throws IGResponseException, IOException {
-		IGChallengeSelectVerifyMethodRequest request = new IGChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend);
-		
-		return client.sendRequest(request);
+	public static IGChallengeStateResponse selectVerifyMethod(IGClient client, IGChallenge challenge, String method, boolean resend) throws IGResponseException {
+		return client.sendRequest(new IGChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend));
 	}
 	
-	public static IGLoginResponse sendSecurityCode(IGClient client, IGChallenge challenge, String code) throws IGResponseException, IOException {
-		IGChallengeSendCodeRequest request = new IGChallengeSendCodeRequest(challenge.getApi_path(), code);
-		
-		return client.sendRequest(request);
+	public static IGLoginResponse sendSecurityCode(IGClient client, IGChallenge challenge, String code) throws IGResponseException {
+		return client.sendRequest(new IGChallengeSendCodeRequest(challenge.getApi_path(), code));
+	}
+	
+	public static IGChallengeStateResponse resetChallenge(IGClient client, IGChallenge challenge) throws IGResponseException {
+		return client.sendRequest(new IGChallengeResetRequest(challenge.getApi_path()));
 	}
 	
 	@SneakyThrows
-	public static void resolve(IGClient client, IGChallenge challenge, Callable<String> inputCode) throws IGChallengeException {
+	public static IGLoginResponse resolve(IGClient client, IGChallenge challenge, Callable<String> inputCode) throws IGLoginException, IGChallengeException, IGChallengeInvalidCodeException {
 		IGChallengeStateResponse stateResponse = requestState(client, challenge);
 		String name = stateResponse.getStep_name();
 		
@@ -49,7 +48,7 @@ public class IGChallengeUtil {
 		} else if (name.equalsIgnoreCase("delta_login_review")) {
 			selectVerifyMethod(client, challenge, "0", false);
 			log.info("delta_login_review option sent choice 0");
-			return;
+			return client.sendLoginRequest();
 		} else {
 			throw new IGChallengeException("Unknown step_name");
 		}
@@ -62,6 +61,8 @@ public class IGChallengeUtil {
 				log.info("Wrong security code");
 				throw new IGChallengeInvalidCodeException(loginResponse.getMessage());
 			}
+			
+			return loginResponse;
 		} catch (Exception exception) {
 			throw new IGChallengeException(exception);
 		}

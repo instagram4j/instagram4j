@@ -9,6 +9,7 @@ public class IGLoginException extends Exception {
 	private IGLoginResponse response;
 	
 	public IGLoginException(IGLoginResponse body) {
+		super(body.getMessage());
 		this.response = body;
 	}
 

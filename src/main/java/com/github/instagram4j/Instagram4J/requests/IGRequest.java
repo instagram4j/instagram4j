@@ -6,13 +6,13 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
-import com.github.instagram4j.Instagram4J.models.IGPayload;
+import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Setter;
 import okhttp3.Request;
 
-public abstract class IGRequest<T> {
+public abstract class IGRequest<T extends IGResponse> {
 	@Setter
 	protected IGClient client;
 
@@ -23,7 +23,9 @@ public abstract class IGRequest<T> {
 	public abstract Class<T> getResponseType();
 
 	public T parseResponse(String json) throws JsonProcessingException, IOException {
-		return IGUtils.MAPPER.readValue(json, this.getResponseType());
+		T response = IGUtils.MAPPER.readValue(json,  this.getResponseType());
+		response.setClient(client);
+		return response;
 	}
 
 	public boolean isSigned() {

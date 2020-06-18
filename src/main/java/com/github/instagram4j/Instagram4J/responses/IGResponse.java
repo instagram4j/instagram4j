@@ -1,10 +1,11 @@
 package com.github.instagram4j.Instagram4J.responses;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.instagram4j.Instagram4J.IGClient;
 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class IGResponse {
     private String status;
     private String message;
@@ -14,4 +15,6 @@ public class IGResponse {
     private String feedback_message;
     private String error_type;
     private String checkpoint_url;
+    @JsonIgnore
+    private IGClient client;
 }

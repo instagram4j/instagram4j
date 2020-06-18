@@ -1,10 +1,10 @@
 package com.github.instagram4j.Instagram4J.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class IGUser {
 	private String pk;
 	private String username;

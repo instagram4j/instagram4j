@@ -24,4 +24,3 @@ src/test/*
 build
 .gradle
 /.gitattributes
-/lombok.config

@@ -1,10 +1,8 @@
 package com.github.instagram4j.Instagram4J.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class IGTwoFactorInfo {
 	private String two_factor_identifier;
 }
