@@ -4,13 +4,12 @@ import java.util.concurrent.Callable;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
-import com.github.instagram4j.Instagram4J.exceptions.IGChallengeInvalidCodeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
-import com.github.instagram4j.Instagram4J.requests.IGChallengeResetRequest;
-import com.github.instagram4j.Instagram4J.requests.IGChallengeSelectVerifyMethodRequest;
-import com.github.instagram4j.Instagram4J.requests.IGChallengeSendCodeRequest;
-import com.github.instagram4j.Instagram4J.requests.IGChallengeStateGetRequest;
+import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeResetRequest;
+import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeSelectVerifyMethodRequest;
+import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeSendCodeRequest;
+import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeStateGetRequest;
 import com.github.instagram4j.Instagram4J.responses.IGChallenge;
 import com.github.instagram4j.Instagram4J.responses.IGChallengeStateResponse;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
@@ -38,7 +37,7 @@ public class IGChallengeUtil {
 	}
 	
 	@SneakyThrows
-	public static IGLoginResponse resolve(IGClient client, IGChallenge challenge, Callable<String> inputCode) throws IGLoginException, IGChallengeException, IGChallengeInvalidCodeException {
+	public static IGLoginResponse resolve(IGClient client, IGChallenge challenge, Callable<String> inputCode) throws IGLoginException, IGChallengeException {
 		IGChallengeStateResponse stateResponse = requestState(client, challenge);
 		String name = stateResponse.getStep_name();
 		
@@ -53,18 +52,14 @@ public class IGChallengeUtil {
 			throw new IGChallengeException("Unknown step_name");
 		}
 		
-		try {
-			IGLoginResponse loginResponse = sendSecurityCode(client, challenge, inputCode.call());
-			if (loginResponse.getStatus().equalsIgnoreCase("ok")) {
-				log.info("challenge success");
-			} else {
-				log.info("Wrong security code");
-				throw new IGChallengeInvalidCodeException(loginResponse.getMessage());
-			}
-			
-			return loginResponse;
-		} catch (Exception exception) {
-			throw new IGChallengeException(exception);
+		IGLoginResponse loginResponse = sendSecurityCode(client, challenge, inputCode.call());
+		if (loginResponse.getStatus().equalsIgnoreCase("ok")) {
+			log.info("challenge success");
+		} else {
+			log.info("Wrong security code");
+			throw new IGLoginException(loginResponse);
 		}
+		
+		return loginResponse;
 	}
 }

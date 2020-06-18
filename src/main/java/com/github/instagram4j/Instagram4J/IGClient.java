@@ -3,15 +3,14 @@ package com.github.instagram4j.Instagram4J;
 import java.net.CookieManager;
 
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
-import com.github.instagram4j.Instagram4J.exceptions.IGChallengeInvalidCodeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException.IGExceptionInfo;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.IGUser;
-import com.github.instagram4j.Instagram4J.requests.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
-import com.github.instagram4j.Instagram4J.requests.IGTwoFactorLoginRequest;
+import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
+import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
@@ -50,6 +49,10 @@ public class IGClient {
 	private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
 		log.debug(msg);
 	}).setLevel(Level.BODY);
+	
+	public IGClient(String username, String password) {
+		this(username, password, new CookieManager(), new OkHttpClient.Builder());
+	}
 	
 	public IGClient(String username, String password, CookieManager manager, OkHttpClient.Builder httpBuilder) {
 		this.username = username;
@@ -128,7 +131,7 @@ public class IGClient {
 		public static IGClient.Builder from(IGClient client) {
 			return new IGClient.Builder().withUsername(client.username).withPassword(client.password).withCookieManager(client.cookieManager);
 		}
-		public IGClient login() throws IGLoginException, IGChallengeException, IGChallengeInvalidCodeException {
+		public IGClient login() throws IGLoginException, IGChallengeException {
 			IGClient client = new IGClient(username, password, cookieManager, clientBuilder);
 			
 			try {
@@ -144,7 +147,7 @@ public class IGClient {
 		
 		@FunctionalInterface
 		public static interface LoginHandler {
-			public IGLoginResponse accept(IGClient client, IGLoginResponse t) throws IGLoginException, IGChallengeException, IGChallengeInvalidCodeException;
+			public IGLoginResponse accept(IGClient client, IGLoginResponse t) throws IGLoginException, IGChallengeException;
 		}
 	}
 }

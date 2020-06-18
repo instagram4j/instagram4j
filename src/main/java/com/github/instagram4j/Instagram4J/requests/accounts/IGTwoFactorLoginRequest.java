@@ -1,7 +1,8 @@
-package com.github.instagram4j.Instagram4J.requests;
+package com.github.instagram4j.Instagram4J.requests.accounts;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
-import com.github.instagram4j.Instagram4J.requests.IGLoginRequest.LoginPayload;
+import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
+import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest.LoginPayload;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
