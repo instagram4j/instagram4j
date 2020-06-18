@@ -6,8 +6,8 @@ import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException.IGExceptionInfo;
-import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
+import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
@@ -91,11 +91,16 @@ public class IGClient {
 
 	@SneakyThrows
 	public <T extends IGResponse> T sendRequest(IGRequest<T> req) throws IGResponseException {
+		return sendRequestWithView(req, req.getResponseType());
+	}
+	
+	@SneakyThrows
+	public <T extends IGResponse> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
 		req.setClient(this);
 		Response res = httpClient.newCall(req.formRequest()).execute();
-
+		
 		try (ResponseBody body = res.body()) {
-			return req.parseResponse(body.string());
+			return req.parseResponse(body.string(), view);
 		} catch (Exception ex) {
 			throw new IGResponseException(IGExceptionInfo.builder().response(res).build(),
 					"Unable to parse to IGResponse", ex);

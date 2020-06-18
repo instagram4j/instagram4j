@@ -28,8 +28,7 @@ public class IGUtils {
 	public static final ObjectReader READER = MAPPER.reader();
 	public static final ObjectWriter WRITER = MAPPER.writer();
 	static {
-		MAPPER.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 	/**

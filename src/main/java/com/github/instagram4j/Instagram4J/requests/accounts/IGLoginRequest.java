@@ -3,7 +3,6 @@ package com.github.instagram4j.Instagram4J.requests.accounts;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
-import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Builder;
 import lombok.Data;

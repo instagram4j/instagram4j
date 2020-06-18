@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -23,8 +24,13 @@ public abstract class IGRequest<T extends IGResponse> {
 	public abstract Class<T> getResponseType();
 
 	public T parseResponse(String json) throws JsonProcessingException, IOException {
-		T response = IGUtils.MAPPER.readValue(json,  this.getResponseType());
+		return parseResponse(json, getResponseType());
+	}
+	
+	public <U extends IGResponse> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
+		U response = IGUtils.MAPPER.readValue(json, type);
 		response.setClient(client);
+		
 		return response;
 	}
 
