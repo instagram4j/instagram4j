@@ -17,7 +17,7 @@ public class IGTwoFactorLoginRequest extends IGPostRequest<IGLoginResponse> {
 
 	@Override
 	public IGPayload getPayload() {
-		return new LoginPayload(username, password, IGUtils.randomUuid(), 0) {
+		return new LoginPayload(username, password, 0) {
 			@Getter
 			private final String verification_code = code;
 			@Getter

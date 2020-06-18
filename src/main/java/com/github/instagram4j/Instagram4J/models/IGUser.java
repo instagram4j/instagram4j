@@ -1,42 +1,49 @@
 package com.github.instagram4j.Instagram4J.models;
 
+import java.util.List;
+
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class IGUser {
-	private String pk;
-	private String username;
-	private String full_name;
-	private boolean is_private;
-	private String profile_pic_url;
-	private boolean is_verified;
-	private boolean has_anonymous_profile_picture;
-	private boolean can_boost_post;
-	private boolean is_business;
-	private int account_type;
-	private int professional_conversion_suggested_account_type;
-	private boolean is_call_to_action_enabled;
-	private boolean can_see_organic_insights;
-	private boolean show_insights_terms;
-	private int total_igtv_videos;
-	private String reel_auto_archive;
-	private boolean has_placed_orders;
-	private String allowed_commenter_type;
-	private Nametag nametag;
-	private boolean is_using_unified_inbox_for_direct;
-	private long interop_messaging_user_fbid;
-	private boolean can_see_primary_country_in_settings;
-	private boolean allow_contacts_sync;
-	private String phone_number;
-	
-	@Getter
-	@Setter
-	public static class Nametag {
-		private int mode;
-		private int gradient;
-		private String emoji;
-		private int selfie_sticker;
-	}
+	public boolean is_private;
+    public boolean is_verified;
+    public String username;
+    public boolean has_chaining;
+    public boolean is_business;
+    public int media_count;
+    public String profile_pic_id;
+    public String external_url;
+    public String full_name;
+    public boolean has_biography_translation;
+    public boolean has_anonymous_profile_picture;
+    public boolean is_favorite;
+    public String public_phone_country_code;
+    public String public_phone_number;
+    public String public_email;
+    public long pk;
+    public int geo_media_count;
+    public int usertags_count;
+    public String profile_pic_url;
+    public String address_street;
+    public String city_name;
+    public String zip;
+    public String direct_messaging;
+    public String business_contact_method;
+    public String biography;
+    public int follower_count;
+    public List<IGProfilePic> hd_profile_pic_versions;
+    public IGProfilePic hd_profile_pic_url_info;
+    public String external_lynx_url;
+    public int following_count;
+    public float latitude;
+    public float longitude;
+    public String category;
+    
+    @Data
+    public static class IGProfilePic {
+    	public String url;
+        public int width;
+        public int height;
+    }
 }

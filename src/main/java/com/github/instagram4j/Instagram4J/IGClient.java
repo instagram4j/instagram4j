@@ -7,7 +7,7 @@ import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException.IGExceptionInfo;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
-import com.github.instagram4j.Instagram4J.models.IGUser;
+import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
@@ -41,9 +41,11 @@ public class IGClient {
 	@Getter
 	private String guid;
 	@Getter
+	private String phoneId;
+	@Getter
 	private boolean loggedIn = false;
 	@Getter
-	private IGUser selfUser;
+	private IGLoggedInUser selfUser;
 
 	// logging
 	private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
@@ -58,6 +60,7 @@ public class IGClient {
 		this.username = username;
 		this.password = password;
 		this.guid = IGUtils.randomUuid();
+		this.phoneId = IGUtils.randomUuid();
 		this.deviceId = IGUtils.generateDeviceId(username, password);
 		this.cookieManager = manager;
 		this.httpClient = httpBuilder.cookieJar(new JavaNetCookieJar(this.cookieManager))
@@ -113,6 +116,7 @@ public class IGClient {
 		load.set_csrftoken(this.getCsrfToken());
 		load.setDevice_id(this.deviceId);
 		load.setGuid(this.guid);
+		load.setPhone_id(this.phoneId);
 
 		return load;
 	}

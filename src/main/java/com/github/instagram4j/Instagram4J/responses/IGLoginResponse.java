@@ -1,13 +1,13 @@
 package com.github.instagram4j.Instagram4J.responses;
 
 import com.github.instagram4j.Instagram4J.models.IGTwoFactorInfo;
-import com.github.instagram4j.Instagram4J.models.IGUser;
+import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
 
 import lombok.Data;
 
 @Data
 public class IGLoginResponse extends IGResponse {
-	private IGUser logged_in_user;
+	private IGLoggedInUser logged_in_user;
 	private IGChallenge challenge;
 	private IGTwoFactorInfo two_factor_info;
 }

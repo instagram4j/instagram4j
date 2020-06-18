@@ -6,10 +6,9 @@ import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @RequiredArgsConstructor
 public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
@@ -28,7 +27,6 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 		LoginPayload payload = LoginPayload.builder()
 				.username(username)
 				.password(password)
-				.phone_id(IGUtils.randomUuid())
 				.build();
 
 		return payload;
@@ -39,12 +37,10 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 		return IGLoginResponse.class;
 	}
 
-	@Getter
-	@Setter
+	@Data
 	@Builder
 	public static class LoginPayload extends IGPayload {
 		private String username;
-		private String phone_id;
 		private String password;
 		@Builder.Default
 		private int login_attempt_account = 0;
