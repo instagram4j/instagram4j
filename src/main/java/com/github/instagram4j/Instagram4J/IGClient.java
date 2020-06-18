@@ -121,6 +121,10 @@ public class IGClient {
 		return load;
 	}
 	
+	public static IGClient.Builder builder() {
+		return new IGClient.Builder();
+	}
+	
 	@With
 	@AllArgsConstructor
 	@NoArgsConstructor
