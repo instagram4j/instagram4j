@@ -23,29 +23,32 @@ dependencies {
 	api 'com.squareup.okhttp3:okhttp:4.7.2'
 	
 	api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
-	
+    
 	api 'com.squareup.okhttp3:okhttp-urlconnection:4.7.2'
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    api 'org.slf4j:slf4j-api:1.7.30'
+	api 'org.slf4j:slf4j-api:1.7.30'
 	
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
 	
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.0'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.0'
 	
 	// https://mvnrepository.com/artifact/commons-codec/commons-codec
-    implementation 'commons-codec:commons-codec:1.5'
-    
+	implementation 'commons-codec:commons-codec:1.5'
+	
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	implementation 'commons-io:commons-io:2.7'
+	
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
     implementation 'org.apache.commons:commons-text:1.8'
 	
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
-    testImplementation 'org.slf4j:slf4j-log4j12:1.7.30'
+	testImplementation 'org.slf4j:slf4j-log4j12:1.7.30'
 	
 	// https://mvnrepository.com/artifact/log4j/log4j
-    testImplementation 'log4j:log4j:1.2.17'
+	testImplementation 'log4j:log4j:1.2.17'
 	
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
