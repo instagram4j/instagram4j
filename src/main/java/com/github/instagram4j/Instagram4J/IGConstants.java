@@ -20,7 +20,7 @@ public class IGConstants {
 	/**
 	 * API v1 URL
 	 */
-	public static final String API_URL = BASE_API_URL + "/api/v1";
+	public static final String API_V1 = "/api/v1";
 	
 	/**
 	 * API Key (extracted from the apk)

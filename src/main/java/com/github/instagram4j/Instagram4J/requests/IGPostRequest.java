@@ -11,22 +11,22 @@ import okhttp3.RequestBody;
 
 public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 
-	public abstract IGPayload getPayload();
+	protected abstract IGPayload getPayload();
 
-	public String getStringPayload() {
+	protected String getStringPayload() {
 		return IGUtils.objectToJson(this.client.setIGLoad(getPayload()));
 	}
 
 	@Override
 	public Request formRequest() {
-		Request.Builder req = new Request.Builder().url(IGConstants.API_URL + this.getUrl());
+		Request.Builder req = new Request.Builder().url(IGConstants.BASE_API_URL + this.apiPath() + this.path());
 		this.applyHeaders(req);
 		req.post(this.getRequestBody());
 
 		return req.build();
 	}
 
-	private RequestBody getRequestBody() {
+	protected RequestBody getRequestBody() {
 		if (getPayload() == null) {
 			return RequestBody.create("", null);
 		}

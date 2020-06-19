@@ -18,7 +18,7 @@ public class IGChallengeResetRequest extends IGPostRequest<IGChallengeStateRespo
 	}
 
 	@Override
-	public String getUrl() {
+	public String path() {
 		return path.replace("/challenge/", "/challenge/reset/");
 	}
 

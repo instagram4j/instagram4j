@@ -31,7 +31,7 @@ public abstract class IGGetRequest<T extends IGResponse> extends IGRequest<T> {
 
 	@Override
 	public Request formRequest() {
-		Request.Builder req = new Request.Builder().url(IGConstants.API_URL + this.getUrl() + this.getQueryStrings());
+		Request.Builder req = new Request.Builder().url(IGConstants.BASE_API_URL + this.apiPath() + this.path() + this.getQueryStrings());
 		this.applyHeaders(req);
 		;
 

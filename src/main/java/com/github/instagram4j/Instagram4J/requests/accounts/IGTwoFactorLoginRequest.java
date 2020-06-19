@@ -25,7 +25,7 @@ public class IGTwoFactorLoginRequest extends IGPostRequest<IGLoginResponse> {
 	}
 
 	@Override
-	public String getUrl() {
+	public String path() {
 		return "/accounts/two_factor_login/";
 	}
 

@@ -17,7 +17,7 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 	private String password;
 
 	@Override
-	public String getUrl() {
+	public String path() {
 		return "/accounts/login/";
 	}
 

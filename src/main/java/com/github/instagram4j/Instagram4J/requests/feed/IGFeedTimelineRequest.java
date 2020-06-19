@@ -26,7 +26,7 @@ public class IGFeedTimelineRequest extends IGPostRequest<IGFeedTimelineResponse>
 	}
 
 	@Override
-	public String getUrl() {
+	public String path() {
 		return "/feed/timeline/";
 	}
 

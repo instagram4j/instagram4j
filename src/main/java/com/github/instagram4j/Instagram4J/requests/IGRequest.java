@@ -17,11 +17,15 @@ public abstract class IGRequest<T extends IGResponse> {
 	@Setter
 	protected IGClient client;
 
-	public abstract String getUrl();
+	public abstract String path();
 
 	public abstract Request formRequest();
 
 	public abstract Class<T> getResponseType();
+	
+	public String apiPath() {
+		return IGConstants.API_V1;
+	}
 
 	public T parseResponse(String json) throws JsonProcessingException, IOException {
 		return parseResponse(json, getResponseType());
@@ -38,7 +42,7 @@ public abstract class IGRequest<T extends IGResponse> {
 		return true;
 	}
 	
-	public Request.Builder applyHeaders(Request.Builder req) {
+	protected Request.Builder applyHeaders(Request.Builder req) {
 		req.addHeader("Connection", "close");
 		req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		req.addHeader("Accept-Language", "en-US");

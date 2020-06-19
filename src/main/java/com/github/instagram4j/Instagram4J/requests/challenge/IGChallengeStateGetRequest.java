@@ -12,7 +12,7 @@ public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateRes
 	private String path;
 	
 	@Override
-	public String getUrl() {
+	public String path() {
 		return path;
 	}
 	
