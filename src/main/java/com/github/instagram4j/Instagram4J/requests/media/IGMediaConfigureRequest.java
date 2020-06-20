@@ -9,9 +9,7 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 @AllArgsConstructor
 public class IGMediaConfigureRequest extends IGPostRequest<IGResponse> {
@@ -21,20 +19,7 @@ public class IGMediaConfigureRequest extends IGPostRequest<IGResponse> {
 
 	@Override
 	protected IGPayload getPayload() {
-		return new IGPayload() {
-			@Getter
-			@Setter
-			private String upload_id = uploadId;
-			@Getter
-			@Setter
-			private String caption = _caption;
-			@Getter
-			@Setter
-			private String media_folder = "Instagram";
-			@Getter
-			@Setter
-			private String source_type = "4";
-		};
+		return new MediaConfigurePayload();
 	}
 
 	@Override
