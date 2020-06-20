@@ -2,7 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.challenge;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
+import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
 
 import lombok.Getter;
 import lombok.NonNull;

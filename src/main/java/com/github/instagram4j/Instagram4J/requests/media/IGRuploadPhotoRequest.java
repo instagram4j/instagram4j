@@ -23,7 +23,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 	private String mediaType;
 	private String uploadId = String.valueOf(System.currentTimeMillis());
 	private boolean isSidecar = false;
-	
+	private final String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
 	
 	
 	@Override
@@ -38,7 +38,6 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 	
 	@Override
 	protected Request.Builder applyHeaders(Request.Builder req) {
-		String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
 		super.applyHeaders(req);
 		req.addHeader("X-Instagram-Rupload-Params", rUploadParams(uploadId, mediaType, isSidecar));
 		req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
@@ -58,7 +57,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 
 	@Override
 	public String path() {
-		return "/rupload_igphoto/";
+		return "/rupload_igphoto/" + name;
 	}
 
 	@Override

@@ -10,9 +10,9 @@ import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeResetReq
 import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeSelectVerifyMethodRequest;
 import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeSendCodeRequest;
 import com.github.instagram4j.Instagram4J.requests.challenge.IGChallengeStateGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGChallenge;
-import com.github.instagram4j.Instagram4J.responses.IGChallengeStateResponse;
-import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
+import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
+import com.github.instagram4j.Instagram4J.responses.challenge.IGChallenge;
+import com.github.instagram4j.Instagram4J.responses.challenge.IGChallengeStateResponse;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

@@ -11,8 +11,8 @@ import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
-import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AllArgsConstructor;
@@ -101,9 +101,9 @@ public class IGClient {
 		
 		try (ResponseBody body = res.body()) {
 			return req.parseResponse(body.string(), view);
-		} catch (Exception ex) {
+		} catch (NullPointerException ex) {
 			throw new IGResponseException(IGExceptionInfo.builder().response(res).build(),
-					"Unable to parse to IGResponse", ex);
+					"Empty body received", ex);
 		}
 	}
 
@@ -150,8 +150,8 @@ public class IGClient {
 			try {
 				client.sendLoginRequest();
 			} catch (IGLoginException ex) {
-				if (ex.getResponse().getChallenge() != null && onChallenge != null) client.setLoggedInState(onChallenge.accept(client, ex.getResponse()));
-				else if (ex.getResponse().getTwo_factor_info() != null && onTwoFactor != null) client.setLoggedInState(onTwoFactor.accept(client, ex.getResponse()));
+				if (ex.getResponse().getTwo_factor_info() != null && onTwoFactor != null) client.setLoggedInState(onTwoFactor.accept(client, ex.getResponse()));
+				else if (ex.getResponse().getChallenge() != null && onChallenge != null) client.setLoggedInState(onChallenge.accept(client, ex.getResponse()));
 				else throw new IGLoginException(ex.getResponse());
 			}
 			

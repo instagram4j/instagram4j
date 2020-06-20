@@ -1,6 +1,6 @@
 package com.github.instagram4j.Instagram4J.exceptions;
 
-import com.github.instagram4j.Instagram4J.responses.IGLoginResponse;
+import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
 
 import lombok.Getter;
 

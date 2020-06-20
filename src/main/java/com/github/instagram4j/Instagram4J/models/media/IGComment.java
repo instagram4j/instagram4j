@@ -1,10 +1,12 @@
-package com.github.instagram4j.Instagram4J.models;
+package com.github.instagram4j.Instagram4J.models.media;
+
+import com.github.instagram4j.Instagram4J.models.IGBaseModel;
+import com.github.instagram4j.Instagram4J.models.IGUser;
 
 import lombok.Data;
 
 @Data
-public class IGComment {
-	private long pk;
+public class IGComment extends IGBaseModel {
 	private long user_id;
 	private String text;
 	private int type;
@@ -18,4 +20,6 @@ public class IGComment {
 	private boolean share_enabled;
 	private long media_id;
 	private int comment_like_count;
+	
+	public static class IGCaption extends IGComment {}
 }

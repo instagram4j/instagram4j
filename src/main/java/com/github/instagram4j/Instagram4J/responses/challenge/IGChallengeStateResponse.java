@@ -1,4 +1,6 @@
-package com.github.instagram4j.Instagram4J.responses;
+package com.github.instagram4j.Instagram4J.responses.challenge;
+
+import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
 import lombok.Data;
 import lombok.Getter;

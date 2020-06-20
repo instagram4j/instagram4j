@@ -1,7 +1,7 @@
 package com.github.instagram4j.Instagram4J.requests.challenge;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGChallengeStateResponse;
+import com.github.instagram4j.Instagram4J.responses.challenge.IGChallengeStateResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
