@@ -24,3 +24,4 @@ src/test/*
 build
 .gradle
 /.gitattributes
+bin/
