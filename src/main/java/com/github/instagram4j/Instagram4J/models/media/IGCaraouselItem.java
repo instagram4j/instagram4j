@@ -7,7 +7,7 @@ import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import lombok.Data;
 
 @Data
-@JsonTypeInfo(defaultImpl=IGMedia.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
+@JsonTypeInfo(defaultImpl=IGCaraouselItem.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = IGImageCaraouselItem.class),
 	@JsonSubTypes.Type(value = IGVideoCaraouselItem.class)
