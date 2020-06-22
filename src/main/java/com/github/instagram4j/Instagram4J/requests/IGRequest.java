@@ -31,9 +31,9 @@ public abstract class IGRequest<T extends IGResponse> {
 		return parseResponse(json, getResponseType());
 	}
 	
-	public <U extends IGResponse> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
+	public <U> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
 		U response = IGUtils.MAPPER.readValue(json, type);
-		response.setClient(client);
+		//response.setClient(client);
 		
 		return response;
 	}

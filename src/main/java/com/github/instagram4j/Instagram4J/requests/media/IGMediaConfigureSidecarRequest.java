@@ -6,16 +6,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureSidecarResponse;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @RequiredArgsConstructor
-public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGResponse> {
+public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGMediaConfigureSidecarResponse> {
 	@NonNull
 	private List<AlbumChildrenMetadata> children;
 	@NonNull
@@ -42,12 +43,11 @@ public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGResponse> {
 	}
 
 	@Override
-	public Class<IGResponse> getResponseType() {
-		return IGResponse.class;
+	public Class<IGMediaConfigureSidecarResponse> getResponseType() {
+		return IGMediaConfigureSidecarResponse.class;
 	}
 	
-	@Getter
-    @Setter
+	@Data
     @Builder
     @JsonInclude(Include.NON_NULL)
     public static class AlbumChildrenMetadata {
