@@ -34,11 +34,12 @@ public class IGUploadParameters {
 				.build());
 	}
 	
-	public static String forVideo(String upload_id, String media_type, boolean is_sidecar) {
+	public static String forVideo(String upload_id, String media_type, boolean is_sidecar, boolean for_album) {
 		return IGUtils.objectToJson(IGUploadParameters.builder()
 				.upload_id(upload_id)
 				.media_type(media_type)
 				.is_sidecar(is_sidecar ? "1" : null)
+				.for_album(for_album ? "1" : null)
 				.build());
 	}
 }

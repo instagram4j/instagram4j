@@ -10,10 +10,12 @@ import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
 	@NonNull
@@ -22,8 +24,17 @@ public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
 	private String mediaType;
 	@NonNull
 	private String uploadId = String.valueOf(System.currentTimeMillis());
-	private boolean isSidecar = false;
+	private boolean is_sidecar = false;
+	private boolean for_album = false;
 	private final String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
+	
+	public IGRuploadVideoRequest(byte[] videoData, String mediaType, String uploadId) {
+		this(videoData, mediaType, uploadId, false, false);
+	}
+	
+	public IGRuploadVideoRequest(byte[] videoData, String mediaType, String uploadId, boolean is_sidecar) {
+		this(videoData, mediaType, uploadId, is_sidecar, false);
+	}
 
 	@Override
 	protected IGPayload getPayload() {
@@ -43,7 +54,7 @@ public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
 	@Override
 	public Request.Builder applyHeaders(Request.Builder req) {
 		super.applyHeaders(req);
-		req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forVideo(uploadId, mediaType, isSidecar));
+		req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forVideo(uploadId, mediaType, is_sidecar, for_album));
 		req.addHeader("X_FB_VIDEO_WATERFALL_ID", IGUtils.randomUuid());
 		req.addHeader("X-Entity-Type", "video/mp4");
 		req.addHeader("Offset", "0");
