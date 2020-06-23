@@ -5,13 +5,13 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class IGSticker {
+public class IGStaticSticker {
 	private String id;
-	private List<IGStickerMetadata> stickers;
+	private List<IGSticker> stickers;
 	private List<String> keywords;
 	
 	@Data
-	public static class IGStickerMetadata {
+	public static class IGSticker {
 	    private String id;
 	    private String type;
 	    private String name;
