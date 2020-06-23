@@ -43,9 +43,6 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 	@JsonInclude(Include.NON_NULL)
 	public class IGMediaConfigureToStoryPayload extends IGPayload {
 		private String upload_id = uploadId;
-		private double source_width = imageWidth;
-		private double source_height = imageHeight;
-		private EditsMap edits = new EditsMap(Arrays.asList(imageWidth, imageHeight));
 		private String source_type = "3";
 		private String configure_mode = "1";
 		private List<String> thread_ids = threadIds;

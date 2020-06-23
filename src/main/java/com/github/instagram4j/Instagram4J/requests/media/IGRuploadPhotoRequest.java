@@ -3,6 +3,7 @@ package com.github.instagram4j.Instagram4J.requests.media;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
+import com.github.instagram4j.Instagram4J.models.IGUploadParameters;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGRuploadPhotoResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
@@ -39,7 +40,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 	@Override
 	protected Request.Builder applyHeaders(Request.Builder req) {
 		super.applyHeaders(req);
-		req.addHeader("X-Instagram-Rupload-Params", rUploadParams(uploadId, mediaType, isSidecar));
+		req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forPhoto(uploadId, mediaType, isSidecar));
 		req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
 		req.addHeader("Accept-Encoding", "gzip");
 		req.addHeader("X-Entity-Name", name);
@@ -65,10 +66,4 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 		return IGRuploadPhotoResponse.class;
 	}
 	
-	protected static String rUploadParams(String uploadId, String mediaType, boolean isSideCar) {
-		return String.format(
-				"{\"retry_context\":\"{\\\"num_step_auto_retry\\\":0,\\\"num_reupload\\\":0,\\\"num_step_manual_retry\\\":0}\",\"media_type\":\"%s\",\"upload_id\":\"%s\",\"xsharing_user_ids\":\"[]\",\" image_compression\":\"{\\\"lib_name\\\":\\\"moz\\\",\\\"lib_version\\\":\\\"3.1.m\\\",\\\"quality\\\":\\\"80\\\"}\"%s}",
-				mediaType, uploadId, isSideCar ? ", \"is_sidecar\":\"1\"" : "");
-	}
-
 }
