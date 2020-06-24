@@ -1,7 +1,10 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -9,6 +12,7 @@ import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.reelmedia.IGReelMetadataItem;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToStoryResponse;
+import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,9 +49,18 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 
     private IGMediaConfigureToStoryPayload constructPayload() {
         IGMediaConfigureToStoryPayload payload = new IGMediaConfigureToStoryPayload();
-        if (story_metadata != null)
-            story_metadata.forEach(data -> payload.addExtraProperty(data.key(), Arrays.asList(data)));
+        if (story_metadata != null) addAllMetadata(payload, story_metadata);
         return payload;
+    }
+    
+    public static void addAllMetadata(IGMediaConfigureToStoryPayload payload, List<IGReelMetadataItem> items) {
+        Map<String, List<IGReelMetadataItem>> map = new HashMap<>();
+        items.forEach(item -> {
+            if (map.putIfAbsent(item.key(), new ArrayList<>(Arrays.asList(item))) != null)
+                map.get(item.key()).add(item);
+        });
+        
+        map.entrySet().forEach(entry -> payload.addExtraProperty(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
     }
 
     @Data
