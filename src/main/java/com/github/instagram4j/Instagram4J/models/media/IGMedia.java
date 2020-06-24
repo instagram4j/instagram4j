@@ -12,8 +12,11 @@ import lombok.Data;
 
 @Data
 @JsonTypeInfo(defaultImpl = IGMedia.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
-@JsonSubTypes({ @JsonSubTypes.Type(value = IGImageMedia.class), @JsonSubTypes.Type(value = IGVideoMedia.class),
-        @JsonSubTypes.Type(value = IGCarouselMedia.class) })
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = IGImageMedia.class),
+        @JsonSubTypes.Type(value = IGVideoMedia.class),
+        @JsonSubTypes.Type(value = IGCarouselMedia.class)
+})
 public class IGMedia extends IGBaseModel {
     private long taken_at;
     private long device_timestamp;

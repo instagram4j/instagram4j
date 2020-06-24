@@ -63,8 +63,10 @@ public class IGClient {
         this.phoneId = IGUtils.randomUuid();
         this.deviceId = IGUtils.generateDeviceId(username, password);
         this.cookieManager = manager;
-        this.httpClient = httpBuilder.cookieJar(new JavaNetCookieJar(this.cookieManager))
-                .addInterceptor(loggingInterceptor).build();
+        this.httpClient = httpBuilder
+                .cookieJar(new JavaNetCookieJar(this.cookieManager))
+                .addInterceptor(loggingInterceptor)
+                .build();
     }
 
     @SneakyThrows
@@ -142,7 +144,9 @@ public class IGClient {
         private LoginHandler onTwoFactor;
 
         public static IGClient.Builder from(IGClient client) {
-            return new IGClient.Builder().withUsername(client.username).withPassword(client.password)
+            return new IGClient.Builder()
+                    .withUsername(client.username)
+                    .withPassword(client.password)
                     .withCookieManager(client.cookieManager);
         }
 
