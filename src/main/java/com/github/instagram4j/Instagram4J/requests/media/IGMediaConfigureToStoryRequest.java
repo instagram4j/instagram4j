@@ -1,10 +1,12 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
+import com.github.instagram4j.Instagram4J.models.reelmedia.IGReelMetadataItem;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToStoryResponse;
 
@@ -16,11 +18,12 @@ import lombok.RequiredArgsConstructor;
 public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigureToStoryResponse> {
 	@NonNull
 	private String uploadId;
+	private List<IGReelMetadataItem> story_metadata; 
 	private List<String> threadIds;
 	
 	@Override
 	protected IGPayload getPayload() {
-		return new IGMediaConfigureToStoryPayload();
+		return constructPayload();
 	}
 
 	@Override
@@ -31,6 +34,12 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 	@Override
 	public Class<IGMediaConfigureToStoryResponse> getResponseType() {
 		return IGMediaConfigureToStoryResponse.class;
+	}
+	
+	private IGMediaConfigureToStoryPayload constructPayload() {
+		IGMediaConfigureToStoryPayload payload = new IGMediaConfigureToStoryPayload();
+		if (story_metadata != null) story_metadata.forEach(data -> payload.addExtraProperty(data.key(), Arrays.asList(data)));
+		return payload;
 	}
 	
 	@Data
