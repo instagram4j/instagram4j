@@ -6,6 +6,7 @@ import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException.IGExceptionInfo;
+import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
@@ -43,6 +44,8 @@ public class IGClient {
 	private String phoneId;
 	@Getter
 	private boolean loggedIn = false;
+	@Getter
+	private IGLoggedInUser selfUser;
 
 	// logging
 	private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
@@ -92,7 +95,7 @@ public class IGClient {
 	}
 	
 	@SneakyThrows
-	public <T> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
+	public <T extends IGResponse> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
 		req.setClient(this);
 		Response res = httpClient.newCall(req.formRequest()).execute();
 		
@@ -107,6 +110,7 @@ public class IGClient {
 	private void setLoggedInState(IGLoginResponse state) throws IGLoginException {
 		if (!state.getStatus().equals("ok")) throw new IGLoginException(state);
 		this.loggedIn = true;
+		this.selfUser = state.getLogged_in_user();
 	}
 
 	public String getCsrfToken() {
