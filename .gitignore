@@ -6,7 +6,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -21,7 +20,7 @@ target/
 .idea
 
 src/test/*
-build
+build/
 .gradle
 /.gitattributes
 bin/

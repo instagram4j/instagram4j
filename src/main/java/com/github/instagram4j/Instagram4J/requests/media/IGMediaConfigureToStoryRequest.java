@@ -54,7 +54,7 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 	public class IGMediaConfigureToStoryPayload extends IGPayload {
 		private String upload_id = uploadId;
 		private String source_type = "3";
-		private String configure_mode = "1";
+		private String configure_mode = threadIds != null ? "1" : "2";
 		private List<String> thread_ids = threadIds;
 	}
 
