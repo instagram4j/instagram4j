@@ -95,7 +95,7 @@ public class IGClient {
 	}
 	
 	@SneakyThrows
-	public <T extends IGResponse> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
+	public <T> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
 		req.setClient(this);
 		Response res = httpClient.newCall(req.formRequest()).execute();
 		
