@@ -5,10 +5,12 @@ import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+@Slf4j
 public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 
 	protected abstract IGPayload getPayload();
@@ -27,6 +29,7 @@ public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 	}
 
 	protected RequestBody getRequestBody() {
+		log.debug("Payload : {}", getStringPayload());
 		if (getPayload() == null) {
 			return RequestBody.create("", null);
 		}

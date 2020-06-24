@@ -10,16 +10,23 @@ import com.github.instagram4j.Instagram4J.models.reelmedia.IGReelMetadataItem;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToStoryResponse;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigureToStoryResponse> {
 	@NonNull
 	private String uploadId;
 	private List<IGReelMetadataItem> story_metadata; 
 	private List<String> threadIds;
+	
+	public IGMediaConfigureToStoryRequest(String upload_id, List<IGReelMetadataItem> story_metadata) {
+		this.uploadId = upload_id;
+		this.story_metadata = story_metadata;
+	}
 	
 	@Override
 	protected IGPayload getPayload() {
