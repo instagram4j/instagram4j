@@ -9,22 +9,22 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGChallengeResetRequest extends IGPostRequest<IGChallengeStateResponse> {
-	@NonNull
-	private String path;
-	
-	@Override
-	public IGPayload getPayload() {
-		return new IGPayload();
-	}
+    @NonNull
+    private String path;
 
-	@Override
-	public String path() {
-		return path.replace("/challenge/", "/challenge/reset/");
-	}
+    @Override
+    public IGPayload getPayload() {
+        return new IGPayload();
+    }
 
-	@Override
-	public Class<IGChallengeStateResponse> getResponseType() {
-		return IGChallengeStateResponse.class;
-	}
-	
+    @Override
+    public String path() {
+        return path.replace("/challenge/", "/challenge/reset/");
+    }
+
+    @Override
+    public Class<IGChallengeStateResponse> getResponseType() {
+        return IGChallengeStateResponse.class;
+    }
+
 }

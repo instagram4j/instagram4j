@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class IGUser {
-	public boolean is_private;
+    public boolean is_private;
     public boolean is_verified;
     public String username;
     public boolean has_chaining;
@@ -39,10 +39,10 @@ public class IGUser {
     public float latitude;
     public float longitude;
     public String category;
-    
+
     @Data
     public static class IGProfilePic {
-    	public String url;
+        public String url;
         public int width;
         public int height;
     }

@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @JsonTypeName("1")
 public class IGImageCaraouselItem extends IGCaraouselItem {
-	private IGImageVersions image_versions2;
+    private IGImageVersions image_versions2;
 }

@@ -17,44 +17,44 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGMediaConfigureSidecarResponse> {
-	@NonNull
-	private List<AlbumChildrenMetadata> children;
-	@NonNull
-	private String _caption;
-	
-	@Override
-	protected IGPayload getPayload() {
-		return new IGPayload() {
-			@Getter
-			@Setter
-			private List<?> children_metadata = children;
-			@Getter
-			@Setter
-			private String caption = _caption;
-			@Getter
-			@Setter
-			private String client_sidecar_id = String.valueOf(System.currentTimeMillis());
-		};
-	}
+    @NonNull
+    private List<AlbumChildrenMetadata> children;
+    @NonNull
+    private String _caption;
 
-	@Override
-	public String path() {
-		return "/media/configure_sidecar/";
-	}
+    @Override
+    protected IGPayload getPayload() {
+        return new IGPayload() {
+            @Getter
+            @Setter
+            private List<?> children_metadata = children;
+            @Getter
+            @Setter
+            private String caption = _caption;
+            @Getter
+            @Setter
+            private String client_sidecar_id = String.valueOf(System.currentTimeMillis());
+        };
+    }
 
-	@Override
-	public Class<IGMediaConfigureSidecarResponse> getResponseType() {
-		return IGMediaConfigureSidecarResponse.class;
-	}
-	
-	@Data
+    @Override
+    public String path() {
+        return "/media/configure_sidecar/";
+    }
+
+    @Override
+    public Class<IGMediaConfigureSidecarResponse> getResponseType() {
+        return IGMediaConfigureSidecarResponse.class;
+    }
+
+    @Data
     @Builder
     @JsonInclude(Include.NON_NULL)
     public static class AlbumChildrenMetadata {
-    	private String upload_id;
-    	private double height;
-    	private double width;
-    	@Builder.Default
-    	private Long length = null;
+        private String upload_id;
+        private double height;
+        private double width;
+        @Builder.Default
+        private Long length = null;
     }
 }

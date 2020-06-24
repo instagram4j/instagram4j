@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class IGRuploadPhotoResponse extends IGResponse {
-	private String upload_id;
+    private String upload_id;
 }

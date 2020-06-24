@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class IGTwoFactorInfo {
-	private String two_factor_identifier;
+    private String two_factor_identifier;
 }

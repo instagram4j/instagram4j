@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class IGBaseModel {
-	private String id;
-	private long pk;
+    private String id;
+    private long pk;
 }

@@ -11,38 +11,35 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
-	@NonNull
-	private String username;
-	@NonNull
-	private String password;
+    @NonNull
+    private String username;
+    @NonNull
+    private String password;
 
-	@Override
-	public String path() {
-		return "/accounts/login/";
-	}
+    @Override
+    public String path() {
+        return "/accounts/login/";
+    }
 
-	@Override
-	public IGPayload getPayload() {
-		LoginPayload payload = LoginPayload.builder()
-				.username(username)
-				.password(password)
-				.build();
+    @Override
+    public IGPayload getPayload() {
+        LoginPayload payload = LoginPayload.builder().username(username).password(password).build();
 
-		return payload;
-	}
-	
-	@Override
-	public Class<IGLoginResponse> getResponseType() {
-		return IGLoginResponse.class;
-	}
+        return payload;
+    }
 
-	@Data
-	@Builder
-	public static class LoginPayload extends IGPayload {
-		private String username;
-		private String password;
-		@Builder.Default
-		private int login_attempt_account = 0;
-	}
-	
+    @Override
+    public Class<IGLoginResponse> getResponseType() {
+        return IGLoginResponse.class;
+    }
+
+    @Data
+    @Builder
+    public static class LoginPayload extends IGPayload {
+        private String username;
+        private String password;
+        @Builder.Default
+        private int login_attempt_account = 0;
+    }
+
 }

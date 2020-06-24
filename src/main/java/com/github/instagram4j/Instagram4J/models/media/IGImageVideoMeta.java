@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class IGImageVideoMeta {
-	private String url;
-	private int width;
-	private int height;
+    private String url;
+    private int width;
+    private int height;
 }

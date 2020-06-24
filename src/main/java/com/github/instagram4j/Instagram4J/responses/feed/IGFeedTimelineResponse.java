@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class IGFeedTimelineResponse extends IGResponse {
-	private boolean auto_load_more_enabled;
+    private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;
     private List<IGFeedItem> feed_items;

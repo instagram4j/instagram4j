@@ -9,5 +9,5 @@ import lombok.Data;
 
 @Data
 public class IGCreativesAssetsResponse extends IGResponse {
-	private List<IGStaticSticker> static_stickers;
+    private List<IGStaticSticker> static_stickers;
 }

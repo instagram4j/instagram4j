@@ -10,29 +10,28 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGChallengeSelectVerifyMethodRequest extends IGPostRequest<IGChallengeStateResponse> {
-	@NonNull
-	private final String path;
-	@NonNull
-	private final String _choice;
-	private final boolean resend;
-	
-	
-	@Override
-	public IGPayload getPayload() {
-		return new IGPayload() {
-			@Getter
-			private final String choice = _choice;
-		};
-	}
+    @NonNull
+    private final String path;
+    @NonNull
+    private final String _choice;
+    private final boolean resend;
 
-	@Override
-	public String path() {
-		return !resend ? path : path.replace("/challenge/", "/challenge/replay/");
-	}
+    @Override
+    public IGPayload getPayload() {
+        return new IGPayload() {
+            @Getter
+            private final String choice = _choice;
+        };
+    }
 
-	@Override
-	public Class<IGChallengeStateResponse> getResponseType() {
-		return IGChallengeStateResponse.class;
-	}
+    @Override
+    public String path() {
+        return !resend ? path : path.replace("/challenge/", "/challenge/replay/");
+    }
+
+    @Override
+    public Class<IGChallengeStateResponse> getResponseType() {
+        return IGChallengeStateResponse.class;
+    }
 
 }

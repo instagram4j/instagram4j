@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class IGChallenge {
-	private String url;
-	private String api_path;
+    private String url;
+    private String api_path;
 }

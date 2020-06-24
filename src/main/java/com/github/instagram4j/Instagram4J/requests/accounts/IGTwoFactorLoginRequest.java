@@ -11,27 +11,27 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGTwoFactorLoginRequest extends IGPostRequest<IGLoginResponse> {
-	@NonNull
-	private String username, password, code, identifier;
+    @NonNull
+    private String username, password, code, identifier;
 
-	@Override
-	public IGPayload getPayload() {
-		return new LoginPayload(username, password, 0) {
-			@Getter
-			private final String verification_code = code;
-			@Getter
-			private final String two_factor_identifier = identifier;
-		};
-	}
+    @Override
+    public IGPayload getPayload() {
+        return new LoginPayload(username, password, 0) {
+            @Getter
+            private final String verification_code = code;
+            @Getter
+            private final String two_factor_identifier = identifier;
+        };
+    }
 
-	@Override
-	public String path() {
-		return "/accounts/two_factor_login/";
-	}
+    @Override
+    public String path() {
+        return "/accounts/two_factor_login/";
+    }
 
-	@Override
-	public Class<IGLoginResponse> getResponseType() {
-		return IGLoginResponse.class;
-	}
+    @Override
+    public Class<IGLoginResponse> getResponseType() {
+        return IGLoginResponse.class;
+    }
 
 }

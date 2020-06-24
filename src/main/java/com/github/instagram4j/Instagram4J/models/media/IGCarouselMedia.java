@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 @JsonTypeName("8")
 public class IGCarouselMedia extends IGMedia {
-	private int carousel_media_count;
-	private List<IGCaraouselItem> carousel_media;
+    private int carousel_media_count;
+    private List<IGCaraouselItem> carousel_media;
 }

@@ -13,34 +13,34 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IGFeedTimelineRequest extends IGPostRequest<IGFeedTimelineResponse> {
-	private String maxId = "";
-	
-	@Override
-	public IGPayload getPayload() {
-		FeedTimelinePayload payload = new FeedTimelinePayload();
-		if (!maxId.isEmpty()) {
-			payload.setMax_id(maxId);
-			payload.setReason("pagination");
-		}
-		return payload;
-	}
+    private String maxId = "";
 
-	@Override
-	public String path() {
-		return "/feed/timeline/";
-	}
+    @Override
+    public IGPayload getPayload() {
+        FeedTimelinePayload payload = new FeedTimelinePayload();
+        if (!maxId.isEmpty()) {
+            payload.setMax_id(maxId);
+            payload.setReason("pagination");
+        }
+        return payload;
+    }
 
-	@Override
-	public Class<IGFeedTimelineResponse> getResponseType() {
-		return IGFeedTimelineResponse.class;
-	}
-	
-	@Data
-	@JsonInclude(Include.NON_NULL)
-	public static class FeedTimelinePayload extends IGPayload {
-		private String max_id;
-		private String reason = "cold_start_fetch";
-		private String is_pull_to_refresh = "0";
-		private String is_prefetch = "0";
-	}
+    @Override
+    public String path() {
+        return "/feed/timeline/";
+    }
+
+    @Override
+    public Class<IGFeedTimelineResponse> getResponseType() {
+        return IGFeedTimelineResponse.class;
+    }
+
+    @Data
+    @JsonInclude(Include.NON_NULL)
+    public static class FeedTimelinePayload extends IGPayload {
+        private String max_id;
+        private String reason = "cold_start_fetch";
+        private String is_pull_to_refresh = "0";
+        private String is_prefetch = "0";
+    }
 }

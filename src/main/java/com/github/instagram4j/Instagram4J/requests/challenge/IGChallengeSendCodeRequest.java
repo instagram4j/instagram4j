@@ -10,27 +10,27 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGChallengeSendCodeRequest extends IGPostRequest<IGLoginResponse> {
-	@NonNull
-	private String path;
-	@NonNull
-	private String code;
-	
-	@Override
-	public IGPayload getPayload() {
-		return new IGPayload() {
-			@Getter
-			private final String security_code = code;
-		};
-	}
+    @NonNull
+    private String path;
+    @NonNull
+    private String code;
 
-	@Override
-	public String path() {
-		return path;
-	}
+    @Override
+    public IGPayload getPayload() {
+        return new IGPayload() {
+            @Getter
+            private final String security_code = code;
+        };
+    }
 
-	@Override
-	public Class<IGLoginResponse> getResponseType() {
-		return IGLoginResponse.class;
-	}
-	
+    @Override
+    public String path() {
+        return path;
+    }
+
+    @Override
+    public Class<IGLoginResponse> getResponseType() {
+        return IGLoginResponse.class;
+    }
+
 }

@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 @JsonTypeName("2")
 public class IGVideoMedia extends IGMedia {
-	private List<IGImageVideoMeta> video_versions;
-	private long video_duration;
-	private boolean has_audio;
-	private int original_width;
-	private int original_height;
-	private int view_count;
+    private List<IGImageVideoMeta> video_versions;
+    private long video_duration;
+    private boolean has_audio;
+    private int original_width;
+    private int original_height;
+    private int view_count;
 }

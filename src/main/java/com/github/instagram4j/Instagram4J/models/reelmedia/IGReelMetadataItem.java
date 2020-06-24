@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @JsonInclude(Include.NON_NULL)
 public abstract class IGReelMetadataItem {
-	private double x;
+    private double x;
     private double y;
     private double z;
     private double width;
@@ -17,5 +17,6 @@ public abstract class IGReelMetadataItem {
     private int is_pinned;
     private int is_hidden;
     private int is_sticker;
+
     public abstract String key();
 }

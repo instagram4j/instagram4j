@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class IGLoginResponse extends IGResponse {
-	private IGLoggedInUser logged_in_user;
-	private IGChallenge challenge;
-	private IGTwoFactorInfo two_factor_info;
+    private IGLoggedInUser logged_in_user;
+    private IGChallenge challenge;
+    private IGTwoFactorInfo two_factor_info;
 }

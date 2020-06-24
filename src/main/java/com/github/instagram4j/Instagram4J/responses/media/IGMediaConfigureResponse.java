@@ -8,15 +8,15 @@ import lombok.Data;
 
 @Data
 public class IGMediaConfigureResponse extends IGResponse {
-	private IGMedia media;
-	
-	@Data
-	public static class IGMediaConfigureSidecarResponse extends IGMediaConfigureResponse {
-		private String client_sidecar_id;
-	}
-	
-	@Data
-	public static class IGMediaConfigureToStoryResponse extends IGMediaConfigureResponse {
-		private IGReelMedia media;
-	}
+    private IGMedia media;
+
+    @Data
+    public static class IGMediaConfigureSidecarResponse extends IGMediaConfigureResponse {
+        private String client_sidecar_id;
+    }
+
+    @Data
+    public static class IGMediaConfigureToStoryResponse extends IGMediaConfigureResponse {
+        private IGReelMedia media;
+    }
 }
