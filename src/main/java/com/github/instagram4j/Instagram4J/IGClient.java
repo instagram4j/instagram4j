@@ -1,11 +1,12 @@
 package com.github.instagram4j.Instagram4J;
 
+import java.io.IOException;
 import java.net.CookieManager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
-import com.github.instagram4j.Instagram4J.exceptions.IGResponseException.IGExceptionInfo;
 import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
@@ -18,6 +19,7 @@ import com.github.instagram4j.Instagram4J.utils.IGUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.With;
 import lombok.extern.slf4j.Slf4j;
@@ -91,20 +93,25 @@ public class IGClient {
         return res;
     }
 
-    @SneakyThrows
-    public <T extends IGResponse> T sendRequest(IGRequest<T> req) throws IGResponseException {
+    public <T extends IGResponse> T sendRequest(@NonNull IGRequest<T> req) throws IGResponseException {
         return sendRequestWithView(req, req.getResponseType());
     }
 
-    @SneakyThrows
-    public <T> T sendRequestWithView(IGRequest<?> req, Class<T> view) throws IGResponseException {
+    public <T> T sendRequestWithView(@NonNull IGRequest<?> req, Class<T> view) throws IGResponseException {
         req.setClient(this);
-        Response res = httpClient.newCall(req.formRequest()).execute();
+        Response res;
+        try {
+            res = httpClient.newCall(req.formRequest()).execute();
+        } catch (IOException ex) { 
+            throw new IGResponseException(null, "exception occured during request", ex);
+        }
 
         try (ResponseBody body = res.body()) {
             return req.parseResponse(body.string(), view);
-        } catch (NullPointerException ex) {
-            throw new IGResponseException(IGExceptionInfo.builder().response(res).build(), "Empty body received", ex);
+        } catch (JsonProcessingException exception) {
+            throw new IGResponseException(res, "Json processing failed", exception);
+        } catch (NullPointerException | IOException  exception) {
+            throw new IGResponseException(res, "Empty or malformed body received", exception);
         }
     }
 
