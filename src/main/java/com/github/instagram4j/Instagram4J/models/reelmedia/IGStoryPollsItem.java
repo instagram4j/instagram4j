@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class IGStoryPolls extends IGReelMetadataItem {
+public class IGStoryPollsItem extends IGReelMetadataItem {
     private String question;
     @Builder.Default
     private List<IGTally> tallies = Arrays.asList(YES, NO);

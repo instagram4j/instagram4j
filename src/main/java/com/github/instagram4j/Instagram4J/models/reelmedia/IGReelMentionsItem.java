@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
 
 @Data
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class IGStoryQuestions extends IGReelMetadataItem {
+public class IGReelMentionsItem extends IGReelMetadataItem {
     @Builder.Default
     private double x = 0.5;
     @Builder.Default
@@ -17,23 +18,18 @@ public class IGStoryQuestions extends IGReelMetadataItem {
     @Builder.Default
     private double z = 0;
     @Builder.Default
-    private double width = 0.5;
-    @Builder.Default
-    private double height = 0.5;
-    @Builder.Default
     private double rotation = 0;
+    @NonNull
+    private String user_id;
     @Builder.Default
-    private String text_color = "#000000";
+    private double height = 1.0;
     @Builder.Default
-    private String background_color = "#FFFFFF";
-    private String question;
-    private String profile_pic_url;
-    private final boolean viewer_can_interact = false;
-    private final boolean is_sticker = true;
-    private final String question_type = "text";
+    private double width = 1.0;
+    private final boolean is_pinned = false;
 
     @Override
     public String key() {
-        return "story_questions";
+        return "reel_mentions";
     }
+
 }
