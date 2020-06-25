@@ -1,27 +1,17 @@
-package com.github.instagram4j.Instagram4J.models.reelmedia;
+package com.github.instagram4j.Instagram4J.models.reelmedia.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @JsonInclude(Include.NON_NULL)
 public class IGStoryCountdownsItem extends IGReelMetadataItem {
-    @Builder.Default
-    private double x = 0.5;
-    @Builder.Default
-    private double y = 0.5;
-    @Builder.Default
-    private double z = 0;
-    @Builder.Default
-    private double width = 0.5;
-    @Builder.Default
-    private double height = 0.5;
-    @Builder.Default
-    private double rotation = 0;
     @Builder.Default
     private String text_color = "#000000";
     @Builder.Default
@@ -34,9 +24,9 @@ public class IGStoryCountdownsItem extends IGReelMetadataItem {
     private String digit_card_color = "#FFFFFF";
     @Builder.Default
     private boolean following_enabled = true;
+    @NonNull
     private String text;
     private long end_ts;
-    private final boolean is_sticker = true;
     
     @Override
     public String key() {

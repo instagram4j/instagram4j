@@ -1,36 +1,26 @@
-package com.github.instagram4j.Instagram4J.models.reelmedia;
+package com.github.instagram4j.Instagram4J.models.reelmedia.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @JsonInclude(Include.NON_NULL)
 public class IGStoryQuestionsItem extends IGReelMetadataItem {
-    @Builder.Default
-    private double x = 0.5;
-    @Builder.Default
-    private double y = 0.5;
-    @Builder.Default
-    private double z = 0;
-    @Builder.Default
-    private double width = 0.5;
-    @Builder.Default
-    private double height = 0.5;
-    @Builder.Default
-    private double rotation = 0;
     @Builder.Default
     private String text_color = "#000000";
     @Builder.Default
     private String background_color = "#FFFFFF";
+    @NonNull
     private String question;
     private String profile_pic_url;
-    private final boolean viewer_can_interact = false;
-    private final boolean is_sticker = true;
-    private final String question_type = "text";
+    @Builder.Default
+    private String question_type = "text";
 
     @Override
     public String key() {
