@@ -5,27 +5,27 @@ import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureTimelineResponse;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
 
-public class IGMediaConfigureRequest extends IGPostRequest<IGMediaConfigureResponse> {
+public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfigureTimelineResponse> {
     @NonNull
     private String uploadId, _caption;
     private Double imageWidth, imageHeight;
     @Setter
     private Long _length;
 
-    public IGMediaConfigureRequest(String uploadId, String caption, double width, double height) {
+    public IGMediaConfigureTimelineRequest(String uploadId, String caption, double width, double height) {
         this.uploadId = uploadId;
         this._caption = caption;
         this.imageWidth = width;
         this.imageHeight = height;
     }
 
-    public IGMediaConfigureRequest(String uploadId, String caption, long length) {
+    public IGMediaConfigureTimelineRequest(String uploadId, String caption, long length) {
         this.uploadId = uploadId;
         this._caption = caption;
         this._length = length;
@@ -42,8 +42,8 @@ public class IGMediaConfigureRequest extends IGPostRequest<IGMediaConfigureRespo
     }
 
     @Override
-    public Class<IGMediaConfigureResponse> getResponseType() {
-        return IGMediaConfigureResponse.class;
+    public Class<IGMediaConfigureTimelineResponse> getResponseType() {
+        return IGMediaConfigureTimelineResponse.class;
     }
 
     @Data

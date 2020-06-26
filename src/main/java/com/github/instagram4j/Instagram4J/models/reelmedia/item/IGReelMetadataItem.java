@@ -20,7 +20,6 @@ public abstract class IGReelMetadataItem {
     private double rotation = 0;
     private int is_pinned;
     private int is_hidden;
-    @Builder.Default
     private int is_sticker;
 
     public abstract String key();

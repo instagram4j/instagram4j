@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.IGUploadParameters;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGRuploadPhotoResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGRuploadPhotoResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AllArgsConstructor;

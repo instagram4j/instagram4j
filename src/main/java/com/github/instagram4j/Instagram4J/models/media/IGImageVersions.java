@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class IGImageVersions {
-    private List<IGImageVideoMeta> candidates;
+    private List<IGImageVersionsMeta> candidates;
 }

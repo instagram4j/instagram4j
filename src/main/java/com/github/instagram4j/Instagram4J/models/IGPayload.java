@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class IGPayload {
     @JsonIgnore
-    protected Map<String, Object> extra_properties = new HashMap<>();
+    protected Map<String, Object> $extra_properties = new HashMap<>();
     private String _csrftoken;
     private String guid;
     private String device_id;
@@ -20,11 +20,11 @@ public class IGPayload {
 
     @JsonAnyGetter
     public Map<String, Object> getExtraProperties() {
-        return extra_properties;
+        return $extra_properties;
     }
     
     @JsonAnySetter
     public void addExtraProperty(String key, Object val) {
-        extra_properties.put(key, val);
+        $extra_properties.put(key, val);
     }
 }

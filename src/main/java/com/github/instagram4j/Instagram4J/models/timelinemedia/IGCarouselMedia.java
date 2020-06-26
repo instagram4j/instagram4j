@@ -1,8 +1,9 @@
-package com.github.instagram4j.Instagram4J.models.media;
+package com.github.instagram4j.Instagram4J.models.timelinemedia;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.github.instagram4j.Instagram4J.models.media.IGMedia;
 
 import lombok.Data;
 

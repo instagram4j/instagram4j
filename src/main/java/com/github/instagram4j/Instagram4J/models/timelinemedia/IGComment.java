@@ -1,4 +1,4 @@
-package com.github.instagram4j.Instagram4J.models.media;
+package com.github.instagram4j.Instagram4J.models.timelinemedia;
 
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.IGUser;

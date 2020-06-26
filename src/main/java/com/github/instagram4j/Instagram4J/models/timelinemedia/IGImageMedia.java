@@ -1,8 +1,11 @@
-package com.github.instagram4j.Instagram4J.models.media;
+package com.github.instagram4j.Instagram4J.models.timelinemedia;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.github.instagram4j.Instagram4J.models.media.IGImageVersions;
+import com.github.instagram4j.Instagram4J.models.media.IGImageVersionsMeta;
+import com.github.instagram4j.Instagram4J.models.media.IGMedia;
 
 import lombok.Data;
 
@@ -10,7 +13,7 @@ import lombok.Data;
 @JsonTypeName("1")
 public class IGImageMedia extends IGMedia {
     private IGImageVersions image_versions2;
-    private List<IGImageVideoMeta> candidates;
+    private List<IGImageVersionsMeta> candidates;
     private long video_duration;
     private boolean has_audio;
     private int original_width;
