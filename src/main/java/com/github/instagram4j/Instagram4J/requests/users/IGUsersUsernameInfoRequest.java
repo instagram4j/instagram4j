@@ -1,9 +1,14 @@
 package com.github.instagram4j.Instagram4J.requests.users;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.users.IGUsersResponse;
 
-public class IGUsersUsernameInfoRequest extends IGGetRequest<IGResponse> {
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class IGUsersUsernameInfoRequest extends IGGetRequest<IGUsersResponse> {
+    @NonNull
     private String username;
     
     @Override
@@ -12,8 +17,8 @@ public class IGUsersUsernameInfoRequest extends IGGetRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGUsersResponse> getResponseType() {
+        return IGUsersResponse.class;
     }
 
 }
