@@ -17,7 +17,7 @@ public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateRes
     }
 
     @Override
-    public String getQueryStrings() {
+    public String getQueryString() {
         return this.mapQueryString("guid", client.getGuid(), "device_id", client.getDeviceId());
     }
 

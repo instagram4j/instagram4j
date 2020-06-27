@@ -20,8 +20,8 @@ public class IGFeedUserRequest extends IGGetRequest<IGFeedUserResponse> {
     }
     
     @Override
-    public String getQueryStrings() {
-        return max_id != null ? this.mapQueryString("max_id", max_id) : "";
+    public String getQueryString() {
+        return this.mapQueryString("max_id", max_id);
     }
     @Override
     public Class<IGFeedUserResponse> getResponseType() {
