@@ -3,8 +3,8 @@ package com.github.instagram4j.Instagram4J.models.feed;
 import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
-import com.github.instagram4j.Instagram4J.models.IGUser;
 import com.github.instagram4j.Instagram4J.models.reelmedia.IGReelMedia;
+import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
 import lombok.Data;
 

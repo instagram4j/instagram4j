@@ -7,8 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
-import com.github.instagram4j.Instagram4J.models.IGLoggedInUser;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
+import com.github.instagram4j.Instagram4J.models.user.IGUser;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
@@ -47,7 +47,7 @@ public class IGClient {
     @Getter
     private boolean loggedIn = false;
     @Getter
-    private IGLoggedInUser selfUser;
+    private IGUser selfUser;
 
     // logging
     private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {

@@ -1,7 +1,7 @@
 package com.github.instagram4j.Instagram4J.models.timelinemedia;
 
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
-import com.github.instagram4j.Instagram4J.models.IGUser;
+import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
 import lombok.Data;
 
