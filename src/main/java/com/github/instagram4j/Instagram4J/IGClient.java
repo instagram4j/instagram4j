@@ -20,7 +20,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import lombok.With;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.JavaNetCookieJar;
@@ -70,9 +69,8 @@ public class IGClient {
                 .addInterceptor(loggingInterceptor)
                 .build();
     }
-
-    @SneakyThrows
-    public IGLoginResponse sendLoginRequest() throws IGLoginException {
+    
+    public IGLoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
         log.debug("Logging in. . .");
         IGLoginRequest login = new IGLoginRequest(username, password);
         IGLoginResponse res = this.sendRequest(login);
@@ -82,8 +80,7 @@ public class IGClient {
         return res;
     }
 
-    @SneakyThrows
-    public IGLoginResponse sendLoginRequest(String code, String identifier) throws IGLoginException {
+    public IGLoginResponse sendLoginRequest(String code, String identifier) throws IGLoginException, IGResponseException {
         log.debug("Logging in. . .");
         IGTwoFactorLoginRequest login = new IGTwoFactorLoginRequest(username, password, code, identifier);
         IGLoginResponse res = this.sendRequest(login);
@@ -162,6 +159,8 @@ public class IGClient {
 
             try {
                 client.sendLoginRequest();
+            } catch (IGResponseException exception) {
+                throw new IGLoginException(exception);
             } catch (IGLoginException ex) {
                 if (ex.getResponse().getTwo_factor_info() != null && onTwoFactor != null)
                     client.setLoggedInState(onTwoFactor.accept(client, ex.getResponse()));
