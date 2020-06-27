@@ -1,7 +1,7 @@
 package com.github.instagram4j.Instagram4J.requests.direct;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.direct.IGDirectInboxResponse;
 
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class IGDirectPendingInboxRequest extends IGGetRequest<IGResponse> {
+public class IGDirectPendingInboxRequest extends IGGetRequest<IGDirectInboxResponse> {
     @NonNull
     private String cursor;
     
@@ -24,8 +24,8 @@ public class IGDirectPendingInboxRequest extends IGGetRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGDirectInboxResponse> getResponseType() {
+        return IGDirectInboxResponse.class;
     }
 
 }

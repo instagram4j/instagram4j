@@ -1,4 +1,4 @@
-package com.github.instagram4j.Instagram4J.models.timelinemedia;
+package com.github.instagram4j.Instagram4J.models.media.timeline;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

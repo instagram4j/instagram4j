@@ -1,6 +1,6 @@
 package com.github.instagram4j.Instagram4J.models.feed;
 
-import com.github.instagram4j.Instagram4J.models.timelinemedia.IGTimelineMedia;
+import com.github.instagram4j.Instagram4J.models.media.timeline.IGTimelineMedia;
 
 import lombok.Data;
 

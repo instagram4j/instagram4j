@@ -1,4 +1,4 @@
-package com.github.instagram4j.Instagram4J.models.timelinemedia;
+package com.github.instagram4j.Instagram4J.models.media.timeline;
 
 import java.util.List;
 
