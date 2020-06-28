@@ -18,7 +18,7 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
 
     @Override
     public String path() {
-        return "/accounts/login/";
+        return "accounts/login/";
     }
 
     @Override

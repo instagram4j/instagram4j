@@ -16,7 +16,7 @@ public class IGFeedUserRequest extends IGGetRequest<IGFeedUserResponse> {
     
     @Override
     public String path() {
-        return "/feed/user/" + pk + "/";
+        return "feed/user/" + pk + "/";
     }
     
     @Override

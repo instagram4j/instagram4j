@@ -15,7 +15,7 @@ public class IGDirectInboxRequest extends IGGetRequest<IGDirectInboxResponse> {
     
     @Override
     public String path() {
-        return "/direct_v2/inbox/";
+        return "direct_v2/inbox/";
     }
 
     @Override

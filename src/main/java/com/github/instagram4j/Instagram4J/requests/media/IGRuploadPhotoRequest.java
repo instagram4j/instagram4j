@@ -57,7 +57,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
 
     @Override
     public String path() {
-        return "/rupload_igphoto/" + name;
+        return "rupload_igphoto/" + name;
     }
 
     @Override

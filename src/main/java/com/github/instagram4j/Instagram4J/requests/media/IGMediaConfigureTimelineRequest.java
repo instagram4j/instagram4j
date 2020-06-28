@@ -38,7 +38,7 @@ public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfig
 
     @Override
     public String path() {
-        return "/media/configure/" + (_length != null ? "?video=1" : "");
+        return "media/configure/" + (_length != null ? "?video=1" : "");
     }
 
     @Override

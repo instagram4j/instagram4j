@@ -17,7 +17,7 @@ public class IGDirectThreadsRequest extends IGGetRequest<IGResponse> {
     
     @Override
     public String path() {
-        return "/direct_v2/threads/" + thread_id + "/";
+        return "direct_v2/threads/" + thread_id + "/";
     }
     
     @Override

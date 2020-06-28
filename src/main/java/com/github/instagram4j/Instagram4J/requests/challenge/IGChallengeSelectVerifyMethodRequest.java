@@ -26,7 +26,7 @@ public class IGChallengeSelectVerifyMethodRequest extends IGPostRequest<IGChalle
 
     @Override
     public String path() {
-        return !resend ? path : path.replace("/challenge/", "/challenge/replay/");
+        return !resend ? path.substring(1) : path.replace("/challenge/", "challenge/replay/");
     }
 
     @Override

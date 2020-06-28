@@ -25,7 +25,7 @@ public class IGChallengeSendCodeRequest extends IGPostRequest<IGLoginResponse> {
 
     @Override
     public String path() {
-        return path;
+        return path.substring(1);
     }
 
     @Override

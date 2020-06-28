@@ -39,7 +39,7 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 
     @Override
     public String path() {
-        return "/media/configure_to_story/";
+        return "media/configure_to_story/";
     }
 
     @Override

@@ -25,7 +25,7 @@ public class IGMediaUploadFinishRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public String path() {
-        return "/media/upload_finish/?video=1";
+        return "media/upload_finish/?video=1";
     }
 
     @Override

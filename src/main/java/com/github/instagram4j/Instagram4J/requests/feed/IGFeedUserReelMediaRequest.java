@@ -13,7 +13,7 @@ public class IGFeedUserReelMediaRequest extends IGGetRequest<IGResponse> {
     
     @Override
     public String path() {
-        return "/feed/user/" + pk + "/reel_media/";
+        return "feed/user/" + pk + "/reel_media/";
     }
 
     @Override

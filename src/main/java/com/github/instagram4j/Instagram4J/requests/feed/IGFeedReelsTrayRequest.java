@@ -7,7 +7,7 @@ public class IGFeedReelsTrayRequest extends IGGetRequest<IGFeedReelsTrayResponse
 
     @Override
     public String path() {
-        return "/feed/reels_tray/";
+        return "feed/reels_tray/";
     }
 
     @Override

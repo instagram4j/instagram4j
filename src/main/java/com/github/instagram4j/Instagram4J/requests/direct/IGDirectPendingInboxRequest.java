@@ -15,7 +15,7 @@ public class IGDirectPendingInboxRequest extends IGGetRequest<IGDirectInboxRespo
     
     @Override
     public String path() {
-        return "/direct_v2/pending_inbox/";
+        return "direct_v2/pending_inbox/";
     }
     
     @Override

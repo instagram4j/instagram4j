@@ -13,7 +13,7 @@ public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateRes
 
     @Override
     public String path() {
-        return path;
+        return path.substring(1);
     }
 
     @Override

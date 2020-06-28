@@ -15,7 +15,7 @@ public class IGCreativesAssetsRequest extends IGPostRequest<IGCreativesAssetsRes
 
     @Override
     public String path() {
-        return "/creatives/assets/";
+        return "creatives/assets/";
     }
 
     @Override

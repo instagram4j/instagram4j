@@ -11,7 +11,7 @@ public class IGUsersInfoRequest extends IGGetRequest<IGUsersResponse> {
     
     @Override
     public String path() {
-        return "/users/" + userId + "/info/";
+        return "users/" + userId + "/info/";
     }
 
     @Override

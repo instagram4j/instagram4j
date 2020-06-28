@@ -39,7 +39,7 @@ public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGMediaConfigu
 
     @Override
     public String path() {
-        return "/media/configure_sidecar/";
+        return "media/configure_sidecar/";
     }
 
     @Override
