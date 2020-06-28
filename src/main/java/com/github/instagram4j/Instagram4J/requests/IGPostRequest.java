@@ -14,7 +14,10 @@ import okhttp3.RequestBody;
 public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 
     protected abstract IGPayload getPayload();
-
+    
+    protected boolean isSigned() {
+        return true;
+    }
     protected String getStringPayload() {
         return IGUtils.objectToJson(this.client.setIGLoad(getPayload()));
     }

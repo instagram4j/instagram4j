@@ -1,6 +1,7 @@
 package com.github.instagram4j.Instagram4J.requests;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,6 +12,7 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Setter;
+import lombok.SneakyThrows;
 import okhttp3.Request;
 
 public abstract class IGRequest<T extends IGResponse> {
@@ -22,7 +24,25 @@ public abstract class IGRequest<T extends IGResponse> {
     public abstract Request formRequest();
 
     public abstract Class<T> getResponseType();
+    
+    public String getQueryString() {
+        return "";
+    }
 
+    @SneakyThrows
+    protected String mapQueryString(String... strings) {
+        StringBuilder builder = new StringBuilder("?");
+
+        for (int i = 0; i < strings.length; i += 2) {
+            if (i + 1 < strings.length && strings[i] != null && strings[i+1] != null && !strings[i].isEmpty() && !strings[i+1].isEmpty()) {
+                builder.append(URLEncoder.encode(strings[i], "utf-8")).append("=")
+                        .append(URLEncoder.encode(strings[i + 1], "utf-8")).append("&");
+            }
+        }
+
+        return builder.substring(0, builder.length() - 1);
+    }
+    
     public String apiPath() {
         return IGConstants.API_V1;
     }
@@ -36,10 +56,6 @@ public abstract class IGRequest<T extends IGResponse> {
         // response.setClient(client);
 
         return response;
-    }
-
-    public boolean isSigned() {
-        return true;
     }
 
     protected Request.Builder applyHeaders(Request.Builder req) {
