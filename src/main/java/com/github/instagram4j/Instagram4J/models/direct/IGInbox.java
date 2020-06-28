@@ -16,7 +16,7 @@ public class IGInbox {
     
     @Data
     public static class IGCursor {
-        private long cursor_timestamp_seconds;
-        private long cursor_thread_v2_id;
+        private String cursor_timestamp_seconds;
+        private String cursor_thread_v2_id;
     }
 }

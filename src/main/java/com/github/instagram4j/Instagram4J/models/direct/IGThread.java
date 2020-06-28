@@ -3,6 +3,7 @@ package com.github.instagram4j.Instagram4J.models.direct;
 import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
+import com.github.instagram4j.Instagram4J.models.direct.item.IGThreadItem;
 import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
 import lombok.Data;
