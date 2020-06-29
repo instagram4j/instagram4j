@@ -1,11 +1,8 @@
 package com.github.instagram4j.Instagram4J.requests;
 
-import java.net.URLEncoder;
-
 import com.github.instagram4j.Instagram4J.IGConstants;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
-import lombok.SneakyThrows;
 import okhttp3.Request;
 
 public abstract class IGGetRequest<T extends IGResponse> extends IGRequest<T> {

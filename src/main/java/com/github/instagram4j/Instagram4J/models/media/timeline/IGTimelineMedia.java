@@ -11,9 +11,9 @@ import lombok.Data;
 @Data
 @JsonTypeInfo(defaultImpl = IGMedia.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = IGImageMedia.class),
-        @JsonSubTypes.Type(value = IGVideoMedia.class),
-        @JsonSubTypes.Type(value = IGCarouselMedia.class)
+        @JsonSubTypes.Type(value = IGTimelineImageMedia.class),
+        @JsonSubTypes.Type(value = IGTimelineVideoMedia.class),
+        @JsonSubTypes.Type(value = IGTimelineCarouselMedia.class)
 })
 public class IGTimelineMedia extends IGMedia {
     private List<IGComment> preview_comments;

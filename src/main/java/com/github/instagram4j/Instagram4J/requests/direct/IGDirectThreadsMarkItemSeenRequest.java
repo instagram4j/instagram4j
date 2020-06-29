@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IGDirectThreadsMarkItemSeenRequest extends IGPostRequest<IGResponse> {
     @NonNull
-    private String thread_id;
+    private String _thread_id;
     @NonNull
-    private String item_id;
+    private String _item_id;
 
     @Override
     protected IGPayload getPayload() {
@@ -22,7 +22,7 @@ public class IGDirectThreadsMarkItemSeenRequest extends IGPostRequest<IGResponse
 
     @Override
     public String path() {
-        return String.format("direct_v2/threads/%s/items/%s/seen/", thread_id, item_id);
+        return String.format("direct_v2/threads/%s/items/%s/seen/", _thread_id, _item_id);
     }
 
     @Override
@@ -32,8 +32,8 @@ public class IGDirectThreadsMarkItemSeenRequest extends IGPostRequest<IGResponse
     
     @Data
     public class IGDirectThreadsMarkItemSeenPayload extends IGPayload {
-        private String thread_id;
-        private String item_id;
+        private String thread_id = _thread_id;
+        private String item_id = _item_id;
         private final String action = "mark_seen";
         private boolean use_unified_inbox = true;
     }

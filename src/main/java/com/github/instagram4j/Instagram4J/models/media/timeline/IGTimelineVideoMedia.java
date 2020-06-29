@@ -10,7 +10,7 @@ import lombok.Data;
 //media_type 2
 @Data
 @JsonTypeName("2")
-public class IGVideoMedia extends IGTimelineMedia {
+public class IGTimelineVideoMedia extends IGTimelineMedia {
     private List<IGVideoVersionsMeta> video_versions;
     private long video_duration;
     private boolean has_audio;

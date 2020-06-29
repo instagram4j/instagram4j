@@ -1,7 +1,7 @@
 package com.github.instagram4j.Instagram4J.requests.direct;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.direct.IGDirectThreadsResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class IGDirectThreadsRequest extends IGGetRequest<IGResponse> {
+public class IGDirectThreadsRequest extends IGGetRequest<IGDirectThreadsResponse> {
     @NonNull
     private String thread_id;
     private String cursor;
@@ -26,8 +26,8 @@ public class IGDirectThreadsRequest extends IGGetRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGDirectThreadsResponse> getResponseType() {
+        return IGDirectThreadsResponse.class;
     }
 
 }
