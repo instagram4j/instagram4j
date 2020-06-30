@@ -4,6 +4,7 @@ import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,37 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
 
         public String getItemType() {
             return "media_share";
+        }
+    }
+    
+    @Data
+    public static class IGBroadcastReelSharePayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String media_id;
+        @NonNull
+        private String text;
+        
+        @Override
+        public String getItemType() {
+            return "reel_share";
+        }
+    }
+    
+    @Data
+    @RequiredArgsConstructor
+    @AllArgsConstructor
+    public static class IGBroadcastStorySharePayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String story_media_id;
+        private String text = "";
+        
+        @Override
+        public String getItemType() {
+            return "story_share";
         }
     }
 

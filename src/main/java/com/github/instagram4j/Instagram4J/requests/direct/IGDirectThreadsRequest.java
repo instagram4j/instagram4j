@@ -13,7 +13,6 @@ public class IGDirectThreadsRequest extends IGGetRequest<IGDirectThreadsResponse
     @NonNull
     private String thread_id;
     private String cursor;
-    private String seq_id;
     
     @Override
     public String path() {
@@ -22,7 +21,7 @@ public class IGDirectThreadsRequest extends IGGetRequest<IGDirectThreadsResponse
     
     @Override
     public String getQueryString() {
-        return mapQueryString("cursor", cursor, "seq_id", seq_id);
+        return mapQueryString("cursor", cursor);
     }
 
     @Override
