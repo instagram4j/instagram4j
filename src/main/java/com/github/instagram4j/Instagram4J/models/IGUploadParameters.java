@@ -23,15 +23,25 @@ public class IGUploadParameters {
     private String direct_v2;
     private String for_direct_story;
     private String is_igtv_video;
-
-    public static String forPhoto(String upload_id, String media_type, boolean is_sidecar) {
-        return IGUtils.objectToJson(IGUploadParameters.builder().upload_id(upload_id).media_type(media_type)
-                .is_sidecar(is_sidecar ? "1" : null)
-                .image_compression("{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}").build());
+    
+    @Override
+    public String toString() {
+        return IGUtils.objectToJson(this);
     }
 
-    public static String forVideo(String upload_id, String media_type, boolean is_sidecar, boolean for_album) {
-        return IGUtils.objectToJson(IGUploadParameters.builder().upload_id(upload_id).media_type(media_type)
-                .is_sidecar(is_sidecar ? "1" : null).for_album(for_album ? "1" : null).build());
+    public static IGUploadParameters forPhoto(String upload_id, String media_type, boolean is_sidecar) {
+        return IGUploadParameters.builder().upload_id(upload_id).media_type(media_type).is_sidecar(is_sidecar ? "1" : null).image_compression("{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}").build();
+    }
+
+    public static IGUploadParameters forTimelineVideo(String upload_id, boolean is_sidecar) {
+        return IGUploadParameters.builder().upload_id(upload_id).media_type("2").is_sidecar(is_sidecar ? "1" : null).build();
+    }
+    
+    public static IGUploadParameters forAlbumVideo(String upload_id) {
+        return IGUploadParameters.builder().upload_id(upload_id).media_type("2").for_album("1").build();
+    }
+    
+    public static IGUploadParameters forDirectVideo(String upload_id) {
+        return IGUploadParameters.builder().upload_id(upload_id).media_type("2").direct_v2("1").build();
     }
 }

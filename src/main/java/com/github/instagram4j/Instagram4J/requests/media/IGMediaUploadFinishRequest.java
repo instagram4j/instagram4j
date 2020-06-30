@@ -7,8 +7,10 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class IGMediaUploadFinishRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String uploadId;

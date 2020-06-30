@@ -39,7 +39,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
     @Override
     protected Request.Builder applyHeaders(Request.Builder req) {
         super.applyHeaders(req);
-        req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forPhoto(uploadId, mediaType, isSidecar));
+        req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forPhoto(uploadId, mediaType, isSidecar).toString());
         req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
         req.addHeader("Accept-Encoding", "gzip");
         req.addHeader("X-Entity-Name", name);
