@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.direct.item.IGThreadItem;
+import com.github.instagram4j.Instagram4J.models.user.IGProfile;
 import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
 import lombok.Data;
@@ -13,8 +14,8 @@ public class IGThread extends IGBaseModel {
     private String thread_id;
     private String thread_v2_id;
     private String id = thread_id;
-    private List<IGUser> users;
-    private List<IGUser> left_users;
+    private List<IGProfile> users;
+    private List<IGProfile> left_users;
     private List<String> admin_user_ids;
     private List<IGThreadItem> items;
     private long last_activity_at;

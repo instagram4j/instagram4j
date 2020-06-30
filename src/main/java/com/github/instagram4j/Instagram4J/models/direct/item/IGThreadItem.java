@@ -14,7 +14,8 @@ import lombok.Data;
         @JsonSubTypes.Type(value = IGThreadStoryShareItem.class),
         @JsonSubTypes.Type(value = IGThreadLinkItem.class),
         @JsonSubTypes.Type(value = IGThreadVoiceMediaItem.class),
-        @JsonSubTypes.Type(value = IGThreadMediaItem.class)
+        @JsonSubTypes.Type(value = IGThreadMediaItem.class),
+        @JsonSubTypes.Type(value = IGThreadProfileItem.class)
 })
 public class IGThreadItem extends IGBaseModel {
     private String item_id;

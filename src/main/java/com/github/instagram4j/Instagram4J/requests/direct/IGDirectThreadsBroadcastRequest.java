@@ -38,6 +38,24 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
     }
     
     @Data
+    public static class IGBroadcastConfigurePhotoPayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String upload_id;
+        public String getItemType() { return "configure_photo"; }
+    }
+    
+    @Data
+    public static class IGBroadcastConfigureVideoPayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String upload_id;
+        public String getItemType() { return "configure_video"; }
+    }
+    
+    @Data
     public static abstract class IGBroadcastPayload extends IGPayload {
         private String action = "send_item";
         public abstract String getItemType();
