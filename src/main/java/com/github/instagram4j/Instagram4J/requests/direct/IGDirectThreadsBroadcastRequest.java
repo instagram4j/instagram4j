@@ -10,9 +10,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
+
     @NonNull
     private IGBroadcastPayload payload;
-    
+
     @Override
     protected IGPayload getPayload() {
         return payload;
@@ -27,39 +28,73 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     public static class IGBroadcastTextPayload extends IGBroadcastPayload {
         @NonNull
         private String thread_id;
         @NonNull
         private String text;
-        public String getItemType() { return "text"; }
+
+        public String getItemType() {
+            return "text";
+        }
     }
-    
+
+    @Data
+    public static class IGBroadcastMediaSharePayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String media_id;
+
+        public String getItemType() {
+            return "media_share";
+        }
+    }
+
+    @Data
+    public static class IGBroadcastProfilePayload extends IGBroadcastPayload {
+        @NonNull
+        private String thread_id;
+        @NonNull
+        private String profile_user_id;
+
+        public String getItemType() {
+            return "profile";
+        }
+    }
+
     @Data
     public static class IGBroadcastConfigurePhotoPayload extends IGBroadcastPayload {
         @NonNull
         private String thread_id;
         @NonNull
         private String upload_id;
-        public String getItemType() { return "configure_photo"; }
+
+        public String getItemType() {
+            return "configure_photo";
+        }
     }
-    
+
     @Data
     public static class IGBroadcastConfigureVideoPayload extends IGBroadcastPayload {
         @NonNull
         private String thread_id;
         @NonNull
         private String upload_id;
-        public String getItemType() { return "configure_video"; }
+
+        public String getItemType() {
+            return "configure_video";
+        }
     }
-    
+
     @Data
     public static abstract class IGBroadcastPayload extends IGPayload {
         private String action = "send_item";
+
         public abstract String getItemType();
         public abstract String getThread_id();
     }
-    
+
 }
