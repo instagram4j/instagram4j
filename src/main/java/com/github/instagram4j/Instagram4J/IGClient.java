@@ -91,10 +91,10 @@ public class IGClient {
     }
 
     public <T extends IGResponse> T sendRequest(@NonNull IGRequest<T> req) throws IGResponseException {
-        return sendRequestWithView(req, req.getResponseType());
+        return sendRequest(req, req.getResponseType());
     }
 
-    public <T> T sendRequestWithView(@NonNull IGRequest<?> req, Class<T> view) throws IGResponseException {
+    public <T> T sendRequest(@NonNull IGRequest<?> req, Class<T> view) throws IGResponseException {
         req.setClient(this);
         Response res;
         try {

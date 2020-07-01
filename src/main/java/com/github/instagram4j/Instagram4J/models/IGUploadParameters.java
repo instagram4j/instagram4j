@@ -23,6 +23,7 @@ public class IGUploadParameters {
     private String direct_v2;
     private String for_direct_story;
     private String is_igtv_video;
+    private String is_direct_voice;
     
     @Override
     public String toString() {
@@ -43,5 +44,9 @@ public class IGUploadParameters {
     
     public static IGUploadParameters forDirectVideo(String upload_id) {
         return IGUploadParameters.builder().upload_id(upload_id).media_type("2").direct_v2("1").build();
+    }
+    
+    public static IGUploadParameters forDirectVoice(String upload_id) {
+        return IGUploadParameters.builder().upload_id(upload_id).media_type("11").is_direct_voice("1").build();
     }
 }

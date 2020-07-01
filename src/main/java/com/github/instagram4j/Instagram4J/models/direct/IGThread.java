@@ -5,7 +5,6 @@ import java.util.List;
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.direct.item.IGThreadItem;
 import com.github.instagram4j.Instagram4J.models.user.IGProfile;
-import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
 import lombok.Data;
 
@@ -18,6 +17,7 @@ public class IGThread extends IGBaseModel {
     private List<IGProfile> left_users;
     private List<String> admin_user_ids;
     private List<IGThreadItem> items;
+    private List<IGDirectStory> direct_story;
     private long last_activity_at;
     private boolean muted;
     private boolean is_pin;
@@ -32,7 +32,7 @@ public class IGThread extends IGBaseModel {
     private long last_non_sender_item_at;
     private long assigned_admin_id;
     private boolean shh_mode_enabled;
-    private IGUser inviter;
+    private IGProfile inviter;
     private boolean has_older;
     private boolean has_newer;
     private String newest_cursor;
