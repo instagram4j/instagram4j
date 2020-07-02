@@ -27,8 +27,12 @@ public abstract class IGRequest<T extends IGResponse> {
         return "";
     }
     
-    public void execute(IGClient client) throws IGResponseException {
-        client.sendRequest(this);
+    public T execute(IGClient client) throws IGResponseException {
+        return client.sendRequest(this);
+    }
+    
+    public <E> E execute(IGClient client, Class<E> clazz) throws IGResponseException {
+        return client.sendRequest(this, clazz);
     }
 
     @SneakyThrows
