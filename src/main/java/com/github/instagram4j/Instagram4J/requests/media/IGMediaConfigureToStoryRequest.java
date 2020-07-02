@@ -49,18 +49,20 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
 
     private IGMediaConfigureToStoryPayload constructPayload() {
         IGMediaConfigureToStoryPayload payload = new IGMediaConfigureToStoryPayload();
-        if (story_metadata != null) addAllMetadata(payload, story_metadata);
+        if (story_metadata != null)
+            addAllMetadata(payload, story_metadata);
         return payload;
     }
-    
+
     public static void addAllMetadata(IGMediaConfigureToStoryPayload payload, List<IGReelMetadataItem> items) {
         Map<String, List<IGReelMetadataItem>> map = new HashMap<>();
         items.forEach(item -> {
             if (map.putIfAbsent(item.key(), new ArrayList<>(Arrays.asList(item))) != null)
                 map.get(item.key()).add(item);
         });
-        
-        map.entrySet().forEach(entry -> payload.addExtraProperty(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
+
+        map.entrySet()
+                .forEach(entry -> payload.addExtraProperty(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
     }
 
     @Data

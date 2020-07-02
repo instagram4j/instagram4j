@@ -27,7 +27,7 @@ public class IGStoryCountdownsItem extends IGReelMetadataItem {
     @NonNull
     private String text;
     private long end_ts;
-    
+
     @Override
     public String key() {
         return "story_countdowns";

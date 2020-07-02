@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class IGUsersUsernameInfoRequest extends IGGetRequest<IGUsersResponse> {
     @NonNull
     private String username;
-    
+
     @Override
     public String path() {
         return "users/" + username + "/usernameinfo/";

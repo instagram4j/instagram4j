@@ -2,6 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.media;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.IGUploadParameters;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
@@ -37,9 +38,10 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
     }
 
     @Override
-    protected Request.Builder applyHeaders(Request.Builder req) {
-        super.applyHeaders(req);
-        req.addHeader("X-Instagram-Rupload-Params", IGUploadParameters.forPhoto(uploadId, mediaType, isSidecar).toString());
+    protected Request.Builder applyHeaders(IGClient client, Request.Builder req) {
+        super.applyHeaders(client, req);
+        req.addHeader("X-Instagram-Rupload-Params",
+                IGUploadParameters.forPhoto(uploadId, mediaType, isSidecar).toString());
         req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
         req.addHeader("Accept-Encoding", "gzip");
         req.addHeader("X-Entity-Name", name);
@@ -51,7 +53,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
     }
 
     @Override
-    protected RequestBody getRequestBody() {
+    protected RequestBody getRequestBody(IGClient client) {
         return RequestBody.create(imgData, MediaType.get("application/octet-stream"));
     }
 

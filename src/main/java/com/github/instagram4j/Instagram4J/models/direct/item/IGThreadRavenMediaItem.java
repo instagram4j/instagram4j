@@ -9,7 +9,7 @@ import lombok.Data;
 @JsonTypeName("raven_media")
 public class IGThreadRavenMediaItem extends IGThreadItem {
     private IGThreadVisualMedia visual_media;
-    
+
     @Data
     public static class IGThreadVisualMedia {
         private long url_expire_at_secs;

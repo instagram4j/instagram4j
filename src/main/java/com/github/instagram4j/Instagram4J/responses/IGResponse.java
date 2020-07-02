@@ -21,7 +21,7 @@ public class IGResponse {
     private String feedback_message;
     private String error_type;
     private String checkpoint_url;
-    
+
     public Set<Entry<String, Object>> getExtraProperties() {
         return $extra_properties.entrySet();
     }

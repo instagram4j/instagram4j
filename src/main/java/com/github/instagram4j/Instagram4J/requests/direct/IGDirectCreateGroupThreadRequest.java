@@ -9,12 +9,12 @@ import lombok.Data;
 public class IGDirectCreateGroupThreadRequest extends IGPostRequest<IGResponse> {
     private String title;
     private String[] userIds;
-    
+
     public IGDirectCreateGroupThreadRequest(String title, String... user_ids) {
         this.title = title;
         this.userIds = user_ids;
     }
-    
+
     @Override
     protected IGPayload getPayload() {
         return new IGDirectCreateGroupThreadPayload();
@@ -29,7 +29,7 @@ public class IGDirectCreateGroupThreadRequest extends IGPostRequest<IGResponse> 
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     public class IGDirectCreateGroupThreadPayload extends IGPayload {
         private String[] recipient_users = userIds;

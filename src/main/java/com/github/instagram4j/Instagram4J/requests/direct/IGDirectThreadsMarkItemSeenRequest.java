@@ -29,7 +29,7 @@ public class IGDirectThreadsMarkItemSeenRequest extends IGPostRequest<IGResponse
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     public class IGDirectThreadsMarkItemSeenPayload extends IGPayload {
         private String thread_id = _thread_id;

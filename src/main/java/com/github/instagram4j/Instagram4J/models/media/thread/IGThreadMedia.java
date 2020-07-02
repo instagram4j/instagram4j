@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 @JsonTypeInfo(defaultImpl = IGThreadMedia.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = IGThreadImageMedia.class),
-    @JsonSubTypes.Type(value = IGThreadVideoMedia.class)
+        @JsonSubTypes.Type(value = IGThreadImageMedia.class),
+        @JsonSubTypes.Type(value = IGThreadVideoMedia.class)
 })
 public class IGThreadMedia extends IGBaseModel {
     private String media_type;

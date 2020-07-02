@@ -15,11 +15,11 @@ public class IGBaseModel {
     private Map<String, Object> $extra_properties = new HashMap<>();
     private String id;
     private long pk;
-    
+
     public Set<Entry<String, Object>> getExtraProperties() {
         return this.$extra_properties.entrySet();
     }
-    
+
     public Object getExtraProperty(String key) {
         return $extra_properties.get(key);
     }

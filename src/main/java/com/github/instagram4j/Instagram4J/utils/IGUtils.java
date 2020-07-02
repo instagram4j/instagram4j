@@ -1,7 +1,5 @@
 package com.github.instagram4j.Instagram4J.utils;
 
-import java.net.CookieStore;
-import java.net.HttpCookie;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.Key;
@@ -22,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.instagram4j.Instagram4J.IGConstants;
 
 import lombok.SneakyThrows;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 
 public class IGUtils {
     public static final ObjectMapper MAPPER = new ObjectMapper();
@@ -149,8 +150,8 @@ public class IGUtils {
         return WRITER.writeValueAsString(obj);
     }
 
-    public static Optional<String> getCookieValue(CookieStore store, String key) {
-        return store.getCookies().stream().filter(cookie -> cookie.getName().equalsIgnoreCase(key))
-                .map(HttpCookie::getValue).findAny();
+    public static Optional<String> getCookieValue(CookieJar jar, String key) {
+        return jar.loadForRequest(HttpUrl.get(IGConstants.BASE_API_URL)).stream()
+                .filter(cookie -> cookie.name().equals(key)).map(Cookie::value).findAny();
     }
 }

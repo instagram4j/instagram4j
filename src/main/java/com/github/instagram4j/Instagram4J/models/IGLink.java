@@ -8,6 +8,7 @@ public class IGLink {
     private IGLinkContext link_context;
     private String client_context;
     private String mutation_token;
+
     @Data
     public static class IGLinkContext {
         private String link_url;

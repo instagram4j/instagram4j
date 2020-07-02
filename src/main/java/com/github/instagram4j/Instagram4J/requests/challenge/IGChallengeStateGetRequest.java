@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateResponse> {
     @NonNull
-    private String path;
+    private String path, guid, device_id;
 
     @Override
     public String path() {
@@ -18,7 +18,7 @@ public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateRes
 
     @Override
     public String getQueryString() {
-        return this.mapQueryString("guid", client.getGuid(), "device_id", client.getDeviceId());
+        return this.mapQueryString("guid", guid, "device_id", device_id);
     }
 
     @Override

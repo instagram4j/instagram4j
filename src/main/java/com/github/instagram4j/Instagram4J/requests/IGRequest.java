@@ -8,25 +8,27 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
+import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
-import lombok.Setter;
 import lombok.SneakyThrows;
 import okhttp3.Request;
 
 public abstract class IGRequest<T extends IGResponse> {
-    @Setter
-    protected IGClient client;
 
     public abstract String path();
 
-    public abstract Request formRequest();
-
-    public abstract Class<T> getResponseType();
+    public abstract Request formRequest(IGClient client);
     
+    public abstract Class<T> getResponseType();
+
     public String getQueryString() {
         return "";
+    }
+    
+    public void execute(IGClient client) throws IGResponseException {
+        client.sendRequest(this);
     }
 
     @SneakyThrows
@@ -34,7 +36,8 @@ public abstract class IGRequest<T extends IGResponse> {
         StringBuilder builder = new StringBuilder("?");
 
         for (int i = 0; i < strings.length; i += 2) {
-            if (i + 1 < strings.length && strings[i] != null && strings[i+1] != null && !strings[i].isEmpty() && !strings[i+1].isEmpty()) {
+            if (i + 1 < strings.length && strings[i] != null && strings[i + 1] != null && !strings[i].isEmpty()
+                    && !strings[i + 1].isEmpty()) {
                 builder.append(URLEncoder.encode(strings[i], "utf-8")).append("=")
                         .append(URLEncoder.encode(strings[i + 1], "utf-8")).append("&");
             }
@@ -42,7 +45,7 @@ public abstract class IGRequest<T extends IGResponse> {
 
         return builder.substring(0, builder.length() - 1);
     }
-    
+
     public String apiPath() {
         return IGConstants.API_V1;
     }
@@ -58,13 +61,13 @@ public abstract class IGRequest<T extends IGResponse> {
         return response;
     }
 
-    protected Request.Builder applyHeaders(Request.Builder req) {
+    protected Request.Builder applyHeaders(IGClient client, Request.Builder req) {
         req.addHeader("Connection", "close");
         req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         req.addHeader("Accept-Language", "en-US");
         req.addHeader("X-IG-Capabilities", IGConstants.DEVICE_CAPABILITIES);
         req.addHeader("X-IG-App-ID", IGConstants.APP_ID);
-        req.addHeader("User-Agent", IGConstants.USER_AGENT);
+        req.addHeader("User-Agent", client.getUserAgent());
         req.addHeader("X-IG-Connection-Type", "WIFI");
         req.addHeader("X-Ads-Opt-Out", "0");
         req.addHeader("X-CM-Bandwidth-KBPS", "-1.000");

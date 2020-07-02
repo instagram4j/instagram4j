@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.models.media.timeline;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
@@ -21,6 +22,9 @@ public class IGComment extends IGBaseModel {
     private long media_id;
     private int comment_like_count;
 
+    @Data
     public static class IGCaption extends IGComment {
+        @JsonProperty("pk")
+        private String caption_pk;
     }
 }

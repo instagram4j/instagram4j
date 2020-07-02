@@ -12,12 +12,12 @@ import lombok.RequiredArgsConstructor;
 public class IGDirectPendingInboxRequest extends IGGetRequest<IGDirectInboxResponse> {
     @NonNull
     private String cursor;
-    
+
     @Override
     public String path() {
         return "direct_v2/pending_inbox/";
     }
-    
+
     @Override
     public String getQueryString() {
         return mapQueryString("cursor", cursor);

@@ -55,7 +55,7 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
             return "media_share";
         }
     }
-    
+
     @Data
     public static class IGBroadcastReelSharePayload extends IGBroadcastPayload {
         @NonNull
@@ -64,13 +64,13 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
         private String media_id;
         @NonNull
         private String text;
-        
+
         @Override
         public String getItemType() {
             return "reel_share";
         }
     }
-    
+
     @Data
     @RequiredArgsConstructor
     @AllArgsConstructor
@@ -80,13 +80,13 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
         @NonNull
         private String story_media_id;
         private String text = "";
-        
+
         @Override
         public String getItemType() {
             return "story_share";
         }
     }
-    
+
     @Data
     public static class IGBroadcastShareVoicePayload extends IGBroadcastPayload {
         @NonNull
@@ -94,8 +94,9 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
         @NonNull
         private String upload_id;
         private int waveform_sampling_frequency_hz = 10;
-        private String waveform = IGUtils.objectToJson(new double[]{0.146, 0.5, 0.854, 1, 0.854, 0.5, 0.146, 0, 0.146, 0.5, 0.854, 1, 0.854, 0.5, 0.146, 0, 0.146, 0.5, 0.854, 1});
-        
+        private String waveform = IGUtils.objectToJson(new double[] { 0.146, 0.5, 0.854, 1, 0.854, 0.5, 0.146, 0, 0.146,
+                0.5, 0.854, 1, 0.854, 0.5, 0.146, 0, 0.146, 0.5, 0.854, 1 });
+
         @Override
         public String getItemType() {
             return "share_voice";
@@ -141,9 +142,10 @@ public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
     @Data
     public static abstract class IGBroadcastPayload extends IGPayload {
         private String action = "send_item";
-        
+
         @JsonIgnore
         public abstract String getItemType();
+
         public abstract String getThread_id();
     }
 

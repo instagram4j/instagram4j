@@ -10,7 +10,7 @@ import lombok.Data;
 
 public class IGDirectThreadsApproveRequest extends IGPostRequest<IGResponse> {
     private final String[] _thread_ids;
-    
+
     public IGDirectThreadsApproveRequest(String... thread_ids) {
         this._thread_ids = thread_ids;
     }
@@ -22,14 +22,15 @@ public class IGDirectThreadsApproveRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public String path() {
-        return String.format("direct_v2/threads/%s/", _thread_ids.length > 1 ? "approve_multiple" : (_thread_ids[0] + "/approve"));
+        return String.format("direct_v2/threads/%s/",
+                _thread_ids.length > 1 ? "approve_multiple" : (_thread_ids[0] + "/approve"));
     }
 
     @Override
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     @JsonInclude(Include.NON_NULL)
     public class IGDirectThreadsApproveRequestPayload extends IGPayload {

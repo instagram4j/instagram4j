@@ -2,6 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.media;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.IGUploadParameters;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
@@ -13,15 +14,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
-    
+
     private byte[] videoData;
     private IGUploadParameters upload_params;
     private final String name;
-    
+
     public IGRuploadVideoRequest(byte data[], IGUploadParameters param) {
         this.videoData = data;
         this.upload_params = param;
-        name = upload_params.getUpload_id() + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
+        name = upload_params.getUpload_id() + "_0_"
+                + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
     }
 
     @Override
@@ -40,8 +42,8 @@ public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Request.Builder applyHeaders(Request.Builder req) {
-        super.applyHeaders(req);
+    public Request.Builder applyHeaders(IGClient client, Request.Builder req) {
+        super.applyHeaders(client, req);
         req.addHeader("X-Instagram-Rupload-Params", IGUtils.objectToJson(upload_params));
         req.addHeader("X_FB_VIDEO_WATERFALL_ID", IGUtils.randomUuid());
         req.addHeader("X-Entity-Type", "video/mp4");
@@ -53,7 +55,7 @@ public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public RequestBody getRequestBody() {
+    public RequestBody getRequestBody(IGClient client) {
         return RequestBody.create(videoData, MediaType.get("application/octet-stream"));
     }
 

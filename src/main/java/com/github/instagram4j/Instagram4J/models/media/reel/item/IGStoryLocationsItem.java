@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 public class IGStoryLocationsItem extends IGReelMetadataItem {
     @NonNull
     private String location_id;
-    
+
     @Override
     public String key() {
         return "story_locations";

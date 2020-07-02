@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class IGUsersInfoRequest extends IGGetRequest<IGUsersResponse> {
     private long userId;
-    
+
     @Override
     public String path() {
         return "users/" + userId + "/info/";

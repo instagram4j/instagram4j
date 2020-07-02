@@ -11,12 +11,12 @@ public class IGThreadAnimatedMedia extends IGBaseModel {
     private boolean is_random;
     private boolean is_sticker;
     private IGUser user;
-    
+
     @Data
     public static class IGThreadImages {
         private IGFixedHeight fixed_height;
     }
-    
+
     @Data
     public static class IGFixedHeight {
         private String height;

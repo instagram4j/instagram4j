@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class IGDirectInboxRequest extends IGGetRequest<IGDirectInboxResponse> {
     @NonNull
     private String cursor;
-    
+
     @Override
     public String path() {
         return "direct_v2/inbox/";

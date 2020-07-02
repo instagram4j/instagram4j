@@ -15,7 +15,7 @@ public class IGLoginException extends Exception {
         super(body.getMessage());
         this.response = body;
     }
-    
+
     public IGLoginException(Throwable t) {
         super(t.getMessage(), t);
     }

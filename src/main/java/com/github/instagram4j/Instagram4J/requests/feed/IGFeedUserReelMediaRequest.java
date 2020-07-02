@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class IGFeedUserReelMediaRequest extends IGGetRequest<IGResponse> {
     @NonNull
     private String pk;
-    
+
     @Override
     public String path() {
         return "feed/user/" + pk + "/reel_media/";

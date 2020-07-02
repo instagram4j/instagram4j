@@ -22,7 +22,7 @@ public class IGPayload {
     public Map<String, Object> getExtraProperties() {
         return $extra_properties;
     }
-    
+
     @JsonAnySetter
     public void addExtraProperty(String key, Object val) {
         $extra_properties.put(key, val);

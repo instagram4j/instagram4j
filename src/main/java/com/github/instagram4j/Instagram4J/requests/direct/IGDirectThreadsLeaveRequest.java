@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class IGDirectThreadsLeaveRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String _thread_id;
-    
+
     @Override
     protected IGPayload getPayload() {
         return new IGPayload();
@@ -26,5 +26,5 @@ public class IGDirectThreadsLeaveRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
 }

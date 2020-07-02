@@ -13,16 +13,17 @@ public class IGFeedUserRequest extends IGGetRequest<IGFeedUserResponse> {
     @NonNull
     private Long pk;
     private String max_id;
-    
+
     @Override
     public String path() {
         return "feed/user/" + pk + "/";
     }
-    
+
     @Override
     public String getQueryString() {
         return this.mapQueryString("max_id", max_id);
     }
+
     @Override
     public Class<IGFeedUserResponse> getResponseType() {
         return IGFeedUserResponse.class;

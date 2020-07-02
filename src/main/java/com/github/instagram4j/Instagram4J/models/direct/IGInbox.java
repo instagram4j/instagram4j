@@ -13,7 +13,7 @@ public class IGInbox {
     private IGCursor prev_cursor;
     private IGCursor next_cursor;
     private boolean blended_inbox_enabled;
-    
+
     @Data
     public static class IGCursor {
         private String cursor_timestamp_seconds;

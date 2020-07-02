@@ -25,12 +25,12 @@ public class IGStoryQuizItems extends IGReelMetadataItem {
     private String start_background_color = "#262626";
     @Builder.Default
     private String end_background_color = "#262626";
-    
+
     @Override
     public String key() {
         return "story_quizs";
     }
-    
+
     @Data
     @Builder
     public static class IGOption {

@@ -17,4 +17,3 @@ public class IGReelVideoMedia extends IGReelMedia {
     private IGImageVersions image_versions2;
     private List<IGVideoVersionsMeta> video_versions;
 }
- 

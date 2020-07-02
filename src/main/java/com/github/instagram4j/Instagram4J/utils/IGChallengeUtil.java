@@ -22,7 +22,7 @@ public class IGChallengeUtil {
 
     public static IGChallengeStateResponse requestState(IGClient client, IGChallenge challenge)
             throws IGResponseException {
-        return client.sendRequest(new IGChallengeStateGetRequest(challenge.getApi_path()));
+        return client.sendRequest(new IGChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId()));
     }
 
     public static IGChallengeStateResponse selectVerifyMethod(IGClient client, IGChallenge challenge, String method,

@@ -10,12 +10,12 @@ import lombok.Data;
 @Data
 public class IGMediaConfigureResponse extends IGResponse {
     private IGMedia media;
-    
+
     @Data
     public static class IGMediaConfigureTimelineResponse extends IGMediaConfigureResponse {
         private IGTimelineMedia media;
     }
-    
+
     @Data
     public static class IGMediaConfigureSidecarResponse extends IGMediaConfigureTimelineResponse {
         private String client_sidecar_id;
