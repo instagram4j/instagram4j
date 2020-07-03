@@ -1,4 +1,4 @@
-package com.github.instagram4j.Instagram4J.requests.media;
+package com.github.instagram4j.Instagram4J.requests.upload;
 
 import java.util.concurrent.ThreadLocalRandom;
 
