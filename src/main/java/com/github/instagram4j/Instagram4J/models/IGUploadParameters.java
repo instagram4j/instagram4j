@@ -52,4 +52,8 @@ public class IGUploadParameters {
     public static IGUploadParameters forDirectVoice(String upload_id) {
         return IGUploadParameters.builder().upload_id(upload_id).media_type("11").is_direct_voice("1").build();
     }
+    
+    public static IGUploadParameters forIgtv(String upload_id) {
+        return IGUploadParameters.builder().upload_id(upload_id).is_igtv_video("1").build();
+    }
 }

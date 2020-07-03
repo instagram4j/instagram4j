@@ -7,22 +7,30 @@ import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
-
+    
     @NonNull
     private IGPhase phase;
     @NonNull
     private IGUploadParameters upload_params;
-    private String stream_id, transfer_id, segment_offset;
+    private String stream_id;
+    private String transfer_id, segment_offset, total_entity_length;
     private byte[] body;
+    
+    public IGRuploadSegmentVideoPhaseRequest(IGPhase phase, IGUploadParameters param, String stream_id, String transfer_id) {
+        this(phase, param);
+        this.stream_id = stream_id;
+    }
 
     private final String uuid = IGUtils.randomUuid();
 
@@ -33,7 +41,7 @@ public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse>
 
     @Override
     public String path() {
-        return "rupload_igvideo/" + (phase == IGPhase.TRANSFER ? transfer_id : uuid);
+        return "rupload_igvideo/" + (phase != IGPhase.START ? transfer_id : uuid);
     }
 
     @Override
@@ -45,6 +53,7 @@ public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse>
     public Request.Builder applyHeaders(IGClient client, Request.Builder req) {
         super.applyHeaders(client, req);
         req.addHeader("X-Instagram-Rupload-Params", IGUtils.objectToJson(upload_params));
+        req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
         this.addHeadersBaseOnPhase(req);
         return req;
     }
@@ -74,10 +83,10 @@ public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse>
                     stream_id,
                     "2",
                     segment_offset,
-                    String.valueOf(body.length),
+                    total_entity_length,
                     transfer_id,
                     "video/mp4",
-                    "0");
+                    segment_offset);
             break;
         case END:
             phase.addToHeader(req, stream_id);

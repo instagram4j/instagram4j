@@ -22,7 +22,7 @@ public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 
     @Override
     public Request formRequest(IGClient client) {
-        Request.Builder req = new Request.Builder().url(IGConstants.BASE_API_URL + this.apiPath() + this.path());
+        Request.Builder req = new Request.Builder().url(IGConstants.BASE_API_URL + this.apiPath() + this.path() + this.getQueryString());
         this.applyHeaders(client, req);
         req.post(this.getRequestBody(client));
 
@@ -30,11 +30,11 @@ public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
     }
 
     protected RequestBody getRequestBody(IGClient client) {
-        String payload = IGUtils.objectToJson(client.setIGPayloadDefaults(getPayload()));
-        log.debug("Payload : {}", payload);
         if (getPayload() == null) {
             return RequestBody.create("", null);
         }
+        String payload = IGUtils.objectToJson(client.setIGPayloadDefaults(getPayload()));
+        log.debug("Payload : {}", payload);
         if (isSigned()) {
             return RequestBody.create(IGUtils.generateSignature(payload),
                     MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8"));
