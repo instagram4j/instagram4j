@@ -25,8 +25,7 @@ import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
@@ -40,10 +39,8 @@ import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 
+@Data
 @Slf4j
-@Getter
-@Setter
-@EqualsAndHashCode
 public class IGClient implements Serializable {
 
     private static final long serialVersionUID = -893265874837l;
