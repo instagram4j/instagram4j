@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToIgtvResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class IGMediaConfigureToIgtvRequest extends IGPostRequest<IGResponse> {
+public class IGMediaConfigureToIgtvRequest extends IGPostRequest<IGMediaConfigureToIgtvResponse> {
     @NonNull
     private String uploadId, _title, _caption;
     private boolean upload_to_feed;
@@ -29,8 +29,8 @@ public class IGMediaConfigureToIgtvRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGMediaConfigureToIgtvResponse> getResponseType() {
+        return IGMediaConfigureToIgtvResponse.class;
     }
 
     @Data

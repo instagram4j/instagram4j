@@ -3,6 +3,7 @@ package com.github.instagram4j.Instagram4J.responses.media;
 import com.github.instagram4j.Instagram4J.models.media.IGMedia;
 import com.github.instagram4j.Instagram4J.models.media.reel.IGReelMedia;
 import com.github.instagram4j.Instagram4J.models.media.timeline.IGTimelineMedia;
+import com.github.instagram4j.Instagram4J.models.media.timeline.IGTimelineVideoMedia;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
 import lombok.Data;
@@ -24,5 +25,10 @@ public class IGMediaConfigureResponse extends IGResponse {
     @Data
     public static class IGMediaConfigureToStoryResponse extends IGMediaConfigureResponse {
         private IGReelMedia media;
+    }
+    
+    @Data
+    public static class IGMediaConfigureToIgtvResponse extends IGMediaConfigureResponse {
+        private IGTimelineVideoMedia media;
     }
 }
