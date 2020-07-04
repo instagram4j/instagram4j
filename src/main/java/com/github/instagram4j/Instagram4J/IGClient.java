@@ -113,11 +113,13 @@ public class IGClient implements Serializable {
         }
 
         try (ResponseBody body = res.body()) {
-            return req.parseResponse(body.string(), view);
+            T t = req.parseResponse(body.string(), view);
+            if (t instanceof IGResponse) ((IGResponse) t).setStatusCode(res.code());
+            return t;
         } catch (JsonProcessingException exception) {
             throw new IGResponseException(res, "Json processing failed", exception);
-        } catch (NullPointerException | IOException exception) {
-            throw new IGResponseException(res, "Empty or malformed body received", exception);
+        } catch (IOException exception) {
+            throw new IGResponseException(res, "malformed body received", exception);
         }
     }
 

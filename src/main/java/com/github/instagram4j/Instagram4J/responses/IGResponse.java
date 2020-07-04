@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -14,6 +15,8 @@ public class IGResponse {
     @JsonAnySetter
     private Map<String, Object> $extra_properties = new HashMap<>();
     private String status;
+    @JsonIgnore
+    private int statusCode;
     private String message;
     private boolean spam;
     private boolean lock;

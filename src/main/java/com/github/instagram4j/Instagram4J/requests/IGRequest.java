@@ -60,8 +60,7 @@ public abstract class IGRequest<T extends IGResponse> {
 
     public <U> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
         U response = IGUtils.MAPPER.readValue(json, type);
-        // response.setClient(client);
-
+        
         return response;
     }
 
