@@ -13,12 +13,12 @@ public class IGIgtvBrowseFeedRequest extends IGGetRequest<IGIgtvBrowseFeedRespon
 
     @Override
     public String path() {
-        return String.format("igtv/%s/", _max_id != null ? "browse_feed" : "non_prefetch_browse_feed");
+        return "igtv/browse_feed/";
     }
     
     @Override
     public String getQueryString() {
-        return _max_id != null ? mapQueryString("max_id", _max_id) : mapQueryString("prefetch", "1");
+        return mapQueryString("max_id", _max_id);
     }
 
     @Override
