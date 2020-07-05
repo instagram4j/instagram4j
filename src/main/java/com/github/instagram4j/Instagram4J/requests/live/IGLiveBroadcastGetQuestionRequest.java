@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
+//TODO: Response and Test
 public class IGLiveBroadcastGetQuestionRequest extends IGGetRequest<IGResponse> {
     @NonNull
     private String broadcast_id;

@@ -2,14 +2,14 @@ package com.github.instagram4j.Instagram4J.requests.live;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.live.IGLiveBroadcastCommentResponse;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGLiveCommentRequest extends IGPostRequest<IGResponse> {
+public class IGLiveBroadcastCommentRequest extends IGPostRequest<IGLiveBroadcastCommentResponse> {
     @NonNull
     private String broadcast_id, _message;
     
@@ -24,8 +24,8 @@ public class IGLiveCommentRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGLiveBroadcastCommentResponse> getResponseType() {
+        return IGLiveBroadcastCommentResponse.class;
     }
     
     @Data

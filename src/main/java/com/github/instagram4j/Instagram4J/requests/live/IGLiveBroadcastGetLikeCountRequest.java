@@ -3,17 +3,26 @@ package com.github.instagram4j.Instagram4J.requests.live;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGLiveInfoRequest extends IGGetRequest<IGResponse> {
+@AllArgsConstructor
+//TODO: Response and Test
+public class IGLiveBroadcastGetLikeCountRequest extends IGGetRequest<IGResponse> {
     @NonNull
-    private String _broadcast_id;
+    private String broadcast_id;
+    private long like_ts = 0L;
     
     @Override
     public String path() {
-        return "live/" + _broadcast_id + "/info/";
+        return "live/" + broadcast_id + "/get_like_count/";
+    }
+    
+    @Override
+    public String getQueryString() {
+        return mapQueryString("like_ts", String.valueOf(like_ts));
     }
 
     @Override
