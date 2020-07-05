@@ -2,6 +2,7 @@ package com.github.instagram4j.Instagram4J.responses.feed;
 
 import java.util.List;
 
+import com.github.instagram4j.Instagram4J.models.live.IGBroadcast;
 import com.github.instagram4j.Instagram4J.models.media.reel.IGReelMedia;
 import com.github.instagram4j.Instagram4J.models.user.IGUser;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -15,5 +16,5 @@ public class IGFeedUserReelsMediaResponse extends IGResponse {
     private String seen;
     private List<IGReelMedia> items;
     private IGUser user;
-    private Object broadcast;
+    private IGBroadcast broadcast;
 }
