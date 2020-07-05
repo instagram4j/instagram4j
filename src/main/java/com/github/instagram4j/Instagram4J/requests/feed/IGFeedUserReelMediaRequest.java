@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IGFeedUserReelMediaRequest extends IGGetRequest<IGFeedUserReelsMediaResponse> {
     @NonNull
-    private String pk;
+    private Long pk;
 
     @Override
     public String path() {
-        return "feed/user/" + pk + "/reel_media/";
+        return "feed/user/" + pk.toString() + "/reel_media/";
     }
 
     @Override

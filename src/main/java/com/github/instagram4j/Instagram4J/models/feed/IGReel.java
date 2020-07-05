@@ -9,7 +9,7 @@ import com.github.instagram4j.Instagram4J.models.user.IGUser;
 import lombok.Data;
 
 @Data
-public class IGTray extends IGBaseModel {
+public class IGReel extends IGBaseModel {
     private long latest_reel_media;
     private long expiring_at;
     private int seen;
