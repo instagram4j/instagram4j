@@ -9,8 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-//TODO: Response and test
-public class IGLiveBroadcastWaveRequest extends IGPostRequest<IGResponse> {
+public class IGLiveWaveRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String broadcast_id, _viewer_id;
     

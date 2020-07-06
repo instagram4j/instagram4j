@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class IGLiveBroadcastGetCommentRequest extends IGGetRequest<IGLiveBroadcastGetCommentResponse> {
     @NonNull
     private String broadcast_id;
-    private Long last_ts;
+    private long last_ts;
 
     @Override
     public String path() {

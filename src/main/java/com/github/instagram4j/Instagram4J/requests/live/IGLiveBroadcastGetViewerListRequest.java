@@ -1,14 +1,13 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.live.IGLiveBroadcastGetViewerListResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-//TODO: Response and Test
-public class IGLiveBroadcastGetViewerListRequest extends IGGetRequest<IGResponse> {
+public class IGLiveBroadcastGetViewerListRequest extends IGGetRequest<IGLiveBroadcastGetViewerListResponse> {
     @NonNull
     private String broadcast_id;
 
@@ -18,8 +17,8 @@ public class IGLiveBroadcastGetViewerListRequest extends IGGetRequest<IGResponse
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGLiveBroadcastGetViewerListResponse> getResponseType() {
+        return IGLiveBroadcastGetViewerListResponse.class;
     }
 
 }

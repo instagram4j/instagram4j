@@ -4,26 +4,24 @@ import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGLiveBroadcastQuestionsRequest extends IGPostRequest<IGResponse> {
+public class IGLiveQuestionActivate extends IGPostRequest<IGResponse> {
     @NonNull
-    private String _broadcast_id, _text;
+    private String broadcast_id;
+    @NonNull
+    private String qid;
 
     @Override
     protected IGPayload getPayload() {
-        return new IGPayload() {
-            @Getter
-            private String text = _text;
-        };
+        return new IGPayload();
     }
 
     @Override
     public String path() {
-        return "live/" + _broadcast_id + "/questions/";
+        return String.format("live/%s/question/%s/activate/", broadcast_id, qid);
     }
 
     @Override

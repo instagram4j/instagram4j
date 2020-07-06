@@ -1,7 +1,7 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.live.IGLiveBroadcastLikeResponse.IGLiveBroadcastGetLikeCountResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-//TODO: Response and Test
-public class IGLiveBroadcastGetLikeCountRequest extends IGGetRequest<IGResponse> {
+public class IGLiveBroadcastGetLikeCountRequest extends IGGetRequest<IGLiveBroadcastGetLikeCountResponse> {
     @NonNull
     private String broadcast_id;
-    private long like_ts = 0L;
+    private long like_ts;
     
     @Override
     public String path() {
@@ -26,8 +25,8 @@ public class IGLiveBroadcastGetLikeCountRequest extends IGGetRequest<IGResponse>
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGLiveBroadcastGetLikeCountResponse> getResponseType() {
+        return IGLiveBroadcastGetLikeCountResponse.class;
     }
 
 }
