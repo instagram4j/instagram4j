@@ -1,9 +1,9 @@
 package com.github.instagram4j.Instagram4J.requests.direct;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.direct.IGDirectGetPresenceResponse;
 
-public class IGDirectGetPresenceRequest extends IGGetRequest<IGResponse> {
+public class IGDirectGetPresenceRequest extends IGGetRequest<IGDirectGetPresenceResponse> {
 
     @Override
     public String path() {
@@ -11,8 +11,8 @@ public class IGDirectGetPresenceRequest extends IGGetRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGDirectGetPresenceResponse> getResponseType() {
+        return IGDirectGetPresenceResponse.class;
     }
 
 }
