@@ -14,7 +14,7 @@ public class IGBaseModel {
     @JsonAnySetter
     private Map<String, Object> $extra_properties = new HashMap<>();
     private String id;
-    private long pk;
+    private Long pk;
 
     public Set<Entry<String, Object>> getExtraProperties() {
         return this.$extra_properties.entrySet();

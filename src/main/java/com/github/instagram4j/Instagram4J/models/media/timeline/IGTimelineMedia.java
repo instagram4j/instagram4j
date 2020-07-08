@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.github.instagram4j.Instagram4J.models.location.IGLocation;
 import com.github.instagram4j.Instagram4J.models.media.IGMedia;
 
 import lombok.Data;
@@ -20,4 +21,5 @@ public class IGTimelineMedia extends IGMedia {
     private boolean has_liked;
     private int like_count;
     private int comment_count;
+    private IGLocation location;
 }
