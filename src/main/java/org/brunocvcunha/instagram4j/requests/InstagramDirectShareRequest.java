@@ -74,6 +74,7 @@ public class InstagramDirectShareRequest extends InstagramRequest<StatusResult> 
 			break;
 		case LINK:
 			result = "direct_v2/threads/broadcast/link/";
+			break;	
 		default:
 			throw new IllegalArgumentException("Invalid shareType parameter value: " + shareType);
 		}
