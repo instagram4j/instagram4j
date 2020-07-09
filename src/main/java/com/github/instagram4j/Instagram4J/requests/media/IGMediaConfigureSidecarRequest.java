@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureSidecarResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureSidecarResponse;
 
 import lombok.Builder;
 import lombok.Data;

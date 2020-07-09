@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.media.reel.item.IGReelMetadataItem;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToStoryResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureToStoryResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.AllArgsConstructor;

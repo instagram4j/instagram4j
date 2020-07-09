@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureTimelineResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureTimelineResponse;
 
 import lombok.Data;
 import lombok.NonNull;

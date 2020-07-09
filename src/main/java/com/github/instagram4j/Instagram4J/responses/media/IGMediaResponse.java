@@ -9,11 +9,11 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class IGMediaConfigureResponse extends IGResponse {
+public class IGMediaResponse extends IGResponse {
     private IGMedia media;
 
     @Data
-    public static class IGMediaConfigureTimelineResponse extends IGMediaConfigureResponse {
+    public static class IGMediaConfigureTimelineResponse extends IGMediaResponse {
         private IGTimelineMedia media;
     }
 
@@ -23,12 +23,12 @@ public class IGMediaConfigureResponse extends IGResponse {
     }
 
     @Data
-    public static class IGMediaConfigureToStoryResponse extends IGMediaConfigureResponse {
+    public static class IGMediaConfigureToStoryResponse extends IGMediaResponse {
         private IGReelMedia media;
     }
     
     @Data
-    public static class IGMediaConfigureToIgtvResponse extends IGMediaConfigureResponse {
+    public static class IGMediaConfigureToIgtvResponse extends IGMediaResponse {
         private IGTimelineVideoMedia media;
     }
 }

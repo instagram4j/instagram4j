@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.media.IGMediaConfigureResponse.IGMediaConfigureToIgtvResponse;
+import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureToIgtvResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
