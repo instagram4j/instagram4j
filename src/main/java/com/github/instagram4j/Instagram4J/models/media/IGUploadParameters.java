@@ -1,4 +1,4 @@
-package com.github.instagram4j.Instagram4J.models;
+package com.github.instagram4j.Instagram4J.models.media;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
