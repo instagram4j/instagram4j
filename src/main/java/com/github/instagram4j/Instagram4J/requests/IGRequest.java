@@ -68,9 +68,9 @@ public abstract class IGRequest<T extends IGResponse> {
         req.addHeader("Connection", "close");
         req.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         req.addHeader("Accept-Language", "en-US");
-        req.addHeader("X-IG-Capabilities", IGConstants.DEVICE_CAPABILITIES);
+        req.addHeader("X-IG-Capabilities", client.getDevice().getCapabilities());
         req.addHeader("X-IG-App-ID", IGConstants.APP_ID);
-        req.addHeader("User-Agent", client.getUserAgent());
+        req.addHeader("User-Agent", client.getDevice().getUserAgent());
         req.addHeader("X-IG-Connection-Type", "WIFI");
         req.addHeader("X-Ads-Opt-Out", "0");
         req.addHeader("X-CM-Bandwidth-KBPS", "-1.000");

@@ -42,7 +42,6 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 @Data
 @Slf4j
 public class IGClient implements Serializable {
-
     private static final long serialVersionUID = -893265874837l;
     private final String $username;
     private final String $password;
@@ -55,11 +54,7 @@ public class IGClient implements Serializable {
     private boolean loggedIn = false;
     @Setter(AccessLevel.PRIVATE)
     private IGProfile selfProfile;
-    private IGDevice device = IGDevice.GOOD_DEVICES[0];
-    public transient String userAgent = String.format("Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s)",
-            IGConstants.APP_VERSION, device.getDEVICE_ANDROID_VERSION(), device.getDEVICE_ANDROID_RELEASE(), device.getDPI(),
-            device.getDISPLAY_RESOLUTION(), device.getDEVICE_MANUFACTURER(), device.getDEVICE_MODEL(),
-            device.getDEVICE(), device.getCPU(), IGConstants.LOCALE);
+    private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
 
     // logging
     private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
@@ -197,10 +192,6 @@ public class IGClient implements Serializable {
     private Object readResolve() throws ObjectStreamException {
         this.httpClient = new OkHttpClient.Builder()
                 .cookieJar(new JavaNetCookieJar(new CookieManager())).addInterceptor(loggingInterceptor).build();
-        this.userAgent = String.format("Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s)",
-                IGConstants.APP_VERSION, device.getDEVICE_ANDROID_VERSION(), device.getDEVICE_ANDROID_RELEASE(), device.getDPI(),
-                device.getDISPLAY_RESOLUTION(), device.getDEVICE_MANUFACTURER(), device.getDEVICE_MODEL(),
-                device.getDEVICE(), device.getCPU(), IGConstants.LOCALE);
 
         return this;
     }
