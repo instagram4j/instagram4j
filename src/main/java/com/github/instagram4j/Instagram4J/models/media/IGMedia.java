@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class IGMedia extends IGBaseModel {
+    private long pk;
+    private String id;
     private long taken_at;
     private long device_timestamp;
     private String media_type;

@@ -2,25 +2,29 @@ package com.github.instagram4j.Instagram4J.models;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-
-@Data
 public class IGBaseModel {
     @JsonAnySetter
     private Map<String, Object> $extra_properties = new HashMap<>();
-    private String id;
-    private Long pk;
+    
 
-    public Set<Entry<String, Object>> getExtraProperties() {
-        return this.$extra_properties.entrySet();
+    @JsonAnyGetter
+    public Map<String, Object> getExtraProperties() {
+        return this.$extra_properties;
     }
-
-    public Object getExtraProperty(String key) {
+    
+    @JsonIgnore
+    public Object get(String key) {
         return $extra_properties.get(key);
+    }
+    
+    public IGBaseModel put(String key, Object val) {
+        this.$extra_properties.put(key, val);
+        
+        return this;
     }
 }

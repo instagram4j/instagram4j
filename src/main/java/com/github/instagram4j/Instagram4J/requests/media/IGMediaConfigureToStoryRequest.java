@@ -62,7 +62,7 @@ public class IGMediaConfigureToStoryRequest extends IGPostRequest<IGMediaConfigu
         });
 
         map.entrySet()
-                .forEach(entry -> payload.addExtraProperty(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
+                .forEach(entry -> payload.put(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
     }
 
     @Data

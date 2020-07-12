@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Data
 public class IGChannel extends IGBaseModel {
+    private String id;
     private List<IGTimelineVideoMedia> items;
     private boolean more_available;
     private String title;

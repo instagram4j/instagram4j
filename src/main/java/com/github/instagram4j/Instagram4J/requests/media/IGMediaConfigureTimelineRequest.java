@@ -1,44 +1,34 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
+import com.github.instagram4j.Instagram4J.models.location.IGLocation;
+import com.github.instagram4j.Instagram4J.models.media.IGUserTag;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureTimelineResponse;
+import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
+@RequiredArgsConstructor
 public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfigureTimelineResponse> {
     @NonNull
-    private String uploadId, _caption;
-    private Double imageWidth, imageHeight;
-    @Setter
-    private Long _length;
-
-    public IGMediaConfigureTimelineRequest(String uploadId, String caption, double width, double height) {
-        this.uploadId = uploadId;
-        this._caption = caption;
-        this.imageWidth = width;
-        this.imageHeight = height;
-    }
-
-    public IGMediaConfigureTimelineRequest(String uploadId, String caption, long length) {
-        this.uploadId = uploadId;
-        this._caption = caption;
-        this._length = length;
-    }
+    private IGMediaConfigurePayload payload;
 
     @Override
     protected IGPayload getPayload() {
-        return _length == null ? new ImagePayload() : new VideoPayload();
+        return payload;
     }
 
     @Override
     public String path() {
-        return "media/configure/" + (_length != null ? "?video=1" : "");
+        return "media/configure/";
     }
 
     @Override
@@ -47,36 +37,42 @@ public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfig
     }
 
     @Data
-    protected class ImagePayload extends MediaConfigurePayload {
-        private EditsMap edits = new EditsMap(Arrays.asList(imageWidth, imageHeight));
-    }
-
-    @Data
-    protected class VideoPayload extends MediaConfigurePayload {
-        private List<Clip> clips = Arrays.asList(new Clip(_length.toString()));
-        private final double length = _length;
-        private final int poster_frame_index = 0;
-        private final boolean audio_muted = false;
-    }
-
-    @Data
-    protected class MediaConfigurePayload extends IGPayload {
-        private String upload_id = uploadId;
-        private String caption = _caption;
-        private String source_type = "4";
-    }
-
-    @Data
-    public static class Clip {
-        private final String length;
-        private final String source_Type = "4";
-    }
-
-    @Data
-    public static class EditsMap {
-        private final List<Double> crop_original_size;
-        private final List<Double> crop_center = Arrays.asList(0d, 0d);
-        private final double crop_zoom = 1d;
+    @Accessors(fluent = true)
+    @JsonInclude(Include.NON_NULL)
+    public static class IGMediaConfigurePayload extends IGPayload {
+        @NonNull
+        public final String upload_id;
+        @NonNull
+        public final String caption;
+        public String disable_comments;
+        public String location;
+        public String usertags;
+        
+        public IGMediaConfigurePayload location(IGLocation loc) {
+            IGLocation payloadLoc = new IGLocation();
+            
+            payloadLoc.setExternal_id(loc.getExternal_id());
+            payloadLoc.setName(loc.getName());
+            payloadLoc.setAddress(loc.getAddress());
+            payloadLoc.setLat(loc.getLat());
+            payloadLoc.setLng(loc.getLng());
+            payloadLoc.setExternal_source(loc.getExternal_source());
+            payloadLoc.put(payloadLoc.getExternal_source() + "_id", payloadLoc.getExternal_id());
+            this.location = IGUtils.objectToJson(payloadLoc);
+            this.put("geotag_enabled", "1");
+            this.put("posting_latitude", payloadLoc.getLat().toString());
+            this.put("posting_longitude", payloadLoc.getLng().toString());
+            this.put("media_latitude", payloadLoc.getLat().toString());
+            this.put("media_longitude", payloadLoc.getLng().toString());
+            
+            return this;
+        }
+        
+        public IGMediaConfigurePayload usertags(IGUserTag... tags) {
+            this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
+            
+            return this;
+        }
     }
 
 }

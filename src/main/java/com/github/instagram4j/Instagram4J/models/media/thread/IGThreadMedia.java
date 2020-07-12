@@ -13,6 +13,8 @@ import lombok.Data;
         @JsonSubTypes.Type(value = IGThreadVideoMedia.class)
 })
 public class IGThreadMedia extends IGBaseModel {
+    private long pk;
+    private String id;
     private String media_type;
     private int original_width;
     private int original_height;

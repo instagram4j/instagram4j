@@ -10,6 +10,8 @@ import lombok.Data;
 
 @Data
 public class IGReel extends IGBaseModel {
+    private long pk;
+    private String id;
     private long latest_reel_media;
     private long expiring_at;
     private int seen;

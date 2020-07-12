@@ -9,7 +9,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-//TODO: test
 public class IGAccountsSetBiographyRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String bio;

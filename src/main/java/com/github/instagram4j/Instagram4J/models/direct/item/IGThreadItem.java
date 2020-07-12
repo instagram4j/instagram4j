@@ -20,7 +20,6 @@ import lombok.Data;
 })
 public class IGThreadItem extends IGBaseModel {
     private String item_id;
-    private String id = item_id;
     private long user_id;
     private long timestamp;
     private String item_type;

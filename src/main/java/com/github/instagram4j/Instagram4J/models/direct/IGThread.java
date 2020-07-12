@@ -12,7 +12,6 @@ import lombok.Data;
 public class IGThread extends IGBaseModel {
     private String thread_id;
     private String thread_v2_id;
-    private String id = thread_id;
     private List<IGProfile> users;
     private List<IGProfile> left_users;
     private List<String> admin_user_ids;

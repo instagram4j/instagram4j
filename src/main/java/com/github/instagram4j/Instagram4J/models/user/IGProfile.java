@@ -21,9 +21,4 @@ public class IGProfile extends IGBaseModel implements Serializable {
     private String profile_pic_id;
     private boolean is_verified;
     private boolean has_anonymous_profile_picture;
-    
-    @Override
-    public String getId() {
-        return pk.toString();
-    }
 }

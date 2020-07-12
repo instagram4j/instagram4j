@@ -52,9 +52,5 @@ public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGMediaConfigu
     @JsonInclude(Include.NON_NULL)
     public static class AlbumChildrenMetadata {
         private String upload_id;
-        private double height;
-        private double width;
-        @Builder.Default
-        private Long length = null;
     }
 }

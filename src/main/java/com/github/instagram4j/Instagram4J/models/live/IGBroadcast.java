@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class IGBroadcast extends IGBaseModel {
+    private String id;
     private String dash_playback_url;
     private String dash_abr_playback_url;
     private String dash_live_predictive_playback_url;

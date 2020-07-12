@@ -1,6 +1,5 @@
 package com.github.instagram4j.Instagram4J.models.media.timeline;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.user.IGUser;
 
@@ -8,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class IGComment extends IGBaseModel {
+    private String pk;
     private long user_id;
     private String text;
     private int type;
@@ -24,7 +24,6 @@ public class IGComment extends IGBaseModel {
 
     @Data
     public static class IGCaption extends IGComment {
-        @JsonProperty("pk")
-        private String caption_pk;
+        
     }
 }
