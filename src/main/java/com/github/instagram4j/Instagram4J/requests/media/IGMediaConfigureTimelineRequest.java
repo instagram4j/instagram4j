@@ -2,6 +2,8 @@ package com.github.instagram4j.Instagram4J.requests.media;
 
 import java.util.Collections;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
@@ -38,15 +40,16 @@ public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfig
 
     @Data
     @Accessors(fluent = true)
+    @JsonAutoDetect(fieldVisibility = Visibility.ANY)
     @JsonInclude(Include.NON_NULL)
     public static class IGMediaConfigurePayload extends IGPayload {
         @NonNull
-        public final String upload_id;
+        private final String upload_id;
         @NonNull
-        public final String caption;
-        public String disable_comments;
-        public String location;
-        public String usertags;
+        private final String caption;
+        private String disable_comments;
+        private String location;
+        private String usertags;
         
         public IGMediaConfigurePayload location(IGLocation loc) {
             IGLocation payloadLoc = new IGLocation();
@@ -73,6 +76,11 @@ public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfig
             
             return this;
         }
+        
+        public String usertags() {
+            return this.usertags;
+        }
+        
     }
 
 }
