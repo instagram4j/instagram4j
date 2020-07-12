@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.location.IGLocation;
-import com.github.instagram4j.Instagram4J.models.media.IGUserTag;
+import com.github.instagram4j.Instagram4J.models.media.IGUserTags.IGUserTagPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureTimelineResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
@@ -71,7 +71,7 @@ public class IGMediaConfigureTimelineRequest extends IGPostRequest<IGMediaConfig
             return this;
         }
         
-        public IGMediaConfigurePayload usertags(IGUserTag... tags) {
+        public IGMediaConfigurePayload usertags(IGUserTagPayload... tags) {
             this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
             
             return this;

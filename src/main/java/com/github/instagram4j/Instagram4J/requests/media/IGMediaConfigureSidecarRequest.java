@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.location.IGLocation;
-import com.github.instagram4j.Instagram4J.models.media.IGUserTag;
+import com.github.instagram4j.Instagram4J.models.media.IGUserTags.IGUserTagPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse.IGMediaConfigureSidecarResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
@@ -85,7 +85,7 @@ public class IGMediaConfigureSidecarRequest extends IGPostRequest<IGMediaConfigu
         private String location;
         private String usertags;
         
-        public AlbumChildrenMetadata usertags(IGUserTag... tags) {
+        public AlbumChildrenMetadata usertags(IGUserTagPayload... tags) {
             this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
             
             return this;

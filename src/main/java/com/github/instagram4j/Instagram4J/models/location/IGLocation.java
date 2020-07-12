@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @JsonInclude(Include.NON_NULL)
 public class IGLocation extends IGBaseModel {
-    @JsonAlias("pk")
+    private Long pk;
     private String external_id;
     private String name;
     private String external_source;
