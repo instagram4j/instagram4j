@@ -118,7 +118,7 @@ public class IGClient implements Serializable {
         }
     }
 
-    private void setLoggedInState(IGLoginResponse state) throws IGLoginException {
+    public void setLoggedInState(IGLoginResponse state) throws IGLoginException {
         if (!state.getStatus().equals("ok"))
             throw new IGLoginException(this, state);
         this.loggedIn = true;
