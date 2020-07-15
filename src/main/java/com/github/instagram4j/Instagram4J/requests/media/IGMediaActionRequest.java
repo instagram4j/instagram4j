@@ -9,26 +9,32 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGMediaUnsaveRequest extends IGPostRequest<IGResponse> {
+public class IGMediaActionRequest extends IGPostRequest<IGResponse> {
     @NonNull
-    private String id;
+    private String _media_id;
+    @NonNull
+    private IGMediaAction action;
 
     @Override
     protected IGPayload getPayload() {
         return new IGPayload() {
             @Getter
-            private String media_id = id;
+            private String media_id = _media_id;
         };
     }
 
     @Override
     public String path() {
-        return "media/" + id + "/unsave/";
+        return String.format("media/%s/%s/", _media_id, action.name().toLowerCase());
     }
 
     @Override
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
+    }
+
+    public static enum IGMediaAction {
+        SAVE, UNSAVE, ONLY_ME, UNDO_ONLY_ME, DELETE;
     }
 
 }

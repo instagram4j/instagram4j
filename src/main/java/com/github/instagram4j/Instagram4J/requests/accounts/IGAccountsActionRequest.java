@@ -8,7 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGAccountsRequest extends IGPostRequest<IGAccountsUserResponse> {
+public class IGAccountsActionRequest extends IGPostRequest<IGAccountsUserResponse> {
     @NonNull
     private IGAccountsAction action;
 
