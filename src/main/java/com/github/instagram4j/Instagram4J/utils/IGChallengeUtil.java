@@ -103,7 +103,8 @@ public class IGChallengeUtil {
 
             try {
                 response = client.sendLoginRequest(code, response.getTwo_factor_info().getTwo_factor_identifier());
-            } catch (IGLoginException | IGResponseException e) {
+            } catch (IGLoginException e) {
+                response = e.getLoginResponse();
                 log.info(e.getMessage());
             }
         } while (!response.getStatus().equals("ok") && --retries > 0);
