@@ -120,7 +120,7 @@ public class IGClient implements Serializable {
 
     private void setLoggedInState(IGLoginResponse state) throws IGLoginException {
         if (!state.getStatus().equals("ok"))
-            throw new IGLoginException(state);
+            throw new IGLoginException(this, state);
         this.loggedIn = true;
         this.selfProfile = state.getLogged_in_user();
     }
@@ -231,12 +231,12 @@ public class IGClient implements Serializable {
             } catch (IGResponseException exception) {
                 throw new IGLoginException(exception);
             } catch (IGLoginException ex) {
-                IGLoginResponse response = ex.getResponse();
+                IGLoginResponse response = ex.getLoginResponse();
 
-                if (ex.getResponse().getTwo_factor_info() != null && onTwoFactor != null) {
-                    response = onTwoFactor.accept(client, ex.getResponse());
-                } else if (ex.getResponse().getChallenge() != null && onChallenge != null) {
-                    response = onChallenge.accept(client, ex.getResponse());
+                if (ex.getLoginResponse().getTwo_factor_info() != null && onTwoFactor != null) {
+                    response = onTwoFactor.accept(client, ex.getLoginResponse());
+                } else if (ex.getLoginResponse().getChallenge() != null && onChallenge != null) {
+                    response = onChallenge.accept(client, ex.getLoginResponse());
                 }
 
                 client.setLoggedInState(response); // will throw if response is not ok

@@ -14,6 +14,7 @@ import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.responses.challenge.IGChallenge;
 import com.github.instagram4j.Instagram4J.responses.challenge.IGChallengeStateResponse;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +23,8 @@ public class IGChallengeUtil {
 
     public static IGChallengeStateResponse requestState(IGClient client, IGChallenge challenge)
             throws IGResponseException {
-        return client.sendRequest(new IGChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId()));
+        return client.sendRequest(
+                new IGChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId()));
     }
 
     public static IGChallengeStateResponse selectVerifyMethod(IGClient client, IGChallenge challenge, String method,
@@ -41,7 +43,7 @@ public class IGChallengeUtil {
     }
 
     @SneakyThrows
-    public static IGLoginResponse resolve(IGClient client, IGChallenge challenge, Callable<String> inputCode)
+    public static IGLoginResponse resolve(@NonNull IGClient client, @NonNull IGChallenge challenge, @NonNull Callable<String> inputCode, int retries)
             throws IGLoginException, IGChallengeException {
         IGChallengeStateResponse stateResponse = requestState(client, challenge);
         String name = stateResponse.getStep_name();
@@ -59,13 +61,23 @@ public class IGChallengeUtil {
         }
 
         IGLoginResponse loginResponse = sendSecurityCode(client, challenge, inputCode.call());
-        if (loginResponse.getStatus().equalsIgnoreCase("ok")) {
-            log.info("challenge success");
-        } else {
+        while (!loginResponse.getStatus().equalsIgnoreCase("ok") && retries-- > 0) {
             log.info("Wrong security code");
-            throw new IGLoginException(loginResponse);
+            loginResponse = sendSecurityCode(client, challenge, inputCode.call());
         }
 
         return loginResponse;
+    }
+
+    @SneakyThrows
+    public static IGLoginResponse resolve(IGLoginException ex, Callable<String> inputCode)
+            throws IGLoginException, IGChallengeException {
+        return resolve(ex.getClient(), ex.getLoginResponse().getChallenge(), inputCode, 3);
+    }
+    
+    @SneakyThrows
+    public static IGLoginResponse resolve(IGLoginException ex, Callable<String> inputCode, int retries)
+            throws IGLoginException, IGChallengeException {
+        return resolve(ex.getClient(), ex.getLoginResponse().getChallenge(), inputCode, retries);
     }
 }

@@ -13,9 +13,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class IGDirectThreadsBroadcastRequest extends IGPostRequest<IGResponse> {
-
     @NonNull
-    private IGBroadcastPayload payload;
+    private final IGBroadcastPayload payload;
 
     @Override
     protected IGPayload getPayload() {
