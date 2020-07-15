@@ -5,12 +5,12 @@ import java.util.stream.Stream;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipsShowManyResponse;
 
 import lombok.Getter;
 import lombok.NonNull;
 
-public class IGFriendshipsShowManyRequest extends IGPostRequest<IGResponse> {
+public class IGFriendshipsShowManyRequest extends IGPostRequest<IGFriendshipsShowManyResponse> {
     @NonNull
     private String _user_ids;
     
@@ -32,7 +32,7 @@ public class IGFriendshipsShowManyRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGFriendshipsShowManyResponse> getResponseType() {
+        return IGFriendshipsShowManyResponse.class;
     }
 }

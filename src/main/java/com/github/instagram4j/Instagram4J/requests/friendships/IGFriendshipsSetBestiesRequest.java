@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipStatusResponse;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGFriendshipsSetBestiesRequest extends IGPostRequest<IGResponse> {
+public class IGFriendshipsSetBestiesRequest extends IGPostRequest<IGFriendshipStatusResponse> {
     private final Long[] _add, _remove;
     
     public IGFriendshipsSetBestiesRequest(boolean add, Long... pks) {
@@ -29,8 +29,8 @@ public class IGFriendshipsSetBestiesRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGFriendshipStatusResponse> getResponseType() {
+        return IGFriendshipStatusResponse.class;
     }
     
     @Data

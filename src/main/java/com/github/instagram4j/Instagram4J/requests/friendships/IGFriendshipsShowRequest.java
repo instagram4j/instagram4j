@@ -1,13 +1,13 @@
 package com.github.instagram4j.Instagram4J.requests.friendships;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipsShowResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGFriendshipsShowRequest extends IGGetRequest<IGResponse> {
+public class IGFriendshipsShowRequest extends IGGetRequest<IGFriendshipsShowResponse> {
     @NonNull
     private Long pk;
 
@@ -17,8 +17,8 @@ public class IGFriendshipsShowRequest extends IGGetRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGFriendshipsShowResponse> getResponseType() {
+        return IGFriendshipsShowResponse.class;
     }
 
 }

@@ -2,14 +2,14 @@ package com.github.instagram4j.Instagram4J.requests.friendships;
 
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipStatusResponse;
 
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGFriendshipsActionRequest extends IGPostRequest<IGResponse> {
+public class IGFriendshipsActionRequest extends IGPostRequest<IGFriendshipStatusResponse> {
     @NonNull
     private Long _pk;
     @NonNull
@@ -29,11 +29,11 @@ public class IGFriendshipsActionRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<IGFriendshipStatusResponse> getResponseType() {
+        return IGFriendshipStatusResponse.class;
     }
 
     public static enum IGFriendshipsAction {
-        BLOCK, UNBLOCK, CREATE, APPROVE, IGNORE, DESTROY, REMOVE_FOLLOWER;
+        BLOCK, UNBLOCK, CREATE, DESTROY, APPROVE, IGNORE, REMOVE_FOLLOWER;
     }
 }
