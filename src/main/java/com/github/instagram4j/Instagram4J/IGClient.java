@@ -234,9 +234,10 @@ public class IGClient implements Serializable {
                 IGLoginResponse response = ex.getLoginResponse();
 
                 if (ex.getLoginResponse().getTwo_factor_info() != null && onTwoFactor != null) {
-                    response = onTwoFactor.accept(client, ex.getLoginResponse());
-                } else if (ex.getLoginResponse().getChallenge() != null && onChallenge != null) {
-                    response = onChallenge.accept(client, ex.getLoginResponse());
+                    response = onTwoFactor.accept(client, response);
+                } 
+                if (ex.getLoginResponse().getChallenge() != null && onChallenge != null) {
+                    response = onChallenge.accept(client, response);
                 }
 
                 client.setLoggedInState(response); // will throw if response is not ok
@@ -249,7 +250,7 @@ public class IGClient implements Serializable {
         @FunctionalInterface
         public static interface LoginHandler {
             public IGLoginResponse accept(IGClient client, IGLoginResponse t)
-                    throws IGLoginException, IGChallengeException;
+                    throws IGChallengeException;
         }
     }
 }
