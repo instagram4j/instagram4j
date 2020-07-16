@@ -17,6 +17,11 @@ public class IGDirectInboxRequest extends IGGetRequest<IGDirectInboxResponse> {
     public String path() {
         return "direct_v2/inbox/";
     }
+    
+    @Override
+    public String getQueryString() {
+        return mapQueryString("cursor", cursor);
+    }
 
     @Override
     public Class<IGDirectInboxResponse> getResponseType() {
