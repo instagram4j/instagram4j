@@ -8,9 +8,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGDirectThreadsLeaveRequest extends IGPostRequest<IGResponse> {
+public class IGDirectThreadsActionRequest extends IGPostRequest<IGResponse> {
     @NonNull
-    private String _thread_id;
+    private String thread_id;
+    @NonNull
+    private IGDirectThreadsAction action;
 
     @Override
     protected IGPayload getPayload() {
@@ -19,12 +21,16 @@ public class IGDirectThreadsLeaveRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public String path() {
-        return "direct_v2/threads/" + this._thread_id + "/leave/";
+        return String.format("direct_v2/threads/%s/%s/", thread_id, action.name().toLowerCase());
     }
 
     @Override
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
+    }
+
+    public static enum IGDirectThreadsAction {
+        HIDE, MUTE, UNMUTE, LEAVE;
     }
 
 }

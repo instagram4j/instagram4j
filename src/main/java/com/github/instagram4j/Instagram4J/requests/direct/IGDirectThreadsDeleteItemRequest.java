@@ -8,7 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class IGDirectThreadsDeleteRequest extends IGPostRequest<IGResponse> {
+public class IGDirectThreadsDeleteItemRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String _thread_id;
     @NonNull
@@ -21,7 +21,7 @@ public class IGDirectThreadsDeleteRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public String path() {
-        return String.format("direct_v2/threads/%s/items/%s/seen/", _thread_id, _item_id);
+        return String.format("direct_v2/threads/%s/items/%s/delete/", _thread_id, _item_id);
     }
 
     @Override
