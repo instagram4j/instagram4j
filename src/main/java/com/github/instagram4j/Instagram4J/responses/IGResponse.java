@@ -1,19 +1,12 @@
 package com.github.instagram4j.Instagram4J.responses;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.instagram4j.Instagram4J.models.IGBaseModel;
 
 import lombok.Data;
 
 @Data
-public class IGResponse {
-    @JsonAnySetter
-    private Map<String, Object> $extra_properties = new HashMap<>();
+public class IGResponse extends IGBaseModel {
     private String status;
     @JsonIgnore
     private int statusCode;
@@ -24,12 +17,4 @@ public class IGResponse {
     private String feedback_message;
     private String error_type;
     private String checkpoint_url;
-
-    public Set<Entry<String, Object>> getExtraProperties() {
-        return $extra_properties.entrySet();
-    }
-
-    public Object getExtraProperty(String key) {
-        return $extra_properties.get(key);
-    }
 }
