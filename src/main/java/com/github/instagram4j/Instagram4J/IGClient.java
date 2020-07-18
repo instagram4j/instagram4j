@@ -19,6 +19,7 @@ import com.github.instagram4j.Instagram4J.models.user.IGProfile;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGTwoFactorLoginRequest;
+import com.github.instagram4j.Instagram4J.requests.qe.IGQeSyncRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
@@ -45,6 +46,7 @@ public class IGClient implements Serializable {
     private static final long serialVersionUID = -893265874837l;
     private final String $username;
     private final String $password;
+    private transient String encryptionId, encryptionKey;
     @JsonIgnore
     private transient OkHttpClient httpClient;
     private String deviceId;
@@ -73,10 +75,25 @@ public class IGClient implements Serializable {
         this(username, password);
         this.httpClient = client;
     }
+    
+    public void sendSyncGetRequest() throws IGResponseException {
+        try {
+            Response response = httpClient.newCall(new IGQeSyncRequest().formRequest(this)).execute();
+            this.encryptionId = response.header("ig-set-password-encryption-key-id");
+            this.encryptionKey = response.header("ig-set-password-encryption-pub-key");
+        } catch (IOException ex) {
+            throw new IGResponseException(null, ex.getMessage(), ex);
+        }
+    }
 
     public IGLoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
+        if (this.encryptionId == null || this.encryptionKey == null) {
+            log.debug("Sending sync request. . .");
+            this.sendSyncGetRequest();
+        }
+        String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
-        IGLoginRequest login = new IGLoginRequest($username, $password);
+        IGLoginRequest login = new IGLoginRequest($username, encryptedPassword);
         IGLoginResponse res = this.sendRequest(login);
         log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
@@ -86,6 +103,10 @@ public class IGClient implements Serializable {
 
     public IGLoginResponse sendLoginRequest(String code, String identifier)
             throws IGLoginException, IGResponseException {
+        if (this.encryptionId == null || this.encryptionKey == null) {
+            log.debug("Sending sync request. . .");
+            this.sendSyncGetRequest();
+        }
         log.debug("Logging in. . .");
         IGTwoFactorLoginRequest login = new IGTwoFactorLoginRequest($username, $password, code, identifier);
         IGLoginResponse res = this.sendRequest(login);
@@ -132,6 +153,13 @@ public class IGClient implements Serializable {
     public IGPayload setIGPayloadDefaults(IGPayload load) {
         load.set_csrftoken(this.getCsrfToken());
         load.setDevice_id(this.deviceId);
+        if (selfProfile != null) {
+            load.setId(selfProfile.getPk().toString());
+            load.set_uid(selfProfile.getPk().toString());
+            load.set_uuid(this.guid);
+        } else {
+            load.setId(this.guid);
+        }
         load.setGuid(this.guid);
         load.setPhone_id(this.phoneId);
 

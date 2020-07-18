@@ -8,13 +8,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class IGProfile extends IGBaseModel implements Serializable {
     private static final long serialVersionUID = -892648357983l;
+    @EqualsAndHashCode.Include
     private Long pk;
-    @EqualsAndHashCode.Include
     private String username;
-    @EqualsAndHashCode.Include
     private String full_name;
     private boolean is_private;
     private String profile_pic_url;

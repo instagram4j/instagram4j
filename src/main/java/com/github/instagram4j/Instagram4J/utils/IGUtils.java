@@ -1,16 +1,27 @@
 package com.github.instagram4j.Instagram4J.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.crypto.Cipher;
 import javax.crypto.Mac;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -135,10 +146,8 @@ public class IGUtils {
     @SneakyThrows
     public static String generateSignature(String payload) {
         String parsedData = URLEncoder.encode(payload, "UTF-8");
-
-        String signedBody = "SIGNATURE";
-
-        return "ig_sig_key_version=" + IGConstants.API_KEY_VERSION + "&signed_body=" + signedBody + '.' + parsedData;
+        
+        return "signed_body=SIGNATURE." + parsedData;
 
     }
 
@@ -175,13 +184,45 @@ public class IGUtils {
     public static long fromCode(String code) throws IllegalArgumentException {
         if (code == null || code.matches("/[^A-Za-z0-9\\-_]/"))
             throw new IllegalArgumentException("Input must be a valid Instagram shortcode.");
-
         String base2 = "";
         for (char c : code.toCharArray()) {
             int base64 = BASE64URL_CHARMAP.indexOf(c);
             base2 += String.format("%6s", Integer.toBinaryString(base64)).replace(' ', '0');
         }
         return Long.parseLong(base2, 2);
+    }
+    
+    @SneakyThrows
+    public static String encryptPassword(String password, String enc_id, String enc_pub_key) {
+        byte[] rand_key = new byte[32], iv = new byte[12];
+        SecureRandom sran = new SecureRandom();
+        sran.nextBytes(rand_key);
+        sran.nextBytes(iv);
+        String time = String.valueOf(System.currentTimeMillis() / 1000);
+        
+        // Encrypt random key
+        String decoded_pub_key = new String(Base64.decodeBase64(enc_pub_key), StandardCharsets.UTF_8).replace("-----BEGIN PUBLIC KEY-----", "").replace("\n-----END PUBLIC KEY-----", "");
+        Cipher rsa_cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+        rsa_cipher.init(Cipher.ENCRYPT_MODE, KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.decodeBase64(decoded_pub_key))));
+        byte[] rand_key_encrypted = rsa_cipher.doFinal(rand_key);
+        
+        // Encrypt password
+        Cipher aes_gcm_cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        aes_gcm_cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(rand_key, "AES"), new GCMParameterSpec(128, iv));
+        aes_gcm_cipher.updateAAD(time.getBytes());
+        byte[] password_encrypted = aes_gcm_cipher.doFinal(password.getBytes());
+                
+        // Write to final byte array
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        out.write(Integer.valueOf(1).byteValue());
+        out.write(Integer.valueOf(enc_id).byteValue());
+        out.write(iv);
+        out.write(ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putChar((char) rand_key_encrypted.length).array());
+        out.write(rand_key_encrypted);
+        out.write(Arrays.copyOfRange(password_encrypted, password_encrypted.length - 16, password_encrypted.length));
+        out.write(Arrays.copyOfRange(password_encrypted, 0, password_encrypted.length - 16));
+        
+        return String.format("#PWD_INSTAGRAM:%s:%s:%s", "4", time, Base64.encodeBase64String(out.toByteArray()));
     }
 
     public static String randomUuid() {

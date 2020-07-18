@@ -35,7 +35,7 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
         @NonNull
         private String username;
         @NonNull
-        private String password;
+        private String enc_password;
         private int login_attempt_account = 0;
     }
 
