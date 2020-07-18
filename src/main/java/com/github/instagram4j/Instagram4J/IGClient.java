@@ -107,8 +107,9 @@ public class IGClient implements Serializable {
             log.debug("Sending sync request. . .");
             this.sendSyncGetRequest();
         }
+        String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
-        IGTwoFactorLoginRequest login = new IGTwoFactorLoginRequest($username, $password, code, identifier);
+        IGTwoFactorLoginRequest login = new IGTwoFactorLoginRequest($username, encryptedPassword, code, identifier);
         IGLoginResponse res = this.sendRequest(login);
         log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
