@@ -33,7 +33,7 @@ public class IGRuploadPhotoRequest extends IGPostRequest<IGRuploadPhotoResponse>
     }
 
     @Override
-    public IGPayload getPayload() {
+    public IGPayload getPayload(IGClient client) {
         return null;
     }
 

@@ -13,7 +13,7 @@ import okhttp3.RequestBody;
 @Slf4j
 public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
 
-    protected abstract IGPayload getPayload();
+    protected abstract IGPayload getPayload(IGClient client);
 
     protected boolean isSigned() {
         return true;
@@ -29,10 +29,10 @@ public abstract class IGPostRequest<T extends IGResponse> extends IGRequest<T> {
     }
 
     protected RequestBody getRequestBody(IGClient client) {
-        if (getPayload() == null) {
+        if (getPayload(client) == null) {
             return RequestBody.create("", null);
         }
-        String payload = IGUtils.objectToJson(client.setIGPayloadDefaults(getPayload()));
+        String payload = IGUtils.objectToJson(client.setIGPayloadDefaults(getPayload(client)));
         log.debug("Payload : {}", payload);
         if (isSigned()) {
             return RequestBody.create(IGUtils.generateSignature(payload),

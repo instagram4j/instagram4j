@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.friendships;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipStatusResponse;
@@ -16,7 +17,7 @@ public class IGFriendshipsActionRequest extends IGPostRequest<IGFriendshipStatus
     private IGFriendshipsAction action;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private long user_id = _pk;

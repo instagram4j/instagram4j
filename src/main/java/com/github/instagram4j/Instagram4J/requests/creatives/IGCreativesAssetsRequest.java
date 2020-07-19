@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.creatives;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.creatives.IGCreativesAssetsResponse;
@@ -9,7 +10,7 @@ import lombok.Data;
 public class IGCreativesAssetsRequest extends IGPostRequest<IGCreativesAssetsResponse> {
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new CreativesAssetsPayload();
     }
 

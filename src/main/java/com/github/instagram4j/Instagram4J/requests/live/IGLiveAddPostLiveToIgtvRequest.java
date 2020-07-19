@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -19,7 +20,7 @@ public class IGLiveAddPostLiveToIgtvRequest extends IGPostRequest<IGResponse> {
     private boolean share_preview;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGLiveAddPostLiveToIgtvPayload();
     }
 

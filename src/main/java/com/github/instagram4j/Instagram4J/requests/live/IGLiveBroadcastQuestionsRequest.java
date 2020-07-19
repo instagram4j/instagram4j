@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -14,7 +15,7 @@ public class IGLiveBroadcastQuestionsRequest extends IGPostRequest<IGResponse> {
     private String _broadcast_id, _text;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private String text = _text;

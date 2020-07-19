@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.accounts;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.accounts.IGLoginResponse;
@@ -21,7 +22,7 @@ public class IGLoginRequest extends IGPostRequest<IGLoginResponse> {
     }
 
     @Override
-    public IGPayload getPayload() {
+    public IGPayload getPayload(IGClient client) {
         return new LoginPayload(username, password);
     }
 

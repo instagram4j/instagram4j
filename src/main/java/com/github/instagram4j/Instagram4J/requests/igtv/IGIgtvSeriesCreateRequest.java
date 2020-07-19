@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.igtv;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.igtv.IGIgtvSeriesResponse;
@@ -14,7 +15,7 @@ public class IGIgtvSeriesCreateRequest extends IGPostRequest<IGIgtvSeriesRespons
     private String _title, _description;
     
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGIgtvSeriesCreatePayload();
     }
 

@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.accounts;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.requests.accounts.IGLoginRequest.LoginPayload;
@@ -15,7 +16,7 @@ public class IGTwoFactorLoginRequest extends IGPostRequest<IGLoginResponse> {
     private String username, password, code, identifier;
 
     @Override
-    public IGPayload getPayload() {
+    public IGPayload getPayload(IGClient client) {
         return new LoginPayload(username, password) {
             @Getter
             private final String verification_code = code;

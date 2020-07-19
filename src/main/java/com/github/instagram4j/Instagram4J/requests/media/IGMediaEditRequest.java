@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.media.IGMediaResponse;
@@ -17,7 +18,7 @@ public class IGMediaEditRequest extends IGPostRequest<IGMediaResponse> {
     private boolean _igtv_feed_preview;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGMediaEditPayload();
     }
 

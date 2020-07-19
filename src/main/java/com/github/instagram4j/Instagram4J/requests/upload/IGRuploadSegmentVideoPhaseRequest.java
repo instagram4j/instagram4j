@@ -64,7 +64,7 @@ public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse>
     }
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return null;
     }
 

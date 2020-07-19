@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.challenge;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.challenge.IGChallengeStateResponse;
@@ -17,7 +18,7 @@ public class IGChallengeSelectVerifyMethodRequest extends IGPostRequest<IGChalle
     private final boolean resend;
 
     @Override
-    public IGPayload getPayload() {
+    public IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private final String choice = _choice;

@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.qe;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
@@ -10,7 +11,7 @@ import lombok.Getter;
 public class IGQeSyncRequest extends IGPostRequest<IGResponse> {
     
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private String experiments = IGConstants.DEVICE_EXPERIMENTS;

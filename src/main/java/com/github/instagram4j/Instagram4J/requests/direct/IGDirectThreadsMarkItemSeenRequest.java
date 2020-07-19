@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.direct;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -16,7 +17,7 @@ public class IGDirectThreadsMarkItemSeenRequest extends IGPostRequest<IGResponse
     private String _item_id;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGDirectThreadsMarkItemSeenPayload();
     }
 

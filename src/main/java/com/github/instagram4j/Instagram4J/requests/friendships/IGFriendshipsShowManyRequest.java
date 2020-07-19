@@ -3,6 +3,7 @@ package com.github.instagram4j.Instagram4J.requests.friendships;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.friendships.IGFriendshipsShowManyResponse;
@@ -19,7 +20,7 @@ public class IGFriendshipsShowManyRequest extends IGPostRequest<IGFriendshipsSho
     }
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private String user_ids = _user_ids;

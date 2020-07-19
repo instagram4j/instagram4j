@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.accounts;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.accounts.IGAccountsUserResponse;
@@ -13,7 +14,7 @@ public class IGAccountsActionRequest extends IGPostRequest<IGAccountsUserRespons
     private IGAccountsAction action;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload();
     }
 

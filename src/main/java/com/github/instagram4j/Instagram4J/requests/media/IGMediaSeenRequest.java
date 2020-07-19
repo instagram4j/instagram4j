@@ -25,7 +25,7 @@ public class IGMediaSeenRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGMediaSeenPayload(reel_media_ids);
     }
 

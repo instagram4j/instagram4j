@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.live.IGLiveCreateResponse;
@@ -15,7 +16,7 @@ public class IGLiveCreateRequest extends IGPostRequest<IGLiveCreateResponse> {
     private String broadcastMessage = "test", broadcastType = "RTMP";
     
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGLiveCreatePayload(width, height, broadcastMessage, broadcastType);
     }
 

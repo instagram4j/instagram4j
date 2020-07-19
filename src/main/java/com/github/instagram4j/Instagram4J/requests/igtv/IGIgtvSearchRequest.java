@@ -2,6 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.igtv;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.igtv.IGIgtvSearchResponse;
@@ -16,7 +17,7 @@ public class IGIgtvSearchRequest extends IGPostRequest<IGIgtvSearchResponse> {
     private String _query;
     
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGIgtvSearchPayload();
     }
 

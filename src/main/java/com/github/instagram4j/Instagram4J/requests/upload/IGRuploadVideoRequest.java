@@ -27,7 +27,7 @@ public class IGRuploadVideoRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return null;
     }
 

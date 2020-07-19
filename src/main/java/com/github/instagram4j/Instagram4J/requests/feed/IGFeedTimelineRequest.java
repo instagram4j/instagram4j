@@ -2,6 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.feed;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.feed.IGFeedTimelineResponse;
@@ -16,7 +17,7 @@ public class IGFeedTimelineRequest extends IGPostRequest<IGFeedTimelineResponse>
     private String maxId = "";
 
     @Override
-    public IGPayload getPayload() {
+    public IGPayload getPayload(IGClient client) {
         FeedTimelinePayload payload = new FeedTimelinePayload();
         if (!maxId.isEmpty()) {
             payload.setMax_id(maxId);

@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.accounts;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
@@ -14,7 +15,7 @@ public class IGAccountsSetBiographyRequest extends IGPostRequest<IGResponse> {
     private String bio;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private String raw_text = bio;

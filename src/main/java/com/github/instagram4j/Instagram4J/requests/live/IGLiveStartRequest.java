@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.live.IGLiveStartResponse;
@@ -13,7 +14,7 @@ public class IGLiveStartRequest extends IGPostRequest<IGLiveStartResponse> {
     private boolean sendNotification;
 
     @Override
-    protected IGPayload getPayload() {
+    protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {
             @Getter
             private boolean should_send_notifications = sendNotification;
