@@ -13,4 +13,6 @@ public class IGDiscoverTopicalExploreResponse extends IGResponse {
     private List<IGSectionalItem> sectional_items;
     private String rank_token;
     private List<IGCluster> clusters;
+    private boolean more_available;
+    private String next_max_id;
 }

@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.direct;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.direct.IGDirectThreadsResponse;
 
@@ -20,7 +21,7 @@ public class IGDirectThreadsRequest extends IGGetRequest<IGDirectThreadsResponse
     }
 
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("cursor", cursor);
     }
 

@@ -45,7 +45,7 @@ public class IGRuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse>
     }
 
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("segmented", "true", "phase", phase.name().toLowerCase());
     }
 

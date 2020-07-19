@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.live;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.live.IGLiveBroadcastGetCommentResponse;
 
@@ -20,7 +21,7 @@ public class IGLiveBroadcastGetCommentRequest extends IGGetRequest<IGLiveBroadca
     }
     
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("last_comment_ts", String.valueOf(last_ts));
     }
 

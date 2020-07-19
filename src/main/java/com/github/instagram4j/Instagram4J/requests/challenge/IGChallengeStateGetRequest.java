@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.challenge;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.challenge.IGChallengeStateResponse;
 
@@ -17,7 +18,7 @@ public class IGChallengeStateGetRequest extends IGGetRequest<IGChallengeStateRes
     }
 
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return this.mapQueryString("guid", guid, "device_id", device_id);
     }
 

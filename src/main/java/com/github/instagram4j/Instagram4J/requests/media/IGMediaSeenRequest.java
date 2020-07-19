@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.media.reel.IGReelMedia;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
@@ -34,7 +35,7 @@ public class IGMediaSeenRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("reel", "1");
     }
 

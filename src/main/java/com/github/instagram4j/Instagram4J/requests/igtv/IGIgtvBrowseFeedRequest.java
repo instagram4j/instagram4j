@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.igtv;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.igtv.IGIgtvBrowseFeedResponse;
 
@@ -17,7 +18,7 @@ public class IGIgtvBrowseFeedRequest extends IGGetRequest<IGIgtvBrowseFeedRespon
     }
     
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("max_id", _max_id);
     }
 

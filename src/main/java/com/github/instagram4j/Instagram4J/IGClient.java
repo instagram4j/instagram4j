@@ -49,6 +49,7 @@ public class IGClient implements Serializable {
     private transient String encryptionId, encryptionKey;
     @JsonIgnore
     private transient OkHttpClient httpClient;
+    private transient String sessionId = IGUtils.randomUuid();
     private String deviceId;
     private String guid;
     private String phoneId;
@@ -76,7 +77,7 @@ public class IGClient implements Serializable {
         this.httpClient = client;
     }
     
-    public void sendSyncGetRequest() throws IGResponseException {
+    public void sendSyncRequest() throws IGResponseException {
         try {
             Response response = httpClient.newCall(new IGQeSyncRequest().formRequest(this)).execute();
             this.encryptionId = response.header("ig-set-password-encryption-key-id");
@@ -89,7 +90,7 @@ public class IGClient implements Serializable {
     public IGLoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.debug("Sending sync request. . .");
-            this.sendSyncGetRequest();
+            this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
@@ -105,7 +106,7 @@ public class IGClient implements Serializable {
             throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.debug("Sending sync request. . .");
-            this.sendSyncGetRequest();
+            this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
@@ -221,7 +222,7 @@ public class IGClient implements Serializable {
     private Object readResolve() throws ObjectStreamException {
         this.httpClient = new OkHttpClient.Builder()
                 .cookieJar(new JavaNetCookieJar(new CookieManager())).addInterceptor(loggingInterceptor).build();
-
+        this.sessionId = IGUtils.randomUuid();
         return this;
     }
 

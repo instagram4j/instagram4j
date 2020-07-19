@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.locationsearch;
 
+import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.locationsearch.IGLocationSearchResponse;
 
@@ -19,7 +20,7 @@ public class IGLocationSearchRequest extends IGGetRequest<IGLocationSearchRespon
     }
     
     @Override
-    public String getQueryString() {
+    public String getQueryString(IGClient client) {
         return mapQueryString("longitude", longitude.toString(), "latitude", latitude.toString(), "search_query", query);
     }
 

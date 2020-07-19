@@ -13,6 +13,7 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.SneakyThrows;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 public abstract class IGRequest<T extends IGResponse> {
@@ -22,9 +23,17 @@ public abstract class IGRequest<T extends IGResponse> {
     public abstract Request formRequest(IGClient client);
     
     public abstract Class<T> getResponseType();
-
-    public String getQueryString() {
+    
+    public String apiPath() {
+        return IGConstants.API_V1;
+    }
+    
+    public String getQueryString(IGClient client) {
         return "";
+    }
+    
+    public HttpUrl formUrl(IGClient client) {
+        return HttpUrl.parse(IGConstants.BASE_API_URL + apiPath() + path() + getQueryString(client));
     }
     
     public T execute(IGClient client) throws IGResponseException {
@@ -48,10 +57,6 @@ public abstract class IGRequest<T extends IGResponse> {
         }
 
         return builder.substring(0, builder.length() - 1);
-    }
-
-    public String apiPath() {
-        return IGConstants.API_V1;
     }
 
     public T parseResponse(String json) throws JsonProcessingException, IOException {
