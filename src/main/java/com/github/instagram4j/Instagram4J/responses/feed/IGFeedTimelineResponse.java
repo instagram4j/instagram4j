@@ -1,9 +1,14 @@
 package com.github.instagram4j.Instagram4J.responses.feed;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import com.github.instagram4j.Instagram4J.models.feed.IGFeedItem;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.util.StdConverter;
+import com.github.instagram4j.Instagram4J.models.media.timeline.IGTimelineMedia;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.Data;
 
@@ -12,6 +17,17 @@ public class IGFeedTimelineResponse extends IGResponse {
     private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;
-    private List<IGFeedItem> feed_items;
+    @JsonDeserialize(converter = BeanToIGTimelineMedia.class)
+    private List<IGTimelineMedia> feed_items;
     private boolean more_available;
+    
+    private static class BeanToIGTimelineMedia extends StdConverter<List<Map<String, Object>>, List<IGTimelineMedia>> {
+        @Override
+        public List<IGTimelineMedia> convert(List<Map<String, Object>> value) {
+            return value.stream()
+                    .filter(m -> m.containsKey("media_or_ad"))
+                    .map(m -> IGUtils.MAPPER.convertValue(m.get("media_or_ad"), IGTimelineMedia.class))
+                    .collect(Collectors.toList());
+        }
+    }
 }
