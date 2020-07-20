@@ -16,8 +16,6 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,18 +32,18 @@ import lombok.SneakyThrows;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Request for editing media.
+ * Request for archiving media.
  * 
- * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
+ * @author Alejandro Perez Moreno
  *
  */
 @RequiredArgsConstructor
 public class InstagramOnlyMeRequest extends InstagramPostRequest<StatusResult> {
-	
 	private final String mediaId;
+
 	@NonNull
 	private final InstagramMediaTypeEnum mediaType;
-    private final Boolean hide = true;
+	
 	@Override
 	public String getUrl() {
 		return "media/" + mediaId + "/only_me/";

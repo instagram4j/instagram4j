@@ -16,8 +16,6 @@
 package org.brunocvcunha.instagram4j.requests;
 
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,26 +24,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.brunocvcunha.instagram4j.requests.payload.StatusResult;
 import org.brunocvcunha.instagram4j.requests.payload.InstagramMediaTypeEnum;
 
-
-import lombok.Getter;
-import lombok.Setter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Request for editing media.
+ * Request for unarchiving media.
  * 
- * @author Evgeny Bondarenko (evgbondarenko@gmail.com)
+ * @author Alejandro Perez Moreno
  *
  */
 @RequiredArgsConstructor
 public class InstagramUndoOnlyMeRequest extends InstagramPostRequest<StatusResult> {
-	
 	private final String mediaId;
+
 	@NonNull
 	private final InstagramMediaTypeEnum mediaType;
-    private final Boolean hide = true;
+
 	@Override
 	public String getUrl() {
 		return "media/" + mediaId + "/undo_only_me/";
