@@ -35,7 +35,7 @@ public class IGMediaActionRequest extends IGPostRequest<IGResponse> {
     }
 
     public static enum IGMediaAction {
-        SAVE, UNSAVE, ONLY_ME, UNDO_ONLY_ME, DELETE;
+        SAVE, UNSAVE, ONLY_ME, UNDO_ONLY_ME, DELETE, LIKE, UNLIKE, ENABLE_COMMENTS, DISABLE_COMMENTS;
     }
 
 }
