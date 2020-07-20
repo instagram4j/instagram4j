@@ -10,7 +10,14 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class IGMusicTrendingResponse extends IGResponse {
+public class IGMusicTrackResponse extends IGResponse {
     @JsonDeserialize(converter = BeanToTrackConverter.class)
     private List<IGMusicTrack> items;
+    private IGMusicTrackPageInfo page_info;
+    
+    @Data
+    public static class IGMusicTrackPageInfo {
+        private String next_max_id;
+        private boolean more_available;
+    }
 }

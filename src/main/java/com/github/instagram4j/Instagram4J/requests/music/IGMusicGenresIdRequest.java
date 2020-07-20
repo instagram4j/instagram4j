@@ -7,11 +7,14 @@ import com.github.instagram4j.Instagram4J.requests.music.IGMusicSearchRequest.IG
 import com.github.instagram4j.Instagram4J.responses.music.IGMusicTrackResponse;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-public class IGMusicTrendingRequest extends IGPostRequest<IGMusicTrackResponse> {
+public class IGMusicGenresIdRequest extends IGPostRequest<IGMusicTrackResponse> {
+    @NonNull
+    private String _id;
     private String _cursor = "0";
     
     @Override
@@ -21,7 +24,7 @@ public class IGMusicTrendingRequest extends IGPostRequest<IGMusicTrackResponse> 
 
     @Override
     public String path() {
-        return "music/trending/";
+        return "music/genres/" + _id + "/";
     }
 
     @Override
