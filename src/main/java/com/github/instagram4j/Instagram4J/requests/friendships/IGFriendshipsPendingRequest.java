@@ -5,16 +5,11 @@ import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
 import com.github.instagram4j.Instagram4J.responses.feed.IGUsersFeedResponse;
 
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class IGFriendshipsFeedsRequest extends IGGetRequest<IGUsersFeedResponse> {
-    @NonNull
-    private Long _id;
-    @NonNull
-    private IGFriendshipsFeeds action;
+@NoArgsConstructor
+public class IGFriendshipsPendingRequest extends IGGetRequest<IGUsersFeedResponse> {
     private String _max_id;
     
     @Override
@@ -24,14 +19,12 @@ public class IGFriendshipsFeedsRequest extends IGGetRequest<IGUsersFeedResponse>
     
     @Override
     public String path() {
-        return String.format("friendships/%s/%s/", _id, action.name().toLowerCase());
+        return "friendships/pending/";
     }
+
     @Override
     public Class<IGUsersFeedResponse> getResponseType() {
         return IGUsersFeedResponse.class;
     }
-    
-    public static enum IGFriendshipsFeeds {
-        FOLLOWERS, FOLLOWING;
-    }
+
 }
