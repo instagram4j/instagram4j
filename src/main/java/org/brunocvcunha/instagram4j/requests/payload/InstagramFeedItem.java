@@ -77,5 +77,6 @@ public class InstagramFeedItem {
     public boolean comments_disabled;
     public boolean can_viewer_save;
     public boolean has_viewer_saved;
+    public String visibility;
     
 }
