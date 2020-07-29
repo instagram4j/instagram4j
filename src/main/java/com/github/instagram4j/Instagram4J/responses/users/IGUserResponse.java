@@ -6,6 +6,6 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class IGUsersResponse extends IGResponse {
+public class IGUserResponse extends IGResponse {
     private IGUser user;
 }
