@@ -206,7 +206,7 @@ public class Instagram4j implements Serializable {
 	 */
 	public InstagramLoginResult login() throws ClientProtocolException, IOException {
 
-		log.info("Logging with user " + username + " and password " + password.replaceAll("[a-zA-Z0-9]", "*"));
+		log.info("Logging with user " + username + " and password " + password.replaceAll(".", "*"));
 
 		InstagramLoginPayload loginRequest = InstagramLoginPayload.builder().username(username).password(password)
 				.guid(uuid).device_id(deviceId).phone_id(InstagramGenericUtil.generateUuid(true))
