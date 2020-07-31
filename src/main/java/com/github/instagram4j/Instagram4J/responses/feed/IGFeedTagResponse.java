@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.github.instagram4j.Instagram4J.models.feed.IGReel;
 import com.github.instagram4j.Instagram4J.models.media.timeline.IGTimelineMedia;
-import com.github.instagram4j.Instagram4J.responses.IGResponse;
+import com.github.instagram4j.Instagram4J.responses.IGPaginatedResponse;
 
 import lombok.Data;
 
 @Data
-public class IGFeedTagResponse extends IGResponse {
+public class IGFeedTagResponse extends IGPaginatedResponse {
     private List<IGTimelineMedia> ranked_items;
     private List<IGTimelineMedia> items;
     private IGReel story;
