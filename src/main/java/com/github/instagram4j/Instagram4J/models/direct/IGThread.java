@@ -9,7 +9,7 @@ import com.github.instagram4j.Instagram4J.models.user.Profile;
 import lombok.Data;
 
 @Data
-public class Thread extends IGBaseModel {
+public class IGThread extends IGBaseModel {
     private String thread_id;
     private String thread_v2_id;
     private List<Profile> users;

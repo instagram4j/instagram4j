@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Inbox {
-    private List<Thread> threads;
+    private List<IGThread> threads;
     private boolean has_older;
     private int unseen_count;
     private long unseen_count_ts;
