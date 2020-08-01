@@ -7,7 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LiveBroadcastGetPostLive extends IGGetRequest<IGResponse> {
+public class LiveBroadcastGetPostLiveRequest extends IGGetRequest<IGResponse> {
     @NonNull
     private String _broadcast_string;
 

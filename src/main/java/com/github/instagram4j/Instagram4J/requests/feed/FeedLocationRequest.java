@@ -2,7 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.feed;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.responses.feed.FeedLocationResponse;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FeedLocationRequest extends IGGetRequest<FeedLocationResponse> implements PaginatedRequest<FeedLocationResponse> {
+public class FeedLocationRequest extends IGGetRequest<FeedLocationResponse> implements IGPaginatedRequest<FeedLocationResponse> {
     @NonNull
     private Long location;
     @Setter

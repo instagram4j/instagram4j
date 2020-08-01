@@ -9,7 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LiveQuestionDeactivate extends IGPostRequest<IGResponse> {
+public class LiveQuestionActivateRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String broadcast_id;
     @NonNull
@@ -22,7 +22,7 @@ public class LiveQuestionDeactivate extends IGPostRequest<IGResponse> {
 
     @Override
     public String path() {
-        return String.format("live/%s/question/%s/deactivate/", broadcast_id, qid);
+        return String.format("live/%s/question/%s/activate/", broadcast_id, qid);
     }
 
     @Override

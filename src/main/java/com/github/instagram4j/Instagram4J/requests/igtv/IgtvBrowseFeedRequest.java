@@ -2,7 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.igtv;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.responses.igtv.IgtvBrowseFeedResponse;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse> implements PaginatedRequest<IgtvBrowseFeedResponse> {
+public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse> implements IGPaginatedRequest<IgtvBrowseFeedResponse> {
     @Setter
     private String max_id;
 

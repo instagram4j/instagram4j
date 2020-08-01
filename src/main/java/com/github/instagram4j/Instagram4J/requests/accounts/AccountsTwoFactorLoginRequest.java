@@ -3,7 +3,7 @@ package com.github.instagram4j.Instagram4J.requests.accounts;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
-import com.github.instagram4j.Instagram4J.requests.accounts.LoginRequest.LoginPayload;
+import com.github.instagram4j.Instagram4J.requests.accounts.AccountsLoginRequest.LoginPayload;
 import com.github.instagram4j.Instagram4J.responses.accounts.LoginResponse;
 
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class TwoFactorLoginRequest extends IGPostRequest<LoginResponse> {
+public class AccountsTwoFactorLoginRequest extends IGPostRequest<LoginResponse> {
     @NonNull
     private String username, password, code, identifier;
 

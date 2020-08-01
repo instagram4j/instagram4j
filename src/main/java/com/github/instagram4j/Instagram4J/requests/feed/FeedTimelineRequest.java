@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.feed.FeedTimelineResponse;
 
@@ -15,7 +15,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class FeedTimelineRequest extends IGPostRequest<FeedTimelineResponse> implements PaginatedRequest<FeedTimelineResponse> {
+public class FeedTimelineRequest extends IGPostRequest<FeedTimelineResponse> implements IGPaginatedRequest<FeedTimelineResponse> {
     @Setter
     private String max_id = "";
 

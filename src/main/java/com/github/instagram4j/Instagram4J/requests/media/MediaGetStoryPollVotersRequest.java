@@ -2,7 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.media;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.responses.media.MediaGetStoryPollVotersResponse;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaGetStoryPollVotersRequest extends IGGetRequest<MediaGetStoryPollVotersResponse> implements PaginatedRequest<MediaGetStoryPollVotersResponse> {
+public class MediaGetStoryPollVotersRequest extends IGGetRequest<MediaGetStoryPollVotersResponse> implements IGPaginatedRequest<MediaGetStoryPollVotersResponse> {
     @NonNull
     private String reel_id, poll_id;
     @Setter

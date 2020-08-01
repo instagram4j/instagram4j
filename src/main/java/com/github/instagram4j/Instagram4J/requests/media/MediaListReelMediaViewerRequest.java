@@ -2,7 +2,7 @@ package com.github.instagram4j.Instagram4J.requests.media;
 
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.responses.media.MediaListReelMediaViewerResponse;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListReelMediaViewerResponse> implements PaginatedRequest<MediaListReelMediaViewerResponse> {
+public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListReelMediaViewerResponse> implements IGPaginatedRequest<MediaListReelMediaViewerResponse> {
     @NonNull
     private String reel_id;
     @Setter

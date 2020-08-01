@@ -11,14 +11,14 @@ import java.util.function.Consumer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.instagram4j.Instagram4J.exceptions.ChallengeException;
-import com.github.instagram4j.Instagram4J.exceptions.LoginException;
+import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
+import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
 import com.github.instagram4j.Instagram4J.models.user.Profile;
 import com.github.instagram4j.Instagram4J.requests.IGRequest;
-import com.github.instagram4j.Instagram4J.requests.accounts.LoginRequest;
-import com.github.instagram4j.Instagram4J.requests.accounts.TwoFactorLoginRequest;
+import com.github.instagram4j.Instagram4J.requests.accounts.AccountsLoginRequest;
+import com.github.instagram4j.Instagram4J.requests.accounts.AccountsTwoFactorLoginRequest;
 import com.github.instagram4j.Instagram4J.requests.qe.QeSyncRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.responses.accounts.LoginResponse;
@@ -87,14 +87,14 @@ public class IGClient implements Serializable {
         }
     }
 
-    public LoginResponse sendLoginRequest() throws LoginException, IGResponseException {
+    public LoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.debug("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
-        LoginRequest login = new LoginRequest($username, encryptedPassword);
+        AccountsLoginRequest login = new AccountsLoginRequest($username, encryptedPassword);
         LoginResponse res = this.sendRequest(login);
         log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
@@ -103,14 +103,14 @@ public class IGClient implements Serializable {
     }
 
     public LoginResponse sendLoginRequest(String code, String identifier)
-            throws LoginException, IGResponseException {
+            throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.debug("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.debug("Logging in. . .");
-        TwoFactorLoginRequest login = new TwoFactorLoginRequest($username, encryptedPassword, code, identifier);
+        AccountsTwoFactorLoginRequest login = new AccountsTwoFactorLoginRequest($username, encryptedPassword, code, identifier);
         LoginResponse res = this.sendRequest(login);
         log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
@@ -141,9 +141,9 @@ public class IGClient implements Serializable {
         }
     }
 
-    public void setLoggedInState(LoginResponse state) throws LoginException {
+    public void setLoggedInState(LoginResponse state) throws IGLoginException {
         if (!state.getStatus().equals("ok"))
-            throw new LoginException(this, state);
+            throw new IGLoginException(this, state);
         this.loggedIn = true;
         this.selfProfile = state.getLogged_in_user();
     }
@@ -252,14 +252,14 @@ public class IGClient implements Serializable {
             return client;
         }
 
-        public IGClient login() throws LoginException, ChallengeException {
+        public IGClient login() throws IGLoginException, IGChallengeException {
             IGClient client = build();
 
             try {
                 onSuccessfulLogin.accept(client.sendLoginRequest());
             } catch (IGResponseException exception) {
-                throw new LoginException(exception);
-            } catch (LoginException ex) {
+                throw new IGLoginException(exception);
+            } catch (IGLoginException ex) {
                 LoginResponse response = ex.getLoginResponse();
 
                 if (ex.getLoginResponse().getTwo_factor_info() != null && onTwoFactor != null) {
@@ -279,7 +279,7 @@ public class IGClient implements Serializable {
         @FunctionalInterface
         public static interface LoginHandler {
             public LoginResponse accept(IGClient client, LoginResponse t)
-                    throws ChallengeException;
+                    throws IGChallengeException;
         }
     }
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
-import com.github.instagram4j.Instagram4J.requests.PaginatedRequest;
+import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.requests.IGPostRequest;
 import com.github.instagram4j.Instagram4J.responses.igtv.IgtvChannelResponse;
 
@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse> implements PaginatedRequest<IgtvChannelResponse> {
+public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse> implements IGPaginatedRequest<IgtvChannelResponse> {
     @NonNull
     private String _id;
     @Setter

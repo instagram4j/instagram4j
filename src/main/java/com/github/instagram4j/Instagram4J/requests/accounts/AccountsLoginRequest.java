@@ -10,7 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LoginRequest extends IGPostRequest<LoginResponse> {
+public class AccountsLoginRequest extends IGPostRequest<LoginResponse> {
     @NonNull
     private String username;
     @NonNull

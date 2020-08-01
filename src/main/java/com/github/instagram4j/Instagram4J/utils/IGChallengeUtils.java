@@ -3,8 +3,8 @@ package com.github.instagram4j.Instagram4J.utils;
 import java.util.concurrent.Callable;
 
 import com.github.instagram4j.Instagram4J.IGClient;
-import com.github.instagram4j.Instagram4J.exceptions.ChallengeException;
-import com.github.instagram4j.Instagram4J.exceptions.LoginException;
+import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
+import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.requests.challenge.ChallengeResetRequest;
 import com.github.instagram4j.Instagram4J.requests.challenge.ChallengeSelectVerifyMethodRequest;
@@ -19,7 +19,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChallengeUtil {
+public class IGChallengeUtils {
 
     public static ChallengeStateResponse requestState(IGClient client, Challenge challenge)
             throws IGResponseException {
@@ -49,7 +49,7 @@ public class ChallengeUtil {
 
     @SneakyThrows
     public static LoginResponse resolve(@NonNull IGClient client, @NonNull Challenge challenge, @NonNull Callable<String> inputCode, int retries)
-            throws ChallengeException {
+            throws IGChallengeException {
         ChallengeStateResponse stateResponse = requestState(client, challenge);
         String name = stateResponse.getStep_name();
 
@@ -61,7 +61,7 @@ public class ChallengeUtil {
             log.info("delta_login_review option sent choice 0");
             return selectVerifyMethodDelta(client, challenge, "0", false);
         } else {
-            throw new ChallengeException("Unknown step_name");
+            throw new IGChallengeException("Unknown step_name");
         }
 
         LoginResponse loginResponse = sendSecurityCode(client, challenge, inputCode.call());
@@ -75,19 +75,19 @@ public class ChallengeUtil {
     
     @SneakyThrows
     public static LoginResponse resolve(@NonNull IGClient client, @NonNull Challenge challenge, @NonNull Callable<String> inputCode)
-            throws ChallengeException {
+            throws IGChallengeException {
         return resolve(client, challenge, inputCode, 3);
     }
 
     @SneakyThrows
-    public static LoginResponse resolve(LoginException ex, Callable<String> inputCode)
-            throws LoginException, ChallengeException {
+    public static LoginResponse resolve(IGLoginException ex, Callable<String> inputCode)
+            throws IGLoginException, IGChallengeException {
         return resolve(ex.getClient(), ex.getLoginResponse().getChallenge(), inputCode);
     }
     
     @SneakyThrows
-    public static LoginResponse resolve(LoginException ex, Callable<String> inputCode, int retries)
-            throws LoginException, ChallengeException {
+    public static LoginResponse resolve(IGLoginException ex, Callable<String> inputCode, int retries)
+            throws IGLoginException, IGChallengeException {
         return resolve(ex.getClient(), ex.getLoginResponse().getChallenge(), inputCode, retries);
     }
     
@@ -103,7 +103,7 @@ public class ChallengeUtil {
 
             try {
                 response = client.sendLoginRequest(code, response.getTwo_factor_info().getTwo_factor_identifier());
-            } catch (LoginException e) {
+            } catch (IGLoginException e) {
                 response = e.getLoginResponse();
                 log.info(e.getMessage());
             }
