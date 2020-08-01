@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.net.CookieManager;
 import java.net.Proxy;
 import java.util.function.Consumer;
 
@@ -33,12 +32,9 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.CookieJar;
-import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 @Data
 @Slf4j
@@ -48,7 +44,7 @@ public class IGClient implements Serializable {
     private final String $password;
     private transient String encryptionId, encryptionKey;
     @JsonIgnore
-    private transient OkHttpClient httpClient;
+    private transient OkHttpClient httpClient = IGUtils.formDefaultHttpClient();
     private transient String sessionId = IGUtils.randomUuid();
     private String deviceId;
     private String guid;
@@ -58,11 +54,6 @@ public class IGClient implements Serializable {
     @Setter(AccessLevel.PRIVATE)
     private Profile selfProfile;
     private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
-
-    // logging
-    private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
-        log.debug(msg);
-    }).setLevel(Level.BODY);
 
     public IGClient(String username, String password) {
         this.$username = username;
@@ -80,8 +71,11 @@ public class IGClient implements Serializable {
     public void sendSyncRequest() throws IGResponseException {
         try {
             Response response = httpClient.newCall(new QeSyncRequest().formRequest(this)).execute();
+            log.info("Response for {} : {}", QeSyncRequest.class.getName(), response.code());
             this.encryptionId = response.header("ig-set-password-encryption-key-id");
             this.encryptionKey = response.header("ig-set-password-encryption-pub-key");
+            log.info("Encryption key id : {}", this.encryptionId);
+            log.info("Encryption key (truncated) : {}", this.encryptionKey.substring(20));
         } catch (IOException ex) {
             throw new IGResponseException(null, ex.getMessage(), ex);
         }
@@ -89,14 +83,13 @@ public class IGClient implements Serializable {
 
     public LoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
-            log.debug("Sending sync request. . .");
+            log.info("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
-        log.debug("Logging in. . .");
+        log.info("Logging in. . .");
         AccountsLoginRequest login = new AccountsLoginRequest($username, encryptedPassword);
         LoginResponse res = this.sendRequest(login);
-        log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
 
         return res;
@@ -105,14 +98,13 @@ public class IGClient implements Serializable {
     public LoginResponse sendLoginRequest(String code, String identifier)
             throws IGLoginException, IGResponseException {
         if (this.encryptionId == null || this.encryptionKey == null) {
-            log.debug("Sending sync request. . .");
+            log.info("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
-        log.debug("Logging in. . .");
+        log.info("Logging in. . .");
         AccountsTwoFactorLoginRequest login = new AccountsTwoFactorLoginRequest($username, encryptedPassword, code, identifier);
         LoginResponse res = this.sendRequest(login);
-        log.debug("Response is : " + res.getStatus());
         this.setLoggedInState(res);
 
         return res;
@@ -125,7 +117,9 @@ public class IGClient implements Serializable {
     public <T> T sendRequest(@NonNull IGRequest<?> req, Class<T> view) throws IGResponseException {
         Response res;
         try {
+            log.info("Sending request : {}", req.getClass().getName());
             res = httpClient.newCall(req.formRequest(this)).execute();
+            log.info("Response for {} : {}", req.getClass().getName(), res.code());
         } catch (IOException ex) {
             throw new IGResponseException(null, "exception occured during request", ex);
         }
@@ -146,6 +140,7 @@ public class IGClient implements Serializable {
             throw new IGLoginException(this, state);
         this.loggedIn = true;
         this.selfProfile = state.getLogged_in_user();
+        log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
     }
 
     public String getCsrfToken() {
@@ -219,9 +214,9 @@ public class IGClient implements Serializable {
     }
 
     private Object readResolve() throws ObjectStreamException {
-        this.httpClient = new OkHttpClient.Builder()
-                .cookieJar(new JavaNetCookieJar(new CookieManager())).addInterceptor(loggingInterceptor).build();
+        this.httpClient = IGUtils.formDefaultHttpClient();
         this.sessionId = IGUtils.randomUuid();
+        log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
         return this;
     }
 
@@ -233,8 +228,7 @@ public class IGClient implements Serializable {
         private String withUsername;
         private String withPassword;
         private CookieJar withCookieJar;
-        private OkHttpClient withClient = new OkHttpClient.Builder()
-                .cookieJar(new JavaNetCookieJar(new CookieManager())).addInterceptor(loggingInterceptor).build();
+        private OkHttpClient withClient = IGUtils.formDefaultHttpClient();
         private Proxy withProxy;
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;

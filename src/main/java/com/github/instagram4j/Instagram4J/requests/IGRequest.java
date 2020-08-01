@@ -13,9 +13,11 @@ import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
+@Slf4j
 public abstract class IGRequest<T extends IGResponse> {
 
     public abstract String path();
@@ -64,7 +66,8 @@ public abstract class IGRequest<T extends IGResponse> {
     }
 
     public <U> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
-        U response = IGUtils.MAPPER.readValue(json, type);
+        log.debug("Parsing response : {}", json);
+        U response = IGUtils.jsonToObject(json, type);
         
         return response;
     }

@@ -24,7 +24,7 @@ public class SectionalMediaGridItem extends SectionalItem {
         @Override
         public List<TimelineMedia> convert(Map<String, List<Map<String, Object>>> value) {
             return value.get("medias").stream()
-                    .map(m -> IGUtils.MAPPER.convertValue(m.get("media"), TimelineMedia.class))
+                    .map(m -> IGUtils.convertToView(m.get("media"), TimelineMedia.class))
                     .collect(Collectors.toList());
         }
     }

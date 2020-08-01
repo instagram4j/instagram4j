@@ -1,6 +1,7 @@
 package com.github.instagram4j.Instagram4J.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.net.CookieManager;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -26,7 +27,6 @@ import org.apache.commons.codec.binary.Hex;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.instagram4j.Instagram4J.IGConstants;
 
@@ -34,12 +34,13 @@ import lombok.SneakyThrows;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
+import okhttp3.JavaNetCookieJar;
+import okhttp3.OkHttpClient;
 
 public class IGUtils {
     private static final String BASE64URL_CHARMAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-    public static final ObjectMapper MAPPER = new ObjectMapper();
-    public static final ObjectReader READER = MAPPER.reader();
-    public static final ObjectWriter WRITER = MAPPER.writer();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectWriter WRITER = MAPPER.writer();
     static {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
@@ -146,7 +147,7 @@ public class IGUtils {
     @SneakyThrows
     public static String generateSignature(String payload) {
         String parsedData = URLEncoder.encode(payload, "UTF-8");
-        
+        // new Instagram version no longer signs requests
         return "signed_body=SIGNATURE." + parsedData;
 
     }
@@ -224,6 +225,10 @@ public class IGUtils {
         
         return String.format("#PWD_INSTAGRAM:%s:%s:%s", "4", time, Base64.encodeBase64String(out.toByteArray()));
     }
+    
+    public static OkHttpClient formDefaultHttpClient() {
+        return new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(new CookieManager())).build();
+    }
 
     public static String randomUuid() {
         return UUID.randomUUID().toString();
@@ -232,6 +237,15 @@ public class IGUtils {
     @SneakyThrows
     public static String objectToJson(Object obj) {
         return WRITER.writeValueAsString(obj);
+    }
+    
+    @SneakyThrows
+    public static <T> T jsonToObject(String json, Class<T> view) {
+        return MAPPER.readValue(json, view);
+    }
+    
+    public static <T> T convertToView(Object o, Class<T> view) {
+        return MAPPER.convertValue(o, view);
     }
 
     public static Optional<String> getCookieValue(CookieJar jar, String key) {

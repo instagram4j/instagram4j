@@ -26,7 +26,7 @@ public class FeedTimelineResponse extends IGPaginatedResponse {
         public List<TimelineMedia> convert(List<Map<String, Object>> value) {
             return value.stream()
                     .filter(m -> m.containsKey("media_or_ad"))
-                    .map(m -> IGUtils.MAPPER.convertValue(m.get("media_or_ad"), TimelineMedia.class))
+                    .map(m -> IGUtils.convertToView(m.get("media_or_ad"), TimelineMedia.class))
                     .collect(Collectors.toList());
         }
     }

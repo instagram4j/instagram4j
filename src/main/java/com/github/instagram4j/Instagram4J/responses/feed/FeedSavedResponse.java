@@ -24,7 +24,7 @@ public class FeedSavedResponse extends IGPaginatedResponse {
         public List<TimelineMedia> convert(List<Map<String, Object>> value) {
             return value.stream()
                     .filter(m -> m.containsKey("media"))
-                    .map(m -> IGUtils.MAPPER.convertValue(m.get("media"), TimelineMedia.class))
+                    .map(m -> IGUtils.convertToView(m.get("media"), TimelineMedia.class))
                     .collect(Collectors.toList());
         }
     }

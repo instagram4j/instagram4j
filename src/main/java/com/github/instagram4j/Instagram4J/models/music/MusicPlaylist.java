@@ -24,7 +24,7 @@ public class MusicPlaylist extends IGBaseModel {
         public List<MusicTrack> convert(List<Map<String, Object>> value) {
             return value.stream()
                     .filter(m -> m.containsKey("track"))
-                    .map(m -> IGUtils.MAPPER.convertValue(m.get("track"), MusicTrack.class))
+                    .map(m -> IGUtils.convertToView(m.get("track"), MusicTrack.class))
                     .collect(Collectors.toList());
         }
     }

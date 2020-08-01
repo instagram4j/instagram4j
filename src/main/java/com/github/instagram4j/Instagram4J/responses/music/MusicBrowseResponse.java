@@ -22,7 +22,7 @@ public class MusicBrowseResponse extends IGResponse {
         public List<MusicPlaylist> convert(List<Map<String, Object>> value) {
             return value.stream()
                     .filter(m -> m.containsKey("playlist"))
-                    .map(m -> IGUtils.MAPPER.convertValue(m.get("playlist"), MusicPlaylist.class))
+                    .map(m -> IGUtils.convertToView(m.get("playlist"), MusicPlaylist.class))
                     .collect(Collectors.toList());
         }
     }
