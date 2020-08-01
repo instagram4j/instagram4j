@@ -9,6 +9,7 @@ import com.github.instagram4j.Instagram4J.responses.IGPaginatedResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 @RequiredArgsConstructor
 public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> {
@@ -24,15 +25,12 @@ public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> 
     }
 
     @Override
+    @SneakyThrows(IGResponseException.class)
     public T next() {
-        try {
-            response = request.execute(client);
-            request.setMax_id(response.getNext_max_id());
-            
-            return response;
-        } catch (IGResponseException exception) {
-            throw new RuntimeException(exception);
-        }
+        response = request.execute(client);
+        request.setMax_id(response.getNext_max_id());
+        
+        return response;
     }
     
 }

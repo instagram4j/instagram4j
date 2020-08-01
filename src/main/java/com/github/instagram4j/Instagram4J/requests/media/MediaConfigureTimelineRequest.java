@@ -17,6 +17,7 @@ import com.github.instagram4j.Instagram4J.utils.IGUtils;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @RequiredArgsConstructor
@@ -43,11 +44,10 @@ public class MediaConfigureTimelineRequest extends IGPostRequest<MediaConfigureT
     @Accessors(fluent = true)
     @JsonAutoDetect(fieldVisibility = Visibility.ANY)
     @JsonInclude(Include.NON_NULL)
+    @Setter
     public static class MediaConfigurePayload extends IGPayload {
-        @NonNull
-        private final String upload_id;
-        @NonNull
-        private final String caption;
+        private String upload_id;
+        private String caption = "";
         private String disable_comments;
         private String location;
         private String usertags;

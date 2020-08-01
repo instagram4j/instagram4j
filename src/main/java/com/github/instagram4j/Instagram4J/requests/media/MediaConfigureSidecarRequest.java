@@ -1,5 +1,6 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,11 +47,8 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
     @JsonAutoDetect(fieldVisibility = Visibility.ANY)
     @JsonInclude(Include.NON_NULL)
     public static class MediaConfigureSidecarPayload extends IGPayload {
-        @NonNull
-        private final List<AlbumChildrenMetadata> children_metadata;
-        @NonNull
-        private final String caption;
-        @NonNull
+        private List<SidecarChildrenMetadata> children_metadata = new ArrayList<>();
+        private String caption = "";
         private String client_sidecar_id = String.valueOf(System.currentTimeMillis());
         private String location;
         private String disable_comments;
@@ -80,13 +78,12 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
     @Accessors(fluent = true)
     @JsonAutoDetect(fieldVisibility = Visibility.ANY)
     @JsonInclude(Include.NON_NULL)
-    public static class AlbumChildrenMetadata extends IGBaseModel {
+    public static class SidecarChildrenMetadata extends IGBaseModel {
         @NonNull
         private final String upload_id;
-        private String location;
         private String usertags;
         
-        public AlbumChildrenMetadata usertags(UserTagPayload... tags) {
+        public SidecarChildrenMetadata usertags(UserTagPayload... tags) {
             this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
             
             return this;

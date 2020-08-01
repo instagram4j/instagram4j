@@ -8,8 +8,8 @@ import java.io.Serializable;
 import java.net.Proxy;
 import java.util.function.Consumer;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.instagram4j.Instagram4J.actions.IGClientActions;
 import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
@@ -43,9 +43,9 @@ public class IGClient implements Serializable {
     private final String $username;
     private final String $password;
     private transient String encryptionId, encryptionKey;
-    @JsonIgnore
     private transient OkHttpClient httpClient = IGUtils.formDefaultHttpClient();
     private transient String sessionId = IGUtils.randomUuid();
+    private transient IGClientActions actions = new IGClientActions(this);
     private String deviceId;
     private String guid;
     private String phoneId;
@@ -54,7 +54,7 @@ public class IGClient implements Serializable {
     @Setter(AccessLevel.PRIVATE)
     private Profile selfProfile;
     private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
-
+    
     public IGClient(String username, String password) {
         this.$username = username;
         this.$password = password;
@@ -66,6 +66,10 @@ public class IGClient implements Serializable {
     public IGClient(String username, String password, OkHttpClient client) {
         this(username, password);
         this.httpClient = client;
+    }
+    
+    public IGClientActions actions() {
+        return this.actions;
     }
     
     public void sendSyncRequest() throws IGResponseException {
@@ -216,6 +220,7 @@ public class IGClient implements Serializable {
     private Object readResolve() throws ObjectStreamException {
         this.httpClient = IGUtils.formDefaultHttpClient();
         this.sessionId = IGUtils.randomUuid();
+        this.actions = new IGClientActions(this);
         log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
         return this;
     }
