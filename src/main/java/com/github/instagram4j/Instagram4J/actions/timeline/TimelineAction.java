@@ -31,7 +31,7 @@ public class TimelineAction {
     private IGClient client;
     
     public FeedIterable<FeedTimelineResponse> feed() {
-        return new FeedIterable<>(client, new FeedTimelineRequest());
+        return new FeedIterable<>(client, FeedTimelineRequest::new);
     }
     
     public MediaConfigureTimelineResponse uploadPhoto(byte[] data, MediaConfigurePayload payload) throws IOException {

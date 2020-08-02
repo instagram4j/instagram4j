@@ -12,7 +12,7 @@ import com.github.instagram4j.Instagram4J.requests.friendships.FriendshipsFeedsR
 import com.github.instagram4j.Instagram4J.requests.friendships.FriendshipsFeedsRequest.FriendshipsFeeds;
 import com.github.instagram4j.Instagram4J.requests.friendships.FriendshipsShowRequest;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
-import com.github.instagram4j.Instagram4J.responses.feed.UsersFeedResponse;
+import com.github.instagram4j.Instagram4J.responses.feed.FeedUsersResponse;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -25,19 +25,23 @@ public class UserAction {
     @NonNull
     @Getter
     private Profile user;
-    
-    public FeedIterable<UsersFeedResponse> followerFeed() {
-        return new FeedIterable<>(client, new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS));
+
+    public FeedIterable<FeedUsersResponse> followerFeed() {
+        return new FeedIterable<>(client, () -> {
+            return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS);
+        });
     }
-    
-    public FeedIterable<UsersFeedResponse> followingFeed() {
-        return new FeedIterable<>(client, new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING));
+
+    public FeedIterable<FeedUsersResponse> followingFeed() {
+        return new FeedIterable<>(client, () -> {
+            return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING);
+        });
     }
-    
+
     public Friendship getFriendship() throws IOException {
         return new FriendshipsShowRequest(user.getPk()).execute(client).getFriendship();
     }
-    
+
     public IGResponse performAction(FriendshipsAction action) throws IOException {
         return new FriendshipsActionRequest(user.getPk(), action).execute(client);
     }
