@@ -49,48 +49,38 @@ public class IGChallengeUtils {
 
     @SneakyThrows
     public static LoginResponse resolve(@NonNull IGClient client, @NonNull LoginResponse response,
-            @NonNull Callable<String> inputCode, int retries) {
+            @NonNull Callable<String> inputCode, int retries) throws IOException {
         Challenge challenge = response.getChallenge();
         ChallengeStateResponse stateResponse = requestState(client, challenge);
         String name = stateResponse.getStep_name();
 
         if (name.equalsIgnoreCase("select_verify_method")) {
+            // verify by phone or email
             selectVerifyMethod(client, challenge, stateResponse.getStep_data().getChoice(), false);
             log.info("select_verify_method option security code sent to "
                     + (stateResponse.getStep_data().getChoice().equals("1") ? "email" : "phone"));
+            response = sendSecurityCode(client, challenge, inputCode.call());
+            while (!response.getStatus().equalsIgnoreCase("ok") && --retries > 0) {
+                log.info("{} : {}", response.getError_type(), response.getMessage());
+                response = sendSecurityCode(client, challenge, inputCode.call());
+            }
         } else if (name.equalsIgnoreCase("delta_login_review")) {
+            // 'This was me' option
             log.info("delta_login_review option sent choice 0");
-            return selectVerifyMethodDelta(client, challenge, "0", false);
+            response = selectVerifyMethodDelta(client, challenge, "0", false);
         } else {
             // Unknown step_name
-            return response;
         }
+        
+        client.setLoggedInState(response);
 
-        LoginResponse loginResponse = sendSecurityCode(client, challenge, inputCode.call());
-        while (!loginResponse.getStatus().equalsIgnoreCase("ok") && --retries > 0) {
-            log.info("Wrong security code");
-            loginResponse = sendSecurityCode(client, challenge, inputCode.call());
-        }
-
-        return loginResponse;
+        return response;
+        
     }
 
-    @SneakyThrows
     public static LoginResponse resolve(@NonNull IGClient client, @NonNull LoginResponse response,
-            @NonNull Callable<String> inputCode) {
+            @NonNull Callable<String> inputCode) throws IOException {
         return resolve(client, response, inputCode, 3);
-    }
-
-    @SneakyThrows
-    public static LoginResponse resolve(IGLoginException ex, Callable<String> inputCode)
-            throws IGLoginException {
-        return resolve(ex.getClient(), ex.getLoginResponse(), inputCode);
-    }
-
-    @SneakyThrows
-    public static LoginResponse resolve(IGLoginException ex, Callable<String> inputCode, int retries)
-            throws IGLoginException {
-        return resolve(ex.getClient(), ex.getLoginResponse(), inputCode, retries);
     }
 
     @SneakyThrows
