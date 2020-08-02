@@ -35,6 +35,6 @@ public class FriendshipsActionRequest extends IGPostRequest<FriendshipStatusResp
     }
 
     public static enum FriendshipsAction {
-        BLOCK, UNBLOCK, CREATE, DESTROY, APPROVE, NORE, REMOVE_FOLLOWER;
+        BLOCK, UNBLOCK, CREATE, DESTROY, APPROVE, IGNORE, REMOVE_FOLLOWER;
     }
 }
