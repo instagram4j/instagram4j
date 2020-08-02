@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.instagram4j.Instagram4J.IGClient;
 import com.github.instagram4j.Instagram4J.IGConstants;
-import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.responses.IGResponse;
 import com.github.instagram4j.Instagram4J.utils.IGUtils;
 
@@ -38,11 +37,11 @@ public abstract class IGRequest<T extends IGResponse> {
         return HttpUrl.parse(IGConstants.BASE_API_URL + apiPath() + path() + getQueryString(client));
     }
     
-    public T execute(IGClient client) throws IGResponseException {
+    public T execute(IGClient client) throws IOException {
         return client.sendRequest(this);
     }
     
-    public <E> E execute(IGClient client, Class<E> clazz) throws IGResponseException {
+    public <E> E execute(IGClient client, Class<E> clazz) throws IOException {
         return client.sendRequest(this, clazz);
     }
 

@@ -5,12 +5,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-import java.net.Proxy;
 import java.util.function.Consumer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.instagram4j.Instagram4J.actions.IGClientActions;
-import com.github.instagram4j.Instagram4J.exceptions.IGChallengeException;
 import com.github.instagram4j.Instagram4J.exceptions.IGLoginException;
 import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.models.IGPayload;
@@ -31,7 +28,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -72,20 +68,16 @@ public class IGClient implements Serializable {
         return this.actions;
     }
     
-    public void sendSyncRequest() throws IGResponseException {
-        try {
-            Response response = httpClient.newCall(new QeSyncRequest().formRequest(this)).execute();
-            log.info("Response for {} : {}", QeSyncRequest.class.getName(), response.code());
-            this.encryptionId = response.header("ig-set-password-encryption-key-id");
-            this.encryptionKey = response.header("ig-set-password-encryption-pub-key");
-            log.info("Encryption key id : {}", this.encryptionId);
-            log.info("Encryption key (truncated) : {}", this.encryptionKey.substring(20));
-        } catch (IOException ex) {
-            throw new IGResponseException(null, ex.getMessage(), ex);
-        }
+    public void sendSyncRequest() throws IOException {
+        Response response = httpClient.newCall(new QeSyncRequest().formRequest(this)).execute();
+        log.info("Response for {} : {}", QeSyncRequest.class.getName(), response.code());
+        this.encryptionId = response.header("ig-set-password-encryption-key-id");
+        this.encryptionKey = response.header("ig-set-password-encryption-pub-key");
+        log.info("Encryption key id : {}", this.encryptionId);
+        log.info("Encryption key (truncated) : {}", this.encryptionKey.substring(20));
     }
 
-    public LoginResponse sendLoginRequest() throws IGLoginException, IGResponseException {
+    public LoginResponse sendLoginRequest() throws IGLoginException, IOException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.info("Sending sync request. . .");
             this.sendSyncRequest();
@@ -100,7 +92,7 @@ public class IGClient implements Serializable {
     }
 
     public LoginResponse sendLoginRequest(String code, String identifier)
-            throws IGLoginException, IGResponseException {
+            throws IGLoginException, IOException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.info("Sending sync request. . .");
             this.sendSyncRequest();
@@ -114,28 +106,24 @@ public class IGClient implements Serializable {
         return res;
     }
 
-    public <T extends IGResponse> T sendRequest(@NonNull IGRequest<T> req) throws IGResponseException {
-        return sendRequest(req, req.getResponseType());
+    public <T extends IGResponse> T sendRequest(@NonNull IGRequest<T> req) throws IOException {
+        T response = sendRequest(req, req.getResponseType());
+        if (response.getMessage() != null && response.getMessage().equals("login_required")) {
+            this.loggedIn = false;
+            throw new IGResponseException(response);
+        }
+        
+        return response;
     }
 
-    public <T> T sendRequest(@NonNull IGRequest<?> req, Class<T> view) throws IGResponseException {
-        Response res;
-        try {
-            log.info("Sending request : {}", req.getClass().getName());
-            res = httpClient.newCall(req.formRequest(this)).execute();
-            log.info("Response for {} : {}", req.getClass().getName(), res.code());
-        } catch (IOException ex) {
-            throw new IGResponseException(null, "exception occured during request", ex);
-        }
-
+    public <T> T sendRequest(@NonNull IGRequest<?> req, Class<T> view) throws IOException {
+        log.info("Sending request : {}", req.getClass().getName());
+        Response res = httpClient.newCall(req.formRequest(this)).execute();
+        log.info("Response for {} : {}", req.getClass().getName(), res.code());
         try (ResponseBody body = res.body()) {
             T t = req.parseResponse(body.string(), view);
             if (t instanceof IGResponse) ((IGResponse) t).setStatusCode(res.code());
             return t;
-        } catch (JsonProcessingException exception) {
-            throw new IGResponseException(res, "Json processing failed", exception);
-        } catch (IOException exception) {
-            throw new IGResponseException(res, "malformed body received", exception);
         }
     }
 
@@ -166,52 +154,19 @@ public class IGClient implements Serializable {
         return load;
     }
 
-    public void setCookieJar(CookieJar jar) {
-        this.httpClient = this.httpClient.newBuilder().cookieJar(jar).build();
-    }
-
-    public void setProxy(Proxy proxy) {
-        this.httpClient = this.httpClient.newBuilder().proxy(proxy).build();
-    }
-
     public static IGClient.Builder builder() {
         return new IGClient.Builder();
     }
 
     public static IGClient from(InputStream from) throws ClassNotFoundException, IOException {
-        return from(from, null, null);
+        return from(from, IGUtils.formDefaultHttpClient());
     }
 
-    public static IGClient from(InputStream from, CookieJar jar) throws ClassNotFoundException, IOException {
-        return from(from, jar, null);
-    }
-
-    public static IGClient from(InputStream from, Proxy proxy) throws ClassNotFoundException, IOException {
-        return from(from, null, proxy);
-    }
-
-    public static IGClient from(InputStream from, CookieJar jar, Proxy proxy)
-            throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(from)) {
-            IGClient client = (IGClient) in.readObject();
-            if (jar != null)
-                client.setCookieJar(jar);
-            if (proxy != null)
-                client.setProxy(proxy);
-
-            return client;
-        }
-    }
-
-    public static IGClient from(InputStream from, CookieJar jar, Proxy proxy, @NonNull OkHttpClient httpClient)
+    public static IGClient from(InputStream from, @NonNull OkHttpClient httpClient)
             throws IOException, ClassNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(from)) {
             IGClient client = (IGClient) in.readObject();
             client.httpClient = httpClient;
-            if (jar != null)
-                client.setCookieJar(jar);
-            if (proxy != null)
-                client.setProxy(proxy);
 
             return client;
         }
@@ -232,32 +187,20 @@ public class IGClient implements Serializable {
     public static class Builder {
         private String withUsername;
         private String withPassword;
-        private CookieJar withCookieJar;
         private OkHttpClient withClient = IGUtils.formDefaultHttpClient();
-        private Proxy withProxy;
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
         private Consumer<LoginResponse> onSuccessfulLogin = (login) -> {};
 
         public IGClient build() {
-            IGClient client = new IGClient(withUsername, withPassword);
-            if (withClient != null)
-                client.setHttpClient(withClient);
-            if (withProxy != null)
-                client.setProxy(withProxy);
-            if (withCookieJar != null)
-                client.setCookieJar(withCookieJar);
-
-            return client;
+            return new IGClient(withUsername, withPassword, withClient);
         }
 
-        public IGClient login() throws IGLoginException, IGChallengeException {
+        public IGClient login() throws IOException {
             IGClient client = build();
 
             try {
                 onSuccessfulLogin.accept(client.sendLoginRequest());
-            } catch (IGResponseException exception) {
-                throw new IGLoginException(exception);
             } catch (IGLoginException ex) {
                 LoginResponse response = ex.getLoginResponse();
 
@@ -266,9 +209,9 @@ public class IGClient implements Serializable {
                 } 
                 if (ex.getLoginResponse().getChallenge() != null && onChallenge != null) {
                     response = onChallenge.accept(client, response);
+                    client.setLoggedInState(response); // will throw if response is not ok
                 }
 
-                client.setLoggedInState(response); // will throw if response is not ok
                 onSuccessfulLogin.accept(response);
             }
 
@@ -277,8 +220,7 @@ public class IGClient implements Serializable {
 
         @FunctionalInterface
         public static interface LoginHandler {
-            public LoginResponse accept(IGClient client, LoginResponse t)
-                    throws IGChallengeException;
+            public LoginResponse accept(IGClient client, LoginResponse t);
         }
     }
 }

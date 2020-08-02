@@ -1,9 +1,9 @@
 package com.github.instagram4j.Instagram4J.actions.feed;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import com.github.instagram4j.Instagram4J.IGClient;
-import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.requests.IGPaginatedRequest;
 import com.github.instagram4j.Instagram4J.responses.IGPaginatedResponse;
 
@@ -25,7 +25,7 @@ public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> 
     }
 
     @Override
-    @SneakyThrows(IGResponseException.class)
+    @SneakyThrows(IOException.class)
     public T next() {
         response = request.execute(client);
         request.setMax_id(response.getNext_max_id());

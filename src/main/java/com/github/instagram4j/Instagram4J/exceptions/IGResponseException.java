@@ -1,17 +1,17 @@
 package com.github.instagram4j.Instagram4J.exceptions;
 
-import org.jetbrains.annotations.Nullable;
+import java.io.IOException;
+
+import com.github.instagram4j.Instagram4J.responses.IGResponse;
 
 import lombok.Getter;
-import okhttp3.Response;
 
 @Getter
-public class IGResponseException extends Exception {
-    @Nullable
-    private final Response response;
+public class IGResponseException extends IOException {
+    private final IGResponse response;
 
-    public IGResponseException(Response response, String message, Throwable pass) {
-        super(message + " " + pass.getMessage(), pass);
+    public IGResponseException(IGResponse response) {
+        super(response.getMessage());
         this.response = response;
     }
 }

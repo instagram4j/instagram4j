@@ -1,9 +1,9 @@
 package com.github.instagram4j.Instagram4J.actions.upload;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import com.github.instagram4j.Instagram4J.IGClient;
-import com.github.instagram4j.Instagram4J.exceptions.IGResponseException;
 import com.github.instagram4j.Instagram4J.models.media.UploadParameters;
 import com.github.instagram4j.Instagram4J.requests.upload.MediaUploadFinishRequest;
 import com.github.instagram4j.Instagram4J.requests.upload.RuploadPhotoRequest;
@@ -24,29 +24,29 @@ public class UploadAction {
     @NonNull
     private IGClient client;
     
-    public RuploadPhotoResponse photo(byte[] data, String upload_id, boolean is_sidecar) throws IGResponseException {
+    public RuploadPhotoResponse photo(byte[] data, String upload_id, boolean is_sidecar) throws IOException {
         return new RuploadPhotoRequest(data, "1", upload_id, is_sidecar).execute(client);
     }
     
-    public RuploadPhotoResponse photo(byte[] data, String upload_id) throws IGResponseException {
+    public RuploadPhotoResponse photo(byte[] data, String upload_id) throws IOException {
         return photo(data, upload_id, false);
     }
     
-    public IGResponse video(byte[] data, byte[] cover, UploadParameters parameters) throws IGResponseException {
+    public IGResponse video(byte[] data, byte[] cover, UploadParameters parameters) throws IOException {
         new RuploadVideoRequest(data, parameters).execute(client);
         return photo(cover, parameters.getUpload_id());
     }
     
-    public IGResponse chunkedVideo(byte[] data, byte[] cover, int chunk_size,  String upload_id) throws IGResponseException {
+    public IGResponse chunkedVideo(byte[] data, byte[] cover, int chunk_size,  String upload_id) throws IOException {
         segments(upload_id, toSegments(data, chunk_size), data.length);
         return photo(cover, upload_id);
     }
     
-    public IGResponse finish(String upload_id) throws IGResponseException {
+    public IGResponse finish(String upload_id) throws IOException {
         return new MediaUploadFinishRequest(upload_id).execute(client);
     }
     
-    public IGResponse segments(String upload_id, byte[][] segments, int totalLengthBytes) throws IGResponseException {
+    public IGResponse segments(String upload_id, byte[][] segments, int totalLengthBytes) throws IOException {
         String transfer_id = upload_id;
         UploadParameters parameter = UploadParameters.forIgtv(upload_id);
         RuploadSegmentVideoPhaseRequest start = new RuploadSegmentVideoPhaseRequest(Phase.START, parameter), end;
