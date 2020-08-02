@@ -1,13 +1,13 @@
 package com.github.instagram4j.Instagram4J.requests.media;
 
 import com.github.instagram4j.Instagram4J.requests.IGGetRequest;
-import com.github.instagram4j.Instagram4J.responses.feed.UsersFeedResponse;
+import com.github.instagram4j.Instagram4J.responses.feed.FeedUsersResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MediaGetLikersRequest extends IGGetRequest<UsersFeedResponse> {
+public class MediaGetLikersRequest extends IGGetRequest<FeedUsersResponse> {
     @NonNull
     private String _id;
 
@@ -17,7 +17,7 @@ public class MediaGetLikersRequest extends IGGetRequest<UsersFeedResponse> {
     }
     
     @Override
-    public Class<UsersFeedResponse> getResponseType() {
-        return UsersFeedResponse.class;
+    public Class<FeedUsersResponse> getResponseType() {
+        return FeedUsersResponse.class;
     }
 }

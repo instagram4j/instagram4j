@@ -8,7 +8,7 @@ import com.github.instagram4j.Instagram4J.responses.IGPaginatedResponse;
 import lombok.Data;
 
 @Data
-public class UsersFeedResponse extends IGPaginatedResponse {
+public class FeedUsersResponse extends IGPaginatedResponse {
     private List<Profile> users;
     private String next_max_id;
     
