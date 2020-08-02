@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.github.instagram4j.Instagram4J.IGClient;
-import com.github.instagram4j.Instagram4J.actions.feed.FeedIterable;
+import com.github.instagram4j.Instagram4J.actions.feed.FeedIterator;
 import com.github.instagram4j.Instagram4J.models.media.UploadParameters;
 import com.github.instagram4j.Instagram4J.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.Instagram4J.requests.media.MediaConfigureSidecarRequest;
@@ -30,8 +30,8 @@ public class TimelineAction {
     @NonNull
     private IGClient client;
     
-    public FeedIterable<FeedTimelineResponse> feed() {
-        return new FeedIterable<>(client, FeedTimelineRequest::new);
+    public FeedIterator<FeedTimelineResponse> feed() {
+        return new FeedIterator<>(client, new FeedTimelineRequest());
     }
     
     public MediaConfigureTimelineResponse uploadPhoto(byte[] data, MediaConfigurePayload payload) throws IOException {
