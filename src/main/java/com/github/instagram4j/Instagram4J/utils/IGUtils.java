@@ -25,6 +25,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -246,6 +247,10 @@ public class IGUtils {
     
     public static <T> T convertToView(Object o, Class<T> view) {
         return MAPPER.convertValue(o, view);
+    }
+    
+    public static <T> T convertToView(Object o, TypeReference<T> type) {
+        return MAPPER.convertValue(o, type);
     }
 
     public static Optional<String> getCookieValue(CookieJar jar, String key) {
