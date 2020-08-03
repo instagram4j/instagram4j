@@ -3,7 +3,7 @@ instagram4j
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 
 :camera: Java wrapper using OkHttpClient for Instagram's private api (Android emulation)
-### Table of contents
+## Table of contents
  - [Install](#install)
  - [Overview](#overview)
 	 - [Features](#features)
@@ -17,12 +17,12 @@ instagram4j
 	 - Serialization
  - [Key Concepts](#key-concepts)
 
-## Install
+# Install
 Download release jar.
 More information soon to follow.
-## Overview
+# Overview
 This Java library provides requests that emulate the Android Instagram app. Most of the official app functionality is supported here. This library has undergone a massive rewrite (instagram4j 1.x.x is not compatible) The rewrite intends to help with maintainability and flexibility throughout time.
-### Features
+## Features
 Most of the Android Instagram app features are supported. Here are some notable ones.
 - OkHttpClient and jackson-databind
 - two factor login
@@ -31,8 +31,8 @@ Most of the Android Instagram app features are supported. Here are some notable 
 - serialization
 - timeline, story, live, direct messaging, shopping, and more!
 
-## Usage
-### Terms and Conditions
+# Usage
+## Terms and Conditions
 This library is intended for personal use and for educational experiences due to limitations of Instagram's public API.
 
  - Please use Instagram's public API if possible
@@ -47,20 +47,20 @@ Contributors are not responsible for usage and maintainability. Due to the natur
 
 ---
 
-### Setup and Login
+## Setup and Login
 An IGClient instance must be constructed and logged in to send most requests. 
-#### Simple Login
+### Simple Login
 Basic login using IGClient builder method.
-##### *Example:*
+#### *Example:*
 ```java
 IGClient client = IGClient.builder()
         .withUsername("username")
         .withPassword("password")
         .login();
 ```
-#### Two factor login
+### Two factor login
 Provide a consumer that may resolve two factor login process. The example uses the included utility to resolve two factor logins.
-##### *Example:*
+#### *Example:*
 ```java
 Scanner scanner = new Scanner(System.in);
 
@@ -83,9 +83,9 @@ IGClient client = IGClient.builder()
         .onTwoFactor(twoFactorHandler)
         .login();
 ```
-#### Challenge login
+### Challenge login
 Sometimes a challenge may arise when logging in. Provide a LoginHandler to handle challenges. The example uses the included utility to handle challenges automatically.
-##### *Example:*
+#### *Example:*
 ```java
 Scanner scanner = new Scanner(System.in);
 
@@ -108,7 +108,7 @@ IGClient client = IGClient.builder()
         .onChallenge(challengeHandler)
         .login();
 ```
-#### Login with proxy
+### Login with proxy
 You may provide Proxy and Authenticator for the Proxy thru configuring an OkHttpClient and passing it in thru the builder.
 ```java
 OkHttpClient httpClient = new OkHttpClient.Builder().proxy(...).build();
@@ -118,23 +118,23 @@ IGClient client = IGClient.builder()
         .client(httpClient)
         .login();
 ```
-## Key concepts
+# Key concepts
 May be moved into Wiki section for detailed documentation.
 
-### IGClient Actions
+## IGClient Actions
 This library contains currently a very **limited** fluent wrapper for common actions. Such actions usually are composed of multiple requests (e.g. uploading a photo), so for convenience the action is wrapped into a single call. Common requests are also wrapped. This is very **experimental** and subject to design changes at any time.
-#### *Example:*
+### *Example:*
 Uploading a photo to your timeline using the fluent wrapper
 ```java
 IGClient client = ...
 // Upload photo using fluent wrapper. Also returns the appropriate IGResponse
 client.actions().timeline().uploadPhoto(new File("myPhoto.jpg"), "My Caption");
 ```
-### IGRequest
+## IGRequest
 IGRequest is the base abstract class for IGPostRequest and IGGetRequest, similar to the previous version. These abstract classes allow for requests to conform to a "standard" for maintainability and readability. The idea is for developers to easily make new requests for new endpoints in the future. IGRequest objects are passed into the **sendRequest** method in IGClient to be executed and parsed into its corresponding response or view. For convenience, IGRequest objects have an **execute** method that takes in IGClient to execute the request. Additionally, **formRequest** in IGRequest objects may be used to form a Request to be executed by OkHttpClient.
-#### IGPostRequest
+### IGPostRequest
 For POST actions in the Instagram app, a JSON **payload** is used. The library makes use of jackson-databind to serialize POJO into JSON. In previous versions, the payload had to be "signed". However in newer versions, Instagram does not seem to require that anymore. Some requests do still require a url encoded form with "SIGNATURE" as the signature.
-#### *Example:*
+### *Example:*
 ```java
 IGClient client = ...
 FeedTimelineRequest request = new FeedTimelineRequest();
@@ -147,30 +147,28 @@ FeedTimelineRequest request = new FeedTimelineRequest();
 // Alternatively use execute
 FeedTimelineResponse response = request.execute(client);
 ```
-### IGResponse
+## IGResponse
 POJO for JSON deserialization by jackson-databind. All IGResponse subclasses have a fallback map for properties not explicitly declared. Additionally, a different view entirely can be used to deserialize JSON. The idea is to support newer properties should there ever be updates instead of relying on hard coded properties as previously.
-#### *Example:*
+### *Example:*
 Extracting story_cta ("See More") link text and then logging it.
 
 Sample JSON for FeedReelsTrayResponse:
-```json
+```
 {
-	"tray": [
-		{
-			"id": ...
-			...
-			"story_cta": [
-				{
-					"links": [
-						{
-							...
-							"webUri": "..."
-						}
-					]
-				}
-			]
-		}
-	]
+    "tray": [
+        {
+            "id": "...",
+	    "story_cta": [
+	        {
+		    "links": [
+		        {
+			     "webUri": "..."
+			}
+	             ]
+	         }
+            ]
+        }
+    ]
 }
 ```
 Sample code:
