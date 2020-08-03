@@ -1,3 +1,5 @@
+
+
 instagram4j
 ========
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
@@ -6,15 +8,15 @@ instagram4j
 ## Table of contents
  - [Install](#install)
  - [Overview](#overview)
-	 - [Features](#features)
+     - [Features](#features)
  - [Usage](#usage)
- -  - [Terms and Conditions](#terms-and-conditions)
-	 - [Setup & Login](#setup-and-login)
-		 - [Simple Login](#simple-login)
-		 - [Two factor login](#two-factor-login)
-		 - [Challenge login](#challenge-login)
-		 - [Login with proxy](#login-with-proxy)
-	 - Serialization
+     - [Terms and Conditions](#terms-and-conditions)
+     - [Setup & Login](#setup-and-login)
+         - [Simple Login](#simple-login)
+         - [Two factor login](#two-factor-login)
+         - [Challenge login](#challenge-login)
+         - [Login with proxy](#login-with-proxy)
+     - [Serialization](#serialization)
  - [Key Concepts](#key-concepts)
 
 # Install
@@ -66,8 +68,8 @@ Scanner scanner = new Scanner(System.in);
 
 // Callable that returns inputted code from System.in
 Callable<String> inputCode = () -> {
-	System.out.print("Please input code: ");
-	return scanner.nextLine();
+    System.out.print("Please input code: ");
+    return scanner.nextLine();
 };
 
 // handler for two factor login
@@ -91,8 +93,8 @@ Scanner scanner = new Scanner(System.in);
 
 // Callable that returns inputted code from System.in
 Callable<String> inputCode = () -> {
-	System.out.print("Please input code: ");
-	return scanner.nextLine();
+    System.out.print("Please input code: ");
+    return scanner.nextLine();
 };
 
 // handler for challenge login
@@ -118,6 +120,10 @@ IGClient client = IGClient.builder()
         .client(httpClient)
         .login();
 ```
+## Serialization
+IGClient is a Serializable object that can be saved and later reconstructed. **Session cookies however must be separately serialized**. Session cookies for OkHttpClient are done through an implementation of CookieJar. You may provide your own implementation of a serializable cookie jar and then serialize your cookies for later use. Session cookies are good for 90 days and avoids relogins.
+
+See example for serialization and deserialization here.
 # Key concepts
 May be moved into Wiki section for detailed documentation.
 
@@ -155,20 +161,20 @@ Extracting story_cta ("See More") link text and then logging it.
 Sample JSON for FeedReelsTrayResponse:
 ```
 {
-    "tray": [
+  "tray":[
+    {
+      "id":"...",
+      "story_cta":[
         {
-            "id": "...",
-	    "story_cta": [
-	        {
-		    "links": [
-		        {
-			     "webUri": "..."
-			}
-	             ]
-	         }
-            ]
+          "links":[
+            {
+              "webUri":"..."
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
 Sample code:
@@ -193,16 +199,16 @@ Alternatively by constructing a POJO and using jackson,
 // using lombok for getters
 @Getter
 public class StoryCta {
-	private List<StoryCtaLink> links;
-	...
-	public static List<StoryCta> convert(Object o) {
+    private List<StoryCtaLink> links;
+    ...
+    public static List<StoryCta> convert(Object o) {
         return IGUtils.convertToView(o, new TypeReference<List<StoryCta>>() {});
     }
     
     @Getter
     public static class StoryCtaLink {
-	    private String webUri;
-	    ...
+        private String webUri;
+        ...
     }
 }
 ```
@@ -218,7 +224,7 @@ response.getTray().forEach(tray -> {
     .flatMap(story_cta -> StoryCta.convert(story_cta).stream())
     .forEach(item -> {
        log.debug(item.getLinks().get(0).getWebUri());
-	});
+    });
 });
 ```
 ### Feeds
@@ -231,9 +237,9 @@ FeedIterator<FeedTimelineResponse> iter = new FeedIterator<>(client, new FeedTim
 // setting a limit of 2 responses (initial and one paginated)
 int limit = 2;
 while (iter.hasNext() && limit-- > 0) {
-	FeedTimelineResponse response = iter.next();
-	// Actions here
-	response.getFeed_items().forEach(...);
-	// Recommended to wait in between iterations
+    FeedTimelineResponse response = iter.next();
+    // Actions here
+    response.getFeed_items().forEach(...);
+    // Recommended to wait in between iterations
 }
 ```
