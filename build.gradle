@@ -1,7 +1,17 @@
 plugins {
     id 'java-library'
     id 'io.freefair.lombok' version '5.1.0'
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.5'
+    id 'net.nemerosa.versioning' version '2.8.2'
 }
+
+group = 'com.github.instagram4j'
+archivesBaseName = 'instagram4j'
+// For release
+// ./gradlew clean bintrayUpload -Prelease=true
+// Otherwise commit SHA will be appended
+version = "${versioning.info.display}${project.hasProperty('release') ? '' : ('-' + versioning.info.build)}"
 
 repositories {
     jcenter()
@@ -25,4 +35,53 @@ dependencies {
     testImplementation 'log4j:log4j:1.2.17'
     testImplementation 'junit:junit:4.12'
     testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenPublish(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId group
+            artifactId archivesBaseName
+            version version
+        }
+    }
+}
+
+bintray {
+    user = project.findProperty('bintray_user') ?: System.getenv('BINTRAY_USER')
+    key = project.findProperty('bintray_key') ?: System.getenv('BINTRAY_KEY')
+    publications = ['mavenPublish']
+    pkg {
+        repo = 'maven'
+        name = archivesBaseName
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/instagram4j/instagram4j'
+        publish = true
+        version {
+            desc = "Release ${project.version}"
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = project.findProperty('gpg_passphrase') ?: System.getenv('GPG_PASSPHRASE')
+            }
+        }
+    }
 }
