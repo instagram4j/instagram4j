@@ -15,6 +15,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 
 public class FeedUserReelsMediaTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeedRequest()
             throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");

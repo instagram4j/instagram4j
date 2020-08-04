@@ -16,6 +16,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 
 public class UserInfoRequestTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLogin()
             throws IGLoginException, IGResponseException, ClassNotFoundException, FileNotFoundException, IOException {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");

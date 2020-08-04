@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MusicRequestTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testBrowse() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicBrowseResponse response = new MusicBrowseRequest().execute(client);
@@ -33,6 +34,7 @@ public class MusicRequestTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testTrend() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicTrackResponse response = new MusicTrendingRequest().execute(client);
@@ -43,6 +45,7 @@ public class MusicRequestTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearch() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicTrackResponse response = new MusicSearchRequest("the box").execute(client);
@@ -52,6 +55,7 @@ public class MusicRequestTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testMoods() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicGetResponse response = new MusicGetGenresRequest().execute(client);
@@ -61,6 +65,7 @@ public class MusicRequestTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testGenreId() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MusicGenresIdRequest("pop").execute(client);
@@ -69,6 +74,7 @@ public class MusicRequestTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLyrics() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicTrackLyricsResponse response = new MusicTrackLyricsRequest("319999298968664").execute(client);

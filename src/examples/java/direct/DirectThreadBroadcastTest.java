@@ -33,6 +33,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 
 public class DirectThreadBroadcastTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeen()
             throws IGLoginException, IGResponseException, IOException, ClassNotFoundException {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
@@ -42,6 +43,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testText() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -50,6 +52,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testProfile() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -58,6 +61,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testMediaShare() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -66,6 +70,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testReelShare() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -74,6 +79,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testStoryShare() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -82,6 +88,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testUploadPhoto() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -94,6 +101,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testUploadVideo() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -107,6 +115,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testUploadVoice() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -119,6 +128,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLink() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128163165245788989"; // "340282366841710300949128198037200507384";
@@ -127,6 +137,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChangeTitle() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128134036896195180";
@@ -135,6 +146,7 @@ public class DirectThreadBroadcastTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAction() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128134036896195180";

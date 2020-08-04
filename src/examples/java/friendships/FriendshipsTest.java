@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FriendshipsTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testShow() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FriendshipsShowRequest show = new FriendshipsShowRequest(18428658l);
@@ -33,6 +34,7 @@ public class FriendshipsTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testShowMany() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FriendshipsShowManyRequest show = new FriendshipsShowManyRequest(18428658l, 18428658l);
@@ -42,6 +44,7 @@ public class FriendshipsTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testActions() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response =  new FriendshipsActionRequest(18428658l, FriendshipsAction.APPROVE).execute(client);
@@ -50,6 +53,7 @@ public class FriendshipsTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testBesties() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response =  new FriendshipsSetBestiesRequest(true, 18428658L, 18428658L).execute(client);
@@ -58,6 +62,7 @@ public class FriendshipsTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFollowers() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUsersResponse response =  new FriendshipsFeedsRequest(18428658L, FriendshipsFeeds.FOLLOWING).execute(client);
@@ -69,6 +74,7 @@ public class FriendshipsTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeeds() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUsersResponse response =  new FriendshipsPendingRequest().execute(client);

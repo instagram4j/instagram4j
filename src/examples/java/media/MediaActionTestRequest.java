@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MediaActionTestRequest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testInfo() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaInfoRequest(IGUtils.fromCode("CClpx7qsYm-") + "").execute(client);
@@ -32,6 +33,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testDelete() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaActionRequest("2342700818431830321_18428658", MediaAction.DELETE).execute(client);
@@ -39,6 +41,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSave() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaActionRequest("2351884457617569072_18428658", MediaAction.UNSAVE).execute(client);
@@ -46,6 +49,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testEdit() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaEditRequest("2342700818431830321_18428658", "edited caption").execute(client);
@@ -53,6 +57,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeen() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserReelsMediaResponse reels = new FeedUserReelMediaRequest(18428658l).execute(client);
@@ -61,6 +66,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testOnlyMe() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaActionRequest("2351884457617569072_18428658", MediaAction.UNDO_ONLY_ME).execute(client);
@@ -68,6 +74,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLike() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaActionRequest("2351884457617569072", MediaAction.ENABLE_COMMENTS).execute(client);
@@ -75,6 +82,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testComment() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaCommentRequest("2351884457617569072", "Gangnam").execute(client);
@@ -82,6 +90,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testComments() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MediaGetCommentsResponse response = new MediaGetCommentsRequest("2355325964336133761_18428658").execute(client);
@@ -92,6 +101,7 @@ public class MediaActionTestRequest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLikers() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUsersResponse response = new MediaGetLikersRequest("2355325964336133761_18428658").execute(client);

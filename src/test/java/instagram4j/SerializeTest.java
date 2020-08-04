@@ -18,6 +18,7 @@ import lombok.SneakyThrows;
 
 public class SerializeTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testProfile() throws IOException, ClassNotFoundException {
         Profile profile = new Profile();
         profile.setFull_name("Test name");
@@ -37,6 +38,7 @@ public class SerializeTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testIGClient() throws IOException, ClassNotFoundException {
         IGClient client = IGClient.builder().username("username").password("password").build();
         File file = File.createTempFile("client", ".ser");

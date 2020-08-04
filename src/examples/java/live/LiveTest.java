@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LiveTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void test()
             throws IGLoginException, IGResponseException, ClassNotFoundException,
             FileNotFoundException, IOException {

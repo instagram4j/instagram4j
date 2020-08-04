@@ -17,7 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FeedUserRequestTest {
-    @Test // 2336729204844097508_18428658
+    @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions // 2336729204844097508_18428658
     public void testFeedRequest()
             throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");

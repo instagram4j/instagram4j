@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FeedIterableTest {
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testIterator() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         // form a FeedIterator for FeedTimelineRequest

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UsersActionTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFriendship() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         UserAction user = client.actions().users().findByUsername("kimkardashian");

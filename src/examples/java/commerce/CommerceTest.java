@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommerceTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testDestination() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         CommerceDestinationResponse response = new CommerceDestinationRequest().execute(client);
@@ -24,6 +25,7 @@ public class CommerceTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testProductDetails() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         CommerceProductsDetailsResponse response = new CommerceProductsDetailsRequest("2562765907136094", "7734459462").execute(client);

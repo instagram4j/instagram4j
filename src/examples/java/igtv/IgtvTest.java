@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IgtvTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearch() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvSearchRequest req = new IgtvSearchRequest("prank");
@@ -26,6 +27,7 @@ public class IgtvTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeed() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvBrowseFeedRequest req = new IgtvBrowseFeedRequest("");
@@ -34,6 +36,7 @@ public class IgtvTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChannel() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvChannelRequest req = new IgtvChannelRequest("user_18428658");
@@ -43,6 +46,7 @@ public class IgtvTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeriesCreate() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvSeriesCreateRequest req = new IgtvSeriesCreateRequest("Earth's Videos", "A collection of cool videos");
@@ -51,6 +55,7 @@ public class IgtvTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeriesAdd() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String series_id = "17893711502749460";

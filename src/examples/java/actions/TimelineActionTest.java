@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TimelineActionTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeed() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedIterator<FeedTimelineResponse> iter = client.actions().timeline().feed();
@@ -34,6 +35,7 @@ public class TimelineActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPhoto() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = client.actions().timeline().uploadPhoto(new File("src/examples/resources/test.jpg"), "Nice photo");
@@ -42,6 +44,7 @@ public class TimelineActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testVideo() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = client.actions().timeline().uploadVideo(new File("src/examples/resources/test.mp4"), new File("src/examples/resources/cover.jpg"), "Nice photo");
@@ -50,6 +53,7 @@ public class TimelineActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAlbum() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         List<SidecarInfo> info = Arrays.asList(SidecarPhoto.from(new File("src/examples/resources/cover.jpg")), SidecarVideo.from(new File("src/examples/resources/test.mp4"), new File("src/examples/resources/cover.jpg")));

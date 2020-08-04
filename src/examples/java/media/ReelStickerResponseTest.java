@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 // poll 17958171793339158
 public class ReelStickerResponseTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testMediaViewer() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new MediaListReelMediaViewerRequest("2364185211807618943").execute(client);
@@ -28,6 +29,7 @@ public class ReelStickerResponseTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testStoryQuestionResponses() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MediaGetStoryQuestionResponsesResponse response = new MediaGetStoryQuestionResponsesRequest("2364185211807618943", "17958669613337332").execute(client);
@@ -37,6 +39,7 @@ public class ReelStickerResponseTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testStoryPollResponses() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MediaGetStoryPollVotersResponse response = new MediaGetStoryPollVotersRequest("2364185211807618943", "17958171793339158").execute(client);

@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DirectInboxTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testInbox()
             throws IGLoginException, IGResponseException, IOException, ClassNotFoundException {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
@@ -36,6 +37,7 @@ public class DirectInboxTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPending() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new DirectPendingInboxRequest().execute(client);
@@ -43,6 +45,7 @@ public class DirectInboxTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testThreads() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128134036896195180";
@@ -51,6 +54,7 @@ public class DirectInboxTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testGetByParticipants() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         DirectThreadsResponse response = new DirectGetByParticipantsRequest(18428658L).execute(client);
@@ -58,6 +62,7 @@ public class DirectInboxTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPresence() throws Exception {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = lib.sendRequest(new DirectGetPresenceRequest());

@@ -23,6 +23,7 @@ import com.github.instagram4j.instagram4j.responses.media.RuploadPhotoResponse;
 
 public class UploadPhotoTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void uploadTest()
             throws IGLoginException, IOException, IGResponseException, ClassNotFoundException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");

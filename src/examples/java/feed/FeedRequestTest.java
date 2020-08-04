@@ -18,6 +18,7 @@ import serialize.SerializeTestUtil;
 @Slf4j
 public class FeedRequestTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeedRequest()
             throws IGResponseException, IGLoginException, ClassNotFoundException,
             FileNotFoundException, IOException {

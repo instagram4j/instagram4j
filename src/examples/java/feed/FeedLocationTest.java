@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FeedLocationTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedLocationResponse response = new FeedLocationRequest(106048159426257l).execute(client);

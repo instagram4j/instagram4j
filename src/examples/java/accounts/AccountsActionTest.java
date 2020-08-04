@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AccountsActionTest {
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testCurrent() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         AccountsUserResponse response = new AccountsCurrentUserRequest().execute(client);
@@ -32,6 +33,7 @@ public class AccountsActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testEdit() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new AccountsEditProfileRequest(new AccountsEditProfilePayload("username", "user@email.com").first_name("First name").biography("Cool!")).execute(client);
@@ -40,6 +42,7 @@ public class AccountsActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSetBiography() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new AccountsSetBiographyRequest("Test boi!").execute(client);
@@ -47,6 +50,7 @@ public class AccountsActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChangeProfilePicture() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String upload = String.valueOf(System.currentTimeMillis());
@@ -56,6 +60,7 @@ public class AccountsActionTest {
     }
     
     @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAction() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = new AccountsActionRequest(AccountsAction.SET_PRIVATE).execute(client);
