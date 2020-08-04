@@ -25,13 +25,13 @@ repositories {
 dependencies {
     // OkHttp
     api 'com.squareup.okhttp3:okhttp:4.7.2'
+    api 'com.squareup.okhttp3:okhttp-urlconnection:4.7.2'
     // jackson data-bind
     api 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
     api 'com.fasterxml.jackson.core:jackson-annotations:2.11.0'
+    api 'org.slf4j:slf4j-api:1.7.30'
     
     // Internal utilities
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.7.2'
-    implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'commons-codec:commons-codec:1.5'
     
     // Test utilities
