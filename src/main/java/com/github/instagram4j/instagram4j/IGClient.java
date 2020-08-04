@@ -176,7 +176,8 @@ public class IGClient implements Serializable {
         this.httpClient = IGUtils.formDefaultHttpClient();
         this.sessionId = IGUtils.randomUuid();
         this.actions = new IGClientActions(this);
-        log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
+        if (loggedIn)
+            log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
         return this;
     }
 
