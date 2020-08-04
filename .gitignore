@@ -19,7 +19,6 @@ target/
 *.iml
 .idea
 
-src/test/*
 src/examples/resources/
 build/
 .gradle
