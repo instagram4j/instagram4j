@@ -9,9 +9,9 @@ plugins {
 group = 'com.github.instagram4j'
 archivesBaseName = 'instagram4j'
 // For release
-// ./gradlew clean bintrayUpload -Prelease=true
-// Otherwise commit SHA will be appended
-version = "${versioning.info.display}${project.hasProperty('release') ? '' : ('-' + versioning.info.build)}"
+// Must be on release/<version> branch
+// Other full name is used
+version = "${versioning.info.branchType.equals('release') ? versioning.info.display : versioning.info.full}"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -77,6 +77,7 @@ bintray {
     pkg {
         repo = 'maven'
         name = archivesBaseName
+        userOrg = 'instagram4j'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/instagram4j/instagram4j'
         publish = true
