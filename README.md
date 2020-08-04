@@ -17,10 +17,10 @@ instagram4j
          - [Challenge login](#challenge-login)
          - [Login with proxy](#login-with-proxy)
      - [Serialization](#serialization)
+     - [Sending requests and actions](#sending-requests-and-actions)
  - [Key Concepts](#key-concepts)
 
 # Install
-Download release jar.
 More information soon to follow.
 # Overview
 This Java library provides requests that emulate the Android Instagram app. Most of the official app functionality is supported here. This library has undergone a massive rewrite (instagram4j 1.x.x is not compatible) The rewrite intends to help with maintainability and flexibility throughout time.
@@ -124,6 +124,12 @@ IGClient client = IGClient.builder()
 IGClient is a Serializable object that can be saved and later reconstructed. **Session cookies however must be separately serialized**. Session cookies for OkHttpClient are done through an implementation of CookieJar. You may provide your own implementation of a serializable cookie jar and then serialize your cookies for later use. Session cookies are good for 90 days and avoids relogins.
 
 See example for serialization and deserialization here.
+## Sending requests and actions
+This library provides a limited wrapper api that may be used for common requests. Not all features are supported through actions currently. Actual requests are located under the requests package and can be sent through IGClient like in previous versions. 
+
+See key concepts for more information.
+
+ 
 # Key concepts
 May be moved into Wiki section for detailed documentation.
 
@@ -243,3 +249,5 @@ while (iter.hasNext() && limit-- > 0) {
     // Recommended to wait in between iterations
 }
 ```
+# Contributing
+More information on how to contribute will follow. 
