@@ -20,8 +20,9 @@ target/
 .idea
 
 src/test/*
+src/examples/resources/
 build/
 .gradle
-/.gitattributes
+.gitattributes
 bin/
-/gradle.properties
+gradle.properties
