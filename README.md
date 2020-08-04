@@ -2,6 +2,8 @@
 
 instagram4j
 ========
+[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-66f4d80) ](https://bintray.com/instagram4j/maven/instagram4j/develop-66f4d80/link)
+[![Build Status](https://travis-ci.org/instagram4j/instagram4j.svg?branch=develop)](https://travis-ci.org/instagram4j/instagram4j)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 
 :camera: Java wrapper using OkHttpClient for Instagram's private api (Android emulation)
@@ -21,7 +23,29 @@ instagram4j
  - [Key Concepts](#key-concepts)
 
 # Install
-More information soon to follow.
+There is currently no release yet from central repository.
+
+Download latest develop build: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-66f4d80) ](https://bintray.com/instagram4j/maven/instagram4j/develop-66f4d80/link)
+
+Dev builds require the bintray repository be added.
+#### Example for gradle:
+```java
+repositories {
+    maven {
+        url 'https://dl.bintray.com/instagram4j/maven'
+    }
+    jcenter()
+}
+```
+## Requirements
+This project depends on
+- Java 8+
+- okhttpclient
+- okhttpclient url connection
+- jackson data-bind
+- jackson annotations
+- slf4j-api
+- apache commons codec
 # Overview
 This Java library provides requests that emulate the Android Instagram app. Most of the official app functionality is supported here. This library has undergone a massive rewrite (instagram4j 1.x.x is not compatible) The rewrite intends to help with maintainability and flexibility throughout time.
 ## Features
