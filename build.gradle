@@ -13,6 +13,11 @@ archivesBaseName = 'instagram4j'
 // Otherwise commit SHA will be appended
 version = "${versioning.info.display}${project.hasProperty('release') ? '' : ('-' + versioning.info.build)}"
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 repositories {
     jcenter()
 }
