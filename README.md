@@ -80,8 +80,8 @@ Basic login using IGClient builder method.
 #### *Example:*
 ```java
 IGClient client = IGClient.builder()
-        .withUsername("username")
-        .withPassword("password")
+        .username("username")
+        .password("password")
         .login();
 ```
 ### Two factor login
