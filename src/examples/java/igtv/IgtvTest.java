@@ -22,7 +22,7 @@ public class IgtvTest {
     public void testSearch() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvSearchRequest req = new IgtvSearchRequest("prank");
-        IGResponse res = client.sendRequest(req);
+        IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
     
@@ -31,7 +31,7 @@ public class IgtvTest {
     public void testFeed() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvBrowseFeedRequest req = new IgtvBrowseFeedRequest("");
-        IGResponse res = client.sendRequest(req);
+        IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
     
@@ -40,7 +40,7 @@ public class IgtvTest {
     public void testChannel() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvChannelRequest req = new IgtvChannelRequest("user_18428658");
-        IgtvChannelResponse res = client.sendRequest(req);
+        IgtvChannelResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
         log.debug(res.toString());
     }
@@ -50,7 +50,7 @@ public class IgtvTest {
     public void testSeriesCreate() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IgtvSeriesCreateRequest req = new IgtvSeriesCreateRequest("Earth's Videos", "A collection of cool videos");
-        IGResponse res = client.sendRequest(req);
+        IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
     
@@ -61,7 +61,7 @@ public class IgtvTest {
         String series_id = "17893711502749460";
         long media_id = 2345536212352661506L;
         IgtvSeriesAddEpisodeRequest req = new IgtvSeriesAddEpisodeRequest(series_id, media_id);
-        IGResponse res = client.sendRequest(req);
+        IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
 }

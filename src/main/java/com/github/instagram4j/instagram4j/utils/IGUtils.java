@@ -1,6 +1,7 @@
 package com.github.instagram4j.instagram4j.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.CookieManager;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
@@ -25,6 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +46,7 @@ public class IGUtils {
     private static final ObjectWriter WRITER = MAPPER.writer();
     static {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.setSerializationInclusion(Include.NON_NULL);
     }
 
     /**
@@ -235,13 +238,12 @@ public class IGUtils {
         return UUID.randomUUID().toString();
     }
 
-    @SneakyThrows
+    @SneakyThrows(IOException.class)
     public static String objectToJson(Object obj) {
         return WRITER.writeValueAsString(obj);
     }
     
-    @SneakyThrows
-    public static <T> T jsonToObject(String json, Class<T> view) {
+    public static <T> T jsonToObject(String json, Class<T> view) throws IOException {
         return MAPPER.readValue(json, view);
     }
     
@@ -257,4 +259,9 @@ public class IGUtils {
         return jar.loadForRequest(HttpUrl.get(IGConstants.BASE_API_URL)).stream()
                 .filter(cookie -> cookie.name().equals(key)).map(Cookie::value).findAny();
     }
+    
+    public static String truncate(String s) {
+        return s != null ? s.substring(0, Math.min(100, s.length())) : s;
+    }
+    
 }

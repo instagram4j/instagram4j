@@ -1,6 +1,5 @@
 package com.github.instagram4j.instagram4j.utils;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import com.github.instagram4j.instagram4j.IGClient;
@@ -20,36 +19,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IGChallengeUtils {
 
-    public static ChallengeStateResponse requestState(IGClient client, Challenge challenge)
-            throws IOException {
-        return client.sendRequest(
-                new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId()));
+    public static ChallengeStateResponse requestState(IGClient client, Challenge challenge) {
+        return new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId()).execute(client).join();
     }
 
     public static ChallengeStateResponse selectVerifyMethod(IGClient client, Challenge challenge, String method,
-            boolean resend) throws IOException {
-        return client.sendRequest(new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend));
+            boolean resend) {
+        return new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend).execute(client).join();
     }
 
     public static LoginResponse selectVerifyMethodDelta(IGClient client, Challenge challenge, String method,
-            boolean resend) throws IOException {
-        return client.sendRequest(new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend),
-                LoginResponse.class);
+            boolean resend) {
+        return IGUtils.convertToView(new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend).execute(client).join(), LoginResponse.class);
     }
 
-    public static LoginResponse sendSecurityCode(IGClient client, Challenge challenge, String code)
-            throws IOException {
-        return client.sendRequest(new ChallengeSendCodeRequest(challenge.getApi_path(), code));
+    public static LoginResponse sendSecurityCode(IGClient client, Challenge challenge, String code) {
+        return new ChallengeSendCodeRequest(challenge.getApi_path(), code).execute(client).join();
     }
 
-    public static ChallengeStateResponse resetChallenge(IGClient client, Challenge challenge)
-            throws IOException {
-        return client.sendRequest(new ChallengeResetRequest(challenge.getApi_path()));
+    public static ChallengeStateResponse resetChallenge(IGClient client, Challenge challenge) {
+        return new ChallengeResetRequest(challenge.getApi_path()).execute(client).join();
     }
 
     @SneakyThrows
-    public static LoginResponse resolve(@NonNull IGClient client, @NonNull LoginResponse response,
-            @NonNull Callable<String> inputCode, int retries) throws IOException {
+    public static LoginResponse resolveChallenge(@NonNull IGClient client, @NonNull LoginResponse response,
+            @NonNull Callable<String> inputCode, int retries) {
         Challenge challenge = response.getChallenge();
         ChallengeStateResponse stateResponse = requestState(client, challenge);
         String name = stateResponse.getStep_name();
@@ -71,16 +65,14 @@ public class IGChallengeUtils {
         } else {
             // Unknown step_name
         }
-        
-        client.setLoggedInState(response);
 
         return response;
         
     }
 
-    public static LoginResponse resolve(@NonNull IGClient client, @NonNull LoginResponse response,
-            @NonNull Callable<String> inputCode) throws IOException {
-        return resolve(client, response, inputCode, 3);
+    public static LoginResponse resolveChallenge(@NonNull IGClient client, @NonNull LoginResponse response,
+            @NonNull Callable<String> inputCode) {
+        return resolveChallenge(client, response, inputCode, 3);
     }
 
     @SneakyThrows

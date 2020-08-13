@@ -21,7 +21,7 @@ public class FeedUserReelsMediaTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserReelMediaRequest req = new FeedUserReelMediaRequest(18428658l);
 
-        IGResponse response = client.sendRequest(req);
+        IGResponse response = client.sendRequest(req).join();
         Assert.assertEquals("ok", response.getStatus());
     }
 }

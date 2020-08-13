@@ -24,7 +24,7 @@ public class FeedUserStoryTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserStoryRequest req = new FeedUserStoryRequest(18428658l);
 
-        FeedUserStoryResponse response = client.sendRequest(req);
+        FeedUserStoryResponse response = client.sendRequest(req).join();
         log.debug("Broadcast id : {}", response.getBroadcast() != null ? response.getBroadcast().getId() : "No broadcast found.");
         Assert.assertEquals("ok", response.getStatus());
     }

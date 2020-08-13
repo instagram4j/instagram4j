@@ -29,7 +29,7 @@ public class DirectInboxTest {
     public void testInbox()
             throws IGLoginException, IGResponseException, IOException, ClassNotFoundException {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        DirectInboxResponse response = new DirectInboxRequest().execute(lib);
+        DirectInboxResponse response = new DirectInboxRequest().execute(lib).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getInbox().getThreads().forEach(thread -> {
             log.debug("{} : {} : {}", thread.getThread_id(), thread.getThread_title(), thread.getUsers().stream().map(Profile::getUsername).collect(Collectors.joining(",")));
@@ -40,7 +40,7 @@ public class DirectInboxTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPending() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new DirectPendingInboxRequest().execute(client);
+        IGResponse response = new DirectPendingInboxRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
     
@@ -49,7 +49,7 @@ public class DirectInboxTest {
     public void testThreads() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String thread_id = "340282366841710300949128134036896195180";
-        IGResponse response = client.sendRequest(new DirectThreadsRequest(thread_id));
+        IGResponse response = client.sendRequest(new DirectThreadsRequest(thread_id)).join();
         Assert.assertEquals("ok", response.getStatus());
     }
     
@@ -57,7 +57,7 @@ public class DirectInboxTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testGetByParticipants() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        DirectThreadsResponse response = new DirectGetByParticipantsRequest(18428658L).execute(client);
+        DirectThreadsResponse response = new DirectGetByParticipantsRequest(18428658L).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
     
@@ -65,7 +65,7 @@ public class DirectInboxTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPresence() throws Exception {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = lib.sendRequest(new DirectGetPresenceRequest());
+        IGResponse response = lib.sendRequest(new DirectGetPresenceRequest()).join();
         Assert.assertEquals("ok", response.getStatus());
     }
 }

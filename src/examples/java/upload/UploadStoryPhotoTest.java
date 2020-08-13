@@ -54,9 +54,9 @@ public class UploadStoryPhotoTest {
         StoryLocationsItem locQ = StoryLocationsItem.builder().location_id("106048159426257").build();
         // end items
         IGRequest<RuploadPhotoResponse> uploadReq = new RuploadPhotoRequest(imgData, "1");
-        String id = client.sendRequest(uploadReq).getUpload_id();
+        String id = client.sendRequest(uploadReq).join().getUpload_id();
         MediaConfigureToStoryRequest configReq = new MediaConfigureToStoryRequest(id, Arrays.asList(qSticker, qPolls));
-        MediaConfigureToStoryResponse response = client.sendRequest(configReq);
+        MediaConfigureToStoryResponse response = client.sendRequest(configReq).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug(response.getMedia().getId());

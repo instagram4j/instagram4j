@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.concurrent.ForkJoinPool;
+
 import org.junit.Test;
 
 import serialize.SerializeTestUtil;
@@ -16,10 +18,10 @@ public class UsersActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFriendship() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        UserAction user = client.actions().users().findByUsername("kimkardashian");
-        Friendship friendship = user.getFriendship();
+        UserAction user = client.actions().users().findByUsername("kimkardashian").join();
+        Friendship friendship = user.getFriendship().join();
         log.debug("Is following : {}", friendship.isFollowing());
-        user.performAction(friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE);
+        user.performAction(friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE).join();
         log.debug("Success");
     }
 }

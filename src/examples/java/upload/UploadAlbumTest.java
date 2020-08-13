@@ -43,19 +43,19 @@ public class UploadAlbumTest {
         // upload photo
         IGRequest<RuploadPhotoResponse> uploadFirstPhoto = new RuploadPhotoRequest(firstImgData, "1",
                 String.valueOf(System.currentTimeMillis()), true);
-        String firstId = client.sendRequest(uploadFirstPhoto).getUpload_id();
+        String firstId = client.sendRequest(uploadFirstPhoto).join().getUpload_id();
         // upload video
         String uploadIdVid = System.currentTimeMillis() + "1";
         IGRequest<?> uploadSecondVideo = new RuploadVideoRequest(scndVidData,
                 UploadParameters.forPhoto(uploadIdVid, "2", true));
         IGRequest<?> uploadThumbnail = new RuploadPhotoRequest(thumbData, "1", uploadIdVid, false);
-        IGResponse vidRes = client.sendRequest(uploadSecondVideo), thumbRes = client.sendRequest(uploadThumbnail);
-        Venue location = new LocationSearchRequest(0d, 0d, "mcdonalds").execute(client).getVenues().get(0);
+        IGResponse vidRes = client.sendRequest(uploadSecondVideo).join(), thumbRes = client.sendRequest(uploadThumbnail).join();
+        Venue location = new LocationSearchRequest(0d, 0d, "mcdonalds").execute(client).join().getVenues().get(0);
         List<SidecarChildrenMetadata> metadata = Arrays.asList(
                 new SidecarChildrenMetadata(firstId),
                 new SidecarChildrenMetadata(uploadIdVid).usertags(new UserTagPayload(18428658l, 0.5, 0.5)));
         IGRequest<?> configReq = new MediaConfigureSidecarRequest(new MediaConfigureSidecarPayload().caption("Wow").children_metadata(metadata).location(location));
-        IGResponse response = client.sendRequest(configReq);
+        IGResponse response = client.sendRequest(configReq).join();
 
         Assert.assertEquals("ok", response.getStatus());
     }

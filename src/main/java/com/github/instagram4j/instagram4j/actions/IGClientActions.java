@@ -3,6 +3,7 @@ package com.github.instagram4j.instagram4j.actions;
 import java.lang.reflect.Field;
 
 import com.github.instagram4j.instagram4j.IGClient;
+import com.github.instagram4j.instagram4j.actions.simulate.SimulateAction;
 import com.github.instagram4j.instagram4j.actions.story.StoryAction;
 import com.github.instagram4j.instagram4j.actions.timeline.TimelineAction;
 import com.github.instagram4j.instagram4j.actions.upload.UploadAction;
@@ -19,6 +20,7 @@ public class IGClientActions {
     private TimelineAction _timeline;
     private StoryAction _story;
     private UsersAction _users;
+    private SimulateAction _simulate;
     
     @SneakyThrows
     public IGClientActions(IGClient client) {

@@ -41,14 +41,14 @@ public class UploadVideoTest {
                 UploadParameters.forTimelineVideo(uploadId, false));
         IGRequest<?> uploadThumbReq = new RuploadPhotoRequest(imgData, "1", uploadId, false);
         IGRequest<?> finish = new MediaUploadFinishRequest(uploadId);
-        IGResponse uploadResponse = client.sendRequest(uploadReq);
-        IGResponse uploadTResponse = client.sendRequest(uploadThumbReq);
-        IGResponse finishResponse = client.sendRequest(finish);
+        IGResponse uploadResponse = client.sendRequest(uploadReq).join();
+        IGResponse uploadTResponse = client.sendRequest(uploadThumbReq).join();
+        IGResponse finishResponse = client.sendRequest(finish).join();
 
         Assert.assertEquals("ok", uploadResponse.getStatus());
 
         IGRequest<MediaConfigureTimelineResponse> configReq = new MediaConfigureTimelineRequest(new MediaConfigurePayload().upload_id(uploadId).caption("test video"));
-        IGResponse response = client.sendRequest(configReq);
+        IGResponse response = client.sendRequest(configReq).join();
 
         Assert.assertEquals("ok", response.getStatus());
     }

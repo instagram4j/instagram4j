@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.github.instagram4j.instagram4j.IGClient;
@@ -16,7 +17,7 @@ import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
 public class ChallengeLoginTest {
-    // @Test
+    @Test
     @FileParameters("src/examples/resources/login.csv")
     public void testChallengeLogin(String username, String password) throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -31,7 +32,7 @@ public class ChallengeLoginTest {
          LoginHandler challengeHandler = (client, response) -> {
              // included utility to resolve challenges
              // may specify retries. default is 3
-             return IGChallengeUtils.resolve(client, response, inputCode);
+             return IGChallengeUtils.resolveChallenge(client, response, inputCode);
          };
     
          IGClient client = IGClient.builder()

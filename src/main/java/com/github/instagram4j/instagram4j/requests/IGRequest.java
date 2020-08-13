@@ -2,19 +2,22 @@ package com.github.instagram4j.instagram4j.requests;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.IGConstants;
+import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 
+import kotlin.Pair;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import okhttp3.Response;
 
 @Slf4j
 public abstract class IGRequest<T extends IGResponse> {
@@ -29,43 +32,54 @@ public abstract class IGRequest<T extends IGResponse> {
         return IGConstants.API_V1;
     }
     
+    public String baseApiUrl() {
+        return IGConstants.BASE_API_URL;
+    }
+    
     public String getQueryString(IGClient client) {
         return "";
     }
     
     public HttpUrl formUrl(IGClient client) {
-        return HttpUrl.parse(IGConstants.BASE_API_URL + apiPath() + path() + getQueryString(client));
+        return HttpUrl.parse(baseApiUrl() + apiPath() + path() + getQueryString(client));
     }
     
-    public T execute(IGClient client) throws IOException {
+    public CompletableFuture<T> execute(IGClient client) {
         return client.sendRequest(this);
-    }
-    
-    public <E> E execute(IGClient client, Class<E> clazz) throws IOException {
-        return client.sendRequest(this, clazz);
     }
 
     @SneakyThrows
-    protected String mapQueryString(String... strings) {
+    protected String mapQueryString(Object... strings) {
         StringBuilder builder = new StringBuilder("?");
 
         for (int i = 0; i < strings.length; i += 2) {
-            if (i + 1 < strings.length && strings[i] != null && strings[i + 1] != null && !strings[i].isEmpty()
-                    && !strings[i + 1].isEmpty()) {
-                builder.append(URLEncoder.encode(strings[i], "utf-8")).append("=")
-                        .append(URLEncoder.encode(strings[i + 1], "utf-8")).append("&");
+            if (i + 1 < strings.length && strings[i] != null && strings[i + 1] != null && !strings[i].toString().isEmpty()
+                    && !strings[i + 1].toString().isEmpty()) {
+                builder.append(URLEncoder.encode(strings[i].toString(), "utf-8")).append("=")
+                        .append(URLEncoder.encode(strings[i + 1].toString(), "utf-8")).append("&");
             }
         }
 
         return builder.substring(0, builder.length() - 1);
     }
+    
+    @SneakyThrows(IOException.class)
+    public T parseResponse(Pair<Response, String> response) {
+        T igResponse = parseResponse(response.getSecond());
+        igResponse.setStatusCode(response.getFirst().code());
+        if (igResponse.getStatus().equals("fail")) {
+            throw new IGResponseException(igResponse);
+        }
+        
+        return igResponse;
+    }
 
-    public T parseResponse(String json) throws JsonProcessingException, IOException {
+    public T parseResponse(String json) throws IOException {
         return parseResponse(json, getResponseType());
     }
 
-    public <U> U parseResponse(String json, Class<U> type) throws JsonMappingException, JsonProcessingException {
-        log.debug("Parsing response : {}", json);
+    public <U> U parseResponse(String json, Class<U> type) throws IOException {
+        log.debug("{} parsing response : {}", apiPath() + path(), json);
         U response = IGUtils.jsonToObject(json, type);
         
         return response;
@@ -91,7 +105,10 @@ public abstract class IGRequest<T extends IGResponse> {
         req.addHeader("X-IG-Bandwidth-TotalBytes-B", "0");
         req.addHeader("X-IG-Bandwidth-TotalTime-MS", "0");
         req.addHeader("X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value", "1000");
+        req.addHeader("X-IG-Device-ID", client.getGuid());
+        req.addHeader("X-IG-Android-ID", client.getDeviceId());
         req.addHeader("X-FB-HTTP-engine", "Liger");
+        Optional.ofNullable(client.getAuthorization()).ifPresent(s -> req.addHeader("Authorization", s));
 
         return req;
     }

@@ -37,7 +37,7 @@ public class LiveTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveCreateRequest liveCreate = new LiveCreateRequest();
         LiveStartRequest liveStart;
-        LiveCreateResponse createResponse = client.sendRequest(liveCreate);
+        LiveCreateResponse createResponse = client.sendRequest(liveCreate).join();
         System.out.printf("Url:\n%s\nKey:\n%s\nBroadcast Id:\n%s\n", createResponse.getBroadcastUrl(), createResponse.getBroadcastKey(), createResponse.getBroadcast_id());
         Scanner in = new Scanner(System.in);
         System.out.println("Type 's' to start");
@@ -57,33 +57,33 @@ public class LiveTest {
                     break;
                 case "viewers":
                     LiveBroadcastGetViewerListRequest vrequest = new LiveBroadcastGetViewerListRequest(id);
-                    LiveBroadcastGetViewerListResponse vresponse = vrequest.execute(client);
+                    LiveBroadcastGetViewerListResponse vresponse = vrequest.execute(client).join();
                     log.info("Viewers List ({})", vresponse.getUsers().size());
                     vresponse.getUsers().forEach(profile -> log.info("{} ({})", profile.getUsername(), profile.getPk()));
                     break;
                 case "comments":
                     LiveBroadcastGetCommentRequest crequest = new LiveBroadcastGetCommentRequest(id, comment_ts);
-                    LiveBroadcastGetCommentResponse cresponse = crequest.execute(client);
+                    LiveBroadcastGetCommentResponse cresponse = crequest.execute(client).join();
                     if (cresponse.getComments().size() > 0)
                         comment_ts = cresponse.getComments().get(cresponse.getComments().size() - 1).getCreated_at();
                     break;
                 case "questions":
                     LiveGetQuestionsRequest qrequest = new LiveGetQuestionsRequest();
-                    IGResponse qresponse = qrequest.execute(client);
+                    IGResponse qresponse = qrequest.execute(client).join();
                     break;
                 case "likes":
                     LiveBroadcastGetLikeCountRequest lrequest = new LiveBroadcastGetLikeCountRequest(id, like_ts);
-                    LiveBroadcastGetLikeCountResponse lResponse = lrequest.execute(client);
+                    LiveBroadcastGetLikeCountResponse lResponse = lrequest.execute(client).join();
                     log.info("Total likes : {}", lResponse.getLikes());
                     like_ts = lResponse.getLike_ts();
                     break;
                 case "activate":
                     LiveQuestionActivateRequest actRequest = new LiveQuestionActivateRequest(id, input.split(" ")[1]);
-                    actRequest.execute(client);
+                    actRequest.execute(client).join();
                     break;
                 case "deactivate":
                     LiveQuestionDeactivateRequest deactRequest = new LiveQuestionDeactivateRequest(id, input.split(" ")[1]);
-                    deactRequest.execute(client);
+                    deactRequest.execute(client).join();
                     break;
                 }
             } catch (Exception exception) {exception.printStackTrace();}

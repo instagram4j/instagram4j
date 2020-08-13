@@ -1,18 +1,19 @@
 package com.github.instagram4j.instagram4j.actions.users;
 
-import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 import com.github.instagram4j.instagram4j.IGClient;
-import com.github.instagram4j.instagram4j.actions.feed.FeedIterator;
+import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.models.friendships.Friendship;
 import com.github.instagram4j.instagram4j.models.user.Profile;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest;
-import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsFeedsRequest;
-import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsShowRequest;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest.FriendshipsAction;
+import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsFeedsRequest;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsFeedsRequest.FriendshipsFeeds;
-import com.github.instagram4j.instagram4j.responses.IGResponse;
+import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsShowRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
+import com.github.instagram4j.instagram4j.responses.friendships.FriendshipStatusResponse;
+import com.github.instagram4j.instagram4j.responses.friendships.FriendshipsShowResponse;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,19 +27,20 @@ public class UserAction {
     @Getter
     private Profile user;
 
-    public FeedIterator<FeedUsersResponse> followersFeed() {
-        return new FeedIterator<>(client, new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS));
+    public FeedIterable<FeedUsersResponse> followersFeed() {
+        return new FeedIterable<>(client, () -> { return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS); });
     }
 
-    public FeedIterator<FeedUsersResponse> followingFeed() {
-        return new FeedIterator<>(client, new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING));
+    public FeedIterable<FeedUsersResponse> followingFeed() {
+        return new FeedIterable<>(client, () -> { return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING); });
     }
 
-    public Friendship getFriendship() throws IOException {
-        return new FriendshipsShowRequest(user.getPk()).execute(client).getFriendship();
+    public CompletableFuture<Friendship> getFriendship() {
+        return new FriendshipsShowRequest(user.getPk()).execute(client)
+                .thenApply(FriendshipsShowResponse::getFriendship);
     }
 
-    public IGResponse performAction(FriendshipsAction action) throws IOException {
+    public CompletableFuture<FriendshipStatusResponse> performAction(FriendshipsAction action) {
         return new FriendshipsActionRequest(user.getPk(), action).execute(client);
     }
 }

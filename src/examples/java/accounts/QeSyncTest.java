@@ -16,7 +16,7 @@ public class QeSyncTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new QeSyncRequest().execute((client));
+        IGResponse response = new QeSyncRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getExtraProperties().keySet().forEach(log::debug);
         log.debug("Success");

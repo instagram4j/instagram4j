@@ -26,7 +26,7 @@ public class FeedReelsTrayFeedRequestTest {
     public void testFeedRequest()
             throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedReelsTrayResponse response = client.actions().story().tray();
+        FeedReelsTrayResponse response = client.actions().story().tray().join();
         Assert.assertEquals("ok", response.getStatus());
         
         /* response.getTray().forEach(tray -> {

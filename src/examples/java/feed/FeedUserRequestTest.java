@@ -23,7 +23,7 @@ public class FeedUserRequestTest {
             throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserRequest req = new FeedUserRequest(client.getSelfProfile().getPk());
-        FeedUserResponse response = client.sendRequest(req);
+        FeedUserResponse response = client.sendRequest(req).join();
         response.getItems().forEach(item -> {
             log.debug("{} : {}", item.getId(), item.getClass().getName());
         });

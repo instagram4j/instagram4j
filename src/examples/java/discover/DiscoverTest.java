@@ -17,12 +17,12 @@ public class DiscoverTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        DiscoverTopicalExploreResponse response = new DiscoverTopicalExploreRequest().execute(client);
+        DiscoverTopicalExploreResponse response = new DiscoverTopicalExploreRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getSectional_items().forEach(item -> log.debug("{} : {}", item.getLayout_type(), item.getClass().getName()));
         response.getSectional_items().stream().filter(i -> i instanceof SectionalMediaGridItem).map(SectionalMediaGridItem.class::cast).forEach(item -> item.getMedias().forEach(media -> log.debug(media.getId())));
         log.debug(response.getNext_max_id());
-        response = new DiscoverTopicalExploreRequest(response.getNext_max_id(), null).execute(client);
+        response = new DiscoverTopicalExploreRequest(response.getNext_max_id(), null).execute(client).join();
         log.debug(response.getNext_max_id());
         log.debug("Success");
     }

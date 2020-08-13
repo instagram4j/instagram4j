@@ -1,7 +1,7 @@
 package com.github.instagram4j.instagram4j.actions.story;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
@@ -21,25 +21,27 @@ public class StoryAction {
     @NonNull
     private IGClient client;
     
-    public MediaConfigureToStoryResponse uploadPhoto(byte[] data, List<ReelMetadataItem> metadata) throws IOException {
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(byte[] data, List<ReelMetadataItem> metadata) {
         String upload_id = String.valueOf(System.currentTimeMillis());
-        client.actions().upload().photo(data, upload_id);
-        
-        return new MediaConfigureToStoryRequest(upload_id, metadata).execute(client);
+        return client.actions().upload().photo(data, upload_id)
+                .thenCompose(response -> {
+                    return new MediaConfigureToStoryRequest(response.getUpload_id(), metadata).execute(client);
+                });
     }
     
-    public MediaConfigureToStoryResponse uploadVideo(byte[] video, byte[] cover, List<ReelMetadataItem> metadata) throws IOException {
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(byte[] video, byte[] cover, List<ReelMetadataItem> metadata) {
         String upload_id = String.valueOf(System.currentTimeMillis());
-        client.actions().upload().video(video, cover, UploadParameters.forAlbumVideo(upload_id));
-        
-        return new MediaConfigureToStoryRequest(upload_id, metadata).execute(client);
+        return client.actions().upload().videoWithCover(video, cover, UploadParameters.forAlbumVideo(upload_id))
+                .thenCompose(Response -> {
+                    return new MediaConfigureToStoryRequest(upload_id, metadata).execute(client);
+                });
     }
     
-    public FeedReelsTrayResponse tray() throws IOException {
+    public CompletableFuture<FeedReelsTrayResponse> tray() {
         return new FeedReelsTrayRequest().execute(client);
     }
     
-    public FeedUserStoryResponse userStory(long pk) throws IOException {
+    public CompletableFuture<FeedUserStoryResponse> userStory(long pk) {
         return new FeedUserStoryRequest(pk).execute(client);
     }
     

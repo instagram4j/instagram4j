@@ -30,10 +30,10 @@ public class UploadPhotoTest {
         File file = new File("src/examples/resources/4to5ratio.jpg");
         byte[] imgData = Files.readAllBytes(file.toPath());
         IGRequest<RuploadPhotoResponse> uploadReq = new RuploadPhotoRequest(imgData, "1");
-        Venue location = new LocationSearchRequest(0d, 0d, "london bridge").execute(client).getVenues().get(0);
-        String id = client.sendRequest(uploadReq).getUpload_id();
+        Venue location = new LocationSearchRequest(0d, 0d, "london bridge").execute(client).join().getVenues().get(0);
+        String id = client.sendRequest(uploadReq).join().getUpload_id();
         IGRequest<MediaConfigureTimelineResponse> configReq = new MediaConfigureTimelineRequest(new MediaConfigurePayload().upload_id(id).caption("This is test").location(location).usertags(new UserTagPayload(18428658l, 0.5, 0.5)));
-        MediaConfigureTimelineResponse response = client.sendRequest(configReq);
+        MediaConfigureTimelineResponse response = client.sendRequest(configReq).join();
 
         Assert.assertEquals("ok", response.getStatus());
     }

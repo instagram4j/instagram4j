@@ -16,7 +16,7 @@ public class FeedLocationTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedLocationResponse response = new FeedLocationRequest(106048159426257l).execute(client);
+        FeedLocationResponse response = new FeedLocationRequest(106048159426257l).execute(client).join();
         log.debug(response.getLocation().getName());
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");

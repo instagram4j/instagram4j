@@ -15,9 +15,9 @@ public class FeedTagTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedTagResponse response = client.sendRequest(new FeedTagRequest("love"));
+        FeedTagResponse response = client.sendRequest(new FeedTagRequest("love")).join();
         log.debug("Items : {} Story : {}", response.getItems().size(), response.getStory().getItems().size());
-        response = new FeedTagRequest("love", response.getNext_max_id()).execute(client);
+        response = new FeedTagRequest("love", response.getNext_max_id()).execute(client).join();
         log.debug("Items : {} Story : {}", response.getItems().size(), response.getStory().getItems().size());
         log.debug("Success");
     }

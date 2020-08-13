@@ -27,7 +27,7 @@ public class FriendshipsTest {
     public void testShow() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FriendshipsShowRequest show = new FriendshipsShowRequest(18428658l);
-        FriendshipsShowResponse response = show.execute(client);
+        FriendshipsShowResponse response = show.execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug(response.getFriendship().isFollowed_by() + "");
         log.debug("Success");
@@ -38,7 +38,7 @@ public class FriendshipsTest {
     public void testShowMany() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FriendshipsShowManyRequest show = new FriendshipsShowManyRequest(18428658l, 18428658l);
-        FriendshipsShowManyResponse response = show.execute(client);
+        FriendshipsShowManyResponse response = show.execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
@@ -47,7 +47,7 @@ public class FriendshipsTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testActions() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response =  new FriendshipsActionRequest(18428658l, FriendshipsAction.APPROVE).execute(client);
+        IGResponse response =  new FriendshipsActionRequest(18428658l, FriendshipsAction.APPROVE).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
@@ -56,7 +56,7 @@ public class FriendshipsTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testBesties() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response =  new FriendshipsSetBestiesRequest(true, 18428658L, 18428658L).execute(client);
+        IGResponse response =  new FriendshipsSetBestiesRequest(true, 18428658L, 18428658L).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
@@ -65,10 +65,10 @@ public class FriendshipsTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFollowers() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedUsersResponse response =  new FriendshipsFeedsRequest(18428658L, FriendshipsFeeds.FOLLOWING).execute(client);
+        FeedUsersResponse response =  new FriendshipsFeedsRequest(18428658L, FriendshipsFeeds.FOLLOWING).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getUsers().forEach(u -> log.debug("{} : {}", u.getPk(), u.getUsername()));
-        response = new FriendshipsFeedsRequest(18428658L, FriendshipsFeeds.FOLLOWING, response.getNext_max_id()).execute(client);
+        response = new FriendshipsFeedsRequest(18428658L, FriendshipsFeeds.FOLLOWING, response.getNext_max_id()).execute(client).join();
         response.getUsers().forEach(u -> log.debug("{} : {}", u.getPk(), u.getUsername()));
         log.debug("Success");
     }
@@ -77,7 +77,7 @@ public class FriendshipsTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeeds() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedUsersResponse response =  new FriendshipsPendingRequest().execute(client);
+        FeedUsersResponse response =  new FriendshipsPendingRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getUsers().forEach(u -> log.debug("{} : {}", u.getPk(), u.getUsername()));
         log.debug("Success");

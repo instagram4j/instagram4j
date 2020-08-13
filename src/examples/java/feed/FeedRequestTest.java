@@ -25,7 +25,7 @@ public class FeedRequestTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedTimelineRequest req = new FeedTimelineRequest();
 
-        FeedTimelineResponse response = client.sendRequest(req);
+        FeedTimelineResponse response = client.sendRequest(req).join();
         Assert.assertEquals("ok", response.getStatus());
 
         response.getFeed_items().forEach(item -> {

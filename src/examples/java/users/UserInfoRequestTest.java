@@ -22,7 +22,7 @@ public class UserInfoRequestTest {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         UsersUsernameInfoRequest req = new UsersUsernameInfoRequest("seattlegoldgrills");
         UsersInfoRequest req2 = new UsersInfoRequest(18428658l);
-        IGResponse response = lib.sendRequest(req), res = lib.sendRequest(req2);
+        IGResponse response = lib.sendRequest(req).join(), res = lib.sendRequest(req2).join();
         Assert.assertEquals("ok", response.getStatus());
         Assert.assertEquals("ok", res.getStatus());
     }

@@ -16,7 +16,7 @@ public class ArchiveTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new ArchiveReelRequest().execute(client);
+        IGResponse response = new ArchiveReelRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }

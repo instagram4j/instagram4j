@@ -26,7 +26,7 @@ public class LiveActionsTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastCommentRequest IGRequest = new LiveBroadcastCommentRequest(BROADCAST_ID, "Test");
         
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
@@ -37,7 +37,7 @@ public class LiveActionsTest {
     public void testHeartbeat() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastHeartbeatRequest IGRequest = new LiveBroadcastHeartbeatRequest(BROADCAST_ID);
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");
@@ -48,7 +48,7 @@ public class LiveActionsTest {
     public void testGetComment() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastGetCommentRequest IGRequest = new LiveBroadcastGetCommentRequest(BROADCAST_ID);
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");
@@ -59,7 +59,7 @@ public class LiveActionsTest {
     public void testLike() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastLikeRequest IGRequest = new LiveBroadcastLikeRequest(BROADCAST_ID, 69);
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");
@@ -70,7 +70,7 @@ public class LiveActionsTest {
     public void testGetViewerList() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastGetViewerListRequest IGRequest = new LiveBroadcastGetViewerListRequest(BROADCAST_ID);
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");
@@ -81,7 +81,7 @@ public class LiveActionsTest {
     public void testBroadcastQuestions() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveBroadcastQuestionsRequest IGRequest = new LiveBroadcastQuestionsRequest(BROADCAST_ID, "What is the meaning of life?");
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");
@@ -92,7 +92,7 @@ public class LiveActionsTest {
     public void testWave() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         LiveWaveRequest IGRequest = new LiveWaveRequest(BROADCAST_ID, "");
-        IGResponse response = IGRequest.execute(client);
+        IGResponse response = IGRequest.execute(client).join();
         
         Assert.assertEquals("ok", response.getStatus());
         log.debug("success");

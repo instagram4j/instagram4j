@@ -5,11 +5,14 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import com.github.instagram4j.instagram4j.actions.IGClientActions;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
-import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
+import com.github.instagram4j.instagram4j.exceptions.IGResponseException.IGFailedResponse;
 import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.models.user.Profile;
 import com.github.instagram4j.instagram4j.requests.IGRequest;
@@ -20,6 +23,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 
+import kotlin.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +32,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -38,7 +44,7 @@ public class IGClient implements Serializable {
     private static final long serialVersionUID = -893265874836l;
     private final String $username;
     private final String $password;
-    private transient String encryptionId, encryptionKey;
+    private transient String encryptionId, encryptionKey, authorization;
     private transient OkHttpClient httpClient = IGUtils.formDefaultHttpClient();
     private transient String sessionId = IGUtils.randomUuid();
     private transient IGClientActions actions = new IGClientActions(this);
@@ -50,7 +56,7 @@ public class IGClient implements Serializable {
     @Setter(AccessLevel.PRIVATE)
     private Profile selfProfile;
     private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
-    
+
     public IGClient(String username, String password) {
         this.$username = username;
         this.$password = password;
@@ -63,73 +69,83 @@ public class IGClient implements Serializable {
         this(username, password);
         this.httpClient = client;
     }
-    
+
     public IGClientActions actions() {
         return this.actions;
     }
-    
-    public void sendSyncRequest() throws IOException {
-        Response response = httpClient.newCall(new QeSyncRequest().formRequest(this)).execute();
-        log.info("Response for {} : {}", QeSyncRequest.class.getName(), response.code());
-        this.encryptionId = response.header("ig-set-password-encryption-key-id");
-        this.encryptionKey = response.header("ig-set-password-encryption-pub-key");
+
+    public void sendSyncRequest() {
+        new QeSyncRequest(true).execute(this).join();
         log.info("Encryption key id : {}", this.encryptionId);
-        log.info("Encryption key (truncated) : {}", this.encryptionKey.substring(20));
+        log.info("Encryption key (truncated) : {}", IGUtils.truncate(this.encryptionKey));
     }
 
-    public LoginResponse sendLoginRequest() throws IGLoginException, IOException {
+    public LoginResponse sendLoginRequest() throws IGLoginException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.info("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.info("Logging in. . .");
-        AccountsLoginRequest login = new AccountsLoginRequest($username, encryptedPassword);
-        LoginResponse res = this.sendRequest(login);
+        LoginResponse res = new AccountsLoginRequest($username, encryptedPassword).execute(this).join();
         this.setLoggedInState(res);
 
         return res;
     }
 
     public LoginResponse sendLoginRequest(String code, String identifier)
-            throws IGLoginException, IOException {
+            throws IGLoginException {
         if (this.encryptionId == null || this.encryptionKey == null) {
             log.info("Sending sync request. . .");
             this.sendSyncRequest();
         }
         String encryptedPassword = IGUtils.encryptPassword($password, this.encryptionId, this.encryptionKey);
         log.info("Logging in. . .");
-        AccountsTwoFactorLoginRequest login = new AccountsTwoFactorLoginRequest($username, encryptedPassword, code, identifier);
-        LoginResponse res = this.sendRequest(login);
+        LoginResponse res = new AccountsTwoFactorLoginRequest($username, encryptedPassword, code, identifier)
+                .execute(this).join();
         this.setLoggedInState(res);
 
         return res;
     }
 
-    public <T extends IGResponse> T sendRequest(@NonNull IGRequest<T> req) throws IOException {
-        T response = sendRequest(req, req.getResponseType());
-        if (response.getMessage() != null && response.getMessage().equals("login_required")) {
-            this.loggedIn = false;
-            throw new IGResponseException(response);
-        }
-        
-        return response;
+    public <T extends IGResponse> CompletableFuture<T> sendRequest(@NonNull IGRequest<T> req) {
+        CompletableFuture<Pair<Response, String>> responseFuture = new CompletableFuture<>();
+        log.info("Sending request : {}", req.formUrl(this).toString());
+        this.httpClient.newCall(req.formRequest(this)).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException exception) {
+                responseFuture.completeExceptionally(exception);
+            }
+
+            @Override
+            public void onResponse(Call call, Response res) throws IOException {
+                log.info("Response for {} : {}", call.request().url().toString(), res.code());
+                try (ResponseBody body = res.body()) {
+                    responseFuture.complete(new Pair<>(res, body.string()));
+                }
+            }
+
+        });
+
+        return responseFuture
+                .thenApply(res -> {
+                    setFromResponseHeaders(res.getFirst());
+                    log.info("Response for {} with body (truncated) : {}", res.getFirst().request().url(),
+                            IGUtils.truncate(res.getSecond()));
+
+                    return req.parseResponse(res);
+                })
+                .exceptionally(tr -> {
+                    T failedResponse = IGFailedResponse.of(tr.getCause(), req.getResponseType());
+                    log.error("{} failed : {}", req.formUrl(this).toString(), failedResponse.getMessage());
+
+                    return failedResponse;
+                });
     }
 
-    public <T> T sendRequest(@NonNull IGRequest<?> req, Class<T> view) throws IOException {
-        log.info("Sending request : {}", req.getClass().getName());
-        Response res = httpClient.newCall(req.formRequest(this)).execute();
-        log.info("Response for {} : {}", req.getClass().getName(), res.code());
-        try (ResponseBody body = res.body()) {
-            T t = req.parseResponse(body.string(), view);
-            if (t instanceof IGResponse) ((IGResponse) t).setStatusCode(res.code());
-            return t;
-        }
-    }
-
-    public void setLoggedInState(LoginResponse state) throws IGLoginException {
-        if (!state.getStatus().equals("ok"))
-            throw new IGLoginException(this, state);
+    private void setLoggedInState(LoginResponse state) {
+        if (!state.getStatus().equals("ok")) return;
         this.loggedIn = true;
         this.selfProfile = state.getLogged_in_user();
         log.info("Logged into {} ({})", selfProfile.getUsername(), selfProfile.getPk());
@@ -137,6 +153,12 @@ public class IGClient implements Serializable {
 
     public String getCsrfToken() {
         return IGUtils.getCookieValue(this.getHttpClient().cookieJar(), "csrftoken").orElse("missing");
+    }
+
+    public void setFromResponseHeaders(Response res) {
+        Optional.ofNullable(res.header("ig-set-password-encryption-key-id")).ifPresent(s -> this.encryptionId = s);
+        Optional.ofNullable(res.header("ig-set-password-encryption-pub-key")).ifPresent(s -> this.encryptionKey = s);
+        Optional.ofNullable(res.header("ig-set-authorization")).ifPresent(s -> this.authorization = s);
     }
 
     public IGPayload setIGPayloadDefaults(IGPayload load) {
@@ -196,34 +218,48 @@ public class IGClient implements Serializable {
         public IGClient build() {
             return new IGClient(username, password, client);
         }
+        
+        public IGClient simulatedLogin(Consumer<List<CompletableFuture<?>>> postLoginResponses) throws IGLoginException {
+            IGClient client = build();
+            client.actions.simulate().preLoginFlow().forEach(CompletableFuture::join);
+            onLogin.accept(performLogin(client));
+            postLoginResponses.accept(client.actions.simulate().postLoginFlow());
+            
+            return client;
+        }
+        
+        public IGClient simulatedLogin() throws IGLoginException {
+            return simulatedLogin((res) -> {});
+        }
 
-        public IGClient login() throws IOException {
+        public IGClient login() throws IGLoginException {
             IGClient client = build();
 
-            try {
-                onLogin.accept(client.sendLoginRequest());
-            } catch (IGLoginException ex) {
-                LoginResponse response = ex.getLoginResponse();
-
-                if (ex.getLoginResponse().getTwo_factor_info() != null && onTwoFactor != null) {
-                    response = onTwoFactor.accept(client, response);
-                }
-                
-                if (ex.getLoginResponse().getChallenge() != null && onChallenge != null) {
-                    response = onChallenge.accept(client, response);
-                }
-                
-                if (!client.isLoggedIn()) throw new IGLoginException(client, response);
-
-                onLogin.accept(response);
-            }
+            onLogin.accept(performLogin(client));
 
             return client;
+        }
+        
+        private LoginResponse performLogin(IGClient client) throws IGLoginException {
+            LoginResponse response = client.sendLoginRequest();
+            if (response.getTwo_factor_info() != null && onTwoFactor != null) {
+                response = onTwoFactor.accept(client, response);
+            }
+            if (response.getChallenge() != null && onChallenge != null) {
+                response = onChallenge.accept(client, response);
+                client.setLoggedInState(response);
+            }
+            
+            if(!client.isLoggedIn()) {
+                throw new IGLoginException(client, response);
+            }
+            
+            return response;
         }
 
         @FunctionalInterface
         public static interface LoginHandler {
-            public LoginResponse accept(IGClient client, LoginResponse t) throws IOException;
+            public LoginResponse accept(IGClient client, LoginResponse t);
         }
     }
 }

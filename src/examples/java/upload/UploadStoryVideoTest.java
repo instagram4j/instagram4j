@@ -44,9 +44,9 @@ public class UploadStoryVideoTest {
                 UploadParameters.forAlbumVideo(upload_id));
         IGRequest<?> uploadCovReq = new RuploadPhotoRequest(covData, "1", upload_id, false);
         IGRequest<?> finish = new MediaUploadFinishRequest(upload_id);
-        IGResponse uploadResponse = client.sendRequest(uploadVidReq);
-        IGResponse uploadTResponse = client.sendRequest(uploadCovReq);
-        IGResponse finishResponse = client.sendRequest(finish);
+        IGResponse uploadResponse = client.sendRequest(uploadVidReq).join();
+        IGResponse uploadTResponse = client.sendRequest(uploadCovReq).join();
+        IGResponse finishResponse = client.sendRequest(finish).join();
 
         Assert.assertEquals("ok", uploadResponse.getStatus());
         Assert.assertEquals("ok", uploadTResponse.getStatus());
@@ -54,7 +54,7 @@ public class UploadStoryVideoTest {
 
         IGRequest<MediaConfigureToStoryResponse> configReq = new MediaConfigureToStoryRequest(upload_id);
 
-        MediaConfigureToStoryResponse response = client.sendRequest(configReq);
+        MediaConfigureToStoryResponse response = client.sendRequest(configReq).join();
 
         log.debug(response.getMedia().getClass().toString());
         Assert.assertEquals("ok", response.getStatus());

@@ -16,7 +16,7 @@ public class FeedReelsMediaTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new FeedReelsMediaRequest("archiveDay:18116528737123990").execute(client);
+        IGResponse response = new FeedReelsMediaRequest("archiveDay:18116528737123990").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }

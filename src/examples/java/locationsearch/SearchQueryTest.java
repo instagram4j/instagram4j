@@ -16,7 +16,7 @@ public class SearchQueryTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        LocationSearchResponse response = new LocationSearchRequest(0d, 0d, "mcdonalds").execute(client);
+        LocationSearchResponse response = new LocationSearchRequest(0d, 0d, "mcdonalds").execute(client).join();
         response.getVenues().forEach(v -> log.debug("{} : {}", v.getName(), v.getExternal_id()));
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");

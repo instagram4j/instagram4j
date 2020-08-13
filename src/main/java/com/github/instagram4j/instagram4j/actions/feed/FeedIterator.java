@@ -1,6 +1,5 @@
 package com.github.instagram4j.instagram4j.actions.feed;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import com.github.instagram4j.instagram4j.IGClient;
@@ -9,7 +8,6 @@ import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 
 @RequiredArgsConstructor
 public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> {
@@ -25,9 +23,8 @@ public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> 
     }
 
     @Override
-    @SneakyThrows(IOException.class)
     public T next() {
-        response = request.execute(client);
+        response = request.execute(client).join();
         request.setMax_id(response.getNext_max_id());
         
         return response;

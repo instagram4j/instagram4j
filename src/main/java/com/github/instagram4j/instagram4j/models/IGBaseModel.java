@@ -22,9 +22,10 @@ public class IGBaseModel {
         return $extra_properties.get(key);
     }
     
-    public IGBaseModel put(String key, Object val) {
+    @SuppressWarnings("unchecked")
+    public <T extends IGBaseModel> T put(String key, Object val) {
         this.$extra_properties.put(key, val);
         
-        return this;
+        return (T) this;
     }
 }

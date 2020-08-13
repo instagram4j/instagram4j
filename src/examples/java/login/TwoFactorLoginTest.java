@@ -38,7 +38,7 @@ public class TwoFactorLoginTest {
                  .username(user)
                  .password(pass)
                  .onTwoFactor(twoFactorHandler)
-                 .login();
+                 .simulatedLogin();
 
         Assert.assertNotNull(client.getSelfProfile());
     }

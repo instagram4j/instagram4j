@@ -16,7 +16,7 @@ public class FeedSavedTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedSavedResponse response = new FeedSavedRequest().execute(client);
+        FeedSavedResponse response = new FeedSavedRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getItems().forEach(item -> log.debug("{} : {}", item.getId(), item.getClass().getName()));
         log.debug("Success");

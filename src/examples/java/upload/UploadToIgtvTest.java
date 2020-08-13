@@ -30,11 +30,11 @@ public class UploadToIgtvTest {
         String upload_id = String.valueOf(System.currentTimeMillis());
         byte[] data = Files.readAllBytes(videoFile.toPath());
         uploadSegments(client, upload_id, segments(data, 10_000_000), data.length);
-        new RuploadPhotoRequest(Files.readAllBytes(cover.toPath()), "2", upload_id, false).execute(client);
+        new RuploadPhotoRequest(Files.readAllBytes(cover.toPath()), "2", upload_id, false).execute(client).join();
         int i = 0;
         do {
             MediaConfigureToIgtvRequest config = new MediaConfigureToIgtvRequest(upload_id, "Goober", "Wow!");
-            IGResponse response = config.execute(client);
+            IGResponse response = config.execute(client).join();
             if (response.getStatus().equals("fail")) {
                 log.debug("waiting");
                 Thread.sleep(1000 * 10 * (i+1));
@@ -47,20 +47,20 @@ public class UploadToIgtvTest {
         String transfer_id = "igtv_" + upload_id;
         UploadParameters parameter = UploadParameters.forIgtv(upload_id);
         RuploadSegmentVideoPhaseRequest start = new RuploadSegmentVideoPhaseRequest(Phase.START, parameter), end;
-        String stream_id = start.execute(client).get("stream_id").toString();
+        String stream_id = start.execute(client).join().get("stream_id").toString();
         
         for (int i = 0; i < segments.length; i++) {
             String offset = String.valueOf(i * segments[0].length);
             RuploadSegmentVideoGetRequest getReq = new RuploadSegmentVideoGetRequest(parameter, stream_id, transfer_id, offset);
-            String getoffset = getReq.execute(client).get("offset").toString();
+            String getoffset = getReq.execute(client).join().get("offset").toString();
             RuploadSegmentVideoPhaseRequest transfer = new RuploadSegmentVideoPhaseRequest(Phase.TRANSFER, parameter, stream_id, transfer_id, offset, String.valueOf(totalLength), segments[i]);
             log.debug("Uploading: {} of {}", i + 1 + "", segments.length + "");
-            transfer.execute(client);
+            transfer.execute(client).join();
             log.debug("Done {}", i + "");
         }
         
         end = new RuploadSegmentVideoPhaseRequest(Phase.END, parameter, stream_id, transfer_id);
-        end.execute(client);
+        end.execute(client).join();
     }
 
     public static byte[][] segments(byte[] data, int segmentSize) {
