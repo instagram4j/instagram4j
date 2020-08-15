@@ -3,7 +3,6 @@ package media;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.feed.FeedUserReelMediaRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaActionRequest;
@@ -21,6 +20,7 @@ import com.github.instagram4j.instagram4j.responses.media.MediaGetCommentsRespon
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class MediaActionTestRequest {

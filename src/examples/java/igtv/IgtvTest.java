@@ -3,7 +3,6 @@ package igtv;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.igtv.IgtvBrowseFeedRequest;
 import com.github.instagram4j.instagram4j.requests.igtv.IgtvChannelRequest;
@@ -14,6 +13,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.igtv.IgtvChannelResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class IgtvTest {

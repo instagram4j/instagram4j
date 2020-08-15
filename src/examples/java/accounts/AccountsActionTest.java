@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest.AccountsAction;
@@ -20,6 +19,7 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class AccountsActionTest {

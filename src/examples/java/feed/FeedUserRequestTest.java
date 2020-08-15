@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
@@ -14,6 +13,7 @@ import com.github.instagram4j.instagram4j.requests.feed.FeedUserRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUserResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class FeedUserRequestTest {

@@ -3,7 +3,6 @@ package music;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.music.MusicBrowseRequest;
 import com.github.instagram4j.instagram4j.requests.music.MusicGenresIdRequest;
@@ -18,6 +17,7 @@ import com.github.instagram4j.instagram4j.responses.music.MusicTrackLyricsRespon
 import com.github.instagram4j.instagram4j.responses.music.MusicTrackResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class MusicRequestTest {

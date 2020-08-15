@@ -3,13 +3,13 @@ package discover;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.discover.SectionalMediaGridItem;
 import com.github.instagram4j.instagram4j.requests.discover.DiscoverTopicalExploreRequest;
 import com.github.instagram4j.instagram4j.responses.discover.DiscoverTopicalExploreResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class DiscoverTest {

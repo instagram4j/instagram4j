@@ -3,7 +3,6 @@ package commerce;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.commerce.CommerceDestinationRequest;
 import com.github.instagram4j.instagram4j.requests.commerce.CommerceProductsDetailsRequest;
@@ -11,6 +10,7 @@ import com.github.instagram4j.instagram4j.responses.commerce.CommerceDestination
 import com.github.instagram4j.instagram4j.responses.commerce.CommerceProductsDetailsResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class CommerceTest {

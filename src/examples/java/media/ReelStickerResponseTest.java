@@ -3,7 +3,6 @@ package media;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.media.MediaGetStoryPollVotersRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaGetStoryQuestionResponsesRequest;
@@ -13,6 +12,7 @@ import com.github.instagram4j.instagram4j.responses.media.MediaGetStoryPollVoter
 import com.github.instagram4j.instagram4j.responses.media.MediaGetStoryQuestionResponsesResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 // id 2364185211807618943

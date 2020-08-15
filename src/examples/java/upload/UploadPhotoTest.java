@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
@@ -20,6 +19,8 @@ import com.github.instagram4j.instagram4j.requests.media.MediaConfigureTimelineR
 import com.github.instagram4j.instagram4j.requests.upload.RuploadPhotoRequest;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse;
 import com.github.instagram4j.instagram4j.responses.media.RuploadPhotoResponse;
+
+import serialize.SerializeTestUtil;
 
 public class UploadPhotoTest {
     @Test

@@ -2,13 +2,13 @@ package actions;
 
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterator;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedTimelineResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class FeedIterableTest {

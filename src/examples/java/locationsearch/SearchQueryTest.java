@@ -3,12 +3,12 @@ package locationsearch;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.locationsearch.LocationSearchRequest;
 import com.github.instagram4j.instagram4j.responses.locationsearch.LocationSearchResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class SearchQueryTest {

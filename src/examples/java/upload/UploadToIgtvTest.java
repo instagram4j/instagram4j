@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToIgtvRequest;
@@ -18,6 +17,7 @@ import com.github.instagram4j.instagram4j.requests.upload.RuploadSegmentVideoPha
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class UploadToIgtvTest {

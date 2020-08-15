@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
@@ -30,6 +29,8 @@ import com.github.instagram4j.instagram4j.requests.upload.MediaUploadFinishReque
 import com.github.instagram4j.instagram4j.requests.upload.RuploadPhotoRequest;
 import com.github.instagram4j.instagram4j.requests.upload.RuploadVideoRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
+
+import serialize.SerializeTestUtil;
 
 public class DirectThreadBroadcastTest {
     @Test

@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
@@ -23,6 +22,8 @@ import com.github.instagram4j.instagram4j.requests.upload.RuploadPhotoRequest;
 import com.github.instagram4j.instagram4j.requests.upload.RuploadVideoRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse;
+
+import serialize.SerializeTestUtil;
 
 public class UploadVideoTest {
     @Test

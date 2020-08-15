@@ -3,7 +3,6 @@ package highlights;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.highlights.HighlightsCreateReelRequest;
 import com.github.instagram4j.instagram4j.requests.highlights.HighlightsDeleteReelRequest;
@@ -12,6 +11,7 @@ import com.github.instagram4j.instagram4j.requests.highlights.HighlightsUserTray
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class HighlightsTest {

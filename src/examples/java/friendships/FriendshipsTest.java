@@ -3,7 +3,6 @@ package friendships;
 import org.junit.Assert;
 import org.junit.Test;
 
-import serialize.SerializeTestUtil;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest.FriendshipsAction;
@@ -19,6 +18,7 @@ import com.github.instagram4j.instagram4j.responses.friendships.FriendshipsShowM
 import com.github.instagram4j.instagram4j.responses.friendships.FriendshipsShowResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import serialize.SerializeTestUtil;
 
 @Slf4j
 public class FriendshipsTest {
