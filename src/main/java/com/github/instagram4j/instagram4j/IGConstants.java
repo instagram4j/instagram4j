@@ -15,7 +15,7 @@ public class IGConstants {
      * Base API URL
      */
     public static final String BASE_API_URL = "https://i.instagram.com/";
-    
+
     public static final String B_BASE_API_URL = "https://b.i.instagram.com/";
 
     /**
