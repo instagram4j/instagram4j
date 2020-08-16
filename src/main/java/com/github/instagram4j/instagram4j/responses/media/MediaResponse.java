@@ -26,7 +26,7 @@ public class MediaResponse extends IGResponse {
     public static class MediaConfigureToStoryResponse extends MediaResponse {
         private ReelMedia media;
     }
-    
+
     @Data
     public static class MediaConfigureToIgtvResponse extends MediaResponse {
         private TimelineVideoMedia media;

@@ -51,10 +51,10 @@ public class MediaConfigureTimelineRequest extends IGPostRequest<MediaConfigureT
         private String disable_comments;
         private String location;
         private String usertags;
-        
+
         public MediaConfigurePayload location(Location loc) {
             Location payloadLoc = new Location();
-            
+
             payloadLoc.setExternal_id(loc.getExternal_id());
             payloadLoc.setName(loc.getName());
             payloadLoc.setAddress(loc.getAddress());
@@ -68,20 +68,20 @@ public class MediaConfigureTimelineRequest extends IGPostRequest<MediaConfigureT
             this.put("posting_longitude", payloadLoc.getLng().toString());
             this.put("media_latitude", payloadLoc.getLat().toString());
             this.put("media_longitude", payloadLoc.getLng().toString());
-            
+
             return this;
         }
-        
+
         public MediaConfigurePayload usertags(UserTagPayload... tags) {
             this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
-            
+
             return this;
         }
-        
+
         public String usertags() {
             return this.usertags;
         }
-        
+
     }
 
 }

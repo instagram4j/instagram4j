@@ -18,10 +18,11 @@ public class LocationSearchRequest extends IGGetRequest<LocationSearchResponse> 
     public String path() {
         return "location_search/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
-        return mapQueryString("longitude", longitude.toString(), "latitude", latitude.toString(), "search_query", query);
+        return mapQueryString("longitude", longitude.toString(), "latitude", latitude.toString(),
+                "search_query", query);
     }
 
     @Override

@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class LiveBroadcastCommentRequest extends IGPostRequest<LiveBroadcastCommentResponse> {
     @NonNull
     private String broadcast_id, _message;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new LiveCommentPayload();
     }
-    
+
     @Override
     public String path() {
         return "live/" + broadcast_id + "/comment/";
@@ -28,10 +28,10 @@ public class LiveBroadcastCommentRequest extends IGPostRequest<LiveBroadcastComm
     public Class<LiveBroadcastCommentResponse> getResponseType() {
         return LiveBroadcastCommentResponse.class;
     }
-    
+
     @Data
     public class LiveCommentPayload extends IGPayload {
         private String comment_text = _message;
     }
-    
+
 }

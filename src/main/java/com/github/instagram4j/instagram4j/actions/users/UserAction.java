@@ -28,11 +28,15 @@ public class UserAction {
     private Profile user;
 
     public FeedIterable<FeedUsersResponse> followersFeed() {
-        return new FeedIterable<>(client, () -> { return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS); });
+        return new FeedIterable<>(client, () -> {
+            return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS);
+        });
     }
 
     public FeedIterable<FeedUsersResponse> followingFeed() {
-        return new FeedIterable<>(client, () -> { return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING); });
+        return new FeedIterable<>(client, () -> {
+            return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING);
+        });
     }
 
     public CompletableFuture<Friendship> getFriendship() {

@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QeSyncRequest extends IGPostRequest<IGResponse> {
     private boolean preLogin;
-    
+
     @Override
     public String baseApiUrl() {
         return preLogin ? IGConstants.B_BASE_API_URL : super.baseApiUrl();
     }
-    
+
     @Override
     protected IGBaseModel getPayload(IGClient client) {
         return preLogin ? new PrePayload(client.getGuid()) : new IGPayload() {
@@ -39,14 +39,14 @@ public class QeSyncRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     private class PrePayload extends IGBaseModel {
         private final String id;
         private final String server_config_retrieval = "1";
         private final String experiments = IGConstants.DEVICE_EXPERIMENTS;
     }
-    
+
     @Data
     private class PostPayload extends IGPayload {
         private final String experiments = IGConstants.DEVICE_EXPERIMENTS;

@@ -26,12 +26,13 @@ public class RequestTest {
         public Class<IGResponse> getResponseType() {
             return IGResponse.class;
         }
-        
+
     }
-    
+
     @Test
     public void testUrlFormation() {
         IGTestRequest test = new IGTestRequest();
-        Assert.assertEquals("https://i.instagram.com/api/v1/test/path/", test.formUrl(null).toString());
+        Assert.assertEquals("https://i.instagram.com/api/v1/test/path/",
+                test.formUrl(null).toString());
     }
 }

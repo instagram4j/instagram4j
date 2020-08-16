@@ -23,13 +23,15 @@ public class SerializableCookieJar implements CookieJar, Serializable {
 
     @Override
     public List<Cookie> loadForRequest(HttpUrl arg0) {
-        return map.getOrDefault(arg0.host(), new ArrayList<SerializableCookie>()).stream().map(c -> c.cookie)
+        return map.getOrDefault(arg0.host(), new ArrayList<SerializableCookie>()).stream()
+                .map(c -> c.cookie)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void saveFromResponse(HttpUrl arg0, List<Cookie> arg1) {
-        List<SerializableCookie> list = arg1.stream().map(c -> new SerializableCookie(c)).collect(Collectors.toList());
+        List<SerializableCookie> list =
+                arg1.stream().map(c -> new SerializableCookie(c)).collect(Collectors.toList());
         if (map.putIfAbsent(arg0.host(), list) != null) {
             map.get(arg0.host()).addAll(list);
         }

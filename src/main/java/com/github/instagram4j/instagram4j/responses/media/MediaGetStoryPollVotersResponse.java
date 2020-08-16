@@ -18,5 +18,5 @@ public class MediaGetStoryPollVotersResponse extends IGPaginatedResponse {
     public boolean isMore_available() {
         return voter_info.isMore_available();
     }
-    
+
 }

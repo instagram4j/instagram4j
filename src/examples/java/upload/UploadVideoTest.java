@@ -48,7 +48,8 @@ public class UploadVideoTest {
 
         Assert.assertEquals("ok", uploadResponse.getStatus());
 
-        IGRequest<MediaConfigureTimelineResponse> configReq = new MediaConfigureTimelineRequest(new MediaConfigurePayload().upload_id(uploadId).caption("test video"));
+        IGRequest<MediaConfigureTimelineResponse> configReq = new MediaConfigureTimelineRequest(
+                new MediaConfigurePayload().upload_id(uploadId).caption("test video"));
         IGResponse response = client.sendRequest(configReq).join();
 
         Assert.assertEquals("ok", response.getStatus());

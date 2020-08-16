@@ -18,7 +18,7 @@ public class MediaCommentRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String id, _comment_text;
     private String _replied_to_comment_id;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new MediaCommentPayload();
@@ -33,7 +33,7 @@ public class MediaCommentRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     @JsonInclude(Include.NON_NULL)
     private class MediaCommentPayload extends IGPayload {

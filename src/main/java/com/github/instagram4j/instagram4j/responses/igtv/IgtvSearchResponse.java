@@ -14,7 +14,7 @@ public class IgtvSearchResponse extends IGResponse {
     private int num_results;
     private boolean has_more;
     private String rank_token;
-    
+
     @Data
     public static class IgtvSearchResult {
         private String type;

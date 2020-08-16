@@ -18,7 +18,7 @@ public class MediaConfigureToIgtvRequest extends IGPostRequest<MediaConfigureToI
     @NonNull
     private String uploadId, _title, _caption;
     private boolean upload_to_feed;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new MediaConfigureToIgtvPayload();
@@ -43,7 +43,8 @@ public class MediaConfigureToIgtvRequest extends IGPostRequest<MediaConfigureToI
         private String igtv_share_preview_to_feed = upload_to_feed ? "1" : null;
         private String source_type = "4";
         private String length = "68";
-        private String retryContext = "{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0}";
+        private String retryContext =
+                "{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0}";
     }
 
 }

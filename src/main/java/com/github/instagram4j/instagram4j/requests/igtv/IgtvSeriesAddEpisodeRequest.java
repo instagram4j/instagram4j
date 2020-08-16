@@ -15,7 +15,7 @@ public class IgtvSeriesAddEpisodeRequest extends IGPostRequest<IgtvSeriesRespons
     private String _series;
     @NonNull
     private Long pk;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IgtvSeriesAddEpisodePayload();
@@ -30,7 +30,7 @@ public class IgtvSeriesAddEpisodeRequest extends IGPostRequest<IgtvSeriesRespons
     public Class<IgtvSeriesResponse> getResponseType() {
         return IgtvSeriesResponse.class;
     }
-    
+
     @Data
     public class IgtvSeriesAddEpisodePayload extends IGPayload {
         private String media_id = pk.toString();

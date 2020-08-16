@@ -25,7 +25,7 @@ public class IgtvTest {
         IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeed() throws Exception {
@@ -34,7 +34,7 @@ public class IgtvTest {
         IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChannel() throws Exception {
@@ -44,16 +44,17 @@ public class IgtvTest {
         Assert.assertEquals("ok", res.getStatus());
         log.debug(res.toString());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeriesCreate() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IgtvSeriesCreateRequest req = new IgtvSeriesCreateRequest("Earth's Videos", "A collection of cool videos");
+        IgtvSeriesCreateRequest req =
+                new IgtvSeriesCreateRequest("Earth's Videos", "A collection of cool videos");
         IGResponse res = client.sendRequest(req).join();
         Assert.assertEquals("ok", res.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSeriesAdd() throws Exception {

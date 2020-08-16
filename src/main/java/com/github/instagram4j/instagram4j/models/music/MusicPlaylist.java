@@ -18,8 +18,9 @@ public class MusicPlaylist extends IGBaseModel {
     private String icon_url;
     @JsonDeserialize(converter = BeanToTrackConverter.class)
     private List<MusicTrack> preview_items;
-    
-    public static class BeanToTrackConverter extends StdConverter<List<Map<String, Object>>, List<MusicTrack>> {
+
+    public static class BeanToTrackConverter
+            extends StdConverter<List<Map<String, Object>>, List<MusicTrack>> {
         @Override
         public List<MusicTrack> convert(List<Map<String, Object>> value) {
             return value.stream()

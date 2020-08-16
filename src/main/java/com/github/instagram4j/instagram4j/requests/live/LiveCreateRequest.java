@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class LiveCreateRequest extends IGPostRequest<LiveCreateResponse> {
     private int width = 720, height = 1280;
     private String broadcastMessage = "test", broadcastType = "RTMP";
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new LiveCreatePayload(width, height, broadcastMessage, broadcastType);
@@ -29,7 +29,7 @@ public class LiveCreateRequest extends IGPostRequest<LiveCreateResponse> {
     public Class<LiveCreateResponse> getResponseType() {
         return LiveCreateResponse.class;
     }
-    
+
     @Data
     @AllArgsConstructor
     public static class LiveCreatePayload extends IGPayload {

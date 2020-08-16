@@ -35,8 +35,10 @@ public class UploadStoryVideoTest {
     public void uploadTest()
             throws IGLoginException, IOException, IGResponseException, ClassNotFoundException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        File vidFile = new File("src/examples/resources/storyvid.mp4"), covFile = new File("src/examples/resources/story.jpg");
-        byte[] vidData = Files.readAllBytes(vidFile.toPath()), covData = Files.readAllBytes(covFile.toPath());
+        File vidFile = new File("src/examples/resources/storyvid.mp4"),
+                covFile = new File("src/examples/resources/story.jpg");
+        byte[] vidData = Files.readAllBytes(vidFile.toPath()),
+                covData = Files.readAllBytes(covFile.toPath());
         BufferedImage img = ImageIO.read(covFile);
         String upload_id = String.valueOf(System.currentTimeMillis());
         Long duration = 13l;
@@ -52,7 +54,8 @@ public class UploadStoryVideoTest {
         Assert.assertEquals("ok", uploadTResponse.getStatus());
         Assert.assertEquals("ok", finishResponse.getStatus());
 
-        IGRequest<MediaConfigureToStoryResponse> configReq = new MediaConfigureToStoryRequest(upload_id);
+        IGRequest<MediaConfigureToStoryResponse> configReq =
+                new MediaConfigureToStoryRequest(upload_id);
 
         MediaConfigureToStoryResponse response = client.sendRequest(configReq).join();
 

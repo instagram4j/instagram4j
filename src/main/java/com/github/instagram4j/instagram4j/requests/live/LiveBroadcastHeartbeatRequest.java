@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class LiveBroadcastHeartbeatRequest extends IGPostRequest<LiveBroadcastHeartbeatResponse> {
     @NonNull
     private String broadcast_id;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IGPayload();
@@ -27,5 +27,5 @@ public class LiveBroadcastHeartbeatRequest extends IGPostRequest<LiveBroadcastHe
     public Class<LiveBroadcastHeartbeatResponse> getResponseType() {
         return LiveBroadcastHeartbeatResponse.class;
     }
-    
+
 }

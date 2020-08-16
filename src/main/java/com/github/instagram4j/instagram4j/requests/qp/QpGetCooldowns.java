@@ -11,7 +11,7 @@ public class QpGetCooldowns extends IGGetRequest<IGResponse> {
     public String path() {
         return "qp/get_cooldowns/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("signature", IGUtils.generateSignature("{}"));

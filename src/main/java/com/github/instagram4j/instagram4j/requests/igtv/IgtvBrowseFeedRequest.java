@@ -11,7 +11,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse> implements IGPaginatedRequest<IgtvBrowseFeedResponse> {
+public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse>
+        implements IGPaginatedRequest<IgtvBrowseFeedResponse> {
     @Setter
     private String max_id;
 
@@ -19,7 +20,7 @@ public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse> 
     public String path() {
         return "igtv/browse_feed/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id);
@@ -29,5 +30,5 @@ public class IgtvBrowseFeedRequest extends IGGetRequest<IgtvBrowseFeedResponse> 
     public Class<IgtvBrowseFeedResponse> getResponseType() {
         return IgtvBrowseFeedResponse.class;
     }
-    
+
 }

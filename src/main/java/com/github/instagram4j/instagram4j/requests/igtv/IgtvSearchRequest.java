@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IgtvSearchRequest extends IGPostRequest<IgtvSearchResponse> {
     private String _query;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IgtvSearchPayload();
@@ -30,7 +30,7 @@ public class IgtvSearchRequest extends IGPostRequest<IgtvSearchResponse> {
     public Class<IgtvSearchResponse> getResponseType() {
         return IgtvSearchResponse.class;
     }
-    
+
     @Data
     @JsonInclude(Include.NON_NULL)
     public class IgtvSearchPayload extends IGPayload {

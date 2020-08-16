@@ -14,7 +14,7 @@ import lombok.NonNull;
 public class FriendshipsShowManyRequest extends IGPostRequest<FriendshipsShowManyResponse> {
     @NonNull
     private String _user_ids;
-    
+
     public FriendshipsShowManyRequest(Long... user_pks) {
         this._user_ids = Stream.of(user_pks).map(Object::toString).collect(Collectors.joining(","));
     }

@@ -16,7 +16,7 @@ public class MusicMoodsIdRequest extends IGPostRequest<MusicTrackResponse> {
     @NonNull
     private String _id;
     private String _cursor = "0";
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new MusicQueryPayload(client.getSessionId(), _cursor);
@@ -31,5 +31,5 @@ public class MusicMoodsIdRequest extends IGPostRequest<MusicTrackResponse> {
     public Class<MusicTrackResponse> getResponseType() {
         return MusicTrackResponse.class;
     }
-    
+
 }

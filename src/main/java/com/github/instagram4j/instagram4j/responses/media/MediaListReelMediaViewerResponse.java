@@ -15,7 +15,7 @@ public class MediaListReelMediaViewerResponse extends IGPaginatedResponse {
     private int user_count;
     private int total_viewer_count;
     private ReelMedia updated_media;
-    
+
     public boolean isMore_available() {
         return next_max_id != null;
     }

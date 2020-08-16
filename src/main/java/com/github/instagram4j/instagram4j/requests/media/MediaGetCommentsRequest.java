@@ -12,7 +12,8 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsResponse> implements IGPaginatedRequest<MediaGetCommentsResponse> {
+public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsResponse>
+        implements IGPaginatedRequest<MediaGetCommentsResponse> {
     @NonNull
     private String _id;
     @Setter
@@ -22,7 +23,7 @@ public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsRespon
     public String path() {
         return "media/" + _id + "/comments/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id);

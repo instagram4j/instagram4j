@@ -19,7 +19,9 @@ public class UsersActionTest {
         UserAction user = client.actions().users().findByUsername("kimkardashian").join();
         Friendship friendship = user.getFriendship().join();
         log.debug("Is following : {}", friendship.isFollowing());
-        user.performAction(friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE).join();
+        user.performAction(
+                friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE)
+                .join();
         log.debug("Success");
     }
 }

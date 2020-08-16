@@ -9,9 +9,10 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.IGRequest;
 
 public class AsyncAction {
-    
-    public static List<CompletableFuture<?>> executeRequestsAsync(IGClient client, IGRequest<?>... reqs) {
+
+    public static List<CompletableFuture<?>> executeRequestsAsync(IGClient client,
+            IGRequest<?>... reqs) {
         return Stream.of(reqs).map(client::sendRequest).collect(Collectors.toList());
     }
-    
+
 }

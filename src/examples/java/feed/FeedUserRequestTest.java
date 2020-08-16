@@ -18,9 +18,11 @@ import serialize.SerializeTestUtil;
 @Slf4j
 public class FeedUserRequestTest {
     @Test
-    // Run SerializeTestUtil.serializeLogin first to generate saved sessions // 2336729204844097508_18428658
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions //
+    // 2336729204844097508_18428658
     public void testFeedRequest()
-            throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
+            throws IGResponseException, IGLoginException, ClassNotFoundException,
+            FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserRequest req = new FeedUserRequest(client.getSelfProfile().getPk());
         FeedUserResponse response = client.sendRequest(req).join();

@@ -98,7 +98,8 @@ public class IGClient implements Serializable {
     public CompletableFuture<LoginResponse> sendLoginRequest() {
         return new QeSyncRequest().execute(this)
                 .thenCompose(res -> new AccountsLoginRequest($username,
-                        IGUtils.encryptPassword(this.$password, this.encryptionId, this.encryptionKey)).execute(this))
+                        IGUtils.encryptPassword(this.$password, this.encryptionId,
+                                this.encryptionKey)).execute(this))
                 .thenApply((res) -> {
                     this.setLoggedInState(res);
 
@@ -109,7 +110,9 @@ public class IGClient implements Serializable {
     public CompletableFuture<LoginResponse> sendLoginRequest(String code, String identifier) {
         return new QeSyncRequest().execute(this)
                 .thenCompose(res -> new AccountsTwoFactorLoginRequest($username,
-                        IGUtils.encryptPassword(this.$password, this.encryptionId, this.encryptionKey), code,
+                        IGUtils.encryptPassword(this.$password, this.encryptionId,
+                                this.encryptionKey),
+                        code,
                         identifier).execute(this))
                 .thenApply((res) -> {
                     this.setLoggedInState(res);
@@ -141,7 +144,8 @@ public class IGClient implements Serializable {
         return responseFuture
                 .thenApply(res -> {
                     setFromResponseHeaders(res.getFirst());
-                    log.info("Response for {} with body (truncated) : {}", res.getFirst().request().url(),
+                    log.info("Response for {} with body (truncated) : {}",
+                            res.getFirst().request().url(),
                             IGUtils.truncate(res.getSecond()));
 
                     return req.parseResponse(res);
@@ -160,13 +164,17 @@ public class IGClient implements Serializable {
     }
 
     public String getCsrfToken() {
-        return IGUtils.getCookieValue(this.getHttpClient().cookieJar(), "csrftoken").orElse("missing");
+        return IGUtils.getCookieValue(this.getHttpClient().cookieJar(), "csrftoken")
+                .orElse("missing");
     }
 
     public void setFromResponseHeaders(Response res) {
-        Optional.ofNullable(res.header("ig-set-password-encryption-key-id")).ifPresent(s -> this.encryptionId = s);
-        Optional.ofNullable(res.header("ig-set-password-encryption-pub-key")).ifPresent(s -> this.encryptionKey = s);
-        Optional.ofNullable(res.header("ig-set-authorization")).ifPresent(s -> this.authorization = s);
+        Optional.ofNullable(res.header("ig-set-password-encryption-key-id"))
+                .ifPresent(s -> this.encryptionId = s);
+        Optional.ofNullable(res.header("ig-set-password-encryption-pub-key"))
+                .ifPresent(s -> this.encryptionKey = s);
+        Optional.ofNullable(res.header("ig-set-authorization"))
+                .ifPresent(s -> this.authorization = s);
     }
 
     public IGPayload setIGPayloadDefaults(IGPayload load) {
@@ -219,7 +227,8 @@ public class IGClient implements Serializable {
         private OkHttpClient client = IGUtils.formDefaultHttpClient();
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
-        private Consumer<LoginResponse> onLogin = (login) -> {};
+        private Consumer<LoginResponse> onLogin = (login) -> {
+        };
 
         public IGClient build() {
             return new IGClient(username, password, client);
@@ -236,7 +245,8 @@ public class IGClient implements Serializable {
         }
 
         public IGClient simulatedLogin() throws IGLoginException {
-            return simulatedLogin((res) -> {});
+            return simulatedLogin((res) -> {
+            });
         }
 
         public IGClient login() throws IGLoginException {
@@ -250,7 +260,8 @@ public class IGClient implements Serializable {
         private LoginResponse performLogin(IGClient client) throws IGLoginException {
             LoginResponse response = client.sendLoginRequest()
                     .exceptionally(tr -> {
-                        LoginResponse loginResponse = IGFailedResponse.of(tr.getCause(), LoginResponse.class);
+                        LoginResponse loginResponse =
+                                IGFailedResponse.of(tr.getCause(), LoginResponse.class);
                         if (loginResponse.getTwo_factor_info() != null && onTwoFactor != null) {
                             loginResponse = onTwoFactor.accept(client, loginResponse);
                         }

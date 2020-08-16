@@ -11,10 +11,11 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class FeedSavedRequest extends IGGetRequest<FeedSavedResponse> implements IGPaginatedRequest<FeedSavedResponse> {
+public class FeedSavedRequest extends IGGetRequest<FeedSavedResponse>
+        implements IGPaginatedRequest<FeedSavedResponse> {
     @Setter
     private String max_id;
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id);
@@ -29,5 +30,5 @@ public class FeedSavedRequest extends IGGetRequest<FeedSavedResponse> implements
     public Class<FeedSavedResponse> getResponseType() {
         return FeedSavedResponse.class;
     }
-    
+
 }

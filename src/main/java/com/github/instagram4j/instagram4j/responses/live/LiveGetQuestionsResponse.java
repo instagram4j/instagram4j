@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class LiveGetQuestionsResponse extends IGResponse {
     private List<LiveQuestions> questions;
-    
+
     @Data
     public static class LiveQuestions {
         private String text;

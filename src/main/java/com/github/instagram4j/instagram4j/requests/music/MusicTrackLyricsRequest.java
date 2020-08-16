@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class MusicTrackLyricsRequest extends IGGetRequest<MusicTrackLyricsResponse> {
     @NonNull
     private String _track_id;
-    
+
     @Override
     public String path() {
         return "music/track/" + _track_id + "/lyrics/";
@@ -20,5 +20,5 @@ public class MusicTrackLyricsRequest extends IGGetRequest<MusicTrackLyricsRespon
     public Class<MusicTrackLyricsResponse> getResponseType() {
         return MusicTrackLyricsResponse.class;
     }
-    
+
 }

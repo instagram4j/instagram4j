@@ -20,7 +20,8 @@ public class StoryPollsItem extends ReelMetadataItem {
     @Builder.Default
     @NonNull
     private List<Tally> tallies = Arrays.asList(YES, NO);
-    public static final Tally YES = Tally.builder().text("YES").build(), NO = Tally.builder().text("NO").build();
+    public static final Tally YES = Tally.builder().text("YES").build(),
+            NO = Tally.builder().text("NO").build();
 
     @Override
     public String key() {

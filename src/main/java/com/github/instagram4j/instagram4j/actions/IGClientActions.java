@@ -21,12 +21,12 @@ public class IGClientActions {
     private StoryAction _story;
     private UsersAction _users;
     private SimulateAction _simulate;
-    
+
     @SneakyThrows
     public IGClientActions(IGClient client) {
         for (Field field : this.getClass().getDeclaredFields())
             if (field.getName().startsWith("_"))
                 field.set(this, field.getType().getConstructor(IGClient.class).newInstance(client));
     }
-    
+
 }

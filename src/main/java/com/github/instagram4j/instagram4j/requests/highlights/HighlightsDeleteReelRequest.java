@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class HighlightsDeleteReelRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String _highlight_id;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IGPayload();
@@ -27,5 +27,5 @@ public class HighlightsDeleteReelRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
 }

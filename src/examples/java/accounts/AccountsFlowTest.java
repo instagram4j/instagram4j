@@ -17,27 +17,27 @@ public class AccountsFlowTest {
     public void testPreLoginFlow() {
         IGClient client = new IGClient("", "", SerializeTestUtil.formTestHttpClient());
         client.actions().simulate().preLoginFlow().stream()
-        .map(CompletableFuture::join)
-        .map(IGResponse.class::cast)
-        .forEach(res -> {
-            log.info("{} : {}", res.getClass().getName(), res.getStatus());
-           Assert.assertEquals("ok", res.getStatus());
-        });
+                .map(CompletableFuture::join)
+                .map(IGResponse.class::cast)
+                .forEach(res -> {
+                    log.info("{} : {}", res.getClass().getName(), res.getStatus());
+                    Assert.assertEquals("ok", res.getStatus());
+                });
         log.info("Success");
     }
-    
+
     @Test
     public void testPostLoginFlow() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         long start = System.currentTimeMillis();
         client.actions().simulate().postLoginFlow().parallelStream()
-        .map(CompletableFuture::join)
-        .map(IGResponse.class::cast)
-        .forEach(res -> {
-            log.info("{} : {}", res.getClass().getName(), res.getStatus());
-            
-            Assert.assertEquals("ok", res.getStatus());
-        });
+                .map(CompletableFuture::join)
+                .map(IGResponse.class::cast)
+                .forEach(res -> {
+                    log.info("{} : {}", res.getClass().getName(), res.getStatus());
+
+                    Assert.assertEquals("ok", res.getStatus());
+                });
         log.info("Success Took {}", System.currentTimeMillis() - start);
     }
 }

@@ -18,8 +18,9 @@ public class FeedSavedResponse extends IGPaginatedResponse {
     private List<TimelineMedia> items;
     private String next_max_id;
     private boolean more_available;
-    
-    private static class MediaBeanToIGTimelineMedia extends StdConverter<List<Map<String, Object>>, List<TimelineMedia>> {
+
+    private static class MediaBeanToIGTimelineMedia
+            extends StdConverter<List<Map<String, Object>>, List<TimelineMedia>> {
         @Override
         public List<TimelineMedia> convert(List<Map<String, Object>> value) {
             return value.stream()

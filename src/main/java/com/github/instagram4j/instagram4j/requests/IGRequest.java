@@ -25,25 +25,25 @@ public abstract class IGRequest<T extends IGResponse> {
     public abstract String path();
 
     public abstract Request formRequest(IGClient client);
-    
+
     public abstract Class<T> getResponseType();
-    
+
     public String apiPath() {
         return IGConstants.API_V1;
     }
-    
+
     public String baseApiUrl() {
         return IGConstants.BASE_API_URL;
     }
-    
+
     public String getQueryString(IGClient client) {
         return "";
     }
-    
+
     public HttpUrl formUrl(IGClient client) {
         return HttpUrl.parse(baseApiUrl() + apiPath() + path() + getQueryString(client));
     }
-    
+
     public CompletableFuture<T> execute(IGClient client) {
         return client.sendRequest(this);
     }
@@ -53,7 +53,8 @@ public abstract class IGRequest<T extends IGResponse> {
         StringBuilder builder = new StringBuilder("?");
 
         for (int i = 0; i < strings.length; i += 2) {
-            if (i + 1 < strings.length && strings[i] != null && strings[i + 1] != null && !strings[i].toString().isEmpty()
+            if (i + 1 < strings.length && strings[i] != null && strings[i + 1] != null
+                    && !strings[i].toString().isEmpty()
                     && !strings[i + 1].toString().isEmpty()) {
                 builder.append(URLEncoder.encode(strings[i].toString(), "utf-8")).append("=")
                         .append(URLEncoder.encode(strings[i + 1].toString(), "utf-8")).append("&");
@@ -62,7 +63,7 @@ public abstract class IGRequest<T extends IGResponse> {
 
         return builder.substring(0, builder.length() - 1);
     }
-    
+
     @SneakyThrows(IOException.class)
     public T parseResponse(Pair<Response, String> response) {
         T igResponse = parseResponse(response.getSecond());
@@ -70,7 +71,7 @@ public abstract class IGRequest<T extends IGResponse> {
         if (igResponse.getStatus().equals("fail")) {
             throw new IGResponseException(igResponse);
         }
-        
+
         return igResponse;
     }
 
@@ -81,7 +82,7 @@ public abstract class IGRequest<T extends IGResponse> {
     public <U> U parseResponse(String json, Class<U> type) throws IOException {
         log.debug("{} parsing response : {}", apiPath() + path(), json);
         U response = IGUtils.jsonToObject(json, type);
-        
+
         return response;
     }
 
@@ -100,7 +101,8 @@ public abstract class IGRequest<T extends IGResponse> {
         req.addHeader("X-IG-Device-Locale", "en_US");
         req.addHeader("X-Pigeon-Session-Id", IGUtils.randomUuid());
         req.addHeader("X-Pigeon-Rawclienttime", System.currentTimeMillis() + "");
-        req.addHeader("X-IG-Connection-Speed", ThreadLocalRandom.current().nextInt(2000, 4000) + "kbps");
+        req.addHeader("X-IG-Connection-Speed",
+                ThreadLocalRandom.current().nextInt(2000, 4000) + "kbps");
         req.addHeader("X-IG-Bandwidth-Speed-KBPS", "-1.000");
         req.addHeader("X-IG-Bandwidth-TotalBytes-B", "0");
         req.addHeader("X-IG-Bandwidth-TotalTime-MS", "0");
@@ -108,7 +110,8 @@ public abstract class IGRequest<T extends IGResponse> {
         req.addHeader("X-IG-Device-ID", client.getGuid());
         req.addHeader("X-IG-Android-ID", client.getDeviceId());
         req.addHeader("X-FB-HTTP-engine", "Liger");
-        Optional.ofNullable(client.getAuthorization()).ifPresent(s -> req.addHeader("Authorization", s));
+        Optional.ofNullable(client.getAuthorization())
+                .ifPresent(s -> req.addHeader("Authorization", s));
 
         return req;
     }

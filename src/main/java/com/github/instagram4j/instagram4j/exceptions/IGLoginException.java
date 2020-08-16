@@ -15,5 +15,5 @@ public class IGLoginException extends IGResponseException {
         this.client = client;
         this.loginResponse = body;
     }
-    
+
 }

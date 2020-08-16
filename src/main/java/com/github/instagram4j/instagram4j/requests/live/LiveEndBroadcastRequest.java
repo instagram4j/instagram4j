@@ -16,7 +16,7 @@ public class LiveEndBroadcastRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String broadcastId;
     private boolean endAfterCopyrightWarning;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {

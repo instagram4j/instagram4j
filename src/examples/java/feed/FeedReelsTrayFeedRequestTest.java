@@ -24,41 +24,39 @@ public class FeedReelsTrayFeedRequestTest {
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeedRequest()
-            throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
+            throws IGResponseException, IGLoginException, ClassNotFoundException,
+            FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedReelsTrayResponse response = client.actions().story().tray().join();
         Assert.assertEquals("ok", response.getStatus());
-        
-        /* response.getTray().forEach(tray -> {
-            tray.getItems().stream()
-            .map(x -> x.get("story_cta"))
-            .filter(Objects::nonNull)
-            .forEach(story_cta -> {
-                ArrayNode node = IGUtils.convertToView(story_cta, ArrayNode.class);
-                log.info(node.get(0).get("links").get(0).get("webUri").asText());
-            });
-        }); */
-        
+
+        /*
+         * response.getTray().forEach(tray -> { tray.getItems().stream() .map(x ->
+         * x.get("story_cta")) .filter(Objects::nonNull) .forEach(story_cta -> { ArrayNode node =
+         * IGUtils.convertToView(story_cta, ArrayNode.class);
+         * log.info(node.get(0).get("links").get(0).get("webUri").asText()); }); });
+         */
+
         response.getTray().forEach(tray -> {
             tray.getItems().stream()
-           .map(item -> item.get("story_cta"))
-           .filter(Objects::nonNull)
-           .flatMap(story_cta -> StoryCta.convert(story_cta).stream())
-           .forEach(item -> {
-              log.debug(item.getLinks().get(0).getWebUri());
-           });
-       });
+                    .map(item -> item.get("story_cta"))
+                    .filter(Objects::nonNull)
+                    .flatMap(story_cta -> StoryCta.convert(story_cta).stream())
+                    .forEach(item -> {
+                        log.debug(item.getLinks().get(0).getWebUri());
+                    });
+        });
     }
-    
+
     @Data
     public static class StoryCta {
         private List<StoryCtaLink> links;
-        
+
         public static List<StoryCta> convert(Object o) {
             return IGUtils.convertToView(o, new TypeReference<List<StoryCta>>() {});
         }
     }
-    
+
     @Data
     public static class StoryCtaLink {
         private String webUri;

@@ -32,10 +32,12 @@ public class DirectInboxTest {
         DirectInboxResponse response = new DirectInboxRequest().execute(lib).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getInbox().getThreads().forEach(thread -> {
-            log.debug("{} : {} : {}", thread.getThread_id(), thread.getThread_title(), thread.getUsers().stream().map(Profile::getUsername).collect(Collectors.joining(",")));
+            log.debug("{} : {} : {}", thread.getThread_id(), thread.getThread_title(),
+                    thread.getUsers().stream().map(Profile::getUsername)
+                            .collect(Collectors.joining(",")));
         });
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPending() throws Exception {
@@ -43,7 +45,7 @@ public class DirectInboxTest {
         IGResponse response = new DirectPendingInboxRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testThreads() throws Exception {
@@ -52,15 +54,16 @@ public class DirectInboxTest {
         IGResponse response = client.sendRequest(new DirectThreadsRequest(thread_id)).join();
         Assert.assertEquals("ok", response.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testGetByParticipants() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        DirectThreadsResponse response = new DirectGetByParticipantsRequest(18428658L).execute(client).join();
+        DirectThreadsResponse response =
+                new DirectGetByParticipantsRequest(18428658L).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPresence() throws Exception {

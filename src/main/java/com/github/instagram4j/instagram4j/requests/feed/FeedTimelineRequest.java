@@ -15,7 +15,8 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class FeedTimelineRequest extends IGPostRequest<FeedTimelineResponse> implements IGPaginatedRequest<FeedTimelineResponse> {
+public class FeedTimelineRequest extends IGPostRequest<FeedTimelineResponse>
+        implements IGPaginatedRequest<FeedTimelineResponse> {
     @Setter
     private String max_id = "";
 

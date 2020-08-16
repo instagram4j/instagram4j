@@ -10,10 +10,11 @@ public class ZrTokenResultRequest extends IGGetRequest<IGResponse> {
     public String path() {
         return "zr/token/result/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
-        return mapQueryString("device_id", client.getDeviceId(), "custom_device_id", client.getGuid(), "fetch_reason", "token_stale");
+        return mapQueryString("device_id", client.getDeviceId(), "custom_device_id",
+                client.getGuid(), "fetch_reason", "token_stale");
     }
 
     @Override

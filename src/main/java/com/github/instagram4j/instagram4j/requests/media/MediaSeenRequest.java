@@ -43,22 +43,23 @@ public class MediaSeenRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     public class MediaSeenPayload extends IGPayload {
         private Map<String, String[]> reels;
-        
+
         public MediaSeenPayload(List<ReelMedia> reelMedias) {
             this.reels = new HashMap<>();
             reelMedias.forEach(this::map_to_reels);
         }
-        
+
         public void map_to_reels(ReelMedia media) {
             String key = String.format("%s_%s", media.getId(), media.getUser().getPk());
-            String[] value = {String.format("%s_%s", media.getTaken_at(), System.currentTimeMillis() / 1000)};
-            
+            String[] value = {
+                    String.format("%s_%s", media.getTaken_at(), System.currentTimeMillis() / 1000)};
+
             reels.put(key, value);
         }
     }
-    
+
 }

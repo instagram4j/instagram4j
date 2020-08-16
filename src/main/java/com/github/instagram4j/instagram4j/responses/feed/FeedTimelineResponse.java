@@ -20,8 +20,9 @@ public class FeedTimelineResponse extends IGPaginatedResponse {
     @JsonDeserialize(converter = FilterToIGTimelineMedia.class)
     private List<TimelineMedia> feed_items;
     private boolean more_available;
-    
-    private static class FilterToIGTimelineMedia extends StdConverter<List<Map<String, Object>>, List<TimelineMedia>> {
+
+    private static class FilterToIGTimelineMedia
+            extends StdConverter<List<Map<String, Object>>, List<TimelineMedia>> {
         @Override
         public List<TimelineMedia> convert(List<Map<String, Object>> value) {
             return value.stream()

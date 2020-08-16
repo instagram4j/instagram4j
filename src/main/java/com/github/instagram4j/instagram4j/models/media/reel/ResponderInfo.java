@@ -15,7 +15,7 @@ public class ResponderInfo extends IGBaseModel {
     private List<Responder> responders;
     private String max_id;
     private boolean more_available;
-    
+
     @Data
     public static class Responder {
         private Profile user;

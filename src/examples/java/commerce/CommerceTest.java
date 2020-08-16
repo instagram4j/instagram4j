@@ -18,17 +18,21 @@ public class CommerceTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testDestination() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        CommerceDestinationResponse response = new CommerceDestinationRequest().execute(client).join();
+        CommerceDestinationResponse response =
+                new CommerceDestinationRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
-        response.getSectional_items().stream().map(item -> item.getMedias()).forEach(media -> media.forEach(item -> log.debug(item.getId())));
+        response.getSectional_items().stream().map(item -> item.getMedias())
+                .forEach(media -> media.forEach(item -> log.debug(item.getId())));
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testProductDetails() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        CommerceProductsDetailsResponse response = new CommerceProductsDetailsRequest("2562765907136094", "7734459462").execute(client).join();
+        CommerceProductsDetailsResponse response =
+                new CommerceProductsDetailsRequest("2562765907136094", "7734459462").execute(client)
+                        .join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug(response.getProduct_item().getName());
         log.debug("Success");

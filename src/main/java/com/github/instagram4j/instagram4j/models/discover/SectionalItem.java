@@ -8,7 +8,8 @@ import lombok.Data;
 
 
 @Data
-@JsonTypeInfo(defaultImpl = SectionalItem.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "layout_type", visible = true)
+@JsonTypeInfo(defaultImpl = SectionalItem.class, use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY, property = "layout_type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = SectionalMediaGridItem.class)
 })

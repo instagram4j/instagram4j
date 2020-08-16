@@ -18,7 +18,7 @@ import okhttp3.RequestBody;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class RuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
-    
+
     @NonNull
     private Phase phase;
     @NonNull
@@ -26,8 +26,9 @@ public class RuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
     private String stream_id;
     private String transfer_id, segment_offset, total_entity_length;
     private byte[] body;
-    
-    public RuploadSegmentVideoPhaseRequest(Phase phase, UploadParameters param, String stream_id, String transfer_id) {
+
+    public RuploadSegmentVideoPhaseRequest(Phase phase, UploadParameters param, String stream_id,
+            String transfer_id) {
         this(phase, param);
         this.stream_id = stream_id;
     }
@@ -70,41 +71,40 @@ public class RuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public RequestBody getRequestBody(IGClient client) {
-        return phase == Phase.TRANSFER ? RequestBody.create(body, MediaType.get("application/octet-stream"))
+        return phase == Phase.TRANSFER
+                ? RequestBody.create(body, MediaType.get("application/octet-stream"))
                 : super.getRequestBody(client);
     }
 
     public void addHeadersBaseOnPhase(Request.Builder req) {
         switch (phase) {
-        default:
-            return;
-        case TRANSFER:
-            phase.addToHeader(req,
-                    stream_id,
-                    "2",
-                    segment_offset,
-                    total_entity_length,
-                    transfer_id,
-                    "video/mp4",
-                    segment_offset);
-            break;
-        case END:
-            phase.addToHeader(req, stream_id);
-            break;
+            default:
+                return;
+            case TRANSFER:
+                phase.addToHeader(req,
+                        stream_id,
+                        "2",
+                        segment_offset,
+                        total_entity_length,
+                        transfer_id,
+                        "video/mp4",
+                        segment_offset);
+                break;
+            case END:
+                phase.addToHeader(req, stream_id);
+                break;
         }
     }
 
     @Getter
     public static enum Phase {
-        START,
-        TRANSFER("Stream-Id",
+        START, TRANSFER("Stream-Id",
                 "Segment-Type",
                 "Segment-Start-Offset",
                 "X-Entity-Length",
                 "X-Entity-Name",
                 "X-Entity-Type",
-                "Offset"),
-        END("Stream-Id");
+                "Offset"), END("Stream-Id");
 
         private String[] headers;
 

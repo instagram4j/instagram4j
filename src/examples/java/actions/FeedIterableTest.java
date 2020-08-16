@@ -12,13 +12,14 @@ import serialize.SerializeTestUtil;
 
 @Slf4j
 public class FeedIterableTest {
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testIterator() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         // form a FeedIterator for FeedTimelineRequest
-        FeedIterator<FeedTimelineResponse> iter = new FeedIterator<>(client, new FeedTimelineRequest());
+        FeedIterator<FeedTimelineResponse> iter =
+                new FeedIterator<>(client, new FeedTimelineRequest());
         // setting a limit of 2 responses (initial and one paginated)
         int limit = 2;
         while (iter.hasNext() && limit-- > 0) {
@@ -27,8 +28,8 @@ public class FeedIterableTest {
             response.getFeed_items().forEach(m -> log.debug(m.getCaption().getText()));
             // Recommended to wait in between iterations
         }
-        
+
         log.debug("Success");
     }
-    
+
 }

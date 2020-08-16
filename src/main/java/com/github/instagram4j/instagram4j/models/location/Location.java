@@ -18,7 +18,7 @@ public class Location extends IGBaseModel {
     private Double lng;
     private String address;
     private Integer minimum_age;
-    
+
     @Data
     public static class Venue extends Location {
         @JsonAlias("external_id_source")

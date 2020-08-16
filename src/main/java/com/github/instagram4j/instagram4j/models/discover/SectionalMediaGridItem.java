@@ -19,8 +19,9 @@ public class SectionalMediaGridItem extends SectionalItem {
     @JsonProperty("layout_content")
     @JsonDeserialize(converter = LayoutContentToIGTimelineMedia.class)
     private List<TimelineMedia> medias;
-    
-    private static class LayoutContentToIGTimelineMedia extends StdConverter<Map<String, List<Map<String, Object>>>, List<TimelineMedia>> {
+
+    private static class LayoutContentToIGTimelineMedia
+            extends StdConverter<Map<String, List<Map<String, Object>>>, List<TimelineMedia>> {
         @Override
         public List<TimelineMedia> convert(Map<String, List<Map<String, Object>>> value) {
             return value.get("medias").stream()

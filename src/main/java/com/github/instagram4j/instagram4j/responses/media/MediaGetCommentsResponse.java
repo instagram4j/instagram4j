@@ -13,7 +13,7 @@ public class MediaGetCommentsResponse extends IGPaginatedResponse {
     private List<Comment> comments;
     private Caption caption;
     private String next_max_id;
-    
+
     public boolean isMore_available() {
         return next_max_id != null;
     }

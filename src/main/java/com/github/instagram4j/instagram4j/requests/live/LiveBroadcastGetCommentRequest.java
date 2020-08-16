@@ -19,7 +19,7 @@ public class LiveBroadcastGetCommentRequest extends IGGetRequest<LiveBroadcastGe
     public String path() {
         return "live/" + broadcast_id + "/get_comment/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("last_comment_ts", String.valueOf(last_ts));

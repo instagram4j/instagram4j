@@ -7,7 +7,7 @@ import com.github.instagram4j.instagram4j.models.media.VideoVersionsMeta;
 
 import lombok.Data;
 
-//media_type 2
+// media_type 2
 @Data
 @JsonTypeName("2")
 public class TimelineVideoMedia extends TimelineMedia {

@@ -7,7 +7,8 @@ import com.github.instagram4j.instagram4j.models.IGBaseModel;
 import lombok.Data;
 
 @Data
-@JsonTypeInfo(defaultImpl = ThreadItem.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "item_type", visible = true)
+@JsonTypeInfo(defaultImpl = ThreadItem.class, use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY, property = "item_type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ThreadTextItem.class),
         @JsonSubTypes.Type(value = ThreadMediaShareItem.class),

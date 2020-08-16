@@ -18,7 +18,7 @@ public class MusicSearchRequest extends IGPostRequest<MusicTrackResponse> {
     @NonNull
     private String _query;
     private String _cursor = "0";
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new MusicQueryPayload(client.getSessionId(), _cursor, _query);
@@ -33,7 +33,7 @@ public class MusicSearchRequest extends IGPostRequest<MusicTrackResponse> {
     public Class<MusicTrackResponse> getResponseType() {
         return MusicTrackResponse.class;
     }
-    
+
     @Data
     @RequiredArgsConstructor
     @AllArgsConstructor
@@ -45,5 +45,5 @@ public class MusicSearchRequest extends IGPostRequest<MusicTrackResponse> {
         private String cursor;
         private String q;
     }
-    
+
 }

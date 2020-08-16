@@ -55,7 +55,8 @@ public class MediaConfigureToStoryRequest extends IGPostRequest<MediaConfigureTo
         return payload;
     }
 
-    public static void addAllMetadata(MediaConfigureToStoryPayload payload, List<ReelMetadataItem> items) {
+    public static void addAllMetadata(MediaConfigureToStoryPayload payload,
+            List<ReelMetadataItem> items) {
         Map<String, List<ReelMetadataItem>> map = new HashMap<>();
         items.forEach(item -> {
             if (map.putIfAbsent(item.key(), new ArrayList<>(Arrays.asList(item))) != null)
@@ -63,7 +64,8 @@ public class MediaConfigureToStoryRequest extends IGPostRequest<MediaConfigureTo
         });
 
         map.entrySet()
-                .forEach(entry -> payload.put(entry.getKey(), IGUtils.objectToJson(entry.getValue())));
+                .forEach(entry -> payload.put(entry.getKey(),
+                        IGUtils.objectToJson(entry.getValue())));
     }
 
     @Data

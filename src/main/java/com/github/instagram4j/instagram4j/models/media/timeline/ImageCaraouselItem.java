@@ -5,7 +5,7 @@ import com.github.instagram4j.instagram4j.models.media.ImageVersions;
 
 import lombok.Data;
 
-//media_type 1
+// media_type 1
 @Data
 @JsonTypeName("1")
 public class ImageCaraouselItem extends CaraouselItem {

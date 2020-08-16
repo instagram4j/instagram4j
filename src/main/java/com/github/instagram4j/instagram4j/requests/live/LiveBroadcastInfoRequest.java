@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class LiveBroadcastInfoRequest extends IGGetRequest<IGResponse> {
     @NonNull
     private String _broadcast_id;
-    
+
     @Override
     public String path() {
         return "live/" + _broadcast_id + "/info/";

@@ -11,15 +11,16 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommerceDestinationRequest extends IGGetRequest<CommerceDestinationResponse> implements IGPaginatedRequest<CommerceDestinationResponse> {
+public class CommerceDestinationRequest extends IGGetRequest<CommerceDestinationResponse>
+        implements IGPaginatedRequest<CommerceDestinationResponse> {
     @Setter
     private String max_id = "0";
-    
+
     @Override
     public String path() {
         return "commerce/destination/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id, "cluster_id", "shopping");
@@ -29,5 +30,5 @@ public class CommerceDestinationRequest extends IGGetRequest<CommerceDestination
     public Class<CommerceDestinationResponse> getResponseType() {
         return CommerceDestinationResponse.class;
     }
-    
+
 }

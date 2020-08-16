@@ -33,7 +33,7 @@ public class LiveAddPostLiveToIgtvRequest extends IGPostRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     public class LiveAddPostLiveToIgtvPayload extends IGPayload {
         private String broadcast_id = _broadcast_id;

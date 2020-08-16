@@ -26,36 +26,45 @@ public class TimelineActionTest {
         client.actions().timeline().feed().stream().limit(2).forEach(res -> {
             Assert.assertEquals("ok", res.getStatus());
             res.getFeed_items().forEach(item -> {
-                log.debug("{} : {} : {}", item.getUser().getUsername(), item.getPk(), item.getCaption().getText());
+                log.debug("{} : {} : {}", item.getUser().getUsername(), item.getPk(),
+                        item.getCaption().getText());
             });
         });
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPhoto() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().timeline().uploadPhoto(new File("src/examples/resources/test.jpg"), "Nice photo").join();
+        IGResponse response = client.actions().timeline()
+                .uploadPhoto(new File("src/examples/resources/test.jpg"), "Nice photo").join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testVideo() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().timeline().uploadVideo(new File("src/examples/resources/test.mp4"), new File("src/examples/resources/cover.jpg"), "Nice photo").join();
+        IGResponse response =
+                client.actions().timeline().uploadVideo(new File("src/examples/resources/test.mp4"),
+                        new File("src/examples/resources/cover.jpg"), "Nice photo").join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAlbum() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        List<SidecarInfo> info = Arrays.asList(SidecarPhoto.from(new File("src/examples/resources/cover.jpg")), SidecarVideo.from(new File("src/examples/resources/test.mp4"), new File("src/examples/resources/cover.jpg")));
-        IGResponse response = client.actions().timeline().uploadAlbum(info, new MediaConfigureSidecarPayload().caption("Nice album!")).join();
+        List<SidecarInfo> info =
+                Arrays.asList(SidecarPhoto.from(new File("src/examples/resources/cover.jpg")),
+                        SidecarVideo.from(new File("src/examples/resources/test.mp4"),
+                                new File("src/examples/resources/cover.jpg")));
+        IGResponse response = client.actions().timeline()
+                .uploadAlbum(info, new MediaConfigureSidecarPayload().caption("Nice album!"))
+                .join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }

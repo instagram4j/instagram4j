@@ -19,7 +19,8 @@ public class UserInfoRequestTest {
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLogin()
-            throws IGLoginException, IGResponseException, ClassNotFoundException, FileNotFoundException, IOException {
+            throws IGLoginException, IGResponseException, ClassNotFoundException,
+            FileNotFoundException, IOException {
         IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         UsersUsernameInfoRequest req = new UsersUsernameInfoRequest("seattlegoldgrills");
         UsersInfoRequest req2 = new UsersInfoRequest(18428658l);

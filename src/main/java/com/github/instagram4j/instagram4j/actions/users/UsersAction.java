@@ -16,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class UsersAction {
     @NonNull
     private IGClient client;
-    
+
     public CompletableFuture<UserAction> findByUsername(String username) {
         return new UsersUsernameInfoRequest(username).execute(client)
                 .thenApply(response -> {
                     return new UserAction(client, response.getUser());
                 });
     }
-    
+
     public CompletableFuture<User> info(long pk) throws IOException {
         return new UsersInfoRequest(pk).execute(client)
                 .thenApply(UserResponse::getUser);

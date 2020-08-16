@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class LiveWaveRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String broadcast_id, _viewer_id;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {

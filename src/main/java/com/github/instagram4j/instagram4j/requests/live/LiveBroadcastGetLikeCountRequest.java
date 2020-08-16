@@ -10,16 +10,17 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class LiveBroadcastGetLikeCountRequest extends IGGetRequest<LiveBroadcastGetLikeCountResponse> {
+public class LiveBroadcastGetLikeCountRequest
+        extends IGGetRequest<LiveBroadcastGetLikeCountResponse> {
     @NonNull
     private String broadcast_id;
     private long like_ts;
-    
+
     @Override
     public String path() {
         return "live/" + broadcast_id + "/get_like_count/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("like_ts", String.valueOf(like_ts));

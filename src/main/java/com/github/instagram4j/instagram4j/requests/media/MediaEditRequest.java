@@ -31,12 +31,12 @@ public class MediaEditRequest extends IGPostRequest<MediaResponse> {
     public Class<MediaResponse> getResponseType() {
         return MediaResponse.class;
     }
-    
+
     @Data
     public class MediaEditPayload extends IGPayload {
         private String media_id = id;
         private String caption = _caption;
-        private boolean igtv_feed_preview= _igtv_feed_preview;
+        private boolean igtv_feed_preview = _igtv_feed_preview;
     }
 
 }

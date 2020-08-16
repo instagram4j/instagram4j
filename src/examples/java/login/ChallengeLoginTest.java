@@ -22,25 +22,25 @@ public class ChallengeLoginTest {
     public void testChallengeLogin(String username, String password) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-         // Callable that returns inputted code from System.in
-         Callable<String> inputCode = () -> {
-             System.out.print("Please input code: ");
-             return scanner.nextLine();
-         };
-    
-         // handler for challenge login
-         LoginHandler challengeHandler = (client, response) -> {
-             // included utility to resolve challenges
-             // may specify retries. default is 3
-             return IGChallengeUtils.resolveChallenge(client, response, inputCode);
-         };
-    
-         IGClient client = IGClient.builder()
-                 .username(username)
-                 .password(password)
-                 .onChallenge(challengeHandler)
-                 .login();
-         
+        // Callable that returns inputted code from System.in
+        Callable<String> inputCode = () -> {
+            System.out.print("Please input code: ");
+            return scanner.nextLine();
+        };
+
+        // handler for challenge login
+        LoginHandler challengeHandler = (client, response) -> {
+            // included utility to resolve challenges
+            // may specify retries. default is 3
+            return IGChallengeUtils.resolveChallenge(client, response, inputCode);
+        };
+
+        IGClient client = IGClient.builder()
+                .username(username)
+                .password(password)
+                .onChallenge(challengeHandler)
+                .login();
+
         Assert.assertNotNull(client.getSelfProfile());
     }
 }

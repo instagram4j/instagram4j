@@ -14,5 +14,5 @@ public class LoomFetchConfigRequest extends IGGetRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
 }

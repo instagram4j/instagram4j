@@ -44,20 +44,24 @@ public class UploadStoryPhotoTest {
         StoryPollsItem qPolls = StoryPollsItem.builder().y(0.8).question("Select one.").build();
         StorySlidersItem qSlides = StorySlidersItem.builder().question("Cool?").build();
         StoryCountdownsItem qCountdown = StoryCountdownsItem.builder().text("Until")
-                .end_ts((System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)) / 1000).following_enabled(false)
+                .end_ts((System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)) / 1000)
+                .following_enabled(false)
                 .build();
         List<Option> options = Arrays.asList(Option.builder().text("1").build(),
                 Option.builder().text("2").build(), Option.builder().text("3").build(),
                 Option.builder().text("4").build());
-        StoryQuizItems qQuiz = StoryQuizItems.builder().question("Which?").options(options).correct_answer(2)
-                .build();
-        StoryLocationsItem locQ = StoryLocationsItem.builder().location_id("106048159426257").build();
+        StoryQuizItems qQuiz =
+                StoryQuizItems.builder().question("Which?").options(options).correct_answer(2)
+                        .build();
+        StoryLocationsItem locQ =
+                StoryLocationsItem.builder().location_id("106048159426257").build();
         // end items
         IGRequest<RuploadPhotoResponse> uploadReq = new RuploadPhotoRequest(imgData, "1");
         String id = client.sendRequest(uploadReq).join().getUpload_id();
-        MediaConfigureToStoryRequest configReq = new MediaConfigureToStoryRequest(id, Arrays.asList(qSticker, qPolls));
+        MediaConfigureToStoryRequest configReq =
+                new MediaConfigureToStoryRequest(id, Arrays.asList(qSticker, qPolls));
         MediaConfigureToStoryResponse response = client.sendRequest(configReq).join();
-        
+
         Assert.assertEquals("ok", response.getStatus());
         log.debug(response.getMedia().getId());
         log.debug(response.getMedia().get("story_questions").toString());

@@ -31,16 +31,18 @@ public class AccountsActionTest {
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testEdit() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new AccountsEditProfileRequest(new AccountsEditProfilePayload("username", "user@email.com").first_name("First name").biography("Cool!")).execute(client).join();
+        IGResponse response = new AccountsEditProfileRequest(
+                new AccountsEditProfilePayload("username", "user@email.com")
+                        .first_name("First name").biography("Cool!")).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSetBiography() throws Exception {
@@ -48,22 +50,26 @@ public class AccountsActionTest {
         IGResponse response = new AccountsSetBiographyRequest("Test boi!").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChangeProfilePicture() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         String upload = String.valueOf(System.currentTimeMillis());
-        new RuploadPhotoRequest(Files.readAllBytes(new File("src/examples/resources/profile.jpg").toPath()), "1", upload, false).execute(client).join();
-        IGResponse response = new AccountsChangeProfilePictureRequest(upload).execute(client).join();
+        new RuploadPhotoRequest(
+                Files.readAllBytes(new File("src/examples/resources/profile.jpg").toPath()), "1",
+                upload, false).execute(client).join();
+        IGResponse response =
+                new AccountsChangeProfilePictureRequest(upload).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAction() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new AccountsActionRequest(AccountsAction.SET_PRIVATE).execute(client).join();
+        IGResponse response =
+                new AccountsActionRequest(AccountsAction.SET_PRIVATE).execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
     }
 }

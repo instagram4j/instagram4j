@@ -16,7 +16,7 @@ public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> 
     @NonNull
     private IGPaginatedRequest<T> request;
     private T response;
-    
+
     @Override
     public boolean hasNext() {
         return response == null || response.isMore_available();
@@ -26,8 +26,8 @@ public class FeedIterator<T extends IGPaginatedResponse> implements Iterator<T> 
     public T next() {
         response = request.execute(client).join();
         request.setMax_id(response.getNext_max_id());
-        
+
         return response;
     }
-    
+
 }

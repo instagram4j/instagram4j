@@ -16,9 +16,11 @@ public class FeedTagTest {
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedTagResponse response = client.sendRequest(new FeedTagRequest("love")).join();
-        log.debug("Items : {} Story : {}", response.getItems().size(), response.getStory().getItems().size());
+        log.debug("Items : {} Story : {}", response.getItems().size(),
+                response.getStory().getItems().size());
         response = new FeedTagRequest("love", response.getNext_max_id()).execute(client).join();
-        log.debug("Items : {} Story : {}", response.getItems().size(), response.getStory().getItems().size());
+        log.debug("Items : {} Story : {}", response.getItems().size(),
+                response.getStory().getItems().size());
         log.debug("Success");
     }
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MusicTrendingRequest extends IGPostRequest<MusicTrackResponse> {
     private String _cursor = "0";
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new MusicQueryPayload(client.getSessionId(), _cursor);
@@ -28,5 +28,5 @@ public class MusicTrendingRequest extends IGPostRequest<MusicTrackResponse> {
     public Class<MusicTrackResponse> getResponseType() {
         return MusicTrackResponse.class;
     }
-    
+
 }

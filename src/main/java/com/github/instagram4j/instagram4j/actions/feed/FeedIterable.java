@@ -20,17 +20,17 @@ public class FeedIterable<T extends IGPaginatedResponse> implements Iterable<T> 
     private IGClient client;
     @NonNull
     private Supplier<IGPaginatedRequest<T>> requestSupplier;
-    
+
     @Override
     public Iterator<T> iterator() {
         return new FeedIterator<T>(client, requestSupplier.get());
     }
-    
+
     @Override
     public Spliterator<T> spliterator() {
         return Spliterators.spliteratorUnknownSize(iterator(), Spliterator.IMMUTABLE);
     }
-    
+
     public Stream<T> stream() {
         return StreamSupport.stream(this.spliterator(), false);
     }

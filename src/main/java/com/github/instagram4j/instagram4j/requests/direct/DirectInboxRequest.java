@@ -16,20 +16,20 @@ public class DirectInboxRequest extends IGGetRequest<DirectInboxResponse> {
     private Integer limit;
     private Boolean persistent_badging;
     private String fetch_reason;
-    
+
     @Override
     public String path() {
         return "direct_v2/inbox/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("cursor", cursor,
-                              "visual_message_return_type", visual_message_return_type,
-                              "thread_message_limit", thread_message_limit,
-                              "limit", limit,
-                              "persistent_badging", persistent_badging,
-                              "fetch_reason", fetch_reason);
+                "visual_message_return_type", visual_message_return_type,
+                "thread_message_limit", thread_message_limit,
+                "limit", limit,
+                "persistent_badging", persistent_badging,
+                "fetch_reason", fetch_reason);
     }
 
     @Override

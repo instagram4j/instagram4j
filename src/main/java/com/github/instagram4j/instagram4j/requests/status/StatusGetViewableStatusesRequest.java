@@ -14,5 +14,5 @@ public class StatusGetViewableStatusesRequest extends IGGetRequest<IGResponse> {
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
 }

@@ -15,7 +15,7 @@ public class MediaGetLikersRequest extends IGGetRequest<FeedUsersResponse> {
     public String path() {
         return "media/" + _id + "/likers/";
     }
-    
+
     @Override
     public Class<FeedUsersResponse> getResponseType() {
         return FeedUsersResponse.class;

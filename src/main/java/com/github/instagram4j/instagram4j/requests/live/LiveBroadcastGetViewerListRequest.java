@@ -7,7 +7,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LiveBroadcastGetViewerListRequest extends IGGetRequest<LiveBroadcastGetViewerListResponse> {
+public class LiveBroadcastGetViewerListRequest
+        extends IGGetRequest<LiveBroadcastGetViewerListResponse> {
     @NonNull
     private String broadcast_id;
 

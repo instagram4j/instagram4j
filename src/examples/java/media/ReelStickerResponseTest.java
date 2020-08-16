@@ -23,28 +23,35 @@ public class ReelStickerResponseTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testMediaViewer() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = new MediaListReelMediaViewerRequest("2364185211807618943").execute(client).join();
+        IGResponse response =
+                new MediaListReelMediaViewerRequest("2364185211807618943").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testStoryQuestionResponses() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        MediaGetStoryQuestionResponsesResponse response = new MediaGetStoryQuestionResponsesRequest("2364185211807618943", "17958669613337332").execute(client).join();
+        MediaGetStoryQuestionResponsesResponse response =
+                new MediaGetStoryQuestionResponsesRequest("2364185211807618943",
+                        "17958669613337332").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
-        response.getResponder_info().getResponders().forEach(responder -> log.debug("{} : {}", responder.getResponse(), responder.getUser().getPk()));
+        response.getResponder_info().getResponders().forEach(responder -> log.debug("{} : {}",
+                responder.getResponse(), responder.getUser().getPk()));
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testStoryPollResponses() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        MediaGetStoryPollVotersResponse response = new MediaGetStoryPollVotersRequest("2364185211807618943", "17958171793339158").execute(client).join();
+        MediaGetStoryPollVotersResponse response =
+                new MediaGetStoryPollVotersRequest("2364185211807618943", "17958171793339158")
+                        .execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
-        response.getVoter_info().getVoters().forEach(responder -> log.debug("{} : {}", responder.getVote(), responder.getUser().getPk()));
+        response.getVoter_info().getVoters().forEach(responder -> log.debug("{} : {}",
+                responder.getVote(), responder.getUser().getPk()));
         log.debug("Success");
     }
 }

@@ -20,5 +20,5 @@ public class LiveBroadcastGetPostLiveThumbnailsRequest extends IGGetRequest<IGRe
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
 }

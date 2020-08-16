@@ -13,7 +13,7 @@ public class VoterInfo extends IGBaseModel {
     private List<Voter> voters;
     private String max_id;
     private boolean more_available;
-    
+
     @Data
     public static class Voter {
         private Profile user;

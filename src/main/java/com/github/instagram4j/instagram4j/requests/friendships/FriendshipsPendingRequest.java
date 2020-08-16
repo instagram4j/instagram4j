@@ -11,15 +11,16 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendshipsPendingRequest extends IGGetRequest<FeedUsersResponse> implements IGPaginatedRequest<FeedUsersResponse> {
+public class FriendshipsPendingRequest extends IGGetRequest<FeedUsersResponse>
+        implements IGPaginatedRequest<FeedUsersResponse> {
     @Setter
     private String max_id;
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id);
     }
-    
+
     @Override
     public String path() {
         return "friendships/pending/";

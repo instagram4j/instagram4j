@@ -16,12 +16,14 @@ public class MusicGetResponse extends IGResponse {
     @JsonProperty("items")
     @JsonDeserialize(converter = BeanToIdConverter.class)
     private List<String> ids;
-    
-    private static class BeanToIdConverter extends StdConverter<List<Map<String, Map<String, String>>>, List<String>> {
+
+    private static class BeanToIdConverter
+            extends StdConverter<List<Map<String, Map<String, String>>>, List<String>> {
         @Override
         public List<String> convert(List<Map<String, Map<String, String>>> value) {
             return value.stream()
-                    .flatMap(m -> m.values().stream().map(b -> b.get("id")).collect(Collectors.toList()).stream())
+                    .flatMap(m -> m.values().stream().map(b -> b.get("id"))
+                            .collect(Collectors.toList()).stream())
                     .collect(Collectors.toList());
         }
     }

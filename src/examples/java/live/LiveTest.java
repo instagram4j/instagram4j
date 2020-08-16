@@ -38,7 +38,9 @@ public class LiveTest {
         LiveCreateRequest liveCreate = new LiveCreateRequest();
         LiveStartRequest liveStart;
         LiveCreateResponse createResponse = client.sendRequest(liveCreate).join();
-        System.out.printf("Url:\n%s\nKey:\n%s\nBroadcast Id:\n%s\n", createResponse.getBroadcastUrl(), createResponse.getBroadcastKey(), createResponse.getBroadcast_id());
+        System.out.printf("Url:\n%s\nKey:\n%s\nBroadcast Id:\n%s\n",
+                createResponse.getBroadcastUrl(), createResponse.getBroadcastKey(),
+                createResponse.getBroadcast_id());
         Scanner in = new Scanner(System.in);
         System.out.println("Type 's' to start");
         in.nextLine();
@@ -51,44 +53,55 @@ public class LiveTest {
         long like_ts = 0, comment_ts = 0;
         while (!(input = in.nextLine()).equals("end")) {
             try {
-                switch(input.split(" ")[0]) {
-                default:
-                    log.info("Unknown. Type 'end' to end.");
-                    break;
-                case "viewers":
-                    LiveBroadcastGetViewerListRequest vrequest = new LiveBroadcastGetViewerListRequest(id);
-                    LiveBroadcastGetViewerListResponse vresponse = vrequest.execute(client).join();
-                    log.info("Viewers List ({})", vresponse.getUsers().size());
-                    vresponse.getUsers().forEach(profile -> log.info("{} ({})", profile.getUsername(), profile.getPk()));
-                    break;
-                case "comments":
-                    LiveBroadcastGetCommentRequest crequest = new LiveBroadcastGetCommentRequest(id, comment_ts);
-                    LiveBroadcastGetCommentResponse cresponse = crequest.execute(client).join();
-                    if (cresponse.getComments().size() > 0)
-                        comment_ts = cresponse.getComments().get(cresponse.getComments().size() - 1).getCreated_at();
-                    break;
-                case "questions":
-                    LiveGetQuestionsRequest qrequest = new LiveGetQuestionsRequest();
-                    IGResponse qresponse = qrequest.execute(client).join();
-                    break;
-                case "likes":
-                    LiveBroadcastGetLikeCountRequest lrequest = new LiveBroadcastGetLikeCountRequest(id, like_ts);
-                    LiveBroadcastGetLikeCountResponse lResponse = lrequest.execute(client).join();
-                    log.info("Total likes : {}", lResponse.getLikes());
-                    like_ts = lResponse.getLike_ts();
-                    break;
-                case "activate":
-                    LiveQuestionActivateRequest actRequest = new LiveQuestionActivateRequest(id, input.split(" ")[1]);
-                    actRequest.execute(client).join();
-                    break;
-                case "deactivate":
-                    LiveQuestionDeactivateRequest deactRequest = new LiveQuestionDeactivateRequest(id, input.split(" ")[1]);
-                    deactRequest.execute(client).join();
-                    break;
+                switch (input.split(" ")[0]) {
+                    default:
+                        log.info("Unknown. Type 'end' to end.");
+                        break;
+                    case "viewers":
+                        LiveBroadcastGetViewerListRequest vrequest =
+                                new LiveBroadcastGetViewerListRequest(id);
+                        LiveBroadcastGetViewerListResponse vresponse =
+                                vrequest.execute(client).join();
+                        log.info("Viewers List ({})", vresponse.getUsers().size());
+                        vresponse.getUsers().forEach(profile -> log.info("{} ({})",
+                                profile.getUsername(), profile.getPk()));
+                        break;
+                    case "comments":
+                        LiveBroadcastGetCommentRequest crequest =
+                                new LiveBroadcastGetCommentRequest(id, comment_ts);
+                        LiveBroadcastGetCommentResponse cresponse = crequest.execute(client).join();
+                        if (cresponse.getComments().size() > 0)
+                            comment_ts = cresponse.getComments()
+                                    .get(cresponse.getComments().size() - 1).getCreated_at();
+                        break;
+                    case "questions":
+                        LiveGetQuestionsRequest qrequest = new LiveGetQuestionsRequest();
+                        IGResponse qresponse = qrequest.execute(client).join();
+                        break;
+                    case "likes":
+                        LiveBroadcastGetLikeCountRequest lrequest =
+                                new LiveBroadcastGetLikeCountRequest(id, like_ts);
+                        LiveBroadcastGetLikeCountResponse lResponse =
+                                lrequest.execute(client).join();
+                        log.info("Total likes : {}", lResponse.getLikes());
+                        like_ts = lResponse.getLike_ts();
+                        break;
+                    case "activate":
+                        LiveQuestionActivateRequest actRequest =
+                                new LiveQuestionActivateRequest(id, input.split(" ")[1]);
+                        actRequest.execute(client).join();
+                        break;
+                    case "deactivate":
+                        LiveQuestionDeactivateRequest deactRequest =
+                                new LiveQuestionDeactivateRequest(id, input.split(" ")[1]);
+                        deactRequest.execute(client).join();
+                        break;
                 }
-            } catch (Exception exception) {exception.printStackTrace();}
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
-        
+
         client.sendRequest(new LiveEndBroadcastRequest(id)).join();
         in.close();
     }

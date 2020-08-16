@@ -31,14 +31,14 @@ import lombok.RequiredArgsConstructor;
 public class SimulateAction {
     @NonNull
     private IGClient client;
-    
+
     private static final IGRequest<?>[] preLoginFlow = {
             new LauncherSyncRequest(true),
             new QeSyncRequest(true),
             new AccountsContactPointPrefillRequest(),
             new AccountsGetPrefillCandidatesRequest()
     };
-    
+
     private static final IGRequest<?>[] postLoginFlow = {
             new LauncherSyncRequest(),
             new QpGetCooldowns(),
@@ -52,15 +52,18 @@ public class SimulateAction {
             new DiscoverTopicalExploreRequest().is_prefetch(true),
             new NewsInboxRequest(false),
             new DirectGetPresenceRequest(),
-            new DirectInboxRequest().limit(0).visual_message_return_type("unseen").persistent_badging(true),
-            new DirectInboxRequest().limit(20).fetch_reason("initial_snapshot").thread_message_limit(10).visual_message_return_type("unseen").persistent_badging(true),
+            new DirectInboxRequest().limit(0).visual_message_return_type("unseen")
+                    .persistent_badging(true),
+            new DirectInboxRequest().limit(20).fetch_reason("initial_snapshot")
+                    .thread_message_limit(10).visual_message_return_type("unseen")
+                    .persistent_badging(true),
             new StatusGetViewableStatusesRequest()
     };
-    
+
     public List<CompletableFuture<?>> preLoginFlow() {
         return AsyncAction.executeRequestsAsync(client, preLoginFlow);
     }
-    
+
     public List<CompletableFuture<?>> postLoginFlow() {
         return AsyncAction.executeRequestsAsync(client, postLoginFlow);
     }

@@ -12,7 +12,8 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FeedUserRequest extends IGGetRequest<FeedUserResponse> implements IGPaginatedRequest<FeedUserResponse> {
+public class FeedUserRequest extends IGGetRequest<FeedUserResponse>
+        implements IGPaginatedRequest<FeedUserResponse> {
     @NonNull
     private Long pk;
     @Setter

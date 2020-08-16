@@ -17,5 +17,5 @@ public class Product extends IGBaseModel {
     private String description;
     private String retailer_id;
     private String external_url;
-    
+
 }

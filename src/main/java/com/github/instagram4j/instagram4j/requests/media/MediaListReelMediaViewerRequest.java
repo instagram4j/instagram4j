@@ -12,7 +12,8 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListReelMediaViewerResponse> implements IGPaginatedRequest<MediaListReelMediaViewerResponse> {
+public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListReelMediaViewerResponse>
+        implements IGPaginatedRequest<MediaListReelMediaViewerResponse> {
     @NonNull
     private String reel_id;
     @Setter

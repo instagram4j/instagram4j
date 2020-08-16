@@ -12,7 +12,8 @@ import lombok.Data;
 @JsonInclude(Include.NON_NULL)
 public class UploadParameters {
     @Builder.Default
-    private String retry_context = "{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0}";
+    private String retry_context =
+            "{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0}";
     private String media_type;
     @Builder.Default
     private Object[] xsharing_user_ids = new Object[] {};
@@ -30,29 +31,36 @@ public class UploadParameters {
         return IGUtils.objectToJson(this);
     }
 
-    public static UploadParameters forPhoto(String upload_id, String media_type, boolean is_sidecar) {
+    public static UploadParameters forPhoto(String upload_id, String media_type,
+            boolean is_sidecar) {
         return UploadParameters.builder().upload_id(upload_id).media_type(media_type)
                 .is_sidecar(is_sidecar ? "1" : null)
-                .image_compression("{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}").build();
+                .image_compression(
+                        "{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}")
+                .build();
     }
 
     public static UploadParameters forTimelineVideo(String upload_id, boolean is_sidecar) {
-        return UploadParameters.builder().upload_id(upload_id).media_type("2").is_sidecar(is_sidecar ? "1" : null)
+        return UploadParameters.builder().upload_id(upload_id).media_type("2")
+                .is_sidecar(is_sidecar ? "1" : null)
                 .build();
     }
 
     public static UploadParameters forAlbumVideo(String upload_id) {
-        return UploadParameters.builder().upload_id(upload_id).media_type("2").for_album("1").build();
+        return UploadParameters.builder().upload_id(upload_id).media_type("2").for_album("1")
+                .build();
     }
 
     public static UploadParameters forDirectVideo(String upload_id) {
-        return UploadParameters.builder().upload_id(upload_id).media_type("2").direct_v2("1").build();
+        return UploadParameters.builder().upload_id(upload_id).media_type("2").direct_v2("1")
+                .build();
     }
 
     public static UploadParameters forDirectVoice(String upload_id) {
-        return UploadParameters.builder().upload_id(upload_id).media_type("11").is_direct_voice("1").build();
+        return UploadParameters.builder().upload_id(upload_id).media_type("11").is_direct_voice("1")
+                .build();
     }
-    
+
     public static UploadParameters forIgtv(String upload_id) {
         return UploadParameters.builder().upload_id(upload_id).is_igtv_video("1").build();
     }

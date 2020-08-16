@@ -25,8 +25,9 @@ public class RuploadPhotoRequest extends IGPostRequest<RuploadPhotoResponse> {
     private String mediaType;
     private String uploadId = String.valueOf(System.currentTimeMillis());
     private boolean isSidecar = false;
-    private final String name = uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
-    
+    private final String name =
+            uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
+
     @Override
     public String apiPath() {
         return "";

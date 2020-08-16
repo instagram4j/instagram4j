@@ -17,12 +17,13 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse> implements IGPaginatedRequest<IgtvChannelResponse> {
+public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse>
+        implements IGPaginatedRequest<IgtvChannelResponse> {
     @NonNull
     private String _id;
     @Setter
     private String max_id;
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IgtvChannelPayload();
@@ -37,7 +38,7 @@ public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse> imple
     public Class<IgtvChannelResponse> getResponseType() {
         return IgtvChannelResponse.class;
     }
-    
+
     @Data
     @JsonInclude(Include.NON_NULL)
     public class IgtvChannelPayload extends IGPayload {

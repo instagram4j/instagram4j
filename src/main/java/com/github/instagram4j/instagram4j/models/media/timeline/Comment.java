@@ -24,6 +24,6 @@ public class Comment extends IGBaseModel {
 
     @Data
     public static class Caption extends Comment {
-        
+
     }
 }

@@ -12,17 +12,18 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FeedTagRequest extends IGGetRequest<FeedTagResponse> implements IGPaginatedRequest<FeedTagResponse> {
+public class FeedTagRequest extends IGGetRequest<FeedTagResponse>
+        implements IGPaginatedRequest<FeedTagResponse> {
     @NonNull
     private String tag;
     @Setter
     private String max_id;
 
-    @Override       
+    @Override
     public String path() {
         return "feed/tag/" + tag + "/";
     }
-    
+
     @Override
     public String getQueryString(IGClient client) {
         return mapQueryString("max_id", max_id);

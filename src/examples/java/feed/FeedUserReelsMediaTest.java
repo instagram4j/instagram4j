@@ -18,7 +18,8 @@ public class FeedUserReelsMediaTest {
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testFeedRequest()
-            throws IGResponseException, IGLoginException, ClassNotFoundException, FileNotFoundException, IOException {
+            throws IGResponseException, IGLoginException, ClassNotFoundException,
+            FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedUserReelMediaRequest req = new FeedUserReelMediaRequest(18428658l);
 

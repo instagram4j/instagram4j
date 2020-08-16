@@ -12,7 +12,7 @@ public class NewsInboxResponse extends IGResponse {
     private NewsCounts counts;
     private List<NewsStory> new_stories;
     private List<NewsStory> old_stories;
-    
+
     @Data
     public static class NewsCounts {
         private int likes;

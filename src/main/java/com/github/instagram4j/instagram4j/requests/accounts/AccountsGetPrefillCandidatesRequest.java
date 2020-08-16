@@ -9,12 +9,12 @@ import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 public class AccountsGetPrefillCandidatesRequest extends IGPostRequest<IGResponse> {
-    
+
     @Override
     public String baseApiUrl() {
         return IGConstants.B_BASE_API_URL;
     }
-    
+
     @Override
     protected IGBaseModel getPayload(IGClient client) {
         return new PrePayload(client.getDeviceId(), client.getPhoneId(), client.getGuid());
@@ -29,7 +29,7 @@ public class AccountsGetPrefillCandidatesRequest extends IGPostRequest<IGRespons
     public Class<IGResponse> getResponseType() {
         return IGResponse.class;
     }
-    
+
     @Data
     private class PrePayload extends IGBaseModel {
         private final String android_device_id;

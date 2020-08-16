@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommerceProductsDetailsRequest extends IGGetRequest<CommerceProductsDetailsResponse> {
     @NonNull
-    private String product_id,  merchant_id;
+    private String product_id, merchant_id;
 
     @Override
     public String path() {

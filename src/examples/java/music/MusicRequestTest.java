@@ -28,11 +28,12 @@ public class MusicRequestTest {
         MusicBrowseResponse response = new MusicBrowseRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getItems().stream()
-        .flatMap(m -> m.getPreview_items().stream())
-        .forEach(m -> log.debug("{} : {} : {}", m.getId(), m.getTitle(), m.getProgressive_download_url()));
+                .flatMap(m -> m.getPreview_items().stream())
+                .forEach(m -> log.debug("{} : {} : {}", m.getId(), m.getTitle(),
+                        m.getProgressive_download_url()));
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testTrend() throws Exception {
@@ -40,20 +41,22 @@ public class MusicRequestTest {
         MusicTrackResponse response = new MusicTrendingRequest().execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getItems().stream()
-        .forEach(m -> log.debug("{} : {} : {}", m.getId(), m.getTitle(), m.getProgressive_download_url()));
+                .forEach(m -> log.debug("{} : {} : {}", m.getId(), m.getTitle(),
+                        m.getProgressive_download_url()));
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearch() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         MusicTrackResponse response = new MusicSearchRequest("the box").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
-        response = new MusicSearchRequest("the box", response.getPage_info().getNext_max_id()).execute(client).join();
+        response = new MusicSearchRequest("the box", response.getPage_info().getNext_max_id())
+                .execute(client).join();
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testMoods() throws Exception {
@@ -63,7 +66,7 @@ public class MusicRequestTest {
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testGenreId() throws Exception {
@@ -72,12 +75,13 @@ public class MusicRequestTest {
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLyrics() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        MusicTrackLyricsResponse response = new MusicTrackLyricsRequest("319999298968664").execute(client).join();
+        MusicTrackLyricsResponse response =
+                new MusicTrackLyricsRequest("319999298968664").execute(client).join();
         Assert.assertEquals("ok", response.getStatus());
         response.getLyrics().getPhrases().forEach(s -> log.debug(s.getPhrase()));
         log.debug("Success");

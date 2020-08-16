@@ -33,10 +33,10 @@ public class SerializeTest {
         file.deleteOnExit();
         serialize(profile, file);
         Profile deserializedProfile = deserialize(file, Profile.class);
-        
+
         Assert.assertEquals(profile, deserializedProfile);
     }
-    
+
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testIGClient() throws IOException, ClassNotFoundException {
@@ -46,21 +46,21 @@ public class SerializeTest {
         serialize(client, file);
         IGClient deserializedClient = deserialize(file, IGClient.class);
         IGClient deserializedClientFrom = IGClient.from(new FileInputStream(file));
-        
+
         Assert.assertEquals(client, deserializedClient);
         Assert.assertEquals(client, deserializedClientFrom);
     }
-    
+
     @SneakyThrows
     public static void serialize(Object o, File to) {
         FileOutputStream file = new FileOutputStream(to);
         ObjectOutputStream out = new ObjectOutputStream(file);
-        
+
         out.writeObject(o);
         out.close();
         file.close();
     }
-    
+
     @SneakyThrows
     public static <T> T deserialize(File file, Class<T> clazz) {
         InputStream in = new FileInputStream(file);
@@ -73,5 +73,5 @@ public class SerializeTest {
 
         return t;
     }
-    
+
 }

@@ -10,7 +10,8 @@ import com.github.instagram4j.instagram4j.models.media.Viewer;
 import lombok.Data;
 
 @Data
-@JsonTypeInfo(defaultImpl = ReelMedia.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
+@JsonTypeInfo(defaultImpl = ReelMedia.class, use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ReelImageMedia.class),
         @JsonSubTypes.Type(value = ReelVideoMedia.class)

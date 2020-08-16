@@ -11,11 +11,11 @@ import lombok.Getter;
 
 public class FeedReelsMediaRequest extends IGPostRequest<IGResponse> {
     private String[] _ids;
-    
+
     public FeedReelsMediaRequest(Object... ids) {
         _ids = Stream.of(ids).map(Object::toString).toArray(String[]::new);
     }
-    
+
     @Override
     protected IGPayload getPayload(IGClient client) {
         return new IGPayload() {

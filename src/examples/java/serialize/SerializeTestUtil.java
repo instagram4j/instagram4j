@@ -34,10 +34,12 @@ public class SerializeTestUtil {
     public void serializeLogin(String username, String password)
             throws IGLoginException, IGResponseException, ClassNotFoundException,
             FileNotFoundException, IOException {
-        File to = new File("src/examples/resources/igclient.ser"), cookFile = new File("src/examples/resources/cookie.ser");
+        File to = new File("src/examples/resources/igclient.ser"),
+                cookFile = new File("src/examples/resources/cookie.ser");
         SerializableCookieJar jar = new SerializableCookieJar();
         IGClient lib = new IGClient.Builder().username(username).password(password)
-                .client(formTestHttpClient(jar)).onLogin(lr -> Assert.assertEquals("ok", lr.getStatus()))
+                .client(formTestHttpClient(jar))
+                .onLogin(lr -> Assert.assertEquals("ok", lr.getStatus()))
                 .login();
         log.debug("Serializing. . .");
         serialize(lib, to);
@@ -52,15 +54,18 @@ public class SerializeTestUtil {
     }
 
     // logging interceptor
-    private static final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor((msg) -> {
-        log.debug(msg);
-    }).setLevel(Level.BODY);
+    private static final HttpLoggingInterceptor loggingInterceptor =
+            new HttpLoggingInterceptor((msg) -> {
+                log.debug(msg);
+            }).setLevel(Level.BODY);
 
     public static IGClient getClientFromSerialize(String clientFile, String cookieFile)
             throws ClassNotFoundException, FileNotFoundException, IOException {
-        File to = new File("src/examples/resources/" + clientFile), cookFile = new File("src/examples/resources/" + cookieFile);
+        File to = new File("src/examples/resources/" + clientFile),
+                cookFile = new File("src/examples/resources/" + cookieFile);
         InputStream fileIn = new FileInputStream(to);
-        IGClient client = IGClient.from(fileIn, formTestHttpClient(deserialize(cookFile, SerializableCookieJar.class)));
+        IGClient client = IGClient.from(fileIn,
+                formTestHttpClient(deserialize(cookFile, SerializableCookieJar.class)));
         fileIn.close();
 
         return client;
@@ -88,12 +93,14 @@ public class SerializeTestUtil {
 
         return t;
     }
-    
+
     public static OkHttpClient formTestHttpClient() {
-        return IGUtils.formDefaultHttpClient().newBuilder().addInterceptor(loggingInterceptor).build();
+        return IGUtils.formDefaultHttpClient().newBuilder().addInterceptor(loggingInterceptor)
+                .build();
     }
 
     public static OkHttpClient formTestHttpClient(SerializableCookieJar jar) {
-        return IGUtils.formDefaultHttpClient().newBuilder().cookieJar(jar).addInterceptor(loggingInterceptor).build();
+        return IGUtils.formDefaultHttpClient().newBuilder().cookieJar(jar)
+                .addInterceptor(loggingInterceptor).build();
     }
 }

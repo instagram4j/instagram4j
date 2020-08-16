@@ -41,7 +41,7 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
     public Class<MediaConfigureSidecarResponse> getResponseType() {
         return MediaConfigureSidecarResponse.class;
     }
-    
+
     @Data
     @Accessors(fluent = true)
     @JsonAutoDetect(fieldVisibility = Visibility.ANY)
@@ -52,10 +52,10 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
         private String client_sidecar_id = String.valueOf(System.currentTimeMillis());
         private String location;
         private String disable_comments;
-        
+
         public MediaConfigureSidecarPayload location(Location loc) {
             Location payloadLoc = new Location();
-            
+
             payloadLoc.setExternal_id(loc.getExternal_id());
             payloadLoc.setName(loc.getName());
             payloadLoc.setAddress(loc.getAddress());
@@ -69,7 +69,7 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
             this.put("posting_longitude", payloadLoc.getLng().toString());
             this.put("media_latitude", payloadLoc.getLat().toString());
             this.put("media_longitude", payloadLoc.getLng().toString());
-            
+
             return this;
         }
     }
@@ -82,13 +82,13 @@ public class MediaConfigureSidecarRequest extends IGPostRequest<MediaConfigureSi
         @NonNull
         private final String upload_id;
         private String usertags;
-        
+
         public SidecarChildrenMetadata usertags(UserTagPayload... tags) {
             this.usertags = IGUtils.objectToJson(Collections.singletonMap("in", tags));
-            
+
             return this;
         }
-        
+
         public String usertag() {
             return usertags;
         }

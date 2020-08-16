@@ -19,40 +19,49 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class IGChallengeUtils {
-    
+
     private static LoginResponse handleException(Throwable t) {
         log.info(t.getCause().toString());
         return IGFailedResponse.of(t.getCause(), LoginResponse.class);
     }
-    
-    public static CompletableFuture<ChallengeStateResponse> requestState(IGClient client, Challenge challenge) {
-        return new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(), client.getDeviceId())
+
+    public static CompletableFuture<ChallengeStateResponse> requestState(IGClient client,
+            Challenge challenge) {
+        return new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(),
+                client.getDeviceId())
+                        .execute(client);
+    }
+
+    public static CompletableFuture<ChallengeStateResponse> selectVerifyMethod(IGClient client,
+            Challenge challenge,
+            String method,
+            boolean resend) {
+        return new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend)
                 .execute(client);
     }
 
-    public static CompletableFuture<ChallengeStateResponse> selectVerifyMethod(IGClient client, Challenge challenge,
+    public static CompletableFuture<LoginResponse> selectVerifyMethodDelta(IGClient client,
+            Challenge challenge,
             String method,
             boolean resend) {
-        return new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend).execute(client);
-    }
-
-    public static CompletableFuture<LoginResponse> selectVerifyMethodDelta(IGClient client, Challenge challenge,
-            String method,
-            boolean resend) {
-        return new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend).execute(client)
+        return new ChallengeSelectVerifyMethodRequest(challenge.getApi_path(), method, resend)
+                .execute(client)
                 .thenApply(res -> IGUtils.convertToView(res, LoginResponse.class));
     }
 
-    public static CompletableFuture<LoginResponse> sendSecurityCode(IGClient client, Challenge challenge, String code) {
+    public static CompletableFuture<LoginResponse> sendSecurityCode(IGClient client,
+            Challenge challenge, String code) {
         return new ChallengeSendCodeRequest(challenge.getApi_path(), code).execute(client);
     }
 
-    public static CompletableFuture<ChallengeStateResponse> resetChallenge(IGClient client, Challenge challenge) {
+    public static CompletableFuture<ChallengeStateResponse> resetChallenge(IGClient client,
+            Challenge challenge) {
         return new ChallengeResetRequest(challenge.getApi_path()).execute(client);
     }
 
     @SneakyThrows
-    public static LoginResponse resolveChallenge(@NonNull IGClient client, @NonNull LoginResponse response,
+    public static LoginResponse resolveChallenge(@NonNull IGClient client,
+            @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode, int retries) {
         Challenge challenge = response.getChallenge();
         ChallengeStateResponse stateResponse = requestState(client, challenge).join();
@@ -82,19 +91,22 @@ public class IGChallengeUtils {
 
     }
 
-    public static LoginResponse resolveChallenge(@NonNull IGClient client, @NonNull LoginResponse response,
+    public static LoginResponse resolveChallenge(@NonNull IGClient client,
+            @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode) {
         return resolveChallenge(client, response, inputCode, 3);
     }
 
     @SneakyThrows
-    public static LoginResponse resolveTwoFactor(@NonNull IGClient client, @NonNull LoginResponse response,
+    public static LoginResponse resolveTwoFactor(@NonNull IGClient client,
+            @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode) {
         return resolveTwoFactor(client, response, inputCode, 3);
     }
 
     @SneakyThrows
-    public static LoginResponse resolveTwoFactor(@NonNull IGClient client, @NonNull LoginResponse response,
+    public static LoginResponse resolveTwoFactor(@NonNull IGClient client,
+            @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode, int retries) {
         String identifier = response.getTwo_factor_info().getTwo_factor_identifier();
         do {

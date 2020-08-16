@@ -11,7 +11,8 @@ import com.github.instagram4j.instagram4j.models.media.UserTags;
 import lombok.Data;
 
 @Data
-@JsonTypeInfo(defaultImpl = Media.class, use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
+@JsonTypeInfo(defaultImpl = Media.class, use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = TimelineImageMedia.class),
         @JsonSubTypes.Type(value = TimelineVideoMedia.class),
