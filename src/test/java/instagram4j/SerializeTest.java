@@ -44,10 +44,8 @@ public class SerializeTest {
         File file = File.createTempFile("client", ".ser");
         file.deleteOnExit();
         serialize(client, file);
-        IGClient deserializedClient = deserialize(file, IGClient.class);
         IGClient deserializedClientFrom = IGClient.from(new FileInputStream(file));
-
-        Assert.assertEquals(client, deserializedClient);
+        Assert.assertNotNull(deserializedClientFrom.getHttpClient());
         Assert.assertEquals(client, deserializedClientFrom);
     }
 

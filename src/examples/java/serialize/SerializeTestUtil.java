@@ -95,12 +95,12 @@ public class SerializeTestUtil {
     }
 
     public static OkHttpClient formTestHttpClient() {
-        return IGUtils.formDefaultHttpClient().newBuilder().addInterceptor(loggingInterceptor)
+        return IGUtils.defaultHttpClientBuilder().addInterceptor(loggingInterceptor)
                 .build();
     }
 
     public static OkHttpClient formTestHttpClient(SerializableCookieJar jar) {
-        return IGUtils.formDefaultHttpClient().newBuilder().cookieJar(jar)
+        return IGUtils.defaultHttpClientBuilder().cookieJar(jar)
                 .addInterceptor(loggingInterceptor).build();
     }
 }

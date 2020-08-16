@@ -239,9 +239,8 @@ public class IGUtils {
                 Base64.encodeBase64String(out.toByteArray()));
     }
 
-    public static OkHttpClient formDefaultHttpClient() {
-        return new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(new CookieManager()))
-                .build();
+    public static OkHttpClient.Builder defaultHttpClientBuilder() {
+        return new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(new CookieManager()));
     }
 
     public static String randomUuid() {

@@ -22,8 +22,11 @@ public class LoginTest {
     @FileParameters("src/examples/resources/login.csv")
     public void testName(String username, String password)
             throws Exception {
-        IGClient client = IGClient.builder().username(username).password(password)
-                .client(SerializeTestUtil.formTestHttpClient()).login();
+        IGClient client = IGClient.builder()
+                .username(username)
+                .password(password)
+                .client(SerializeTestUtil.formTestHttpClient())
+                .login();
         log.debug(client.toString());
         Assert.assertNotNull(client.getSelfProfile());
         log.debug("Success");

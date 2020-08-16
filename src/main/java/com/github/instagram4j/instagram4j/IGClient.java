@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.function.Consumer;
-
 import com.github.instagram4j.instagram4j.actions.IGClientActions;
 import com.github.instagram4j.instagram4j.exceptions.ExceptionallyHandler;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
@@ -24,7 +23,6 @@ import com.github.instagram4j.instagram4j.requests.qe.QeSyncRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
-
 import kotlin.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -64,21 +62,20 @@ public class IGClient implements Serializable {
     private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
 
     public IGClient(String username, String password) {
+        this(username, password, IGUtils.defaultHttpClientBuilder().build());
+    }
+
+    public IGClient(String username, String password, OkHttpClient client) {
         this.$username = username;
         this.$password = password;
         this.guid = IGUtils.randomUuid();
         this.phoneId = IGUtils.randomUuid();
         this.deviceId = IGUtils.generateDeviceId(username, password);
+        this.httpClient = client;
         this.initializeDefaults();
     }
 
-    public IGClient(String username, String password, OkHttpClient client) {
-        this(username, password);
-        this.httpClient = client;
-    }
-
     private void initializeDefaults() {
-        this.httpClient = IGUtils.formDefaultHttpClient();
         this.sessionId = IGUtils.randomUuid();
         this.actions = new IGClientActions(this);
         this.exceptionallyHandler = new ExceptionallyHandler() {
@@ -197,7 +194,7 @@ public class IGClient implements Serializable {
     }
 
     public static IGClient from(InputStream from) throws ClassNotFoundException, IOException {
-        return from(from, IGUtils.formDefaultHttpClient());
+        return from(from, IGUtils.defaultHttpClientBuilder().build());
     }
 
     public static IGClient from(InputStream from, @NonNull OkHttpClient httpClient)
@@ -224,14 +221,14 @@ public class IGClient implements Serializable {
     public static class Builder {
         private String username;
         private String password;
-        private OkHttpClient client = IGUtils.formDefaultHttpClient();
+        private OkHttpClient client;
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
         private Consumer<LoginResponse> onLogin = (login) -> {
         };
 
         public IGClient build() {
-            return new IGClient(username, password, client);
+            return new IGClient(username, password, Optional.ofNullable(client).orElseGet(() -> IGUtils.defaultHttpClientBuilder().build()));
         }
 
         public IGClient simulatedLogin(Consumer<List<CompletableFuture<?>>> postLoginResponses)
