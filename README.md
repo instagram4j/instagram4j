@@ -1,5 +1,7 @@
 
 
+
+
 instagram4j
 ========
 [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-66f4d80) ](https://bintray.com/instagram4j/maven/instagram4j/develop-66f4d80/link)
@@ -13,21 +15,22 @@ instagram4j
      - [Features](#features)
  - [Usage](#usage)
      - [Terms and Conditions](#terms-and-conditions)
+     - [Quick Usage](#quick-usage)
      - [Setup & Login](#setup-and-login)
          - [Simple Login](#simple-login)
          - [Two factor login](#two-factor-login)
          - [Challenge login](#challenge-login)
          - [Login with proxy](#login-with-proxy)
-     - [Serialization](#serialization)
      - [Sending requests and actions](#sending-requests-and-actions)
- - [Key Concepts](#key-concepts)
+     - [Serialization](#serialization)
+ - [Contributing](#contributing)
 
 # Install
 There is currently no release yet from central repository.
 
 Download latest develop build: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-66f4d80) ](https://bintray.com/instagram4j/maven/instagram4j/develop-66f4d80/link)
 
-Dev builds require the bintray repository be added.
+Dev builds require the bintray repository be added. Dev builds are highly experimental and subject to breaking changes between versions.
 #### Example for gradle:
 ```java
 repositories {
@@ -72,7 +75,37 @@ This library is in no way affiliated with, authorized, maintained, sponsored or 
 Contributors are not responsible for usage and maintainability. Due to the nature of this project, some features of the library are not guaranteed as they make change and break in the future. This library is licensed under ASL.
 
 ---
+## Quick Usage
+**Login:**
+```java
+IGClient client = IGClient.builder()
+        .username("username")
+        .password("password")
+        .login();
+```
+**Actions:**
+```java
+IGClient client = ...
 
+client.actions()
+.timeline()
+.uploadPhoto(new File("myPhoto.jpg"), "My Caption")
+.thenAccept(response -> {
+    System.out.println("Successfully uploaded photo!");
+})
+.join(); // block current thread until complete
+```
+**Executing requests:**
+```java
+IGClient client = ...
+
+// Alternatively use client.sendRequest
+new FeedTimelineRequest().execute(client)
+.thenAccept(response -> {
+    response.getFeed_items().forEach(...);
+})
+.join(); // block current thread until complete
+```
 ## Setup and Login
 An IGClient instance must be constructed and logged in to send most requests. 
 ### Simple Login
@@ -83,6 +116,14 @@ IGClient client = IGClient.builder()
         .username("username")
         .password("password")
         .login();
+```
+#### *Example:*
+```java
+// simulate pre login flow (synchronous) and post login flow (asynchronous)
+IGClient client = IGClient.builder()
+        .username("username")
+        .password("password")
+        .simulatedLogin();
 ```
 ### Two factor login
 Provide a consumer that may resolve two factor login process. The example uses the included utility to resolve two factor logins.
@@ -144,134 +185,53 @@ IGClient client = IGClient.builder()
         .client(httpClient)
         .login();
 ```
+## Sending requests and actions
+This library provides a limited wrapper api that may be used to locate and send common requests. Not all features are supported through actions currently. Actual requests are located under the requests package and can be sent through IGClient like in previous versions. Requests can be sent asynchronously. All requests return a [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html).
+
+#### *Simple Example:*
+```java
+IGClient client = ...
+
+client.actions().timelime()
+.uploadPhoto(new File("myPhoto.jpg"), "My Caption")
+.thenAccept(res -> {
+    // perform actions with response
+    log.info("Uploaded photo {}", response.getMedia().getId());
+})
+.exceptionally(tr -> {
+    // something has terribly gone wrong!
+    // handle exception
+    
+    return null;
+})
+.join(); // blocks currect thread until completion
+```
+#### *Chainng Example:*
+```java
+IGClient client = ...
+
+// finds user by username then gets friendship status
+client.actions().users()
+.findByUsername("instagram")
+.thenCompose(UserAction::getFriendship)
+.thenAccept(friendship -> {
+    // response here
+})
+.join();
+
+// uploads a photo then comments on it
+client.actions().timeline()
+.uploadPhoto(new File("myPhoto.jpg"), "My Caption")
+.thenCompose(response -> {
+    // action with response
+    return new MediaCommentRequest(response.getMedia().getId(), "First comment!").execute(client)
+})
+.join();
+
+```
 ## Serialization
 IGClient is a Serializable object that can be saved and later reconstructed. **Session cookies however must be separately serialized**. Session cookies for OkHttpClient are done through an implementation of CookieJar. You may provide your own implementation of a serializable cookie jar and then serialize your cookies for later use. Session cookies are good for 90 days and avoids relogins.
 
-See example for serialization and deserialization here.
-## Sending requests and actions
-This library provides a limited wrapper api that may be used for common requests. Not all features are supported through actions currently. Actual requests are located under the requests package and can be sent through IGClient like in previous versions. 
-
-See key concepts for more information.
-
- 
-# Key concepts
-May be moved into Wiki section for detailed documentation.
-
-## IGClient Actions
-This library contains currently a very **limited** fluent wrapper for common actions. Such actions usually are composed of multiple requests (e.g. uploading a photo), so for convenience the action is wrapped into a single call. Common requests are also wrapped. This is very **experimental** and subject to design changes at any time.
-### *Example:*
-Uploading a photo to your timeline using the fluent wrapper
-```java
-IGClient client = ...
-// Upload photo using fluent wrapper. Also returns the appropriate IGResponse
-client.actions().timeline().uploadPhoto(new File("myPhoto.jpg"), "My Caption");
-```
-## IGRequest
-IGRequest is the base abstract class for IGPostRequest and IGGetRequest, similar to the previous version. These abstract classes allow for requests to conform to a "standard" for maintainability and readability. The idea is for developers to easily make new requests for new endpoints in the future. IGRequest objects are passed into the **sendRequest** method in IGClient to be executed and parsed into its corresponding response or view. For convenience, IGRequest objects have an **execute** method that takes in IGClient to execute the request. Additionally, **formRequest** in IGRequest objects may be used to form a Request to be executed by OkHttpClient.
-### IGPostRequest
-For POST actions in the Instagram app, a JSON **payload** is used. The library makes use of jackson-databind to serialize POJO into JSON. In previous versions, the payload had to be "signed". However in newer versions, Instagram does not seem to require that anymore. Some requests do still require a url encoded form with "SIGNATURE" as the signature.
-### *Example:*
-```java
-IGClient client = ...
-FeedTimelineRequest request = new FeedTimelineRequest();
-// Use sendRequest in IGClient
-FeedTimelineResponse response = client.sendRequest(request);
-```
-```java
-IGClient client = ...
-FeedTimelineRequest request = new FeedTimelineRequest();
-// Alternatively use execute
-FeedTimelineResponse response = request.execute(client);
-```
-## IGResponse
-POJO for JSON deserialization by jackson-databind. All IGResponse subclasses have a fallback map for properties not explicitly declared. Additionally, a different view entirely can be used to deserialize JSON. The idea is to support newer properties should there ever be updates instead of relying on hard coded properties as previously.
-### *Example:*
-Extracting story_cta ("See More") link text and then logging it.
-
-Sample JSON for FeedReelsTrayResponse:
-```
-{
-  "tray":[
-    {
-      "id":"...",
-      "story_cta":[
-        {
-          "links":[
-            {
-              "webUri":"..."
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
-Sample code:
-```java
-IGClient client = ...
-FeedReelsTrayResponse response = client.actions().story().tray();
-
-// loops through each user's story (found at the top of the timeline) 
-// if there is a "See More" link then log it
-response.getTray().forEach(tray -> {
-    tray.getItems().stream()
-    .map(x -> x.get("story_cta"))
-    .filter(Objects::nonNull)
-    .forEach(story_cta -> {
-        ArrayNode node = IGUtils.convertToView(story_cta, ArrayNode.class);
-        log.info(node.get(0).get("links").get(0).get("webUri").asText());
-    });
-});
-```
-Alternatively by constructing a POJO and using jackson,
-```java
-// using lombok for getters
-@Getter
-public class StoryCta {
-    private List<StoryCtaLink> links;
-    ...
-    public static List<StoryCta> convert(Object o) {
-        return IGUtils.convertToView(o, new TypeReference<List<StoryCta>>() {});
-    }
-    
-    @Getter
-    public static class StoryCtaLink {
-        private String webUri;
-        ...
-    }
-}
-```
-```java
-IGClient client = ...
-FeedReelsTrayResponse response = client.actions().story().tray();
-
-// loops through each user's story and if there is a "See More" link, log it
-response.getTray().forEach(tray -> {
-     tray.getItems().stream()
-    .map(item -> item.get("story_cta"))
-    .filter(Objects::nonNull)
-    .flatMap(story_cta -> StoryCta.convert(story_cta).stream())
-    .forEach(item -> {
-       log.debug(item.getLinks().get(0).getWebUri());
-    });
-});
-```
-### Feeds
-Feeds are **paginated** which means a request for one only returns a certain amount of objects and a **max_id** (or **cursor** for direct) is needed in future requests for more data. For example, a request for a users followers may return only the first twenty. To retrieve the next amount of followers, you need to pass in **max_id** (which is retrieved from the response of this first request). For convenience, the library provides a FeedIterator for paginated requests. It is **recommended** to wait in between requests for a reasonable (human) amount of time in order to not trigger a soft ban for spam.
-#### *Example:*
-```Java
-IGClient client = ...
-// form a FeedIterator for FeedTimelineRequest
-FeedIterator<FeedTimelineResponse> iter = new FeedIterator<>(client, new FeedTimelineRequest());
-// setting a limit of 2 responses (initial and one paginated)
-int limit = 2;
-while (iter.hasNext() && limit-- > 0) {
-    FeedTimelineResponse response = iter.next();
-    // Actions here
-    response.getFeed_items().forEach(...);
-    // Recommended to wait in between iterations
-}
-```
+See example for serialization and deserialization [here](https://github.com/instagram4j/instagram4j/blob/c2c4a0da8b18dce86900bb1af2393b6d0265b096/src/examples/java/serialize/SerializeTestUtil.java#L34).
 # Contributing
-More information on how to contribute will follow. 
+See Issues tab to find good starting issues to work on. If you have an addition you would like to make, please do not hesitate to make a pull request!
