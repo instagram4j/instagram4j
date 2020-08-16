@@ -11,6 +11,7 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.timeline.TimelineAction.SidecarInfo;
 import com.github.instagram4j.instagram4j.actions.timeline.TimelineAction.SidecarPhoto;
 import com.github.instagram4j.instagram4j.actions.timeline.TimelineAction.SidecarVideo;
+import com.github.instagram4j.instagram4j.requests.media.MediaCommentRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.MediaConfigureSidecarPayload;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 
@@ -38,7 +39,9 @@ public class TimelineActionTest {
     public void testPhoto() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         IGResponse response = client.actions().timeline()
-                .uploadPhoto(new File("src/examples/resources/test.jpg"), "Nice photo").join();
+                .uploadPhoto(new File("src/examples/resources/cover.jpg"), "My Caption")
+                .thenCompose(res -> new MediaCommentRequest(res.getMedia().getId(), "First comment!").execute(client))
+                .join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }

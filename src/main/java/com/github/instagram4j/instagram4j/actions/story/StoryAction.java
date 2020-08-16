@@ -24,7 +24,8 @@ public class StoryAction {
     public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(byte[] data,
             List<ReelMetadataItem> metadata) {
         String upload_id = String.valueOf(System.currentTimeMillis());
-        return client.actions().upload().photo(data, upload_id)
+        return client.actions().upload()
+                .photo(data, upload_id)
                 .thenCompose(response -> {
                     return new MediaConfigureToStoryRequest(response.getUpload_id(), metadata)
                             .execute(client);

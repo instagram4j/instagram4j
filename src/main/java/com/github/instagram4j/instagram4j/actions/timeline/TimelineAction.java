@@ -39,9 +39,9 @@ public class TimelineAction {
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(byte[] data,
             MediaConfigurePayload payload) {
-        String upload_id = String.valueOf(System.currentTimeMillis());
-        client.actions().upload().photo(data, upload_id);
-        return new MediaConfigureTimelineRequest(payload.upload_id(upload_id)).execute(client);
+        return client.actions().upload()
+                .photo(data, String.valueOf(System.currentTimeMillis()))
+                .thenCompose(res -> new MediaConfigureTimelineRequest(payload.upload_id(res.getUpload_id())).execute(client));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(byte[] data,
