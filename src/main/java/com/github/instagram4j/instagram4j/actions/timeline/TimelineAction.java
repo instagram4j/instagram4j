@@ -2,11 +2,11 @@ package com.github.instagram4j.instagram4j.actions.timeline;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
@@ -21,7 +21,6 @@ import com.github.instagram4j.instagram4j.responses.feed.FeedTimelineResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureSidecarResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse;
 import com.github.instagram4j.instagram4j.responses.media.RuploadPhotoResponse;
-
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +40,8 @@ public class TimelineAction {
             MediaConfigurePayload payload) {
         return client.actions().upload()
                 .photo(data, String.valueOf(System.currentTimeMillis()))
-                .thenCompose(res -> new MediaConfigureTimelineRequest(payload.upload_id(res.getUpload_id())).execute(client));
+                .thenCompose(res -> new MediaConfigureTimelineRequest(
+                        payload.upload_id(res.getUpload_id())).execute(client));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(byte[] data,
@@ -49,15 +49,19 @@ public class TimelineAction {
         return uploadPhoto(data, new MediaConfigurePayload().caption(caption));
     }
 
-    public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(File file, String caption)
-            throws IOException {
-        return uploadPhoto(Files.readAllBytes(file.toPath()),
+    public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(File file,
+            String caption) {
+        return uploadPhoto(file,
                 new MediaConfigurePayload().caption(caption));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(File file,
-            MediaConfigurePayload payload) throws IOException {
-        return uploadPhoto(Files.readAllBytes(file.toPath()), payload);
+            MediaConfigurePayload payload) {
+        try {
+            return uploadPhoto(Files.readAllBytes(file.toPath()), payload);
+        } catch (IOException exception) {
+            throw new UncheckedIOException(exception);
+        }
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
@@ -76,19 +80,23 @@ public class TimelineAction {
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
-            String caption) throws IOException, IOException {
-        return uploadVideo(Files.readAllBytes(video.toPath()), Files.readAllBytes(cover.toPath()),
-                new MediaConfigurePayload().caption(caption));
+            String caption) {
+        return uploadVideo(video, cover, new MediaConfigurePayload().caption(caption));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
-            MediaConfigurePayload payload) throws IOException, IOException {
-        return uploadVideo(Files.readAllBytes(video.toPath()), Files.readAllBytes(cover.toPath()),
-                payload);
+            MediaConfigurePayload payload) {
+        try {
+            return uploadVideo(Files.readAllBytes(video.toPath()),
+                    Files.readAllBytes(cover.toPath()), payload);
+        } catch (IOException exception) {
+            throw new UncheckedIOException(exception);
+        }
+
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
-            byte[] coverData, String caption) throws IOException {
+            byte[] coverData, String caption) {
         return uploadVideo(videoData, coverData, new MediaConfigurePayload().caption(caption));
     }
 
@@ -130,13 +138,20 @@ public class TimelineAction {
             return client.actions().upload().photo(data, metadata.upload_id(), true);
         }
 
-        public static SidecarPhoto from(File file) throws IOException {
-            return new SidecarPhoto(Files.readAllBytes(file.toPath()));
+        public static SidecarPhoto from(File file) {
+            try {
+                return new SidecarPhoto(Files.readAllBytes(file.toPath()));
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
         }
 
-        public static SidecarPhoto from(File file, SidecarChildrenMetadata metadata)
-                throws IOException {
-            return new SidecarPhoto(Files.readAllBytes(file.toPath())).metadata(metadata);
+        public static SidecarPhoto from(File file, SidecarChildrenMetadata metadata) {
+            try {
+                return new SidecarPhoto(Files.readAllBytes(file.toPath())).metadata(metadata);
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
         }
     }
 
@@ -157,15 +172,22 @@ public class TimelineAction {
                     UploadParameters.forTimelineVideo(metadata.upload_id(), true));
         }
 
-        public static SidecarVideo from(File video, File cover) throws IOException {
-            return new SidecarVideo(Files.readAllBytes(video.toPath()),
-                    Files.readAllBytes(cover.toPath()));
+        public static SidecarVideo from(File video, File cover) {
+            try {
+                return new SidecarVideo(Files.readAllBytes(video.toPath()),
+                        Files.readAllBytes(cover.toPath()));
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
         }
 
-        public static SidecarVideo from(File video, File cover, SidecarChildrenMetadata metadata)
-                throws IOException {
-            return new SidecarVideo(Files.readAllBytes(video.toPath()),
-                    Files.readAllBytes(cover.toPath())).metadata(metadata);
+        public static SidecarVideo from(File video, File cover, SidecarChildrenMetadata metadata) {
+            try {
+                return new SidecarVideo(Files.readAllBytes(video.toPath()),
+                        Files.readAllBytes(cover.toPath())).metadata(metadata);
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
         }
     }
 }

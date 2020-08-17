@@ -1,14 +1,11 @@
 package com.github.instagram4j.instagram4j.actions.users;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.user.User;
 import com.github.instagram4j.instagram4j.requests.users.UsersInfoRequest;
 import com.github.instagram4j.instagram4j.requests.users.UsersUsernameInfoRequest;
 import com.github.instagram4j.instagram4j.responses.users.UserResponse;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +21,7 @@ public class UsersAction {
                 });
     }
 
-    public CompletableFuture<User> info(long pk) throws IOException {
+    public CompletableFuture<User> info(long pk) {
         return new UsersInfoRequest(pk).execute(client)
                 .thenApply(UserResponse::getUser);
     }
