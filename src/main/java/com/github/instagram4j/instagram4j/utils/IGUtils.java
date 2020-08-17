@@ -1,7 +1,6 @@
 package com.github.instagram4j.instagram4j.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.CookieManager;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
@@ -17,22 +16,19 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.instagram4j.instagram4j.IGConstants;
-
 import lombok.SneakyThrows;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -247,12 +243,12 @@ public class IGUtils {
         return UUID.randomUUID().toString();
     }
 
-    @SneakyThrows(IOException.class)
+    @SneakyThrows(JsonProcessingException.class)
     public static String objectToJson(Object obj) {
         return WRITER.writeValueAsString(obj);
     }
 
-    public static <T> T jsonToObject(String json, Class<T> view) throws IOException {
+    public static <T> T jsonToObject(String json, Class<T> view) throws JsonProcessingException {
         return MAPPER.readValue(json, view);
     }
 

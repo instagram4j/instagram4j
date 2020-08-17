@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.IGConstants;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
@@ -75,11 +75,11 @@ public abstract class IGRequest<T extends IGResponse> {
         return igResponse;
     }
 
-    public T parseResponse(String json) throws IOException {
+    public T parseResponse(String json) throws JsonProcessingException {
         return parseResponse(json, getResponseType());
     }
 
-    public <U> U parseResponse(String json, Class<U> type) throws IOException {
+    public <U> U parseResponse(String json, Class<U> type) throws JsonProcessingException {
         log.debug("{} parsing response : {}", apiPath() + path(), json);
         U response = IGUtils.jsonToObject(json, type);
 

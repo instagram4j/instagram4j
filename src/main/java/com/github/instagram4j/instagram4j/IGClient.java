@@ -228,7 +228,8 @@ public class IGClient implements Serializable {
         };
 
         public IGClient build() {
-            return new IGClient(username, password, Optional.ofNullable(client).orElseGet(() -> IGUtils.defaultHttpClientBuilder().build()));
+            return new IGClient(username, password, Optional.ofNullable(client)
+                    .orElseGet(() -> IGUtils.defaultHttpClientBuilder().build()));
         }
 
         public IGClient simulatedLogin(Consumer<List<CompletableFuture<?>>> postLoginResponses)
