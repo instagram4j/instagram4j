@@ -59,7 +59,6 @@ public class IGChallengeUtils {
         return new ChallengeResetRequest(challenge.getApi_path()).execute(client);
     }
 
-    @SneakyThrows
     public static LoginResponse resolveChallenge(@NonNull IGClient client,
             @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode, int retries) {
@@ -73,9 +72,13 @@ public class IGChallengeUtils {
             log.info("select_verify_method option security code sent to "
                     + (stateResponse.getStep_data().getChoice().equals("1") ? "email" : "phone"));
             do {
-                response = sendSecurityCode(client, challenge, inputCode.call())
-                        .exceptionally(IGChallengeUtils::handleException)
-                        .join();
+                try {
+                    response = sendSecurityCode(client, challenge, inputCode.call())
+                            .exceptionally(IGChallengeUtils::handleException)
+                            .join();
+                } catch (Exception e) {
+                    log.info(e.toString());
+                }
             } while (!response.getStatus().equalsIgnoreCase("ok") && --retries > 0);
         } else if (name.equalsIgnoreCase("delta_login_review")) {
             // 'This was me' option
@@ -97,24 +100,26 @@ public class IGChallengeUtils {
         return resolveChallenge(client, response, inputCode, 3);
     }
 
-    @SneakyThrows
     public static LoginResponse resolveTwoFactor(@NonNull IGClient client,
             @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode) {
         return resolveTwoFactor(client, response, inputCode, 3);
     }
 
-    @SneakyThrows
     public static LoginResponse resolveTwoFactor(@NonNull IGClient client,
             @NonNull LoginResponse response,
             @NonNull Callable<String> inputCode, int retries) {
         String identifier = response.getTwo_factor_info().getTwo_factor_identifier();
         do {
-            String code = inputCode.call();
+            try {
+                String code = inputCode.call();
 
-            response = client.sendLoginRequest(code, identifier)
-                    .exceptionally(IGChallengeUtils::handleException)
-                    .join();
+                response = client.sendLoginRequest(code, identifier)
+                        .exceptionally(IGChallengeUtils::handleException)
+                        .join();
+            } catch (Exception e) {
+                log.info(e.toString());
+            }
         } while (!response.getStatus().equals("ok") && --retries > 0);
 
         return response;
