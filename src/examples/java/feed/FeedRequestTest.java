@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
+import com.github.instagram4j.instagram4j.models.media.timeline.TimelineImageMedia;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedTimelineResponse;
 
@@ -23,13 +24,29 @@ public class FeedRequestTest {
             throws IGResponseException, IGLoginException, ClassNotFoundException,
             FileNotFoundException, IOException {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        FeedTimelineRequest req = new FeedTimelineRequest();
-
-        FeedTimelineResponse response = client.sendRequest(req).join();
-        Assert.assertEquals("ok", response.getStatus());
-
-        response.getFeed_items().forEach(item -> {
-            log.debug("{} : {}", item.getId(), item.getClass().toString());
+        
+        new FeedTimelineRequest().execute(client)
+        .thenAccept(res -> {
+            res.getFeed_items().stream()
+            .filter(TimelineImageMedia.class::isInstance) // TimelineImageMedia correspends to media_type of 1
+            .map(TimelineImageMedia.class::cast)
+            .forEach(image -> {
+                // now perform actions on image!
+            });
+        })
+        .join();
+        
+        client.actions().timeline()
+        .feed().stream()
+        .limit(2)
+        .forEach(res -> {
+            res.getFeed_items().stream()
+            .filter(TimelineImageMedia.class::isInstance)
+            .map(TimelineImageMedia.class::cast)
+            .forEach(image -> {
+                // 
+                log.info("Download link : {}", image.getImage_versions2().getCandidates().get(0).getUrl());
+            });
         });
     }
 }
