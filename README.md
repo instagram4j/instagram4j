@@ -40,6 +40,22 @@ repositories {
     jcenter()
 }
 ```
+
+If you want to keep up with the latest snapshot of the develop branch instead of a develop release, use JitPack
+#### Example for gradle:
+```java
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+```
+```java
+dependencies {
+    implementation 'com.github.instagram4j:instagram4j:develop-SNAPSHOT'
+}
+```
+
 ## Requirements
 This project depends on
 - Java 8+
