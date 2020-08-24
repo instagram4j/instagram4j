@@ -2,7 +2,6 @@ package com.github.instagram4j.instagram4j.actions.upload;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.upload.MediaUploadFinishRequest;
@@ -13,7 +12,6 @@ import com.github.instagram4j.instagram4j.requests.upload.RuploadSegmentVideoPha
 import com.github.instagram4j.instagram4j.requests.upload.RuploadVideoRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.media.RuploadPhotoResponse;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,33 +56,37 @@ public class UploadAction {
             int totalLengthBytes) {
         String transfer_id = upload_id;
         UploadParameters parameter = UploadParameters.forIgtv(upload_id);
+
         return new RuploadSegmentVideoPhaseRequest(Phase.START, parameter)
                 .execute(client)
-                .thenApply(startResponse -> {
+                .thenCompose(startResponse -> {
                     String stream_id = startResponse.get("stream_id").toString();
+                    CompletableFuture<IGResponse> uploadResponse =
+                            CompletableFuture.completedFuture(startResponse);
+                    int i = 0;
+                    do {
+                        int segment = i;
+                        String offset = String.valueOf(segment * segments[0].length);
+                        uploadResponse = uploadResponse
+                                .thenCompose(res -> new RuploadSegmentVideoGetRequest(parameter,
+                                        stream_id, transfer_id, offset).execute(client))
+                                .thenCompose(res -> {
+                                    log.info("{} Uploading segment ({}/{})", upload_id, segment + 1,
+                                            segments.length);
 
-                    for (int i = 0; i < segments.length; i++) {
-                        String offset = String.valueOf(i * segments[0].length);
-                        RuploadSegmentVideoGetRequest getReq = new RuploadSegmentVideoGetRequest(
-                                parameter, stream_id, transfer_id, offset);
-                        String getoffset = getReq.execute(client).join().get("offset").toString();
-                        log.debug("Offset : {}", getoffset);
-                        RuploadSegmentVideoPhaseRequest transfer =
-                                new RuploadSegmentVideoPhaseRequest(Phase.TRANSFER, parameter,
-                                        stream_id, transfer_id, offset,
-                                        String.valueOf(totalLengthBytes), segments[i]);
-                        log.debug(String.format("Uploading %s (%s of %s)", transfer_id, i + 1,
-                                segments.length));
-                        transfer.execute(client).join();
-                        log.debug(
-                                String.format("Done with upload %s of %s", i + 1, segments.length));
-                    }
+                                    return new RuploadSegmentVideoPhaseRequest(Phase.TRANSFER,
+                                            parameter, stream_id, transfer_id, offset,
+                                            String.valueOf(totalLengthBytes), segments[segment])
+                                                    .execute(client)
+                                                    .whenComplete((transRes, tr) -> log.info(
+                                                            "{} Done uploading segment {}",
+                                                            upload_id, segment + 1));
+                                });
+                    } while (++i < segments.length);
 
-                    return stream_id;
-                })
-                .thenCompose(stream_id -> {
-                    return new RuploadSegmentVideoPhaseRequest(Phase.END, parameter, stream_id,
-                            transfer_id).execute(client);
+                    return uploadResponse
+                            .thenCompose(res -> new RuploadSegmentVideoPhaseRequest(Phase.END,
+                                    parameter, stream_id, transfer_id).execute(client));
                 });
     }
 

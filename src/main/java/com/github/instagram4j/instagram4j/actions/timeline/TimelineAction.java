@@ -11,10 +11,8 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.MediaConfigureSidecarPayload;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.SidecarChildrenMetadata;
-import com.github.instagram4j.instagram4j.requests.media.MediaConfigureTimelineRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureTimelineRequest.MediaConfigurePayload;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.feed.FeedTimelineResponse;
@@ -40,8 +38,7 @@ public class TimelineAction {
             MediaConfigurePayload payload) {
         return client.actions().upload()
                 .photo(data, String.valueOf(System.currentTimeMillis()))
-                .thenCompose(res -> new MediaConfigureTimelineRequest(
-                        payload.upload_id(res.getUpload_id())).execute(client));
+                .thenCompose(res -> client.actions().media().configureMediaToTimeline(res.getUpload_id(), payload));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(byte[] data,
@@ -73,10 +70,7 @@ public class TimelineAction {
                 .thenCompose(response -> {
                     return client.actions().upload().finish(upload_id);
                 })
-                .thenCompose(response -> {
-                    return new MediaConfigureTimelineRequest(payload.upload_id(upload_id))
-                            .execute(client);
-                });
+                .thenCompose(response -> client.actions().media().configureMediaToTimeline(upload_id, payload));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
@@ -108,9 +102,7 @@ public class TimelineAction {
                 .addAll(infos.stream().map(SidecarInfo::metadata).collect(Collectors.toList()));
         return CompletableFuture
                 .allOf(uploadFutures.toArray(new CompletableFuture[uploadFutures.size()]))
-                .thenCompose(v -> {
-                    return new MediaConfigureSidecarRequest(payload).execute(client);
-                });
+                .thenCompose(res -> client.actions().media().configureAlbumToTimeline(payload));
     }
 
     public CompletableFuture<MediaConfigureSidecarResponse> uploadAlbum(List<SidecarInfo> infos,

@@ -2,7 +2,6 @@ package com.github.instagram4j.instagram4j.utils;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException.IGFailedResponse;
 import com.github.instagram4j.instagram4j.requests.challenge.ChallengeResetRequest;
@@ -12,9 +11,7 @@ import com.github.instagram4j.instagram4j.requests.challenge.ChallengeStateGetRe
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse;
 import com.github.instagram4j.instagram4j.responses.challenge.Challenge;
 import com.github.instagram4j.instagram4j.responses.challenge.ChallengeStateResponse;
-
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

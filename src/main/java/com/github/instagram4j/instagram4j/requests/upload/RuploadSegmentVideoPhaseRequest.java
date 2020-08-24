@@ -30,6 +30,7 @@ public class RuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
     public RuploadSegmentVideoPhaseRequest(Phase phase, UploadParameters param, String stream_id,
             String transfer_id) {
         this(phase, param);
+        this.transfer_id = transfer_id;
         this.stream_id = stream_id;
     }
 

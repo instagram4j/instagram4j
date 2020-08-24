@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
-
 import org.junit.Test;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToIgtvRequest;
@@ -15,7 +13,6 @@ import com.github.instagram4j.instagram4j.requests.upload.RuploadSegmentVideoGet
 import com.github.instagram4j.instagram4j.requests.upload.RuploadSegmentVideoPhaseRequest;
 import com.github.instagram4j.instagram4j.requests.upload.RuploadSegmentVideoPhaseRequest.Phase;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
-
 import lombok.extern.slf4j.Slf4j;
 import serialize.SerializeTestUtil;
 
@@ -25,8 +22,8 @@ public class UploadToIgtvTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testName() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        File videoFile = new File("src/example/resources/igtvvideo.mp4"),
-                cover = new File("src/examples/resources/igtvphoto.jpg");
+        File videoFile = new File("src/examples/resources/igtvvid.mp4"),
+                cover = new File("src/examples/resources/igtvcover.jpg");
         String upload_id = String.valueOf(System.currentTimeMillis());
         byte[] data = Files.readAllBytes(videoFile.toPath());
         uploadSegments(client, upload_id, segments(data, 10_000_000), data.length);
@@ -45,6 +42,17 @@ public class UploadToIgtvTest {
             }
         } while (i++ < 3);
         log.debug("{}", i >= 3 ? "Success" : "fail");
+    }
+    
+    @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
+    public void testAction() throws Exception {
+        IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
+        File videoFile = new File("src/examples/resources/igtvvid.mp4"),
+                cover = new File("src/examples/resources/igtvcover.jpg");
+        byte[] data = Files.readAllBytes(videoFile.toPath()), coverData = Files.readAllBytes(cover.toPath());
+        
+        client.actions().igtv().upload(data, coverData, "Title", "Wow", false).join();
     }
 
     public static void uploadSegments(IGClient client, String upload_id, byte[][] segments,

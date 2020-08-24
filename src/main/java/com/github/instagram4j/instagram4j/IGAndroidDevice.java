@@ -1,7 +1,6 @@
 package com.github.instagram4j.instagram4j;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 @Data
