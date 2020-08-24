@@ -68,7 +68,7 @@ public abstract class IGRequest<T extends IGResponse> {
     public T parseResponse(Pair<Response, String> response) {
         T igResponse = parseResponse(response.getSecond());
         igResponse.setStatusCode(response.getFirst().code());
-        if (igResponse.getStatus().equals("fail")) {
+        if (!response.getFirst().isSuccessful() || (igResponse.getStatus() != null && igResponse.getStatus().equals("fail"))) {
             throw new IGResponseException(igResponse);
         }
 
