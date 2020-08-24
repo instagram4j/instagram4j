@@ -16,7 +16,7 @@ public class IGThread extends IGBaseModel {
     private List<Profile> left_users;
     private List<String> admin_user_ids;
     private List<ThreadItem> items;
-    private List<DirectStory> direct_story;
+    private DirectStory direct_story;
     private long last_activity_at;
     private boolean muted;
     private boolean is_pin;
