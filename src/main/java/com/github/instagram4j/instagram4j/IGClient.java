@@ -222,6 +222,7 @@ public class IGClient implements Serializable {
         private String username;
         private String password;
         private OkHttpClient client;
+        private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
         private Consumer<LoginResponse> onLogin = (login) -> {
@@ -229,7 +230,7 @@ public class IGClient implements Serializable {
 
         public IGClient build() {
             return new IGClient(username, password, Optional.ofNullable(client)
-                    .orElseGet(() -> IGUtils.defaultHttpClientBuilder().build()));
+                    .orElseGet(() -> IGUtils.defaultHttpClientBuilder().build())).setDevice(device);
         }
 
         public IGClient simulatedLogin(Consumer<List<CompletableFuture<?>>> postLoginResponses)
