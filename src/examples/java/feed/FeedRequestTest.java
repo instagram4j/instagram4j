@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.instagram4j.instagram4j.IGClient;
+import com.github.instagram4j.instagram4j.actions.feed.FeedItems;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
 import com.github.instagram4j.instagram4j.models.media.timeline.TimelineImageMedia;
@@ -27,9 +28,7 @@ public class FeedRequestTest {
         
         new FeedTimelineRequest().execute(client)
         .thenAccept(res -> {
-            res.getFeed_items().stream()
-            .filter(TimelineImageMedia.class::isInstance) // TimelineImageMedia correspends to media_type of 1
-            .map(TimelineImageMedia.class::cast)
+            FeedItems.filter(res.getFeed_items(), TimelineImageMedia.class)// TimelineImageMedia correspends to media_type of 1
             .forEach(image -> {
                 // now perform actions on image!
             });
@@ -40,11 +39,9 @@ public class FeedRequestTest {
         .feed().stream()
         .limit(2)
         .forEach(res -> {
-            res.getFeed_items().stream()
-            .filter(TimelineImageMedia.class::isInstance)
-            .map(TimelineImageMedia.class::cast)
+            FeedItems.filter(res.getFeed_items(), TimelineImageMedia.class)
             .forEach(image -> {
-                // 
+                log.info(image.getMedia_type());
                 log.info("Download link : {}", image.getImage_versions2().getCandidates().get(0).getUrl());
             });
         });
