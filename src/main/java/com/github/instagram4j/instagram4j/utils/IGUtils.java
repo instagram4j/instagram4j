@@ -7,21 +7,18 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
 import javax.crypto.Cipher;
-import javax.crypto.Mac;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -120,26 +117,6 @@ public class IGUtils {
     }
 
     /**
-     * Generate a Hmac SHA-256 hash
-     * 
-     * @param key key
-     * @param string value
-     * @return hashed
-     */
-    public static String generateHash(String key, String string) {
-        SecretKeySpec object = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-        try {
-            Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init((Key) object);
-            byte[] byteArray = mac.doFinal(string.getBytes("UTF-8"));
-            return new String(new Hex().encode(byteArray), "ISO-8859-1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
      * Generate signed payload
      * 
      * @param payload Payload
@@ -204,12 +181,11 @@ public class IGUtils {
 
         // Encrypt random key
         String decoded_pub_key =
-                new String(Base64.decodeBase64(enc_pub_key), StandardCharsets.UTF_8)
-                        .replace("-----BEGIN PUBLIC KEY-----", "")
-                        .replace("\n-----END PUBLIC KEY-----", "");
+                new String(Base64.getDecoder().decode(enc_pub_key), StandardCharsets.UTF_8)
+                        .replaceAll("-(.*)-|\n", "");
         Cipher rsa_cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
         rsa_cipher.init(Cipher.ENCRYPT_MODE, KeyFactory.getInstance("RSA")
-                .generatePublic(new X509EncodedKeySpec(Base64.decodeBase64(decoded_pub_key))));
+                .generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(decoded_pub_key))));
         byte[] rand_key_encrypted = rsa_cipher.doFinal(rand_key);
 
         // Encrypt password
@@ -232,7 +208,7 @@ public class IGUtils {
         out.write(Arrays.copyOfRange(password_encrypted, 0, password_encrypted.length - 16));
 
         return String.format("#PWD_INSTAGRAM:%s:%s:%s", "4", time,
-                Base64.encodeBase64String(out.toByteArray()));
+                Base64.getEncoder().encodeToString(out.toByteArray()));
     }
 
     public static OkHttpClient.Builder defaultHttpClientBuilder() {

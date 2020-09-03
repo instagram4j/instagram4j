@@ -14,6 +14,7 @@ import com.github.instagram4j.instagram4j.utils.IGChallengeUtils;
 
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
+import serialize.SerializeTestUtil;
 
 @RunWith(JUnitParamsRunner.class)
 public class ChallengeLoginTest {
@@ -38,6 +39,7 @@ public class ChallengeLoginTest {
         IGClient client = IGClient.builder()
                 .username(username)
                 .password(password)
+                .client(SerializeTestUtil.formTestHttpClient())
                 .onChallenge(challengeHandler)
                 .login();
 
