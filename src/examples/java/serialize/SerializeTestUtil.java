@@ -39,7 +39,7 @@ public class SerializeTestUtil {
         SerializableCookieJar jar = new SerializableCookieJar();
         IGClient lib = new IGClient.Builder().username(username).password(password)
                 .client(formTestHttpClient(jar))
-                .onLogin(lr -> Assert.assertEquals("ok", lr.getStatus()))
+                .onLogin((cli, lr) -> Assert.assertEquals("ok", lr.getStatus()))
                 .login();
         log.debug("Serializing. . .");
         serialize(lib, to);

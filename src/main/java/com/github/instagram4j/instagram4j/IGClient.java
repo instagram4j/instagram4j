@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import com.github.instagram4j.instagram4j.actions.IGClientActions;
 import com.github.instagram4j.instagram4j.exceptions.ExceptionallyHandler;
@@ -225,7 +226,7 @@ public class IGClient implements Serializable {
         private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
-        private Consumer<LoginResponse> onLogin = (login) -> {
+        private BiConsumer<IGClient, LoginResponse> onLogin = (client, login) -> {
         };
 
         public IGClient build() {
@@ -237,7 +238,7 @@ public class IGClient implements Serializable {
                 throws IGLoginException {
             IGClient client = build();
             client.actions.simulate().preLoginFlow().forEach(CompletableFuture::join);
-            onLogin.accept(performLogin(client));
+            onLogin.accept(client, performLogin(client));
             postLoginResponses.accept(client.actions.simulate().postLoginFlow());
 
             return client;
@@ -251,7 +252,7 @@ public class IGClient implements Serializable {
         public IGClient login() throws IGLoginException {
             IGClient client = build();
 
-            onLogin.accept(performLogin(client));
+            onLogin.accept(client, performLogin(client));
 
             return client;
         }
@@ -284,5 +285,6 @@ public class IGClient implements Serializable {
         public static interface LoginHandler {
             public LoginResponse accept(IGClient client, LoginResponse t);
         }
+        
     }
 }
