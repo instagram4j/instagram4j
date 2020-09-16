@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
+import com.github.instagram4j.instagram4j.actions.media.MediaAction;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.MediaConfigureSidecarPayload;
@@ -38,7 +39,7 @@ public class TimelineAction {
             MediaConfigurePayload payload) {
         return client.actions().upload()
                 .photo(data, String.valueOf(System.currentTimeMillis()))
-                .thenCompose(res -> client.actions().media().configureMediaToTimeline(res.getUpload_id(), payload));
+                .thenCompose(res -> MediaAction.configureMediaToTimeline(client, res.getUpload_id(), payload));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadPhoto(byte[] data,
@@ -70,7 +71,7 @@ public class TimelineAction {
                 .thenCompose(response -> {
                     return client.actions().upload().finish(upload_id);
                 })
-                .thenCompose(response -> client.actions().media().configureMediaToTimeline(upload_id, payload));
+                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
@@ -102,7 +103,7 @@ public class TimelineAction {
                 .addAll(infos.stream().map(SidecarInfo::metadata).collect(Collectors.toList()));
         return CompletableFuture
                 .allOf(uploadFutures.toArray(new CompletableFuture[uploadFutures.size()]))
-                .thenCompose(res -> client.actions().media().configureAlbumToTimeline(payload));
+                .thenCompose(res -> MediaAction.configureAlbumToTimeline(client, payload));
     }
 
     public CompletableFuture<MediaConfigureSidecarResponse> uploadAlbum(List<SidecarInfo> infos,

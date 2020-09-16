@@ -1,16 +1,13 @@
 package com.github.instagram4j.instagram4j.actions;
 
 import java.lang.reflect.Field;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.igtv.IgtvAction;
-import com.github.instagram4j.instagram4j.actions.media.MediaAction;
 import com.github.instagram4j.instagram4j.actions.simulate.SimulateAction;
 import com.github.instagram4j.instagram4j.actions.story.StoryAction;
 import com.github.instagram4j.instagram4j.actions.timeline.TimelineAction;
 import com.github.instagram4j.instagram4j.actions.upload.UploadAction;
 import com.github.instagram4j.instagram4j.actions.users.UsersAction;
-
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
@@ -23,7 +20,6 @@ public class IGClientActions {
     private StoryAction _story;
     private UsersAction _users;
     private SimulateAction _simulate;
-    private MediaAction _media;
     private IgtvAction _igtv;
 
     @SneakyThrows
