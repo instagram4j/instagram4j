@@ -1,8 +1,12 @@
 package com.github.instagram4j.instagram4j.actions.story;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.models.media.reel.item.ReelMetadataItem;
@@ -12,7 +16,6 @@ import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToStoryRe
 import com.github.instagram4j.instagram4j.responses.feed.FeedReelsTrayResponse;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUserStoryResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToStoryResponse;
-
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +43,30 @@ public class StoryAction {
                 .thenCompose(Response -> {
                     return new MediaConfigureToStoryRequest(upload_id, metadata).execute(client);
                 });
+    }
+    
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(File file, List<ReelMetadataItem> metadata) {
+        try {
+            return uploadPhoto(Files.readAllBytes(file.toPath()), metadata);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+    
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(File file) {
+        return uploadPhoto(file, Collections.emptyList());
+    }
+    
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(File videoFile, File coverFile, List<ReelMetadataItem> metadata) {
+        try {
+            return uploadVideo(Files.readAllBytes(videoFile.toPath()), Files.readAllBytes(coverFile.toPath()), metadata);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+    
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(File videoFile, File coverFile) {
+        return uploadVideo(videoFile, coverFile, Collections.emptyList());
     }
 
     public CompletableFuture<FeedReelsTrayResponse> tray() {
