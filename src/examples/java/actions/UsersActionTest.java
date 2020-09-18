@@ -18,7 +18,7 @@ public class UsersActionTest {
         Friendship friendship = user.getFriendship().join();
         log.debug("Is following : {}", friendship.isFollowing());
         
-        user.performAction(
+        user.action(
                 friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE)
                 .join();
         log.debug("Success");

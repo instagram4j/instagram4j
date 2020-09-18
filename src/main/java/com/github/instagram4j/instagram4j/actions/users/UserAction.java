@@ -44,7 +44,7 @@ public class UserAction {
                 .thenApply(FriendshipsShowResponse::getFriendship);
     }
 
-    public CompletableFuture<FriendshipStatusResponse> performAction(FriendshipsAction action) {
+    public CompletableFuture<FriendshipStatusResponse> action(FriendshipsAction action) {
         return new FriendshipsActionRequest(user.getPk(), action).execute(client);
     }
 }
