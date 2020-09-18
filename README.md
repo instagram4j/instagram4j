@@ -4,7 +4,7 @@
 
 instagram4j
 ========
-[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-22c2bee) ](https://bintray.com/instagram4j/maven/instagram4j/develop-22c2bee/link)
+[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-370fad2) ](https://bintray.com/instagram4j/maven/instagram4j/develop-370fad2/link)
 [![Build Status](https://travis-ci.org/instagram4j/instagram4j.svg?branch=develop)](https://travis-ci.org/instagram4j/instagram4j)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/instagram4j/instagram4j.svg)](https://gitter.im/instagram4j/instagram4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -29,7 +29,7 @@ instagram4j
 # Install
 There is currently no release yet from central repository.
 
-Download latest develop build: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-22c2bee) ](https://bintray.com/instagram4j/maven/instagram4j/develop-22c2bee/link)
+Download latest develop build: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-370fad2) ](https://bintray.com/instagram4j/maven/instagram4j/develop-370fad2/link)
 
 Dev builds require the bintray repository be added. Dev builds are highly experimental and subject to breaking changes between versions.
 #### Example for gradle:
