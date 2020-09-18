@@ -55,12 +55,7 @@ public class AccountsActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testChangeProfilePicture() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        String upload = String.valueOf(System.currentTimeMillis());
-        new RuploadPhotoRequest(
-                Files.readAllBytes(new File("src/examples/resources/profile.jpg").toPath()), "1",
-                upload, false).execute(client).join();
-        IGResponse response =
-                new AccountsChangeProfilePictureRequest(upload).execute(client).join();
+        IGResponse response = client.actions().account().setProfilePicture(new File("src/examples/resources/profile.jpg")).join();
         Assert.assertEquals("ok", response.getStatus());
     }
 
@@ -68,8 +63,7 @@ public class AccountsActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testAction() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response =
-                new AccountsActionRequest(AccountsAction.SET_PRIVATE).execute(client).join();
+        IGResponse response = client.actions().account().action(AccountsAction.SET_PRIVATE).join();
         Assert.assertEquals("ok", response.getStatus());
     }
 }
