@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.github.instagram4j.instagram4j.models.media.ImageVersions;
-import com.github.instagram4j.instagram4j.models.media.ImageVersionsMeta;
+import com.github.instagram4j.instagram4j.models.media.VideoVersionsMeta;
 
 import lombok.Data;
 
@@ -12,5 +12,5 @@ import lombok.Data;
 @JsonTypeName("2")
 public class VideoCaraouselItem extends CaraouselItem {
     private ImageVersions image_versions2;
-    private List<ImageVersionsMeta> video_versions;
+    private List<VideoVersionsMeta> video_versions;
 }
