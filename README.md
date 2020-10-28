@@ -57,6 +57,27 @@ dependencies {
 }
 ```
 
+#### Example for maven:
+```xml
+  ...
+  </dependencies>
+      ...
+    <dependency> 
+      <groupId>com.github.instagram4j</groupId>
+      <artifactId>instagram4j</artifactId>
+      <version>develop-SNAPSHOT</version>
+    </dependency> 
+  </dependencies>
+  ...
+  <repositories>
+    ...
+    <repository>
+      <id>jitpack</id>
+      <url>https://jitpack.io</url>   
+    </repository>
+ </repositories>
+```
+
 ## Requirements
 This project depends on
 - Java 8+
