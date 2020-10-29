@@ -10,6 +10,7 @@ public class Inbox {
     private boolean has_older;
     private int unseen_count;
     private long unseen_count_ts;
+    private String oldest_cursor;
     private Cursor prev_cursor;
     private Cursor next_cursor;
     private boolean blended_inbox_enabled;
