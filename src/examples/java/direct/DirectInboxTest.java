@@ -39,6 +39,27 @@ public class DirectInboxTest {
     }
 
     @Test
+    public void testInboxCursor()
+        IGClient lib = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
+        DirectInboxResponse response = new DirectInboxRequest().execute(lib).join();
+        int limit = 3;
+        int i = 1;
+        do {
+            response.getInbox().getThreads().forEach(thread -> {
+                log.debug("{} : {} : {}", thread.getThread_id(), thread.getThread_title(),
+                        thread.getUsers().stream().map(Profile::getUsername)
+                                .collect(Collectors.joining(",")));
+            });        
+            if (response.getInbox().isHas_older() && i != limit)
+                response = new DirectInboxRequest().cursor(response.getInbox().getOldest_cursor()).execute(client).join();
+            else
+                break;
+        
+            i++;
+        } while (true);
+    }
+
+    @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testPending() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
