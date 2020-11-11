@@ -29,13 +29,14 @@ public class FeedReelsTrayFeedRequestTest {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         FeedReelsTrayResponse response = client.actions().story().tray().join();
         Assert.assertEquals("ok", response.getStatus());
-
-        /*
-         * response.getTray().forEach(tray -> { tray.getItems().stream() .map(x ->
-         * x.get("story_cta")) .filter(Objects::nonNull) .forEach(story_cta -> { ArrayNode node =
-         * IGUtils.convertToView(story_cta, ArrayNode.class);
-         * log.info(node.get(0).get("links").get(0).get("webUri").asText()); }); });
-         */
+    }
+    
+    @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
+    public void testTrayStoryCta() throws Exception {
+        IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
+        FeedReelsTrayResponse response = client.actions().story().tray().join();
+        Assert.assertEquals("ok", response.getStatus());
 
         response.getTray().forEach(tray -> {
             tray.getItems().stream()
