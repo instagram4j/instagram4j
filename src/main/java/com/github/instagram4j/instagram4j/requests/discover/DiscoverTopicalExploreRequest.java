@@ -16,7 +16,7 @@ public class DiscoverTopicalExploreRequest extends IGGetRequest<DiscoverTopicalE
         implements IGPaginatedRequest<DiscoverTopicalExploreResponse> {
     @Setter
     private String max_id = "0";
-    private String _cluster_id;
+    private String _cluster_id = "explore_all:0";
     @Setter
     @Accessors(chain = true, fluent = true)
     private Boolean is_prefetch;
