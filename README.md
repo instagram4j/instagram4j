@@ -5,7 +5,7 @@
 instagram4j
 ========
 [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-370fad2) ](https://bintray.com/instagram4j/maven/instagram4j/develop-370fad2/link)
-[![Build Status](https://travis-ci.org/instagram4j/instagram4j.svg?branch=develop)](https://travis-ci.org/instagram4j/instagram4j)
+![Java CI with Gradle](https://github.com/instagram4j/instagram4j/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/instagram4j/instagram4j.svg)](https://gitter.im/instagram4j/instagram4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
