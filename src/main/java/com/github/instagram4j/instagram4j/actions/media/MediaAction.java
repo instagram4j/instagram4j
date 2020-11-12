@@ -42,7 +42,7 @@ public class MediaAction {
         return new MediaInfoRequest(media_id).execute(client);
     }
     
-    public FeedIterable<MediaGetCommentsResponse> comments() {
+    public FeedIterable<MediaGetCommentsRequest, MediaGetCommentsResponse> comments() {
         return new FeedIterable<>(client, () -> new MediaGetCommentsRequest(media_id));
     }
     

@@ -31,7 +31,7 @@ public class TimelineAction {
     @NonNull
     private IGClient client;
 
-    public FeedIterable<FeedTimelineResponse> feed() {
+    public FeedIterable<FeedTimelineRequest, FeedTimelineResponse> feed() {
         return new FeedIterable<>(client, FeedTimelineRequest::new);
     }
 

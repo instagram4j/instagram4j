@@ -90,7 +90,7 @@ public class IgtvAction {
         return new IgtvSearchRequest(query).execute(client);
     }
 
-    public FeedIterable<IgtvBrowseFeedResponse> feed() {
-        return new FeedIterable<>(client, () -> new IgtvBrowseFeedRequest());
+    public FeedIterable<IgtvBrowseFeedRequest, IgtvBrowseFeedResponse> feed() {
+        return new FeedIterable<>(client, IgtvBrowseFeedRequest::new);
     }
 }

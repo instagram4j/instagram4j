@@ -27,13 +27,13 @@ public class UserAction {
     @Getter
     private Profile user;
 
-    public FeedIterable<FeedUsersResponse> followersFeed() {
+    public FeedIterable<FriendshipsFeedsRequest, FeedUsersResponse> followersFeed() {
         return new FeedIterable<>(client, () -> {
             return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWERS);
         });
     }
 
-    public FeedIterable<FeedUsersResponse> followingFeed() {
+    public FeedIterable<FriendshipsFeedsRequest, FeedUsersResponse> followingFeed() {
         return new FeedIterable<>(client, () -> {
             return new FriendshipsFeedsRequest(user.getPk(), FriendshipsFeeds.FOLLOWING);
         });
