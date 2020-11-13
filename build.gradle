@@ -100,7 +100,6 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/instagram4j/instagram4j'
         publish = true
-        override = true
         version {
             desc = "Release ${project.version}"
             released = new Date()
