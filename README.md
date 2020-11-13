@@ -4,7 +4,7 @@
 
 instagram4j
 ========
-[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-370fad2) ](https://bintray.com/instagram4j/maven/instagram4j/develop-370fad2/link)
+[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.0) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.0/link)
 ![Java CI with Gradle](https://github.com/instagram4j/instagram4j/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/instagram4j/instagram4j.svg)](https://gitter.im/instagram4j/instagram4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -27,23 +27,28 @@ instagram4j
  - [Contributing](#contributing)
 
 # Install
-There is currently no release yet from central repository.
+The latest stable release: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.0) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.0/link)
 
-Download latest develop build: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=develop-370fad2) ](https://bintray.com/instagram4j/maven/instagram4j/develop-370fad2/link)
-
-Dev builds require the bintray repository be added. Dev builds are highly experimental and subject to breaking changes between versions.
 #### Example for gradle:
 ```java
-repositories {
-    maven {
-        url 'https://dl.bintray.com/instagram4j/maven'
-    }
-    jcenter()
+dependencies {
+    implementation 'com.github.instagram4j:instagram4j:2.0.0'
 }
 ```
 
-If you want to keep up with the latest snapshot of the develop branch instead of a develop release, use JitPack
-#### Example for gradle:
+#### Example for maven:
+```
+  </dependencies>
+    <dependency> 
+      <groupId>com.github.instagram4j</groupId>
+      <artifactId>instagram4j</artifactId>
+      <version>2.0.0</version>
+    </dependency> 
+  </dependencies>
+```
+
+For develop (unreleased to central) builds, jitpack can be used.
+
 ```java
 repositories {
     maven {
@@ -53,7 +58,7 @@ repositories {
 ```
 ```java
 dependencies {
-    implementation 'com.github.instagram4j:instagram4j:develop-SNAPSHOT'
+    implementation 'com.github.instagram4j:instagram4j:master-SNAPSHOT'
 }
 ```
 
@@ -65,7 +70,7 @@ dependencies {
     <dependency> 
       <groupId>com.github.instagram4j</groupId>
       <artifactId>instagram4j</artifactId>
-      <version>develop-SNAPSHOT</version>
+      <version>master-SNAPSHOT</version>
     </dependency> 
   </dependencies>
   ...
