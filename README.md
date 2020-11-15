@@ -7,7 +7,7 @@ instagram4j
 [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.0) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.0/link)
 ![Java CI with Gradle](https://github.com/instagram4j/instagram4j/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
-![Discord](https://img.shields.io/discord/777326687326044171?label=chat)
+[![Discord](https://img.shields.io/discord/777326687326044171?label=chat)](https://discord.com/invite/gR2EPwZGEZ)
 
 :camera: Java wrapper using OkHttpClient for Instagram's private api (Android emulation)
 ## Table of contents
