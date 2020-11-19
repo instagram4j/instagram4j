@@ -45,6 +45,14 @@ public class AccountAction {
         return new AccountsCurrentUserRequest().execute(client);
     }
 
+    /**
+     * @param text The thread app limit the String to a length to 30 characters, but there are no server verification
+     * @param emoji The thread app prevent you to put anything else that an emoji, but there are no server verification
+     * @param expires_at Must be in second (Example System.currentTimeMillis()/1000+60 for 60 seconds)
+     * @param should_notify Close friend should be notify or not
+     * @param status_type Must be "auto" or "manual"
+     * @return IGResponse
+     */
     public CompletableFuture<IGResponse> setStatus(String text, String emoji, long expires_at, boolean should_notify, String status_type) {
         return new AccountsEditStatusRequest(new AccountsEditStatusRequest.AccountsEditStatusPayload(text,emoji,expires_at,should_notify,status_type)).execute(client);
     }
