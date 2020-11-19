@@ -6,10 +6,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.concurrent.CompletableFuture;
 import com.github.instagram4j.instagram4j.IGClient;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsChangeProfilePictureRequest;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsCurrentUserRequest;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsSetBiographyRequest;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest;
+import com.github.instagram4j.instagram4j.requests.accounts.*;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest.AccountsAction;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
@@ -46,5 +43,9 @@ public class AccountAction {
     
     public CompletableFuture<AccountsUserResponse> currentUser() {
         return new AccountsCurrentUserRequest().execute(client);
+    }
+
+    public CompletableFuture<IGResponse> setStatus(String text, String emoji, long expires_at, boolean should_notify, String status_type) {
+        return new AccountsEditStatusRequest(new AccountsEditStatusRequest.AccountsEditStatusPayload(text,emoji,expires_at,should_notify,status_type)).execute(client);
     }
 }
