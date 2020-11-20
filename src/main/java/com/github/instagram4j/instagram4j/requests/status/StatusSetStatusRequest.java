@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.requests.accounts;
+package com.github.instagram4j.instagram4j.requests.status;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.instagram4j.IGClient;
@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @RequiredArgsConstructor
-public class AccountsEditStatusRequest extends IGPostRequest<IGResponse> {
+public class StatusSetStatusRequest extends IGPostRequest<IGResponse> {
     @NonNull
-    private AccountsEditStatusPayload payload;
+    private StatusSetStatusRequest.StatusSetStatusPayload payload;
 
     @Override
     protected IGPayload getPayload(IGClient client) {
@@ -34,7 +34,7 @@ public class AccountsEditStatusRequest extends IGPostRequest<IGResponse> {
 
     @Data
     @Accessors(fluent = true)
-    public static class AccountsEditStatusPayload extends IGPayload {
+    public static class StatusSetStatusPayload extends IGPayload {
         @NonNull
         @JsonProperty("text")
         private String text;
@@ -50,6 +50,22 @@ public class AccountsEditStatusRequest extends IGPostRequest<IGResponse> {
         @NonNull
         @JsonProperty("status_type")
         private String status_type;
+
+        public StatusSetStatusPayload(String text, String emoji, long expires_at) {
+            this.text = text;
+            this.emoji = emoji;
+            this.expires_at = expires_at;
+            this.should_notify = false;
+            this.status_type = "manual";
+        }
+
+        public StatusSetStatusPayload(String text, String emoji, long expires_at, boolean should_notify, String status_type) {
+            this.text = text;
+            this.emoji = emoji;
+            this.expires_at = expires_at;
+            this.should_notify = should_notify;
+            this.status_type = status_type;
+        }
     }
 
 }
