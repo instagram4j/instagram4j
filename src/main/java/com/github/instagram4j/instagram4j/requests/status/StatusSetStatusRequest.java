@@ -41,10 +41,8 @@ public class StatusSetStatusRequest extends IGPostRequest<IGResponse> {
         @NonNull
         @JsonProperty("emoji")
         private String emoji;
-        @NonNull
         @JsonProperty("expires_at")
         private long expires_at;
-        @NonNull
         @JsonProperty("should_notify")
         private boolean should_notify;
         @NonNull
