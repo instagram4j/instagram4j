@@ -38,7 +38,7 @@ dependencies {
 
 #### Example for maven:
 ```
-  </dependencies>
+  <dependencies>
     <dependency> 
       <groupId>com.github.instagram4j</groupId>
       <artifactId>instagram4j</artifactId>
@@ -65,7 +65,7 @@ dependencies {
 #### Example for maven:
 ```xml
   ...
-  </dependencies>
+  <dependencies>
       ...
     <dependency> 
       <groupId>com.github.instagram4j</groupId>
