@@ -25,7 +25,7 @@ public class StatusAction {
      * @return IGResponse
      */
     public CompletableFuture<IGResponse> setStatus(String text, String emoji, long expires_at, boolean should_notify, String status_type) {
-        return new AccountsEditStatusRequest(new AccountsEditStatusRequest.AccountsEditStatusPayload(text,emoji,expires_at,should_notify,status_type)).execute(client);
+        return new StatusSetStatusRequest(new StatusSetStatusRequest.StatusSetStatusPayload(text,emoji,expires_at,should_notify,status_type)).execute(client);
     }
 
     /**
