@@ -28,19 +28,19 @@ public class UsersAction {
                 .thenApply(UserResponse::getUser);
     }
 
-    public CompletableFuture<UsersSearchResponse> search(String query) {
+    public CompletableFuture<UsersSearchResponse> search(@NonNull String query) {
         return new UsersSearchRequest(query).execute(client);
     }
 
-    public CompletableFuture<UsersSearchResponse> search(String query, String search_surface, int timezone_offset, int count) {
+    public CompletableFuture<UsersSearchResponse> search(@NonNull String query,@NonNull String search_surface, int timezone_offset, int count) {
         return new UsersSearchRequest(query, search_surface, timezone_offset, count).execute(client);
     }
-
-    public CompletableFuture<UsersSearchResponse> getSearchNextPage(UsersSearchResponse usersSearchResponse, String query) {
+    
+    public CompletableFuture<UsersSearchResponse> getSearchNextPage(@NonNull UsersSearchResponse usersSearchResponse,@NonNull String query) {
         return new UsersSearchRequest(query,usersSearchResponse.getRank_token(),usersSearchResponse.getPage_token()).execute(client);
     }
 
-    public CompletableFuture<UsersSearchResponse> getSearchNextPage(UsersSearchResponse usersSearchResponse, String query, String search_surface, int timezone_offset, int count) {
+    public CompletableFuture<UsersSearchResponse> getSearchNextPage(@NonNull UsersSearchResponse usersSearchResponse,@NonNull  String query,@NonNull  String search_surface, int timezone_offset, int count) {
         return new UsersSearchRequest(query, search_surface, timezone_offset, count,usersSearchResponse.getRank_token(),usersSearchResponse.getPage_token()).execute(client);
     }
 
