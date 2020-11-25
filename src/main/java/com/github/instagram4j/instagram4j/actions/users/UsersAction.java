@@ -35,13 +35,5 @@ public class UsersAction {
     public CompletableFuture<UsersSearchResponse> search(@NonNull String query,@NonNull String search_surface, int timezone_offset, int count) {
         return new UsersSearchRequest(query, search_surface, timezone_offset, count).execute(client);
     }
-    
-    public CompletableFuture<UsersSearchResponse> getSearchNextPage(@NonNull UsersSearchResponse usersSearchResponse,@NonNull String query) {
-        return new UsersSearchRequest(query,usersSearchResponse.getRank_token(),usersSearchResponse.getPage_token()).execute(client);
-    }
-
-    public CompletableFuture<UsersSearchResponse> getSearchNextPage(@NonNull UsersSearchResponse usersSearchResponse,@NonNull  String query,@NonNull  String search_surface, int timezone_offset, int count) {
-        return new UsersSearchRequest(query, search_surface, timezone_offset, count,usersSearchResponse.getRank_token(),usersSearchResponse.getPage_token()).execute(client);
-    }
 
 }
