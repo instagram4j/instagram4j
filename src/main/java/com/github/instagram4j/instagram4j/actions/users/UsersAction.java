@@ -18,9 +18,7 @@ public class UsersAction {
 
     public CompletableFuture<UserAction> findByUsername(String username) {
         return new UsersUsernameInfoRequest(username).execute(client)
-                .thenApply(response -> {
-                    return new UserAction(client, response.getUser());
-                });
+                .thenApply(response -> new UserAction(client, response.getUser()));
     }
 
     public CompletableFuture<User> info(long pk) {
@@ -28,12 +26,8 @@ public class UsersAction {
                 .thenApply(UserResponse::getUser);
     }
 
-    public CompletableFuture<UsersSearchResponse> search(@NonNull String query) {
+    public CompletableFuture<UsersSearchResponse> search(String query) {
         return new UsersSearchRequest(query).execute(client);
-    }
-
-    public CompletableFuture<UsersSearchResponse> search(@NonNull String query,@NonNull String search_surface, int timezone_offset, int count) {
-        return new UsersSearchRequest(query, search_surface, timezone_offset, count).execute(client);
     }
 
 }

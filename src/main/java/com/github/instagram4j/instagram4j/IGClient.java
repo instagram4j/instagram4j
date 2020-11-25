@@ -285,6 +285,6 @@ public class IGClient implements Serializable {
         public static interface LoginHandler {
             public LoginResponse accept(IGClient client, LoginResponse t);
         }
-        
+
     }
 }
