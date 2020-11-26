@@ -4,8 +4,10 @@ import java.util.concurrent.CompletableFuture;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.user.User;
 import com.github.instagram4j.instagram4j.requests.users.UsersInfoRequest;
+import com.github.instagram4j.instagram4j.requests.users.UsersSearchRequest;
 import com.github.instagram4j.instagram4j.requests.users.UsersUsernameInfoRequest;
 import com.github.instagram4j.instagram4j.responses.users.UserResponse;
+import com.github.instagram4j.instagram4j.responses.users.UsersSearchResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -25,4 +27,13 @@ public class UsersAction {
         return new UsersInfoRequest(pk).execute(client)
                 .thenApply(UserResponse::getUser);
     }
+
+    public CompletableFuture<UsersSearchResponse> search(@NonNull String query) {
+        return new UsersSearchRequest(query).execute(client);
+    }
+
+    public CompletableFuture<UsersSearchResponse> search(@NonNull String query,@NonNull String search_surface, int timezone_offset, int count) {
+        return new UsersSearchRequest(query, search_surface, timezone_offset, count).execute(client);
+    }
+
 }
