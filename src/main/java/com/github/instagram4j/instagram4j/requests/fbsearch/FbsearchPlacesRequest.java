@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 public class FbsearchPlacesRequest extends IGGetRequest<FbsearchPlacesResponse> {
     @NonNull
     private String query;
-    @NonNull
     private Double lat, lon;
     private String page_token, rank_token;
     private final int count = 30;
@@ -29,9 +28,9 @@ public class FbsearchPlacesRequest extends IGGetRequest<FbsearchPlacesResponse> 
                 "search_surface", "places_search_page",
                 "timezone_offset", "0",
                 "query", query,
-                "lat", lat.toString(),
-                "lng", lon.toString(),
-                "count", String.valueOf(count),
+                "lat", lat,
+                "lng", lon,
+                "count", count,
                 "rank_token", rank_token,
                 "page_token", page_token);
     }

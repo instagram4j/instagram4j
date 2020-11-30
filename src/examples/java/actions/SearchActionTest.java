@@ -15,7 +15,7 @@ public class SearchActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearchTag() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().search().searchTag("love", 0d, 0d).join();
+        IGResponse response = client.actions().search().searchTag("love").join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
@@ -24,7 +24,16 @@ public class SearchActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearchLocation() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().search().searchPlace("San Francisco", 0d, 0d).join();
+        IGResponse response = client.actions().search().searchPlace("San Francisco").join();
+        Assert.assertEquals("ok", response.getStatus());
+        log.debug("Success");
+    }
+    
+    @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
+    public void testSearchUser() throws Exception {
+        IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
+        IGResponse response = client.actions().search().searchUser("Kim Kardashian").join();
         Assert.assertEquals("ok", response.getStatus());
         log.debug("Success");
     }
