@@ -25,3 +25,4 @@ build/
 .gitattributes
 bin/
 gradle.properties
+.DS_Store

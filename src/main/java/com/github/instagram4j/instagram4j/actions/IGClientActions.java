@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.account.AccountAction;
 import com.github.instagram4j.instagram4j.actions.igtv.IgtvAction;
+import com.github.instagram4j.instagram4j.actions.search.SearchAction;
 import com.github.instagram4j.instagram4j.actions.simulate.SimulateAction;
 import com.github.instagram4j.instagram4j.actions.status.StatusAction;
 import com.github.instagram4j.instagram4j.actions.story.StoryAction;
@@ -24,6 +25,7 @@ public class IGClientActions {
     private SimulateAction _simulate;
     private IgtvAction _igtv;
     private AccountAction _account;
+    private SearchAction _search;
     private StatusAction _status;
 
     @SneakyThrows

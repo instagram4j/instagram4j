@@ -6,9 +6,9 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
 
 public interface IGPaginatedRequest<T extends IGPaginatedResponse> {
-    public void setMax_id(String s);
+    void setMax_id(String s);
     
-    public Class<T> getResponseType();
+    Class<T> getResponseType();
 
-    public CompletableFuture<T> execute(IGClient client);
+    CompletableFuture<T> execute(IGClient client);
 }

@@ -5,8 +5,6 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
-import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
