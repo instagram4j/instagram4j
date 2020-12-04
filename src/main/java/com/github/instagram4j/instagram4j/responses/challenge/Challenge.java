@@ -6,4 +6,5 @@ import lombok.Data;
 public class Challenge {
     private String url;
     private String api_path;
+    private String challenge_context;
 }
