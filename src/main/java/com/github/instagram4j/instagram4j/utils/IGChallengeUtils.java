@@ -25,7 +25,7 @@ public class IGChallengeUtils {
     public static CompletableFuture<ChallengeStateResponse> requestState(IGClient client,
             Challenge challenge) {
         return new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(),
-                client.getDeviceId())
+                client.getDeviceId(),challenge.getChallenge_context())
                         .execute(client);
     }
 
