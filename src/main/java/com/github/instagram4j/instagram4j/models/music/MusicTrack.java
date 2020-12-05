@@ -1,7 +1,7 @@
 package com.github.instagram4j.instagram4j.models.music;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.instagram4j.models.IGBaseModel;
-
 import lombok.Data;
 
 @Data
@@ -17,6 +17,7 @@ public class MusicTrack extends IGBaseModel {
     private String cover_artwork_thumbnail_uri;
     private String progressive_download_url;
     private long[] highlight_start_times_in_ms;
+    @JsonProperty("is_explicit")
     private boolean is_explicit;
     private boolean has_lyrics;
 }

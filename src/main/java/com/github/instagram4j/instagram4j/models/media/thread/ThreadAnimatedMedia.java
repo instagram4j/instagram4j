@@ -1,14 +1,16 @@
 package com.github.instagram4j.instagram4j.models.media.thread;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.instagram4j.models.IGBaseModel;
 import com.github.instagram4j.instagram4j.models.user.User;
-
 import lombok.Data;
 
 @Data
 public class ThreadAnimatedMedia extends IGBaseModel {
     private ThreadImages images;
+    @JsonProperty("is_random")
     private boolean is_random;
+    @JsonProperty("is_sticker")
     private boolean is_sticker;
     private User user;
 

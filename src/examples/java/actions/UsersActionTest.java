@@ -1,5 +1,6 @@
 package actions;
 
+import org.junit.Assert;
 import org.junit.Test;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.users.UserAction;
@@ -22,5 +23,16 @@ public class UsersActionTest {
                 friendship.isFollowing() ? FriendshipsAction.DESTROY : FriendshipsAction.CREATE)
                 .join();
         log.debug("Success");
+    }
+    
+    @Test
+    // Run SerializeTestUtil.serializeLogin first to generate saved sessions
+    public void testFindByusername() throws Exception {
+        IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
+        client.actions().users().findByUsername("instagram")
+        .thenAccept(res -> {
+            Assert.assertTrue(res.getUser().is_verified());
+        })
+        .join();
     }
 }

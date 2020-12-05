@@ -1,11 +1,12 @@
 package com.github.instagram4j.instagram4j.models.user;
 
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class User extends Profile {
+    @JsonProperty("is_business")
     private boolean is_business;
     private int media_count;
     private int follower_count;

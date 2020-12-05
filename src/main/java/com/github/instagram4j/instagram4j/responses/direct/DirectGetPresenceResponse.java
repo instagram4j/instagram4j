@@ -1,9 +1,8 @@
 package com.github.instagram4j.instagram4j.responses.direct;
 
 import java.util.Map;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
-
 import lombok.Data;
 
 @Data
@@ -12,6 +11,7 @@ public class DirectGetPresenceResponse extends IGResponse {
 
     @Data
     public static class UserPresence {
+        @JsonProperty("is_active")
         private boolean is_active;
         private long last_activity_at_ms;
     }
