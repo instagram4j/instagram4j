@@ -15,7 +15,7 @@ public class TagsSearchResponse extends IGResponse {
     private List<SearchTagTag> feed_items;
 
     @Data
-    static class SearchTagTag {
+    public static class SearchTagTag {
         private long id;
         private String name;
         private String formatted_media_count;
