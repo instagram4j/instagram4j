@@ -12,7 +12,7 @@ public class TagsSearchResponse extends IGResponse {
     private String page_token;
     private String status;
     private boolean has_more;
-    private List<SearchTagTag> feed_items;
+    private List<SearchTagTag> results;
 
     @Data
     public static class SearchTagTag {

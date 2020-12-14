@@ -2,10 +2,7 @@ package actions;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import com.github.instagram4j.instagram4j.IGClient;
-import com.github.instagram4j.instagram4j.responses.IGResponse;
-
 import lombok.extern.slf4j.Slf4j;
 import serialize.SerializeTestUtil;
 
@@ -15,8 +12,13 @@ public class SearchActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearchTag() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().search().searchTag("love").join();
-        Assert.assertEquals("ok", response.getStatus());
+        client.actions().search().searchTag("love")
+        .thenAccept(res -> {
+            Assert.assertEquals("ok", res);
+            res.getResults().forEach(tag -> {
+                log.debug(tag.getId() + " " + tag.getMedia_count());
+            });
+        }).join();
         log.debug("Success");
     }
     
@@ -24,8 +26,12 @@ public class SearchActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearchLocation() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().search().searchPlace("San Francisco").join();
-        Assert.assertEquals("ok", response.getStatus());
+        client.actions().search().searchPlace("San Francisco").thenAccept(res -> {
+            Assert.assertEquals("ok", res.getStatus());
+            res.getItems().forEach(item -> {
+                log.debug(item.getTitle());
+            });
+        }).join();
         log.debug("Success");
     }
     
@@ -33,8 +39,13 @@ public class SearchActionTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testSearchUser() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response = client.actions().search().searchUser("Kim Kardashian").join();
-        Assert.assertEquals("ok", response.getStatus());
+        client.actions().search().searchUser("Kim Kardashian")
+        .thenAccept(res -> {
+            Assert.assertEquals("ok", res.getStatus());
+            res.getUsers().forEach(user -> {
+                log.debug(user.getFull_name());
+            });
+        }).join();
         log.debug("Success");
     }
 }
