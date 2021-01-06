@@ -19,7 +19,7 @@ public class FbsearchPlacesResponse extends IGResponse {
     public static class SearchLocationLocation {
         private String title;
         private String subtitle;
-        private FbsearchLocation fbsearchLocation;
+        private FbsearchLocation location;
     }
 
     @Data
