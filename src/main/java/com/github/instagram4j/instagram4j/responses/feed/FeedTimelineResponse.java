@@ -3,17 +3,16 @@ package com.github.instagram4j.instagram4j.responses.feed;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.util.StdConverter;
 import com.github.instagram4j.instagram4j.models.media.timeline.TimelineMedia;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
-
 import lombok.Data;
 
 @Data
-public class FeedTimelineResponse extends IGPaginatedResponse {
+public class FeedTimelineResponse extends IGResponse implements IGPaginatedResponse {
     private boolean auto_load_more_enabled;
     private int num_results;
     private String next_max_id;

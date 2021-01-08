@@ -13,7 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FeedLocationRequest extends IGGetRequest<FeedLocationResponse>
-        implements IGPaginatedRequest<FeedLocationResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private Long location;
     @Setter

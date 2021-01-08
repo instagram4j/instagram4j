@@ -1,23 +1,16 @@
 package accounts;
 
 import java.io.File;
-import java.nio.file.Files;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import com.github.instagram4j.instagram4j.IGClient;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsActionRequest.AccountsAction;
-import com.github.instagram4j.instagram4j.requests.accounts.AccountsChangeProfilePictureRequest;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsCurrentUserRequest;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsEditProfileRequest;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsEditProfileRequest.AccountsEditProfilePayload;
 import com.github.instagram4j.instagram4j.requests.accounts.AccountsSetBiographyRequest;
-import com.github.instagram4j.instagram4j.requests.upload.RuploadPhotoRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
-
 import lombok.extern.slf4j.Slf4j;
 import serialize.SerializeTestUtil;
 

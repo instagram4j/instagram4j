@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommerceDestinationRequest extends IGGetRequest<CommerceDestinationResponse>
-        implements IGPaginatedRequest<CommerceDestinationResponse> {
+        implements IGPaginatedRequest {
     @Setter
     private String max_id = "0";
 

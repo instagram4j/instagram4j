@@ -1,15 +1,14 @@
 package com.github.instagram4j.instagram4j.responses.discover;
 
 import java.util.List;
-
 import com.github.instagram4j.instagram4j.models.discover.Cluster;
 import com.github.instagram4j.instagram4j.models.discover.SectionalItem;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
-
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class DiscoverTopicalExploreResponse extends IGPaginatedResponse {
+public class DiscoverTopicalExploreResponse extends IGResponse implements IGPaginatedResponse {
     private List<SectionalItem> sectional_items;
     private String rank_token;
     private List<Cluster> clusters;

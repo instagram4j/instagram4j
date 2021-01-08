@@ -2,7 +2,6 @@ package media;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.feed.FeedUserReelMediaRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaActionRequest;
@@ -18,7 +17,6 @@ import com.github.instagram4j.instagram4j.responses.feed.FeedUserReelsMediaRespo
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaGetCommentsResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
-
 import lombok.extern.slf4j.Slf4j;
 import serialize.SerializeTestUtil;
 
@@ -114,7 +112,7 @@ public class MediaActionTestRequest {
         response.getComments().forEach(c -> log.debug("{} : {}", c.getPk(), c.getText()));
         Assert.assertEquals("ok", response.getStatus());
     }
-
+    
     @Test
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testLikers() throws Exception {

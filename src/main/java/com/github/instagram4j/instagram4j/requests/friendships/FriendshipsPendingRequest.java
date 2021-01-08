@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FriendshipsPendingRequest extends IGGetRequest<FeedUsersResponse>
-        implements IGPaginatedRequest<FeedUsersResponse> {
+        implements IGPaginatedRequest {
     @Setter
     private String max_id;
 

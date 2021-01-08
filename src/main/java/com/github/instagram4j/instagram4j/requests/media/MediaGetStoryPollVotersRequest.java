@@ -13,7 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class MediaGetStoryPollVotersRequest extends IGGetRequest<MediaGetStoryPollVotersResponse>
-        implements IGPaginatedRequest<MediaGetStoryPollVotersResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private String reel_id, poll_id;
     @Setter

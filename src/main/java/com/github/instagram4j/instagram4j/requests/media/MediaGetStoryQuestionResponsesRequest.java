@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MediaGetStoryQuestionResponsesRequest
         extends IGGetRequest<MediaGetStoryQuestionResponsesResponse>
-        implements IGPaginatedRequest<MediaGetStoryQuestionResponsesResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private String reel_id, question_id;
     @Setter

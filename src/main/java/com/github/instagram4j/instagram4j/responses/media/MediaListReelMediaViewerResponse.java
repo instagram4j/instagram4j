@@ -1,15 +1,14 @@
 package com.github.instagram4j.instagram4j.responses.media;
 
 import java.util.List;
-
 import com.github.instagram4j.instagram4j.models.media.reel.ReelMedia;
 import com.github.instagram4j.instagram4j.models.user.Profile;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
-
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class MediaListReelMediaViewerResponse extends IGPaginatedResponse {
+public class MediaListReelMediaViewerResponse extends IGResponse implements IGPaginatedResponse {
     private List<Profile> users;
     private String next_max_id;
     private int user_count;

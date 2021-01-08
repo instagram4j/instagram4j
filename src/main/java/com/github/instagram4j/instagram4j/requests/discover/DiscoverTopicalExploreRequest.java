@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscoverTopicalExploreRequest extends IGGetRequest<DiscoverTopicalExploreResponse>
-        implements IGPaginatedRequest<DiscoverTopicalExploreResponse> {
+        implements IGPaginatedRequest {
     @Setter
     private String max_id = "0";
     private String _cluster_id = "explore_all:0";
