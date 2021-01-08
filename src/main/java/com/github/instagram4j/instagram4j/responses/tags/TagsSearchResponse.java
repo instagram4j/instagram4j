@@ -1,13 +1,13 @@
 package com.github.instagram4j.instagram4j.responses.tags;
 
+import com.github.instagram4j.instagram4j.responses.IGPageRankTokenResponse;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class TagsSearchResponse extends IGResponse {
-
+public class TagsSearchResponse extends IGResponse implements IGPageRankTokenResponse {
     private String rank_token;
     private String page_token;
     private String status;

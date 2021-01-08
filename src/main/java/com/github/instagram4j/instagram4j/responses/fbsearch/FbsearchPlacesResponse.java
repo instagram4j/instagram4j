@@ -1,12 +1,13 @@
 package com.github.instagram4j.instagram4j.responses.fbsearch;
 
+import com.github.instagram4j.instagram4j.responses.IGPageRankTokenResponse;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class FbsearchPlacesResponse extends IGResponse {
+public class FbsearchPlacesResponse extends IGResponse implements IGPageRankTokenResponse {
 
     private int num_results;
     private String rank_token;
