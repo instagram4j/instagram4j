@@ -2,11 +2,11 @@ package com.github.instagram4j.instagram4j.responses.media;
 
 import com.github.instagram4j.instagram4j.models.media.reel.ResponderInfo;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
-
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class MediaGetStoryQuestionResponsesResponse extends IGPaginatedResponse {
+public class MediaGetStoryQuestionResponsesResponse extends IGResponse implements IGPaginatedResponse {
     private ResponderInfo responder_info;
 
     @Override

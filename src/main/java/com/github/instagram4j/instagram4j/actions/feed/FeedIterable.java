@@ -10,11 +10,12 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.IGPaginatedRequest;
 import com.github.instagram4j.instagram4j.requests.IGRequest;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FeedIterable<T extends IGRequest<R> & IGPaginatedRequest<R>, R extends IGPaginatedResponse> implements Iterable<R> {
+public class FeedIterable<T extends IGRequest<R> & IGPaginatedRequest, R extends IGResponse & IGPaginatedResponse> implements Iterable<R> {
     @NonNull
     private IGClient client;
     @NonNull

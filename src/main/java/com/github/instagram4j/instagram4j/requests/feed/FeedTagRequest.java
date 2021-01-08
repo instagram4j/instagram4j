@@ -13,7 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FeedTagRequest extends IGGetRequest<FeedTagResponse>
-        implements IGPaginatedRequest<FeedTagResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private String tag;
     @Setter

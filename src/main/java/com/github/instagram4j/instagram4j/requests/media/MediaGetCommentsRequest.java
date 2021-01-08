@@ -13,7 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsResponse>
-        implements IGPaginatedRequest<MediaGetCommentsResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private String _id;
     @Setter

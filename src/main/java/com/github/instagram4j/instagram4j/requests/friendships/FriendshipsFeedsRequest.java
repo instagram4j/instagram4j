@@ -13,7 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class FriendshipsFeedsRequest extends IGGetRequest<FeedUsersResponse>
-        implements IGPaginatedRequest<FeedUsersResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private Long _id;
     @NonNull

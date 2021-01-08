@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedSavedRequest extends IGGetRequest<FeedSavedResponse>
-        implements IGPaginatedRequest<FeedSavedResponse> {
+        implements IGPaginatedRequest {
     @Setter
     private String max_id;
 

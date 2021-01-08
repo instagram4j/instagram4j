@@ -18,7 +18,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class IgtvChannelRequest extends IGPostRequest<IgtvChannelResponse>
-        implements IGPaginatedRequest<IgtvChannelResponse> {
+        implements IGPaginatedRequest {
     @NonNull
     private String _id;
     @Setter

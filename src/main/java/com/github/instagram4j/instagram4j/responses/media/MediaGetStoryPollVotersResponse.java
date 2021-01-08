@@ -2,11 +2,11 @@ package com.github.instagram4j.instagram4j.responses.media;
 
 import com.github.instagram4j.instagram4j.models.media.reel.VoterInfo;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
-
+import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 
 @Data
-public class MediaGetStoryPollVotersResponse extends IGPaginatedResponse {
+public class MediaGetStoryPollVotersResponse extends IGResponse implements IGPaginatedResponse {
     private VoterInfo voter_info;
 
     @Override
