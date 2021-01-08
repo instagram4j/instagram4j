@@ -34,5 +34,10 @@ public class FeedIterable<T extends IGRequest<R> & IGPaginatedRequest, R extends
     public Stream<R> stream() {
         return StreamSupport.stream(this.spliterator(), false);
     }
+    
+    public static <T extends IGRequest<R> & IGPaginatedRequest, R extends IGResponse & IGPaginatedResponse> FeedIterable<T, R> of(
+            IGClient client, T t) {
+        return new FeedIterable<>(client, () -> t);
+    }
 
 }
