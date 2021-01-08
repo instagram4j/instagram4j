@@ -19,7 +19,7 @@ public class FeedIterableTest {
     public void testIterator() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
         // form a FeedIterator for FeedTimelineRequest
-        new FeedIterable<>(client, () -> new FeedTimelineRequest())
+        FeedIterable.of(client, new FeedTimelineRequest())
         .stream()
         .limit(2)
         .forEach(res -> {
@@ -44,5 +44,6 @@ public class FeedIterableTest {
         
         log.debug("Success");
     }
+    
 
 }
