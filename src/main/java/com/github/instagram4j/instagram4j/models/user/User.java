@@ -3,6 +3,7 @@ package com.github.instagram4j.instagram4j.models.user;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import java.io.Serializable;
 
 @Data
 public class User extends Profile {
@@ -18,7 +19,7 @@ public class User extends Profile {
     private int account_type;
 
     @Data
-    public static class ProfilePic {
+    public static class ProfilePic implements Serializable {
         public String url;
         public int width;
         public int height;
