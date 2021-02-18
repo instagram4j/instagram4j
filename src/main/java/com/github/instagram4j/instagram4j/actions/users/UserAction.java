@@ -1,11 +1,10 @@
 package com.github.instagram4j.instagram4j.actions.users;
 
 import java.util.concurrent.CompletableFuture;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.models.friendships.Friendship;
-import com.github.instagram4j.instagram4j.models.user.Profile;
+import com.github.instagram4j.instagram4j.models.user.User;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsActionRequest.FriendshipsAction;
 import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsFeedsRequest;
@@ -14,7 +13,6 @@ import com.github.instagram4j.instagram4j.requests.friendships.FriendshipsShowRe
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
 import com.github.instagram4j.instagram4j.responses.friendships.FriendshipStatusResponse;
 import com.github.instagram4j.instagram4j.responses.friendships.FriendshipsShowResponse;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,7 @@ public class UserAction {
     private IGClient client;
     @NonNull
     @Getter
-    private Profile user;
+    private User user;
 
     public FeedIterable<FriendshipsFeedsRequest, FeedUsersResponse> followersFeed() {
         return new FeedIterable<>(client, () ->
