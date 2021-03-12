@@ -5,11 +5,11 @@ import java.util.stream.Stream;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
-import com.github.instagram4j.instagram4j.responses.IGResponse;
 
+import com.github.instagram4j.instagram4j.responses.feed.FeedReelsMediaResponse;
 import lombok.Getter;
 
-public class FeedReelsMediaRequest extends IGPostRequest<IGResponse> {
+public class FeedReelsMediaRequest extends IGPostRequest<FeedReelsMediaResponse> {
     private String[] _ids;
 
     public FeedReelsMediaRequest(Object... ids) {
@@ -30,8 +30,8 @@ public class FeedReelsMediaRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<FeedReelsMediaResponse> getResponseType() {
+        return FeedReelsMediaResponse.class;
     }
 
 }
