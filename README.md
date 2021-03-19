@@ -4,7 +4,7 @@
 
 instagram4j
 ========
-[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.3) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.3/link)
+[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.4) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.4/link)
 ![Java CI with Gradle](https://github.com/instagram4j/instagram4j/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Discord](https://img.shields.io/discord/777326687326044171?label=chat)](https://discord.com/invite/gR2EPwZGEZ)
@@ -27,12 +27,12 @@ instagram4j
  - [Contributing](#contributing)
 
 # Install
-The latest stable release: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.3) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.3/link)
+The latest stable release: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.4) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.4/link)
 
 #### Example for gradle:
 ```java
 dependencies {
-    implementation 'com.github.instagram4j:instagram4j:2.0.3'
+    implementation 'com.github.instagram4j:instagram4j:2.0.4'
 }
 ```
 
@@ -42,7 +42,7 @@ dependencies {
     <dependency> 
       <groupId>com.github.instagram4j</groupId>
       <artifactId>instagram4j</artifactId>
-      <version>2.0.3</version>
+      <version>2.0.4</version>
     </dependency> 
   </dependencies>
 ```
