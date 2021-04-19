@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @JsonTypeName("media_share")
 public class ThreadMediaShareItem extends ThreadItem {
-    private Media media;
+    private Media media_share;
 }
