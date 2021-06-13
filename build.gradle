@@ -2,7 +2,8 @@ plugins {
     id 'java-library'
     id 'io.freefair.lombok' version '5.1.0'
     id 'maven-publish'
-    id 'com.jfrog.bintray' version '1.8.5'
+    id 'signing'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
     id 'net.nemerosa.versioning' version '2.8.2'
 }
 
@@ -10,7 +11,7 @@ group = 'com.github.instagram4j'
 archivesBaseName = 'instagram4j'
 // For release
 // Must be on release/<version> branch
-// Other full name is used
+// Release: ./gradlew publishSonatype closeSonatypeStagingRepository
 version = "${versioning.info.branchType.equals('release') ? versioning.info.display : versioning.info.full}"
 
 java {
@@ -89,24 +90,12 @@ publishing {
     }
 }
 
-bintray {
-    user = project.findProperty('bintray_user') ?: System.getenv('BINTRAY_USER')
-    key = project.findProperty('bintray_key') ?: System.getenv('BINTRAY_KEY')
-    publications = ['mavenPublish']
-    pkg {
-        repo = 'maven'
-        name = archivesBaseName
-        userOrg = 'instagram4j'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/instagram4j/instagram4j'
-        publish = true
-        version {
-            desc = "Release ${project.version}"
-            released = new Date()
-            gpg {
-                sign = true
-                passphrase = project.findProperty('gpg_passphrase') ?: System.getenv('GPG_PASSPHRASE')
-            }
-        }
+signing {
+    sign publishing.publications.mavenPublish
+}
+
+nexusPublishing {
+    repositories {
+        sonatype()
     }
 }
