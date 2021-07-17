@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UserTagsFeedResponse extends IGResponse implements IGPaginatedResponse{
 
-	private List<Media> items;
+	private List<TimelineMedia> items;
 	
 	private int num_results;
 	private String next_max_id;
