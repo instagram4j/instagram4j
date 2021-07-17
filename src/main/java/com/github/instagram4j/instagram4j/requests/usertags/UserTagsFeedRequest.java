@@ -8,6 +8,7 @@ import com.github.instagram4j.instagram4j.responses.usertags.UserTagsFeedRespons
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
