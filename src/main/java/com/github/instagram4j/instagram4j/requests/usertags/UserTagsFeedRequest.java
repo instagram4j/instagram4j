@@ -9,13 +9,15 @@ import com.github.instagram4j.instagram4j.responses.usertags.UserTagsFeedRespons
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class UserTagsFeedRequest extends IGGetRequest<UserTagsFeedResponse> 
 					implements IGPaginatedRequest {
 	
     private long userId;
     
-    @Setter private String max_id ="";
+    @Setter 
+    private String max_id;
     
     @Override
     public String path() {
