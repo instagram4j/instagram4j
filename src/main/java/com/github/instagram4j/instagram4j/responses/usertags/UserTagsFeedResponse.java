@@ -2,7 +2,7 @@ package com.github.instagram4j.instagram4j.responses.usertags;
 
 import java.util.List;
 
-import com.github.instagram4j.instagram4j.models.media.Media;
+import com.github.instagram4j.instagram4j.models.media.timeline.TimelineMedia;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 
