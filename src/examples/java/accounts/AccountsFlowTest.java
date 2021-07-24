@@ -15,7 +15,7 @@ import serialize.SerializeTestUtil;
 public class AccountsFlowTest {
     @Test
     public void testPreLoginFlow() {
-        IGClient client = new IGClient("", "", SerializeTestUtil.formTestHttpClient());
+        IGClient client = new IGClient("", "", SerializeTestUtil.formTestHttpClientBuilder().build());
         client.actions().simulate().preLoginFlow().stream()
                 .map(CompletableFuture::join)
                 .map(IGResponse.class::cast)

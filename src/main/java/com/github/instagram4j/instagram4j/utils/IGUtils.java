@@ -1,7 +1,6 @@
 package com.github.instagram4j.instagram4j.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.net.CookieManager;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -30,7 +29,6 @@ import lombok.SneakyThrows;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
-import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 
 public class IGUtils {
@@ -42,6 +40,8 @@ public class IGUtils {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         MAPPER.setSerializationInclusion(Include.NON_NULL);
     }
+
+    private IGUtils() {}
 
     /**
      * The characters from a hex-string
@@ -185,7 +185,8 @@ public class IGUtils {
                         .replaceAll("-(.*)-|\n", "");
         Cipher rsa_cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
         rsa_cipher.init(Cipher.ENCRYPT_MODE, KeyFactory.getInstance("RSA")
-                .generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(decoded_pub_key))));
+                .generatePublic(
+                        new X509EncodedKeySpec(Base64.getDecoder().decode(decoded_pub_key))));
         byte[] rand_key_encrypted = rsa_cipher.doFinal(rand_key);
 
         // Encrypt password
@@ -212,7 +213,7 @@ public class IGUtils {
     }
 
     public static OkHttpClient.Builder defaultHttpClientBuilder() {
-        return new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(new CookieManager()));
+        return new OkHttpClient.Builder().cookieJar(new SerializableCookieJar());
     }
 
     public static String randomUuid() {

@@ -2,6 +2,7 @@ package login;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,9 +24,13 @@ public class LoginTest {
         IGClient client = IGClient.builder()
                 .username(username)
                 .password(password)
-                .client(SerializeTestUtil.formTestHttpClient())
+                .client(SerializeTestUtil.formTestHttpClientBuilder().build())
                 .onLogin((cli, response) -> {
-                    cli.sendRequest(new AccountsCurrentUserRequest()).join();
+                    cli.sendRequest(new AccountsCurrentUserRequest())
+                    .thenAccept(repsonse -> {
+                        Assert.assertThat(response.getStatus(), CoreMatchers.is("ok"));
+                    })
+                    .join();
                 })
                 .login();
         log.debug(client.toString());

@@ -1,8 +1,6 @@
 package com.github.instagram4j.instagram4j.responses.users;
 
 import java.util.List;
-
-import com.github.instagram4j.instagram4j.models.IGBaseModel;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;
 

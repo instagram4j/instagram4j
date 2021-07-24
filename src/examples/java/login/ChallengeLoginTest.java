@@ -39,7 +39,7 @@ public class ChallengeLoginTest {
         IGClient client = IGClient.builder()
                 .username(username)
                 .password(password)
-                .client(SerializeTestUtil.formTestHttpClient())
+                .client(SerializeTestUtil.formTestHttpClientBuilder().build())
                 .onChallenge(challengeHandler)
                 .login();
 

@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IGChallengeUtils {
 
+    private IGChallengeUtils() {}
+
     private static LoginResponse handleException(Throwable t) {
         log.info(t.getCause().toString());
         return IGFailedResponse.of(t.getCause(), LoginResponse.class);
@@ -25,7 +27,7 @@ public class IGChallengeUtils {
     public static CompletableFuture<ChallengeStateResponse> requestState(IGClient client,
             Challenge challenge) {
         return new ChallengeStateGetRequest(challenge.getApi_path(), client.getGuid(),
-                client.getDeviceId(),challenge.getChallenge_context())
+                client.getDeviceId(), challenge.getChallenge_context())
                         .execute(client);
     }
 

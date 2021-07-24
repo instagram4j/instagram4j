@@ -1,8 +1,7 @@
 package com.github.instagram4j.instagram4j;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +23,8 @@ import com.github.instagram4j.instagram4j.requests.qe.QeSyncRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
+import com.github.instagram4j.instagram4j.utils.SerializableCookieJar;
+import com.github.instagram4j.instagram4j.utils.SerializeUtil;
 import kotlin.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -194,18 +196,26 @@ public class IGClient implements Serializable {
         return new IGClient.Builder();
     }
 
-    public static IGClient from(InputStream from) throws ClassNotFoundException, IOException {
-        return from(from, IGUtils.defaultHttpClientBuilder().build());
+    public static IGClient deserialize(File clientFile, File cookieFile)
+            throws ClassNotFoundException, IOException {
+        return deserialize(clientFile, cookieFile, IGUtils.defaultHttpClientBuilder());
     }
 
-    public static IGClient from(InputStream from, @NonNull OkHttpClient httpClient)
-            throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(from)) {
-            IGClient client = (IGClient) in.readObject();
-            client.httpClient = httpClient;
+    public static IGClient deserialize(File clientFile, File cookieFile,
+            OkHttpClient.Builder clientBuilder) throws ClassNotFoundException, IOException {
+        IGClient client = SerializeUtil.deserialize(clientFile, IGClient.class);
+        CookieJar jar = SerializeUtil.deserialize(cookieFile, SerializableCookieJar.class);
 
-            return client;
-        }
+        client.httpClient = clientBuilder
+                .cookieJar(jar)
+                .build();
+
+        return client;
+    }
+
+    public void serialize(File clientFile, File cookieFile) throws IOException {
+        SerializeUtil.serialize(this, clientFile);
+        SerializeUtil.serialize(this.httpClient.cookieJar(), cookieFile);
     }
 
     private Object readResolve() throws ObjectStreamException {

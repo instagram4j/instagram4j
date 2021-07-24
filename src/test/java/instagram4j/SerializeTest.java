@@ -1,20 +1,12 @@
 package instagram4j;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.user.Profile;
-
-import lombok.SneakyThrows;
+import com.github.instagram4j.instagram4j.utils.SerializeUtil;
 
 public class SerializeTest {
     @Test
@@ -31,8 +23,8 @@ public class SerializeTest {
         profile.set_verified(true);
         File file = File.createTempFile("profile", ".ser");
         file.deleteOnExit();
-        serialize(profile, file);
-        Profile deserializedProfile = deserialize(file, Profile.class);
+        SerializeUtil.serialize(profile, file);
+        Profile deserializedProfile = SerializeUtil.deserialize(file, Profile.class);
 
         Assert.assertEquals(profile, deserializedProfile);
     }
@@ -41,35 +33,14 @@ public class SerializeTest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testIGClient() throws IOException, ClassNotFoundException {
         IGClient client = IGClient.builder().username("username").password("password").build();
-        File file = File.createTempFile("client", ".ser");
-        file.deleteOnExit();
-        serialize(client, file);
-        IGClient deserializedClientFrom = IGClient.from(new FileInputStream(file));
+        File clientFile = File.createTempFile("client", ".ser");
+        File cookieFile = File.createTempFile("cookie", ".ser");
+        clientFile.deleteOnExit();
+        cookieFile.deleteOnExit();
+        client.serialize(clientFile, cookieFile);
+        IGClient deserializedClientFrom = IGClient.deserialize(clientFile, cookieFile);
         Assert.assertNotNull(deserializedClientFrom.getHttpClient());
         Assert.assertEquals(client, deserializedClientFrom);
-    }
-
-    @SneakyThrows
-    public static void serialize(Object o, File to) {
-        FileOutputStream file = new FileOutputStream(to);
-        ObjectOutputStream out = new ObjectOutputStream(file);
-
-        out.writeObject(o);
-        out.close();
-        file.close();
-    }
-
-    @SneakyThrows
-    public static <T> T deserialize(File file, Class<T> clazz) {
-        InputStream in = new FileInputStream(file);
-        ObjectInputStream oIn = new ObjectInputStream(in);
-
-        T t = clazz.cast(oIn.readObject());
-
-        in.close();
-        oIn.close();
-
-        return t;
     }
 
 }

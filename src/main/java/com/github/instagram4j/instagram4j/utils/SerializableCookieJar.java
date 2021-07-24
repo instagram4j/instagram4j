@@ -1,4 +1,4 @@
-package serialize;
+package com.github.instagram4j.instagram4j.utils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,18 +22,18 @@ public class SerializableCookieJar implements CookieJar, Serializable {
     Map<String, List<SerializableCookie>> map = new HashMap<>();
 
     @Override
-    public List<Cookie> loadForRequest(HttpUrl arg0) {
-        return map.getOrDefault(arg0.host(), new ArrayList<SerializableCookie>()).stream()
+    public List<Cookie> loadForRequest(HttpUrl url) {
+        return map.getOrDefault(url.host(), new ArrayList<SerializableCookie>()).stream()
                 .map(c -> c.cookie)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void saveFromResponse(HttpUrl arg0, List<Cookie> arg1) {
+    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
         List<SerializableCookie> list =
-                arg1.stream().map(c -> new SerializableCookie(c)).collect(Collectors.toList());
-        if (map.putIfAbsent(arg0.host(), list) != null) {
-            map.get(arg0.host()).addAll(list);
+                cookies.stream().map(c -> new SerializableCookie(c)).collect(Collectors.toList());
+        if (map.putIfAbsent(url.host(), list) != null) {
+            map.get(url.host()).addAll(list);
         }
     }
 
