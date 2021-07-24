@@ -11,7 +11,7 @@ group = 'com.github.instagram4j'
 archivesBaseName = 'instagram4j'
 // For release
 // Must be on release/<version> branch
-// Release: ./gradlew publishSonatype closeSonatypeStagingRepository
+// Release: ./gradlew publishToSonatype closeSonatypeStagingRepository --console=plain
 version = "${versioning.info.branchType.equals('release') ? versioning.info.display : versioning.info.full}"
 
 java {
