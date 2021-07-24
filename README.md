@@ -4,7 +4,6 @@
 
 instagram4j
 ========
-[ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.4) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.4/link)
 ![Java CI with Gradle](https://github.com/instagram4j/instagram4j/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=develop)
 [![Apache License](http://img.shields.io/badge/license-ASL-blue.svg)](https://github.com/brunocvcunha/instagram4j/blob/master/LICENSE)
 [![Discord](https://img.shields.io/discord/777326687326044171?label=chat)](https://discord.com/invite/gR2EPwZGEZ)
@@ -27,12 +26,11 @@ instagram4j
  - [Contributing](#contributing)
 
 # Install
-The latest stable release: [ ![Download](https://api.bintray.com/packages/instagram4j/maven/instagram4j/images/download.svg?version=2.0.4) ](https://bintray.com/instagram4j/maven/instagram4j/2.0.4/link)
 
 #### Example for gradle:
 ```java
 dependencies {
-    implementation 'com.github.instagram4j:instagram4j:2.0.4'
+    implementation 'com.github.instagram4j:instagram4j:2.0.5'
 }
 ```
 
@@ -42,7 +40,7 @@ dependencies {
     <dependency> 
       <groupId>com.github.instagram4j</groupId>
       <artifactId>instagram4j</artifactId>
-      <version>2.0.4</version>
+      <version>2.0.5</version>
     </dependency> 
   </dependencies>
 ```
@@ -273,8 +271,17 @@ client.actions().timeline()
 
 ```
 ## Serialization
-IGClient is a Serializable object that can be saved and later reconstructed. **Session cookies however must be separately serialized**. Session cookies for OkHttpClient are done through an implementation of CookieJar. You may provide your own implementation of a serializable cookie jar and then serialize your cookies for later use. Session cookies are good for 90 days and avoids relogins.
+IGClient and cookies can serialize into two files out of the box.
+```java
+IGClient client = ...
+File clientFile = new File(...);
+File cookieFile = new File(...);
+// serializing
+client.serialize(clientFile, cookieFile);
+// deserializing
+IGClient deserializedClient = IGClient.deserialize(clientFile, cookieFile);
+```
+IGClient is [Serializable](https://docs.oracle.com/javase/tutorial/jndi/objects/serial.html). The SerializableCookieJar used to store cookie's in OkHttpClient is Serializable as well. This opens to other mediums of storing serialization too, not just files.
 
-See example for serialization and deserialization [here](https://github.com/instagram4j/instagram4j/blob/c2c4a0da8b18dce86900bb1af2393b6d0265b096/src/examples/java/serialize/SerializeTestUtil.java#L34).
 # Contributing
 See Issues tab to find good starting issues to work on. If you have an addition you would like to make, please do not hesitate to make a pull request!
