@@ -217,7 +217,7 @@ IGClient client = IGClient.builder()
         .login();
 ```
 ### Login with proxy
-You may provide Proxy and Authenticator for the Proxy thru configuring an OkHttpClient and passing it in thru the builder.
+You may provide Proxy and Authenticator for the Proxy through configuring an OkHttpClient and passing it in through the builder.
 ```java
 OkHttpClient httpClient = new OkHttpClient.Builder().proxy(...).build();
 IGClient client = IGClient.builder()
