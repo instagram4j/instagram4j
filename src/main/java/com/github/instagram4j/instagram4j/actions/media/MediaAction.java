@@ -14,6 +14,7 @@ import com.github.instagram4j.instagram4j.requests.media.MediaEditRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaGetCommentsRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaInfoRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
+import com.github.instagram4j.instagram4j.responses.media.MediaCommentResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaGetCommentsResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaInfoResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse;
@@ -30,7 +31,7 @@ public class MediaAction {
     @NonNull
     private String media_id;
     
-    public CompletableFuture<IGResponse> comment(String comment) {
+    public CompletableFuture<MediaCommentResponse> comment(String comment) {
         return new MediaCommentRequest(media_id, comment).execute(client);
     }
     

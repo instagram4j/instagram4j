@@ -15,6 +15,7 @@ import com.github.instagram4j.instagram4j.requests.media.MediaSeenRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUserReelsMediaResponse;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
+import com.github.instagram4j.instagram4j.responses.media.MediaCommentResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaGetCommentsResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -95,8 +96,9 @@ public class MediaActionTestRequest {
     // Run SerializeTestUtil.serializeLogin first to generate saved sessions
     public void testComment() throws Exception {
         IGClient client = SerializeTestUtil.getClientFromSerialize("igclient.ser", "cookie.ser");
-        IGResponse response =
+        MediaCommentResponse response =
                 new MediaCommentRequest("2351884457617569072", "Gangnam").execute(client).join();
+        log.info(response.getComment().getPk());
         Assert.assertEquals("ok", response.getStatus());
     }
 

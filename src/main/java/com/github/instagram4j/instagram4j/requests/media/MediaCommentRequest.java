@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
-import com.github.instagram4j.instagram4j.responses.IGResponse;
-
+import com.github.instagram4j.instagram4j.responses.media.MediaCommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -14,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaCommentRequest extends IGPostRequest<IGResponse> {
+public class MediaCommentRequest extends IGPostRequest<MediaCommentResponse> {
     @NonNull
     private String id, _comment_text;
     private String _replied_to_comment_id;
@@ -30,8 +29,8 @@ public class MediaCommentRequest extends IGPostRequest<IGResponse> {
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<MediaCommentResponse> getResponseType() {
+        return MediaCommentResponse.class;
     }
 
     @Data
