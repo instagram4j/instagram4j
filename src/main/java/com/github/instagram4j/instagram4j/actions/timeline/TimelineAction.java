@@ -97,7 +97,8 @@ public class TimelineAction {
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
-                                                                         byte[] coverData, MediaConfigurePayload payload) {
+                                                                         byte[] coverData,
+                                                                         MediaConfigurePayload payload) {
         return uploadVideoWithTimeout(videoData, coverData, payload, 0L);
     }
 
