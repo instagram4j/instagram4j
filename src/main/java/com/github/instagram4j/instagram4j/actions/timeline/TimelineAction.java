@@ -67,14 +67,7 @@ public class TimelineAction {
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
                                                                          byte[] coverData,
                                                                          MediaConfigurePayload payload) {
-        String upload_id = String.valueOf(System.currentTimeMillis());
-        return client.actions().upload()
-                .videoWithCover(videoData, coverData,
-                        UploadParameters.forTimelineVideo(upload_id, false))
-                .thenCompose(response -> {
-                    return client.actions().upload().finish(upload_id);
-                })
-                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
+        return uploadVideoWithTimeout(videoData, coverData, payload, 0L);
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
@@ -106,22 +99,14 @@ public class TimelineAction {
                                                                                     MediaConfigurePayload payload,
                                                                                     long uploadFinishTimeoutSeconds) {
         String upload_id = String.valueOf(System.currentTimeMillis());
-        UploadParameters uploadParameters = UploadParameters.forTimelineVideo(upload_id, false);
+        return client.actions().upload()
+                .videoWithCover(videoData, coverData,
+                        UploadParameters.forTimelineVideo(upload_id, false))
+                .thenCompose(response -> {
+                    IGUtils.sleepSeconds(uploadFinishTimeoutSeconds);
 
-        IGResponse igResponse = client
-                .actions()
-                .upload()
-                .videoWithCover(videoData, coverData, uploadParameters)
-                .join();
-
-        if (igResponse.getStatusCode() == 200) {
-            IGUtils.sleepSeconds(uploadFinishTimeoutSeconds);
-        }
-
-        return client
-                .actions()
-                .upload()
-                .finish(upload_id)
+                    return client.actions().upload().finish(upload_id);
+                })
                 .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
     }
 
