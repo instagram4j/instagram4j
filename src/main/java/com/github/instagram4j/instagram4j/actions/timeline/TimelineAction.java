@@ -1,12 +1,5 @@
 package com.github.instagram4j.instagram4j.actions.timeline;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.actions.media.MediaAction;
@@ -26,6 +19,14 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class TimelineAction {
@@ -63,6 +64,34 @@ public class TimelineAction {
         }
     }
 
+    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
+                                                                         byte[] coverData,
+                                                                         MediaConfigurePayload payload) {
+        String upload_id = String.valueOf(System.currentTimeMillis());
+        return client.actions().upload()
+                .videoWithCover(videoData, coverData,
+                        UploadParameters.forTimelineVideo(upload_id, false))
+                .thenCompose(response -> {
+                    return client.actions().upload().finish(upload_id);
+                })
+                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
+    }
+
+    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
+            String caption) {
+        return uploadVideo(video, cover, new MediaConfigurePayload().caption(caption));
+    }
+
+    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
+            MediaConfigurePayload payload) {
+        try {
+            return uploadVideo(Files.readAllBytes(video.toPath()),
+                    Files.readAllBytes(cover.toPath()), payload);
+        } catch (IOException exception) {
+            throw new UncheckedIOException(exception);
+        }
+    }
+
     /**
      * Upload video with timeout before upload finish request
      *
@@ -94,27 +123,6 @@ public class TimelineAction {
                 .upload()
                 .finish(upload_id)
                 .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
-    }
-
-    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
-                                                                         byte[] coverData,
-                                                                         MediaConfigurePayload payload) {
-        return uploadVideoWithTimeout(videoData, coverData, payload, 0L);
-    }
-
-    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
-            String caption) {
-        return uploadVideo(video, cover, new MediaConfigurePayload().caption(caption));
-    }
-
-    public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(File video, File cover,
-            MediaConfigurePayload payload) {
-        try {
-            return uploadVideo(Files.readAllBytes(video.toPath()),
-                    Files.readAllBytes(cover.toPath()), payload);
-        } catch (IOException exception) {
-            throw new UncheckedIOException(exception);
-        }
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
