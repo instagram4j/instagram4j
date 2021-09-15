@@ -3,7 +3,6 @@ package com.github.instagram4j.instagram4j.models.direct.item;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.instagram4j.instagram4j.models.IGBaseModel;
-
 import lombok.Data;
 
 @Data
@@ -17,7 +16,8 @@ import lombok.Data;
         @JsonSubTypes.Type(value = ThreadVoiceMediaItem.class),
         @JsonSubTypes.Type(value = ThreadMediaItem.class),
         @JsonSubTypes.Type(value = ThreadProfileItem.class),
-        @JsonSubTypes.Type(value = ThreadRavenMediaItem.class)
+        @JsonSubTypes.Type(value = ThreadRavenMediaItem.class),
+        @JsonSubTypes.Type(value = ThreadClipItem.class)
 })
 public class ThreadItem extends IGBaseModel {
     private String item_id;
