@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -50,7 +51,7 @@ public class IGUtils {
 
     /**
      * Digest a string using the given codec and input
-     * 
+     *
      * @param codec Codec to use
      * @param source Source to use
      * @return
@@ -67,7 +68,7 @@ public class IGUtils {
 
     /**
      * Get the MD5 (in hexadecimal presentation) for the given source
-     * 
+     *
      * @param source The string to hash
      * @return MD5 hex presentation
      */
@@ -77,7 +78,7 @@ public class IGUtils {
 
     /**
      * Convert the byte array to a hexadecimal presentation (String)
-     * 
+     *
      * @param bytes byte array
      * @param initialCount count (length) of the input
      * @return
@@ -104,7 +105,7 @@ public class IGUtils {
 
     /**
      * Generates Instagram Device ID
-     * 
+     *
      * @param username Username to generate
      * @param password Password to generate
      * @return device id
@@ -118,7 +119,7 @@ public class IGUtils {
 
     /**
      * Generate signed payload
-     * 
+     *
      * @param payload Payload
      * @return Signed string
      */
@@ -246,4 +247,16 @@ public class IGUtils {
         return s != null ? s.substring(0, Math.min(100, s.length())) : s;
     }
 
+    /**
+     * Sleep for number of seconds
+     *
+     * @param seconds number of seconds
+     */
+    public static void sleepSeconds(long seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
