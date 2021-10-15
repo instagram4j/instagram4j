@@ -25,6 +25,8 @@ public class UploadParameters {
     private String for_direct_story;
     private String is_igtv_video;
     private String is_direct_voice;
+    private String broadcast_id;
+    private String is_post_live_igtv;
 
     @Override
     public String toString() {
@@ -32,9 +34,11 @@ public class UploadParameters {
     }
 
     public static UploadParameters forPhoto(String upload_id, String media_type,
-            boolean is_sidecar) {
+            boolean is_sidecar, String broadcastId) {
         return UploadParameters.builder().upload_id(upload_id).media_type(media_type)
                 .is_sidecar(is_sidecar ? "1" : null)
+                .broadcast_id(broadcastId)
+                .is_post_live_igtv(broadcastId != null ? "1" : null)
                 .image_compression(
                         "{\"lib_name\":\"moz\",\"lib_version\":\"3.1.m\",\"quality\":\"80\"}")
                 .build();

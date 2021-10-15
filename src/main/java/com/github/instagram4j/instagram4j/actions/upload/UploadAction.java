@@ -23,12 +23,17 @@ public class UploadAction {
     private IGClient client;
 
     public CompletableFuture<RuploadPhotoResponse> photo(byte[] data, String upload_id,
+            String broadcastId, boolean is_sidecar) {
+        return new RuploadPhotoRequest(data, "1", upload_id, broadcastId, is_sidecar).execute(client);
+    }
+
+    public CompletableFuture<RuploadPhotoResponse> photo(byte[] data, String upload_id,
             boolean is_sidecar) {
-        return new RuploadPhotoRequest(data, "1", upload_id, is_sidecar).execute(client);
+        return photo(data, upload_id, null, is_sidecar);
     }
 
     public CompletableFuture<RuploadPhotoResponse> photo(byte[] data, String upload_id) {
-        return photo(data, upload_id, false);
+        return photo(data, upload_id, null, false);
     }
 
     public CompletableFuture<? extends IGResponse> videoWithCover(byte[] data, byte[] cover,

@@ -148,7 +148,7 @@ public class TimelineAction {
 
         @Override
         public CompletableFuture<RuploadPhotoResponse> upload(IGClient client) {
-            return client.actions().upload().photo(data, metadata.upload_id(), true);
+            return client.actions().upload().photo(data, metadata.upload_id(), null, true);
         }
 
         public static SidecarPhoto from(File file) {
