@@ -6,6 +6,7 @@ import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToIgtvResponse;
+import com.github.instagram4j.instagram4j.utils.IGUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,13 @@ public class MediaConfigureToIgtvRequest extends IGPostRequest<MediaConfigureToI
         return MediaConfigureToIgtvResponse.class;
     }
 
+    @Override
+    protected Request.Builder applyHeaders(IGClient client, Request.Builder req) {
+        Request.Builder builder = super.applyHeaders(client, req);
+        builder.addHeader("is_igtv_video", "1");
+        return builder;
+    }
+
     @Data
     @JsonInclude(Include.NON_NULL)
     public class MediaConfigureToIgtvPayload extends IGPayload {
@@ -42,6 +50,9 @@ public class MediaConfigureToIgtvRequest extends IGPostRequest<MediaConfigureToI
         private String caption = _caption;
         private String igtv_share_preview_to_feed = upload_to_feed ? "1" : null;
         private String source_type = "4";
+        private boolean keep_shoppable_products = false;
+        private boolean igtv_ads_toggled_on = false;
+        private String igtv_composer_session_id = IGUtils.randomUuid();
         private String length = "68";
         private String retryContext =
                 "{\"num_step_auto_retry\":0,\"num_reupload\":0,\"num_step_manual_retry\":0}";
