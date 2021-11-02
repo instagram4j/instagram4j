@@ -24,6 +24,7 @@ public class RuploadPhotoRequest extends IGPostRequest<RuploadPhotoResponse> {
     @NonNull
     private String mediaType;
     private String uploadId = String.valueOf(System.currentTimeMillis());
+    private String broadcastId;
     private boolean isSidecar = false;
     private final String name =
             uploadId + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
@@ -42,7 +43,7 @@ public class RuploadPhotoRequest extends IGPostRequest<RuploadPhotoResponse> {
     protected Request.Builder applyHeaders(IGClient client, Request.Builder req) {
         super.applyHeaders(client, req);
         req.addHeader("X-Instagram-Rupload-Params",
-                UploadParameters.forPhoto(uploadId, mediaType, isSidecar).toString());
+                UploadParameters.forPhoto(uploadId, mediaType, isSidecar, broadcastId).toString());
         req.addHeader("X_FB_WATERFALL_ID", IGUtils.randomUuid());
         req.addHeader("Accept-Encoding", "gzip");
         req.addHeader("X-Entity-Name", name);

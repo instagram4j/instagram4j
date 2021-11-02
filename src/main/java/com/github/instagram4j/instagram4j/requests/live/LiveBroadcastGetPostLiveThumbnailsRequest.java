@@ -1,13 +1,13 @@
 package com.github.instagram4j.instagram4j.requests.live;
 
 import com.github.instagram4j.instagram4j.requests.IGGetRequest;
-import com.github.instagram4j.instagram4j.responses.IGResponse;
+import com.github.instagram4j.instagram4j.responses.live.LiveBroadcastThumbnailsResponse;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LiveBroadcastGetPostLiveThumbnailsRequest extends IGGetRequest<IGResponse> {
+public class LiveBroadcastGetPostLiveThumbnailsRequest extends IGGetRequest<LiveBroadcastThumbnailsResponse> {
     @NonNull
     private String _broadcast_id;
 
@@ -17,8 +17,8 @@ public class LiveBroadcastGetPostLiveThumbnailsRequest extends IGGetRequest<IGRe
     }
 
     @Override
-    public Class<IGResponse> getResponseType() {
-        return IGResponse.class;
+    public Class<LiveBroadcastThumbnailsResponse> getResponseType() {
+        return LiveBroadcastThumbnailsResponse.class;
     }
 
 }
