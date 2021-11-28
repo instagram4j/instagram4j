@@ -5,6 +5,8 @@ import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.friendships.FriendshipStatusResponse;
 
+import java.util.Locale;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class FriendshipsActionRequest extends IGPostRequest<FriendshipStatusResp
 
     @Override
     public String path() {
-        return String.format("friendships/%s/%s/", action.name().toLowerCase(), _pk);
+        return String.format("friendships/%s/%s/", action.name().toLowerCase(new Locale("en", "US")), _pk);
     }
 
     @Override

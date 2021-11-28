@@ -7,6 +7,8 @@ import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 
+import java.util.Locale;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -48,7 +50,7 @@ public class RuploadSegmentVideoPhaseRequest extends IGPostRequest<IGResponse> {
 
     @Override
     public String getQueryString(IGClient client) {
-        return mapQueryString("segmented", "true", "phase", phase.name().toLowerCase());
+        return mapQueryString("segmented", "true", "phase", phase.name().toLowerCase(new Locale("en", "US")));
     }
 
     @Override

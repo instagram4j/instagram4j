@@ -5,6 +5,8 @@ import com.github.instagram4j.instagram4j.requests.IGGetRequest;
 import com.github.instagram4j.instagram4j.requests.IGPaginatedRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
 
+import java.util.Locale;
+
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class FriendshipsFeedsRequest extends IGGetRequest<FeedUsersResponse>
 
     @Override
     public String path() {
-        return String.format("friendships/%s/%s/", _id, action.name().toLowerCase());
+        return String.format("friendships/%s/%s/", _id, action.name().toLowerCase(new Locale("en", "US")));
     }
 
     @Override
