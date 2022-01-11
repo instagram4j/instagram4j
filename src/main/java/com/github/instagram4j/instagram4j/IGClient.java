@@ -97,9 +97,12 @@ public class IGClient implements Serializable {
 
     public CompletableFuture<LoginResponse> sendLoginRequest() {
         return new QeSyncRequest().execute(this)
-                .thenCompose(res -> new AccountsLoginRequest($username,
-                        IGUtils.encryptPassword(this.$password, this.encryptionId,
-                                this.encryptionKey)).execute(this))
+                .thenCompose(res -> {
+                    IGUtils.sleepSeconds(1);
+                    return new AccountsLoginRequest($username,
+                            IGUtils.encryptPassword(this.$password, this.encryptionId,
+                                    this.encryptionKey)).execute(this);
+                })
                 .thenApply((res) -> {
                     this.setLoggedInState(res);
 
