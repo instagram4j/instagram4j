@@ -51,7 +51,7 @@ public class UploadAlbumTest {
         // upload video
         String uploadIdVid = System.currentTimeMillis() + "1";
         IGRequest<?> uploadSecondVideo = new RuploadVideoRequest(scndVidData,
-                UploadParameters.forPhoto(uploadIdVid, "2", true));
+                UploadParameters.forPhoto(uploadIdVid, "2", true, null));
         IGRequest<?> uploadThumbnail = new RuploadPhotoRequest(thumbData, "1", uploadIdVid, false);
         IGResponse vidRes = client.sendRequest(uploadSecondVideo).join(),
                 thumbRes = client.sendRequest(uploadThumbnail).join();

@@ -15,15 +15,14 @@ import okhttp3.RequestBody;
 
 public class RuploadVideoRequest extends IGPostRequest<IGResponse> {
 
-    private byte[] videoData;
-    private UploadParameters upload_params;
+    private final byte[] videoData;
+    private final UploadParameters upload_params;
     private final String name;
 
-    public RuploadVideoRequest(byte data[], UploadParameters param) {
+    public RuploadVideoRequest(final byte data[], final UploadParameters param) {
         this.videoData = data;
         this.upload_params = param;
-        name = upload_params.getUpload_id() + "_0_"
-                + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
+        this.name = upload_params.getUpload_id() + "_0_" + ThreadLocalRandom.current().nextLong(1_000_000_000, 9_999_999_999l);
     }
 
     @Override
