@@ -5,6 +5,8 @@ import com.github.instagram4j.instagram4j.models.IGPayload;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
 
+import java.util.Locale;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +22,7 @@ public class AccountsActionRequest extends IGPostRequest<AccountsUserResponse> {
 
     @Override
     public String path() {
-        return "accounts/" + action.name().toLowerCase() + "/";
+        return "accounts/" + action.name().toLowerCase(new Locale("en", "US")) + "/";
     }
 
     @Override
