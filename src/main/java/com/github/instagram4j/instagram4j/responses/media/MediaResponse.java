@@ -31,4 +31,9 @@ public class MediaResponse extends IGResponse {
     public static class MediaConfigureToIgtvResponse extends MediaResponse {
         private TimelineVideoMedia media;
     }
+
+    @Data
+    public static class MediaConfigureToClipsResponse extends MediaResponse {
+        private TimelineVideoMedia media;
+    }
 }
