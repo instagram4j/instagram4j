@@ -17,6 +17,7 @@ public abstract class StoriesMetadataItem {
     private double width = 0.5;
     @Builder.Default
     private double height = 0.5;
+    @Builder.Default
     private double rotation = 0;
     private int is_pinned;
     private int is_hidden;

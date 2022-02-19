@@ -54,7 +54,7 @@ public class IGUtils {
      *
      * @param codec Codec to use
      * @param source Source to use
-     * @return
+     * @return hexadecimal presentation of source
      */
     protected static String digest(String codec, String source) {
         try {
@@ -81,7 +81,7 @@ public class IGUtils {
      *
      * @param bytes byte array
      * @param initialCount count (length) of the input
-     * @return
+     * @return hexadecimal presentation of bytes
      */
     protected static String hexlate(byte[] bytes, int initialCount) {
         if (bytes == null) {
