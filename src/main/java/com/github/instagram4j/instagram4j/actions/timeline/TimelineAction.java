@@ -110,6 +110,17 @@ public class TimelineAction {
                 .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
     }
 
+    public CompletableFuture<MediaConfigureTimelineResponse> uploadClip(byte[] videoData,
+                                                                                    byte[] coverData,
+                                                                                    MediaConfigurePayload payload) {
+        String upload_id = String.valueOf(System.currentTimeMillis());
+        return client.actions().upload()
+                .videoWithCover(videoData, coverData,
+                        UploadParameters.forClip(upload_id))
+                .thenCompose(response -> client.actions().upload().finish(upload_id))
+                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
+    }
+
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,
             byte[] coverData, String caption) {
         return uploadVideo(videoData, coverData, new MediaConfigurePayload().caption(caption));
