@@ -8,6 +8,6 @@ import lombok.Data;
 
 @Data
 @JsonTypeName("1")
-public class StoriesImageMedia extends StoriesMedia implements ImageMedia {
+public class StoryImageMedia extends StoryMedia implements ImageMedia {
     private ImageVersions image_versions2;
 }

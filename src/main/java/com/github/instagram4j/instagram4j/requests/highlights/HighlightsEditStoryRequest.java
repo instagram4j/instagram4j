@@ -14,14 +14,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class HighlightsEditReelRequest extends IGPostRequest<IGResponse> {
+public class HighlightsEditStoryRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String _highlight_id, _title, _cover_media_id;
     private String[] _add_media, _remove_media;
 
     @Override
     protected IGPayload getPayload(IGClient client) {
-        return new HighlightsEditReelPayload();
+        return new HighlightsEditStoryPayload();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class HighlightsEditReelRequest extends IGPostRequest<IGResponse> {
     }
 
     @Data
-    private class HighlightsEditReelPayload extends IGPayload {
+    private class HighlightsEditStoryPayload extends IGPayload {
         private String title = _title;
         private String cover = IGUtils.objectToJson(new Object() {
             @Getter

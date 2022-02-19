@@ -7,7 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class FeedUserReelMediaRequest extends IGGetRequest<FeedUserStoriesMediaResponse> {
+public class FeedUserStoriesMediaRequest extends IGGetRequest<FeedUserStoriesMediaResponse> {
     @NonNull
     private Long pk;
 

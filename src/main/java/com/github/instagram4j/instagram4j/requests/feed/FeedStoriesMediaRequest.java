@@ -9,10 +9,10 @@ import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedStoriesMediaResponse;
 import lombok.Getter;
 
-public class FeedReelsMediaRequest extends IGPostRequest<FeedStoriesMediaResponse> {
+public class FeedStoriesMediaRequest extends IGPostRequest<FeedStoriesMediaResponse> {
     private String[] _ids;
 
-    public FeedReelsMediaRequest(Object... ids) {
+    public FeedStoriesMediaRequest(Object... ids) {
         _ids = Stream.of(ids).map(Object::toString).toArray(String[]::new);
     }
 

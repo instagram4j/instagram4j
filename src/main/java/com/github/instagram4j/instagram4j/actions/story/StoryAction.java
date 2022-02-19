@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.models.media.stories.item.StoriesMetadataItem;
-import com.github.instagram4j.instagram4j.requests.feed.FeedReelsTrayRequest;
+import com.github.instagram4j.instagram4j.requests.feed.FeedStoriesTrayRequest;
 import com.github.instagram4j.instagram4j.requests.feed.FeedUserStoryRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToStoryRequest;
 import com.github.instagram4j.instagram4j.responses.feed.FeedStoriesTrayResponse;
@@ -70,7 +70,7 @@ public class StoryAction {
     }
 
     public CompletableFuture<FeedStoriesTrayResponse> tray() {
-        return new FeedReelsTrayRequest().execute(client);
+        return new FeedStoriesTrayRequest().execute(client);
     }
 
     public CompletableFuture<FeedUserStoryResponse> userStory(long pk) {

@@ -9,7 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class HighlightsDeleteReelRequest extends IGPostRequest<IGResponse> {
+public class HighlightsDeleteStoryRequest extends IGPostRequest<IGResponse> {
     @NonNull
     private String _highlight_id;
 

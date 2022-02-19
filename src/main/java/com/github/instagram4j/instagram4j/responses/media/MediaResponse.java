@@ -1,7 +1,7 @@
 package com.github.instagram4j.instagram4j.responses.media;
 
 import com.github.instagram4j.instagram4j.models.media.Media;
-import com.github.instagram4j.instagram4j.models.media.stories.StoriesMedia;
+import com.github.instagram4j.instagram4j.models.media.stories.StoryMedia;
 import com.github.instagram4j.instagram4j.models.media.timeline.TimelineMedia;
 import com.github.instagram4j.instagram4j.models.media.timeline.TimelineVideoMedia;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
@@ -24,7 +24,7 @@ public class MediaResponse extends IGResponse {
 
     @Data
     public static class MediaConfigureToStoryResponse extends MediaResponse {
-        private StoriesMedia media;
+        private StoryMedia media;
     }
 
     @Data

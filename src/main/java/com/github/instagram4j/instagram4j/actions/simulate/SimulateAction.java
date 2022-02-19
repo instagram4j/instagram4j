@@ -11,7 +11,7 @@ import com.github.instagram4j.instagram4j.requests.accounts.AccountsGetPrefillCa
 import com.github.instagram4j.instagram4j.requests.direct.DirectGetPresenceRequest;
 import com.github.instagram4j.instagram4j.requests.direct.DirectInboxRequest;
 import com.github.instagram4j.instagram4j.requests.discover.DiscoverTopicalExploreRequest;
-import com.github.instagram4j.instagram4j.requests.feed.FeedReelsTrayRequest;
+import com.github.instagram4j.instagram4j.requests.feed.FeedStoriesTrayRequest;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.instagram4j.requests.launcher.LauncherSyncRequest;
 import com.github.instagram4j.instagram4j.requests.linkedaccounts.LinkedAccountsGetLinkageStatusRequest;
@@ -47,7 +47,7 @@ public class SimulateAction {
             new LoomFetchConfigRequest(),
             new MediaBlockedRequest(),
             new FeedTimelineRequest(),
-            new FeedReelsTrayRequest(),
+            new FeedStoriesTrayRequest(),
             new UsersArlinkDownloadInfoRequest(),
             new DiscoverTopicalExploreRequest().is_prefetch(true),
             new NewsInboxRequest(false),

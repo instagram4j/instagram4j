@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @JsonTypeName("2")
-public class StoriesVideoMedia extends StoriesMedia {
+public class StoryVideoMedia extends StoryMedia {
     private boolean has_audio;
     private int number_of_qualities;
     private double video_duration;

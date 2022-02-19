@@ -3,7 +3,7 @@ package com.github.instagram4j.instagram4j.requests.media;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.requests.IGGetRequest;
 import com.github.instagram4j.instagram4j.requests.IGPaginatedRequest;
-import com.github.instagram4j.instagram4j.responses.media.MediaListStoriesMediaViewerResponse;
+import com.github.instagram4j.instagram4j.responses.media.MediaListStoryMediaViewerResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListStoriesMediaViewerResponse>
+public class MediaListStoryMediaViewerRequest extends IGGetRequest<MediaListStoryMediaViewerResponse>
         implements IGPaginatedRequest {
     @NonNull
     private String reel_id;
@@ -30,8 +30,8 @@ public class MediaListReelMediaViewerRequest extends IGGetRequest<MediaListStori
     }
 
     @Override
-    public Class<MediaListStoriesMediaViewerResponse> getResponseType() {
-        return MediaListStoriesMediaViewerResponse.class;
+    public Class<MediaListStoryMediaViewerResponse> getResponseType() {
+        return MediaListStoryMediaViewerResponse.class;
     }
 
 }
