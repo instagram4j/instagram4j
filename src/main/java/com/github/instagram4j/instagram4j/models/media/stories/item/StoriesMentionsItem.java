@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel.item;
+package com.github.instagram4j.instagram4j.models.media.stories.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,13 +10,13 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @JsonInclude(Include.NON_NULL)
-public class StoryLocationsItem extends ReelMetadataItem {
+public class StoriesMentionsItem extends StoriesMetadataItem {
     @NonNull
-    private String location_id;
+    private String user_id;
 
     @Override
     public String key() {
-        return "story_locations";
+        return "reel_mentions";
     }
 
 }

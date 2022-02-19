@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel;
+package com.github.instagram4j.instagram4j.models.media.stories;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @JsonTypeName("2")
-public class ReelVideoMedia extends ReelMedia {
+public class StoriesVideoMedia extends StoriesMedia {
     private boolean has_audio;
     private int number_of_qualities;
     private double video_duration;

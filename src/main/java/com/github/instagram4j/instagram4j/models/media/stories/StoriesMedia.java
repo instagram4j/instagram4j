@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel;
+package com.github.instagram4j.instagram4j.models.media.stories;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import com.github.instagram4j.instagram4j.models.media.Viewer;
 import lombok.Data;
 
 @Data
-@JsonTypeInfo(defaultImpl = ReelMedia.class, use = JsonTypeInfo.Id.NAME,
+@JsonTypeInfo(defaultImpl = StoriesMedia.class, use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY, property = "media_type", visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ReelImageMedia.class),
-        @JsonSubTypes.Type(value = ReelVideoMedia.class)
+        @JsonSubTypes.Type(value = StoriesImageMedia.class),
+        @JsonSubTypes.Type(value = StoriesVideoMedia.class)
 })
-public class ReelMedia extends Media {
+public class StoriesMedia extends Media {
     private int viewer_count;
     private int total_viewer_count;
     private List<Viewer> viewers;

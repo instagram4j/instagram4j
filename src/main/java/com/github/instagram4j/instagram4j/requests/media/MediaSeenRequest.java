@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
-import com.github.instagram4j.instagram4j.models.media.reel.ReelMedia;
+import com.github.instagram4j.instagram4j.models.media.stories.StoriesMedia;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MediaSeenRequest extends IGPostRequest<IGResponse> {
     @NonNull
-    private List<ReelMedia> reel_media_ids;
+    private List<StoriesMedia> reel_media_ids;
 
     @Override
     public String apiPath() {
@@ -48,12 +48,12 @@ public class MediaSeenRequest extends IGPostRequest<IGResponse> {
     public class MediaSeenPayload extends IGPayload {
         private Map<String, String[]> reels;
 
-        public MediaSeenPayload(List<ReelMedia> reelMedias) {
+        public MediaSeenPayload(List<StoriesMedia> storiesMedia) {
             this.reels = new HashMap<>();
-            reelMedias.forEach(this::map_to_reels);
+            storiesMedia.forEach(this::map_to_reels);
         }
 
-        public void map_to_reels(ReelMedia media) {
+        public void map_to_reels(StoriesMedia media) {
             String key = String.format("%s_%s", media.getId(), media.getUser().getPk());
             String[] value = {
                     String.format("%s_%s", media.getTaken_at(), System.currentTimeMillis() / 1000)};

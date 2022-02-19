@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
-import com.github.instagram4j.instagram4j.models.media.reel.item.ReelMetadataItem;
+import com.github.instagram4j.instagram4j.models.media.stories.item.StoriesMetadataItem;
 import com.github.instagram4j.instagram4j.requests.feed.FeedReelsTrayRequest;
 import com.github.instagram4j.instagram4j.requests.feed.FeedUserStoryRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToStoryRequest;
-import com.github.instagram4j.instagram4j.responses.feed.FeedReelsTrayResponse;
+import com.github.instagram4j.instagram4j.responses.feed.FeedStoriesTrayResponse;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUserStoryResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToStoryResponse;
 import lombok.NonNull;
@@ -25,7 +25,7 @@ public class StoryAction {
     private IGClient client;
 
     public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(byte[] data,
-            List<ReelMetadataItem> metadata) {
+            List<StoriesMetadataItem> metadata) {
         String upload_id = String.valueOf(System.currentTimeMillis());
         return client.actions().upload()
                 .photo(data, upload_id)
@@ -36,7 +36,7 @@ public class StoryAction {
     }
 
     public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(byte[] video, byte[] cover,
-            List<ReelMetadataItem> metadata) {
+            List<StoriesMetadataItem> metadata) {
         String upload_id = String.valueOf(System.currentTimeMillis());
         return client.actions().upload()
                 .videoWithCover(video, cover, UploadParameters.forAlbumVideo(upload_id))
@@ -45,7 +45,7 @@ public class StoryAction {
                 });
     }
     
-    public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(File file, List<ReelMetadataItem> metadata) {
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadPhoto(File file, List<StoriesMetadataItem> metadata) {
         try {
             return uploadPhoto(Files.readAllBytes(file.toPath()), metadata);
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class StoryAction {
         return uploadPhoto(file, Collections.emptyList());
     }
     
-    public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(File videoFile, File coverFile, List<ReelMetadataItem> metadata) {
+    public CompletableFuture<MediaConfigureToStoryResponse> uploadVideo(File videoFile, File coverFile, List<StoriesMetadataItem> metadata) {
         try {
             return uploadVideo(Files.readAllBytes(videoFile.toPath()), Files.readAllBytes(coverFile.toPath()), metadata);
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class StoryAction {
         return uploadVideo(videoFile, coverFile, Collections.emptyList());
     }
 
-    public CompletableFuture<FeedReelsTrayResponse> tray() {
+    public CompletableFuture<FeedStoriesTrayResponse> tray() {
         return new FeedReelsTrayRequest().execute(client);
     }
 

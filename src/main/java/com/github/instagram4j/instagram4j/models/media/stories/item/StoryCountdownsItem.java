@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel.item;
+package com.github.instagram4j.instagram4j.models.media.stories.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @JsonInclude(Include.NON_NULL)
-public class StoryCountdownsItem extends ReelMetadataItem {
+public class StoryCountdownsItem extends StoriesMetadataItem {
     @Builder.Default
     private String text_color = "#000000";
     @Builder.Default

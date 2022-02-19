@@ -1,9 +1,9 @@
 package com.github.instagram4j.instagram4j.requests.feed;
 
 import com.github.instagram4j.instagram4j.requests.IGGetRequest;
-import com.github.instagram4j.instagram4j.responses.feed.FeedReelsTrayResponse;
+import com.github.instagram4j.instagram4j.responses.feed.FeedStoriesTrayResponse;
 
-public class FeedReelsTrayRequest extends IGGetRequest<FeedReelsTrayResponse> {
+public class FeedReelsTrayRequest extends IGGetRequest<FeedStoriesTrayResponse> {
 
     @Override
     public String path() {
@@ -11,8 +11,8 @@ public class FeedReelsTrayRequest extends IGGetRequest<FeedReelsTrayResponse> {
     }
 
     @Override
-    public Class<FeedReelsTrayResponse> getResponseType() {
-        return FeedReelsTrayResponse.class;
+    public Class<FeedStoriesTrayResponse> getResponseType() {
+        return FeedStoriesTrayResponse.class;
     }
 
 }

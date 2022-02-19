@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel;
+package com.github.instagram4j.instagram4j.models.media.stories;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.github.instagram4j.instagram4j.models.media.ImageMedia;
@@ -8,6 +8,6 @@ import lombok.Data;
 
 @Data
 @JsonTypeName("1")
-public class ReelImageMedia extends ReelMedia implements ImageMedia {
+public class StoriesImageMedia extends StoriesMedia implements ImageMedia {
     private ImageVersions image_versions2;
 }

@@ -1,6 +1,6 @@
 package com.github.instagram4j.instagram4j.responses.media;
 
-import com.github.instagram4j.instagram4j.models.media.reel.ResponderInfo;
+import com.github.instagram4j.instagram4j.models.media.stories.ResponderInfo;
 import com.github.instagram4j.instagram4j.responses.IGPaginatedResponse;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import lombok.Data;

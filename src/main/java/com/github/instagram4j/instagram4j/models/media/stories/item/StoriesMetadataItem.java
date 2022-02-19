@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel.item;
+package com.github.instagram4j.instagram4j.models.media.stories.item;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public abstract class ReelMetadataItem {
+public abstract class StoriesMetadataItem {
     @Builder.Default
     private double x = 0.5;
     @Builder.Default

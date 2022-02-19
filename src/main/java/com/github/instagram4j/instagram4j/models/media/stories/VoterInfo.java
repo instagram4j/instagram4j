@@ -1,4 +1,4 @@
-package com.github.instagram4j.instagram4j.models.media.reel;
+package com.github.instagram4j.instagram4j.models.media.stories;
 
 import java.util.List;
 
