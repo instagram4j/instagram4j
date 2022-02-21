@@ -6,7 +6,7 @@ plugins {
     id 'net.nemerosa.versioning' version '2.15.1'
 }
 
-group = 'com.github.kil0bait'
+group = 'com.github.instagram4j'
 archivesBaseName = 'instagram4j'
 // For release
 // Must be on release/<version> branch
@@ -70,7 +70,7 @@ publishing {
             pom {
                 name = "instagram4j"
                 description = "Java HTTP Client for Instagram"
-                url = "https://github.com/kil0bait/instagram4j"
+                url = "https://github.com/instagram4j/instagram4j"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"
@@ -85,9 +85,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = "scm:git:git://github.com/kil0bait/instagram4j.git"
-                    developerConnection = "scm:git:ssh://github.com:kil0bait/instagram4j.git"
-                    url = "https://github.com/kil0bait/instagram4j/tree/master"
+                    connection = "scm:git:git://github.com/instagram4j/instagram4j.git"
+                    developerConnection = "scm:git:ssh://github.com:instagram4j/instagram4j.git"
+                    url = "https://github.com/instagram4j/instagram4j/tree/master"
                 }
             }
         }
