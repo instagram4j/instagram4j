@@ -62,7 +62,7 @@ public class IGClient implements Serializable {
     @Setter(AccessLevel.PRIVATE)
     private Profile selfProfile;
     @Accessors(chain = true)
-    private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
+    private IGDevice device = IGAndroidDevice.GOOD_DEVICES[6];
 
     public IGClient(String username, String password) {
         this(username, password, IGUtils.defaultHttpClientBuilder().build());
@@ -236,7 +236,7 @@ public class IGClient implements Serializable {
         private String username;
         private String password;
         private OkHttpClient client;
-        private IGDevice device = IGAndroidDevice.GOOD_DEVICES[0];
+        private IGDevice device = IGAndroidDevice.GOOD_DEVICES[6];
         private LoginHandler onChallenge;
         private LoginHandler onTwoFactor;
         private BiConsumer<IGClient, LoginResponse> onLogin = (client, login) -> {

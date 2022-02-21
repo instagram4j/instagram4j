@@ -1,8 +1,10 @@
 package com.github.instagram4j.instagram4j.actions.timeline;
 
 import com.github.instagram4j.instagram4j.IGClient;
+import com.github.instagram4j.instagram4j.actions.async.AsyncAction;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
 import com.github.instagram4j.instagram4j.actions.media.MediaAction;
+import com.github.instagram4j.instagram4j.exceptions.IGResponseException;
 import com.github.instagram4j.instagram4j.models.media.UploadParameters;
 import com.github.instagram4j.instagram4j.requests.feed.FeedTimelineRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.MediaConfigureSidecarPayload;
@@ -23,9 +25,12 @@ import lombok.experimental.Accessors;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.net.SocketTimeoutException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -107,7 +112,17 @@ public class TimelineAction {
 
                     return client.actions().upload().finish(upload_id);
                 })
-                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload));
+                .thenCompose(response -> MediaAction.configureMediaToTimeline(client, upload_id, payload))
+                .exceptionally(tr -> {
+                    if (IGResponseException.IGFailedResponse.of(tr.getCause()).getStatusCode() != 202 &&
+                            !(tr.getCause() instanceof SocketTimeoutException)) {
+                        throw new CompletionException(tr.getCause());
+                    }
+                    return AsyncAction.retry(
+                            () -> MediaAction.configureMediaToTimeline(client, upload_id, payload),
+                            tr, 3, 10L,
+                            TimeUnit.SECONDS).join();
+                });
     }
 
     public CompletableFuture<MediaConfigureTimelineResponse> uploadVideo(byte[] videoData,

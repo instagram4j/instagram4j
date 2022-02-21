@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.models.IGPayload;
-import com.github.instagram4j.instagram4j.models.media.reel.item.ReelMetadataItem;
+import com.github.instagram4j.instagram4j.models.media.stories.item.StoriesMetadataItem;
 import com.github.instagram4j.instagram4j.requests.IGPostRequest;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToStoryResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
@@ -25,10 +25,10 @@ import lombok.RequiredArgsConstructor;
 public class MediaConfigureToStoryRequest extends IGPostRequest<MediaConfigureToStoryResponse> {
     @NonNull
     private String uploadId;
-    private List<ReelMetadataItem> story_metadata;
+    private List<StoriesMetadataItem> story_metadata;
     private List<String> threadIds;
 
-    public MediaConfigureToStoryRequest(String upload_id, List<ReelMetadataItem> story_metadata) {
+    public MediaConfigureToStoryRequest(String upload_id, List<StoriesMetadataItem> story_metadata) {
         this.uploadId = upload_id;
         this.story_metadata = story_metadata;
     }
@@ -56,8 +56,8 @@ public class MediaConfigureToStoryRequest extends IGPostRequest<MediaConfigureTo
     }
 
     public static void addAllMetadata(MediaConfigureToStoryPayload payload,
-            List<ReelMetadataItem> items) {
-        Map<String, List<ReelMetadataItem>> map = new HashMap<>();
+            List<StoriesMetadataItem> items) {
+        Map<String, List<StoriesMetadataItem>> map = new HashMap<>();
         items.forEach(item -> {
             if (map.putIfAbsent(item.key(), new ArrayList<>(Arrays.asList(item))) != null)
                 map.get(item.key()).add(item);

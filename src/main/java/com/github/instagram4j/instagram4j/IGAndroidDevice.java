@@ -80,5 +80,12 @@ public class IGAndroidDevice extends IGDevice implements Serializable {
              * https://www.handsetdetection.com/properties/devices/Samsung/SM-G930F
              */
             new IGAndroidDevice(
-                    "23/6.0.1; 640dpi; 1440x2560; samsung; SM-G930F; herolte; samsungexynos8890")};
+                    "23/6.0.1; 640dpi; 1440x2560; samsung; SM-G930F; herolte; samsungexynos8890"),
+
+            /*
+             * OnePlus 9 Pro LE2120. Released: April 2021.
+             * [Set by default]
+             */
+            new IGAndroidDevice(
+                    "30/11; 450dpi; 1080x2263; OnePlus; LE2120; OnePlus9Pro; qcom")};
 }

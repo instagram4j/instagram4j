@@ -3,16 +3,10 @@ package com.github.instagram4j.instagram4j.actions.media;
 import java.util.concurrent.CompletableFuture;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.feed.FeedIterable;
-import com.github.instagram4j.instagram4j.requests.media.MediaActionRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaCommentRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest;
+import com.github.instagram4j.instagram4j.requests.media.*;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureSidecarRequest.MediaConfigureSidecarPayload;
-import com.github.instagram4j.instagram4j.requests.media.MediaConfigureTimelineRequest;
 import com.github.instagram4j.instagram4j.requests.media.MediaConfigureTimelineRequest.MediaConfigurePayload;
-import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToIgtvRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaEditRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaGetCommentsRequest;
-import com.github.instagram4j.instagram4j.requests.media.MediaInfoRequest;
+import com.github.instagram4j.instagram4j.requests.media.MediaConfigureToClipsRequest.MediaConfigureToClipsPayload;
 import com.github.instagram4j.instagram4j.responses.IGResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaCommentResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaGetCommentsResponse;
@@ -20,6 +14,7 @@ import com.github.instagram4j.instagram4j.responses.media.MediaInfoResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureSidecarResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureTimelineResponse;
+import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToClipsResponse;
 import com.github.instagram4j.instagram4j.responses.media.MediaResponse.MediaConfigureToIgtvResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +60,9 @@ public class MediaAction {
     
     public static CompletableFuture<MediaConfigureToIgtvResponse> configureToIgtv(IGClient client, String upload_id, String title, String caption, boolean postToFeed) {
         return new MediaConfigureToIgtvRequest(upload_id, title, caption, postToFeed).execute(client);
+    }
+
+    public static CompletableFuture<MediaConfigureToClipsResponse> configureToClips(IGClient client, String upload_id, MediaConfigureToClipsPayload payload) {
+        return new MediaConfigureToClipsRequest(payload.upload_id(upload_id)).execute(client);
     }
 }

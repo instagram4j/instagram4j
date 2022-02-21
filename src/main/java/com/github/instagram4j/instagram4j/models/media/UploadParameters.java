@@ -24,6 +24,7 @@ public class UploadParameters {
     private String direct_v2;
     private String for_direct_story;
     private String is_igtv_video;
+    private String is_clips_video;
     private String is_direct_voice;
     private String broadcast_id;
     private String is_post_live_igtv;
@@ -67,5 +68,9 @@ public class UploadParameters {
 
     public static UploadParameters forIgtv(String upload_id) {
         return UploadParameters.builder().upload_id(upload_id).is_igtv_video("1").build();
+    }
+
+    public static UploadParameters forClip(String upload_id) {
+        return UploadParameters.builder().upload_id(upload_id).media_type("2").is_clips_video("1").build();
     }
 }
