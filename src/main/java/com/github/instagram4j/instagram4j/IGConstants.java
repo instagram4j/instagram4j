@@ -32,7 +32,7 @@ public class IGConstants {
     /**
      * Instagram App Version
      */
-    public static final String APP_VERSION = "148.0.0.33.121";
+    public static final String APP_VERSION = "212.0.0.38.119";
 
     public static final String APP_ID = "567067343352427";
 
