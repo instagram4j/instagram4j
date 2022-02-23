@@ -11,11 +11,11 @@ archivesBaseName = 'instagram4j'
 // For release
 // Must be on release/<version> branch
 // Release: ./gradlew publishToSonatype closeSonatypeStagingRepository --console=plain
-version = "${versioning.info.branchType.equals('release') ? versioning.info.display : versioning.info.full}"
+version = "${versioning.info.branchType == 'release' ? versioning.info.display : versioning.info.full}" as Object
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -45,7 +45,7 @@ dependencies {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    classifier('sources')
     from sourceSets.main.allSource
 }
 
