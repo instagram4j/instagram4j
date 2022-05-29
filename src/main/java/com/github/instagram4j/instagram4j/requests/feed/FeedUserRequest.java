@@ -19,9 +19,9 @@ public class FeedUserRequest extends IGGetRequest<FeedUserResponse>
     @Setter
     private String max_id;
     @Setter
-    private String min_timestamp;
+    private Long min_timestamp;
     @Setter
-    private String max_timestamp;
+    private Long max_timestamp;
 
     @Override
     public String path() {
