@@ -18,6 +18,10 @@ public class FeedUserRequest extends IGGetRequest<FeedUserResponse>
     private Long pk;
     @Setter
     private String max_id;
+    @Setter
+    private String min_timestamp;
+    @Setter
+    private String max_timestamp;
 
     @Override
     public String path() {
@@ -26,7 +30,7 @@ public class FeedUserRequest extends IGGetRequest<FeedUserResponse>
 
     @Override
     public String getQueryString(IGClient client) {
-        return this.mapQueryString("max_id", max_id);
+        return this.mapQueryString("max_id", max_id, "min_timestamp", min_timestamp, "max_timestamp", max_timestamp);
     }
 
     @Override
