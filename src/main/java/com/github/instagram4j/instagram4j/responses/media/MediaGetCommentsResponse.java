@@ -12,8 +12,9 @@ public class MediaGetCommentsResponse extends IGResponse implements IGPaginatedR
     private List<Comment> comments;
     private Caption caption;
     private String next_max_id;
+    private String next_min_id;
 
     public boolean isMore_available() {
-        return next_max_id != null;
+        return next_max_id != null || next_min_id != null;
     }
 }
