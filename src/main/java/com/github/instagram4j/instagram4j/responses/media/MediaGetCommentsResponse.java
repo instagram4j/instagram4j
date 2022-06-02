@@ -11,6 +11,7 @@ import lombok.Data;
 public class MediaGetCommentsResponse extends IGResponse implements IGPaginatedResponse {
     private List<Comment> comments;
     private Caption caption;
+    private Long comment_count;
     private String next_max_id;
 
     public boolean isMore_available() {
