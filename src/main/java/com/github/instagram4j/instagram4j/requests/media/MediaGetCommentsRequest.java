@@ -17,6 +17,8 @@ public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsRespon
     @NonNull
     private String _id;
     @Setter
+    private String min_id;
+    @Setter
     private String max_id;
 
     @Override
@@ -26,7 +28,7 @@ public class MediaGetCommentsRequest extends IGGetRequest<MediaGetCommentsRespon
 
     @Override
     public String getQueryString(IGClient client) {
-        return mapQueryString("max_id", max_id);
+        return mapQueryString("min_id", min_id, "max_id", max_id);
     }
 
     @Override
