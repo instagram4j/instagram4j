@@ -135,10 +135,12 @@ public class IGClient implements Serializable {
             }
 
             @Override
-            public void onResponse(Call call, Response res) throws IOException {
+            public void onResponse(Call call, Response res) {
                 log.info("Response for {} : {}", call.request().url().toString(), res.code());
                 try (ResponseBody body = res.body()) {
                     responseFuture.complete(new Pair<>(res, body.string()));
+                } catch(IOException e) {
+                    responseFuture.completeExceptionally(e);
                 }
             }
 
