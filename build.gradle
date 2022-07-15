@@ -25,17 +25,17 @@ repositories {
 
 dependencies {
     // OkHttp
-    api 'com.squareup.okhttp3:okhttp:4.7.2'
-    api 'com.squareup.okhttp3:okhttp-urlconnection:4.7.2'
+    api 'com.squareup.okhttp3:okhttp:4.10.0'
+    api 'com.squareup.okhttp3:okhttp-urlconnection:4.10.0'
     // jackson data-bind
-    api 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
-    api 'com.fasterxml.jackson.core:jackson-annotations:2.11.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
     api 'org.slf4j:slf4j-api:1.7.30'
     // Test utilities
-    testImplementation 'org.slf4j:slf4j-log4j12:1.7.30'
-    testImplementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    testImplementation 'org.slf4j:slf4j-log4j12:1.7.36'
+    testImplementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     testImplementation 'log4j:log4j:1.2.17'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
     testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
 }
 
