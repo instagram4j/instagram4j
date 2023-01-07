@@ -1,0 +1,3 @@
+before_install:
+  - sdk install java 17.0.5-tem
+  - sdk use java 17.0.5-tem
