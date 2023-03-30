@@ -38,6 +38,11 @@ public class IGAndroidDevice extends IGDevice implements Serializable {
 
     public static final IGAndroidDevice[] GOOD_DEVICES = {
             /*
+             * Samsung Galaxy S21
+             */
+            new IGAndroidDevice(
+                    "30/11; 421dpi; 1080x2400; samsung; SM-G991x; unbound; samsungexynos2100"),
+            /*
              * Samsung Galaxy S7 Edge SM-G935F. Released: March 2016.
              * https://www.amazon.com/Samsung-SM-G935F-Factory-Unlocked-Smartphone/dp/ B01C5OIINO
              * https://www.handsetdetection.com/properties/devices/Samsung/SM-G935F
