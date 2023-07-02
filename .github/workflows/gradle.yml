@@ -11,17 +11,14 @@
     build-root-directory: # optional
     # When 'true', all caching is disabled. No entries will be written to or read from the cache.
     cache-disabled: # optional
-    # When 'true', existing entries will be read from the cache but no entries will be written.
-By default this value is 'false' for workflows on the GitHub default branch and 'true' for workflows on other branches.
+    # When 'true', existing entries will be read from the cache but no entries will be written. By default this value is 'false' for workflows on the GitHub default branch and 'true' for workflows on other branches.
 
     cache-read-only: # optional, default is ${{ github.event.repository != null && github.ref_name != github.event.repository.default_branch }}
-    # When 'true', entries will not be restored from the cache but will be saved at the end of the Job. 
-Setting this to 'true' implies cache-read-only will be 'false'.
+    # When 'true', entries will not be restored from the cache but will be saved at the end of the Job. Setting this to 'true' implies cache-read-only will be 'false'.
 
     cache-write-only: # optional
     # Paths within Gradle User Home to cache.
-    gradle-home-cache-includes: # optional, default is caches
-notifications
+    gradle-home-cache-includes: # optional, default is caches notifications
 
     # Paths within Gradle User Home to exclude from cache.
     gradle-home-cache-excludes: # optional
