@@ -1,4 +1,4 @@
-- name: Gradle Build Action
+name: Gradle Build Action
   # You may pin to the exact commit or the version.
   # uses: gradle/gradle-build-action@40b6781dcdec2762ad36556682ac74e31030cfe2
   uses: gradle/gradle-build-action@v2.5.1
