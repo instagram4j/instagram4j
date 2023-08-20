@@ -1,1 +1,2 @@
 rootProject.name = 'instagram4j'
+include 'instagram4j'

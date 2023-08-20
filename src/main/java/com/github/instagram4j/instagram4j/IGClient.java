@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -25,6 +29,7 @@ import com.github.instagram4j.instagram4j.responses.accounts.LoginResponse;
 import com.github.instagram4j.instagram4j.utils.IGUtils;
 import com.github.instagram4j.instagram4j.utils.SerializableCookieJar;
 import com.github.instagram4j.instagram4j.utils.SerializeUtil;
+import com.google.gson.Gson;
 import kotlin.Pair;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -204,6 +209,11 @@ public class IGClient implements Serializable {
         return deserialize(clientFile, cookieFile, IGUtils.defaultHttpClientBuilder());
     }
 
+    public static IGClient deserialize(File clientFile, File cookieFile, File mapFile)
+            throws ClassNotFoundException, IOException, IllegalAccessException {
+        return deserialize(clientFile, cookieFile, mapFile, IGUtils.defaultHttpClientBuilder());
+    }
+
     public static IGClient deserialize(File clientFile, File cookieFile,
             OkHttpClient.Builder clientBuilder) throws ClassNotFoundException, IOException {
         IGClient client = SerializeUtil.deserialize(clientFile, IGClient.class);
@@ -216,9 +226,61 @@ public class IGClient implements Serializable {
         return client;
     }
 
+    public static IGClient deserialize(File clientFile, File cookieFile, File mapFile,
+                                       OkHttpClient.Builder clientBuilder) throws ClassNotFoundException, IOException, IllegalAccessException {
+        IGClient client = SerializeUtil.deserialize(clientFile, IGClient.class);
+        CookieJar jar = SerializeUtil.deserialize(cookieFile, SerializableCookieJar.class);
+
+        client.httpClient = clientBuilder
+                .cookieJar(jar)
+                .build();
+
+        HashMap<String, String> mapFields = (HashMap<String, String>) SerializeUtil.deserialize(mapFile, HashMap.class);
+
+        for (Map.Entry<String, String> entry : mapFields.entrySet()) {
+            Field[] fields = client.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if (field.getName().equals(entry.getKey())) {
+                    field.setAccessible(true);
+                    if (field.getType() == String.class) {
+                        field.set(client, entry.getValue());
+                    } else {
+                        field.set(client, new Gson().fromJson(entry.getValue(), field.getType()));
+                    }
+                    field.setAccessible(false);
+                }
+            }
+        }
+
+        return client;
+    }
+
+
     public void serialize(File clientFile, File cookieFile) throws IOException {
         SerializeUtil.serialize(this, clientFile);
         SerializeUtil.serialize(this.httpClient.cookieJar(), cookieFile);
+    }
+
+    public void serialize(File clientFile, File cookieFile, File mapFile) throws IOException, IllegalAccessException {
+        HashMap<String, String> mapField = new HashMap<>();
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (Modifier.isTransient(field.getModifiers())) {
+                if (!field.getName().equals("httpClient") && !field.getName().equals("exceptionallyHandler")) {
+                    field.setAccessible(true);
+                    if (field.getType() == String.class) {
+                        mapField.put(field.getName(), (String) field.get(this));
+                    } else {
+                        mapField.put(field.getName(), new Gson().toJson(field.get(this)));
+                    }
+                    field.setAccessible(false);
+                }
+            }
+        }
+
+        SerializeUtil.serialize(this, clientFile);
+        SerializeUtil.serialize(this.httpClient.cookieJar(), cookieFile);
+        SerializeUtil.serialize(mapField, mapFile);
     }
 
     private Object readResolve() throws ObjectStreamException {

@@ -37,6 +37,9 @@ public class IGAndroidDevice extends IGDevice implements Serializable {
     }
 
     public static final IGAndroidDevice[] GOOD_DEVICES = {
+            new IGAndroidDevice("31/12; 480dpi; 1080x2278; vivo; vivo 1939; 2004; qcom"),
+            new IGAndroidDevice("26/8.0.0; 480dpi; 1080x1920; Xiaomi; MI 5s; capricorn; qcom"),
+            new IGAndroidDevice("26/8.0.0; 480dpi; 1080x2076; samsung; SM-A530F; jackpotlte; samsungexynos7885"),
             /*
              * Samsung Galaxy S7 Edge SM-G935F. Released: March 2016.
              * https://www.amazon.com/Samsung-SM-G935F-Factory-Unlocked-Smartphone/dp/ B01C5OIINO
