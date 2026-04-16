@@ -1,32 +1,24 @@
 <h1 align="center">
-  <br>
-  <img src="/jxinsta.png" alt="Markdownify" width="250">
-  <br>
-  JxInsta
-  <br>
+  <img src="/banner.png" alt="Markdownify" width="650">
 </h1>
 
-<h4 align="center">An Object Oriented java library for Instagram Private API.</h4>
-
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.0-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/ErrorxCode/JxInsta?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/ErrorxCode/JxInsta?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/ErrorxCode/JxInsta?color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-3.0-green?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/instagram4j/instagram4j?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/instagram4j/instagram4j?color=red&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/instagram4j/instagram4j?color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-Rahil--Khan-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Author-Rahil-cyan?style=flat-square">
   <img src="https://img.shields.io/badge/Open%20Source-Yes-cyan?style=flat-square">
   <img src="https://img.shields.io/badge/Written%20In-Java-cyan?style=flat-square">
 </p>
 
-<p align="center">
-	<img src="/jxinsta-code.png" alt="Markdownify" width="750">
-</p>
 
+> Do things that you cannot do with the official API.
 
-An Object Oriented Java library of Instagram Private API. This library is built as a replacement for old **instagram4j** since it is too old and is no longer maintained. If you still want to use **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
+An Object Oriented re-write of **instagram4j**. This library is a replacement of lagacy **instagram4j** since it is too old and is no longer maintained. If you still want to lagacy **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
 
 ## 🎯Key Features
 
@@ -68,8 +60,8 @@ Step 2. Add the dependency
 
 ```groovy
 	dependencies {
-	        implementation 'com.github.Errorxcode.jxinsta:mobile:2.0'   // If you want to use mobile API
-          implementation 'com.github.Errorxcode.jxinsta:web:2.0'   // If you want to use web API
+	        implementation 'com.github.instagram4j.instagram4j:mobile:3.0'   // If you want to use mobile API
+          implementation 'com.github.instagram4j.instagram4j:web:3.0'   // If you want to use web API
 	}
 ```
 
@@ -87,20 +79,20 @@ Step 2. Add the dependency
 if you want `Mobile` API :
 ```xml
 	<dependency>
-	    <groupId>com.github.Errorxcode.jxinsta</groupId>
+	    <groupId>com.github.instagram4j.instagram4j</groupId>
 	    <artifactId>mobile</artifactId>
-	    <version>2.0</version>
+	    <version>3.0</version>
 	</dependency>
 ```
 or if you want `Web` API :
 ```xml
 	<dependency>
-	    <groupId>com.github.Errorxcode.jxinsta</groupId>
+	    <groupId>com.github.instagram4j.instagram4j</groupId>
 	    <artifactId>web</artifactId>
-	    <version>2.0</version>
+	    <version>3.0</version>
 	</dependency>
 ```
-[![](https://jitpack.io/v/Errorxcode/JxInsta.svg)](https://jitpack.io/#Errorxcode/JxInsta)
+[![](https://jitpack.io/v/instagram4j/instagram4j.svg)](https://jitpack.io/#Errorxcode/JxInsta)
 
 
 ## Acknowledgements
@@ -145,7 +137,7 @@ For detailed guide, check out [User guide](https://github.com/ErrorxCode/JxInsta
 <details>
   <summary>In Android, can we use Webview to log in?</summary>
 
-  **Answer.**  Yes, check  [this](https://github.com/ErrorxCode/JxInsta/wiki/Android-users#using-webview-for-login)  example on how to use that
+  **Answer.**  Yes, but only for web module. All you need to do is extract the crsf and session id from the cookie after login.
 </details>
 
 
@@ -155,7 +147,7 @@ For detailed guide, check out [User guide](https://github.com/ErrorxCode/JxInsta
 
 Contributions are always welcome! There is a lot of scope for contribution in this library.
 
-Please refer to  [Contribution guide](https://github.com/ErrorxCode/JxInsta/blob/main/CONTRIBUTING.md). Also, see the  [code of conduct](https://github.com/ErrorxCode/JxInsta/blob/main/CODE_OF_CONDUCT.md).
+Please refer to  [Contribution guide](/CONTRIBUTING.md). Also, see the  [code of conduct](/CODE_OF_CONDUCT.md).
 To get started, you can check out "Projects" or "Issues" of the Repo. There are many thing left for implementation
 
 
