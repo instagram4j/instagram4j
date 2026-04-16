@@ -1,0 +1,8 @@
+jdk:
+  - openjdk23
+before_install:
+  - sdk install java 23-open
+  - sdk use java 23-open
+  - jshell --version
+  - java --version
+
