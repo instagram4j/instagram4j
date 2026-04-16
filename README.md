@@ -25,6 +25,12 @@ instagram4j
      - [Serialization](#serialization)
  - [Contributing](#contributing)
 
+
+## Announcement 📣
+A new re-write of this library is coming soon. It will be a fully object oriented library with total different design. As this happens, this version will become legacy and will no longer be updated. Please plan your migration ahead!
+
+
+
 # Install
 
 #### Example for gradle:
