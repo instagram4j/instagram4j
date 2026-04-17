@@ -10,11 +10,14 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Author-Rahil-cyan?style=flat-square">
-  <img src="https://img.shields.io/badge/Open%20Source-Yes-cyan?style=flat-square">
-  <img src="https://img.shields.io/badge/Written%20In-Java-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Author-ErrorxCode-cyan?style=flat-square">
+  <img src="https://img.shields.io/badge/Open%20Source-Yes-green?style=flat-square">
+  <img src="https://img.shields.io/badge/Made%20In-Java-orange?style=flat-square">
 </p>
 
+<p align="center">
+  <img src="https://jitpack.io/v/instagram4j/instagram4j/month.svg">
+</p>
 
 > Do things that you cannot do with the official API.
 
@@ -42,7 +45,7 @@ An Object Oriented re-write of **instagram4j**. This library is a replacement of
 -   Supports **Scrapping comments of a post**
 -   Supoorts **Fetching reels, stories & highlight**
 
-## Implimentation
+## 💻 Implimentation
 ### Gradle
 Step 1. Add the JitPack repository to your build file
 
@@ -95,14 +98,14 @@ or if you want `Web` API :
 [![](https://jitpack.io/v/instagram4j/instagram4j.svg)](https://jitpack.io/#Errorxcode/JxInsta)
 
 
-## Acknowledgements
+## 📖 Acknowledgements
 
 -   [Instagram usage limits](https://www.linkedin.com/pulse/stay-within-boundaries-complete-breakdown-instagrams-cmscc/)
 - [Instagram daily limit](https://socialpros.co/instagram-daily-limits/#:~:text=Instagram's%20Daily%20Limits%20%E2%80%93%20Like,than%2030%20likes%20per%20hour)
 -   [API Policies](https://developers.facebook.com/devpolicy/)
 -   [About Instagram checkpoints and challenges](https://github.com/ErrorxCode/JxInsta/blob/main/Instagram%20checkpoints.md)
 
-## Its easy :)
+## ✅ Its easy :)
 
 ```java
 JxInsta insta = new JxInsta("username", "password");  
@@ -113,7 +116,7 @@ System.out.print("User Bio : " + profile.bio);
 For detailed guide, check out [User guide](https://github.com/ErrorxCode/JxInsta/wiki)
 
 
-## FAQs
+## ❓FAQs
 
 <details>
   <summary>Can we use this library to make bots?</summary>
@@ -143,7 +146,7 @@ For detailed guide, check out [User guide](https://github.com/ErrorxCode/JxInsta
 
 
 
-## Contributing
+## 💌 Contributing
 
 Contributions are always welcome! There is a lot of scope for contribution in this library.
 
@@ -151,7 +154,11 @@ Please refer to  [Contribution guide](/CONTRIBUTING.md). Also, see the  [code of
 To get started, you can check out "Projects" or "Issues" of the Repo. There are many thing left for implementation
 
 
-## Support
+## 💖Support
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A01XZ1CJ)
 
-The fastest channel to contact me is **Instagram**, just DM me and I'll reply to you within 24 hours. My Instagram : [x0.rahil](https://instagram.com/x0.rahil)
-You can show your support by giving a ⭐.
+#### for any kind of help, you can contact me at:
+- Instagram : [x0.rahil](https://instagram.com/x0.rahil)
+- Email : hackerinsiderahil@gmail.com
+
+You can also show your support by giving a ⭐.
