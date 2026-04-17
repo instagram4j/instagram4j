@@ -1,4 +1,4 @@
-# Code of Conduct - JxInsta
+# Code of Conduct - Instagram4j
 
 ## Our Pledge
 
