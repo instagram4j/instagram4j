@@ -1,5 +1,5 @@
-
-
+# Announcement 📣
+### THis branch is depricated and no longer maintained. A complete re-write of this library is released. check out the `v3` branch!
 
 
 instagram4j
@@ -26,8 +26,6 @@ instagram4j
  - [Contributing](#contributing)
 
 
-# Announcement 📣
-#### A new re-write of this library is coming soon. It will be a fully object oriented library with total different design. As this happens, this version will become legacy and will no longer be updated. Please plan your migration ahead!
 
 # Install
 
