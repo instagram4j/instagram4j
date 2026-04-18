@@ -113,7 +113,7 @@ var profile = insta.getProfile("username");
 profile.follow();
 System.out.print("User Bio : " + profile.bio);
 ```
-For detailed guide, check out [User guide](https://github.com/ErrorxCode/JxInsta/wiki)
+For detailed guide, check out [User guide](https://github.com/instagram4j/instagram4j/wiki)
 
 
 ## ❓FAQs
