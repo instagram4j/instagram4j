@@ -13,7 +13,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 <!-- omit in toc -->
 ## Table of Contents
-
+- [Contribution Guide](https://github.com/instagram4j/instagram4j/wiki/Contribution-Guide) - Directly jump here if you aren't new
 - [Code of Conduct](#code-of-conduct)
 - [I Have a Question](#i-have-a-question)
 - [I Want To Contribute](#i-want-to-contribute)
@@ -123,9 +123,12 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/Instag
 <!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
 
 ## Contribution guide
-First of all, to contribuite in this project, you need to be good in OOPs and must know to use **okhttp** client. But before that, we need a openapi specifiaction where all the api requests will be listed with proper formate. We just have to impliment the request one by one in java.
+We have a detailed [Endpoint Discovery & Implementation Guide](https://github.com/instagram4j/instagram4j/wiki/Contribution-Guide) that walks you through:
+- Sniffing APIs: How to find new endpoints via mobile and web proxies.
 
-So before getting stared....what we need is the reverse enggineered endpoints of instagram. If you know that, then **give me your postman email** and I will invite yout to collabration workplace where all the endpoints are collected. Later, I will provide you with a `.json` file in which you have to add your discovered endpoints. If not, then please wait for the openapi specification to get ready.
+- New Routes: How to create a brand-new Java class for a specific feature.
+
+- New Methods: How to add a single action (like "Mute" or "Block") to an existing class.
 
 ## Styleguides
 Follow [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html), see other bits of the code base, and write consistent code.
