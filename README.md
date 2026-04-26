@@ -154,6 +154,7 @@ Please refer to  [Contribution guide](/CONTRIBUTING.md). Also, see the  [code of
 To get started, you can check out "Projects" or "Issues" of the Repo. There are many thing left for implementation
 
 
+
 ## 💖Support
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A01XZ1CJ)
 
@@ -162,3 +163,11 @@ To get started, you can check out "Projects" or "Issues" of the Repo. There are 
 - Email : hackerinsiderahil@gmail.com
 
 You can also show your support by giving a ⭐.
+
+
+
+> A special thanks to **[ErrorxCode](https://github.com/ErrorxCode)**, the creator of JxInsta. 
+>
+> JxInsta was originally developed as a modern continuation of this library during a period of inactivity. By joining forces, we have integrated the best features, modern design patterns, and updated mobile endpoints from JxInsta directly into the core of `instagram4j`. 
+>
+> _**Credits:** Extensive mobile endpoint discovery and architecture improvements provided by [ErrorxCode](https://github.com/ErrorxCode)._
