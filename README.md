@@ -2,6 +2,8 @@
   <img src="/banner.png" alt="Markdownify" width="650">
 </h1>
 
+<h4 align="center">Do things that you cannot do with the official API.</h4>
+
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.0-green?style=for-the-badge">
   <img src="https://img.shields.io/github/stars/instagram4j/instagram4j?style=for-the-badge">
@@ -15,13 +17,14 @@
   <img src="https://img.shields.io/badge/Made%20In-Java-orange?style=flat-square">
 </p>
 
+
 <p align="center">
   <img src="https://jitpack.io/v/instagram4j/instagram4j/month.svg">
 </p>
 
-> Do things that you cannot do with the official API.
+---
 
-An Object Oriented re-write of **instagram4j**. This library is a replacement of lagacy **instagram4j** since it is too old and is no longer maintained. If you still want to lagacy **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
+**instagram4j** is An Object Oriented re-write of **instagram4j**. This library is a replacement of lagacy **instagram4j** since it is too old and is no longer maintained. If you still want to lagacy **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
 
 ## 🎯Key Features
 
