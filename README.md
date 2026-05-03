@@ -24,7 +24,7 @@
 
 ---
 
-**instagram4j** is An Object Oriented re-write of **instagram4j**. This library is a replacement of lagacy **instagram4j** since it is too old and is no longer maintained. If you still want to lagacy **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
+**instagram4j-v3** is An Object Oriented re-write of **instagram4j-legacy** since it is too old and is no longer maintained. If you still want to lagacy **instagram4j** (as it has quite more features as of now), you can check out [EasyInsta](https://github.com/ErrorxCode/EasyInsta/) - A Easy2Use Instagram4j wrapper.
 
 ## 🎯Key Features
 
@@ -111,7 +111,7 @@ or if you want `Web` API :
 ## ✅ Its easy :)
 
 ```java
-JxInsta insta = new JxInsta("username", "password");  
+Instagram4j insta = new Instagram4j("username", "password");  
 var profile = insta.getProfile("username");
 profile.follow();
 System.out.print("User Bio : " + profile.bio);
