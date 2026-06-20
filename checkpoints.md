@@ -6,7 +6,7 @@ As we all know Instagram is improving its platform security day by day. It is ma
 -  [We Detected An Unusual Login Attempt](/#we-detected-an-unusual-login-attempt)
 - [We suspected automation behaviour](/#we-suspected-automation-behaviour)
 
-These are the most frequently occured checkpoints. If discovered, it will be appended to this table.
+These are the most frequently occurred checkpoints. If discovered, it will be appended to this table.
 Below is the detail on each checkpoint and how to resolve them.
 
 
