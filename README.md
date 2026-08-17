@@ -162,7 +162,7 @@ To get started, you can check out "Projects" or "Issues" of the Repo. There are 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A01XZ1CJ)
 
 #### for any kind of help, you can contact me at:
-- Instagram : [x0.rahil](https://instagram.com/x0.rahil)
+- Instagram : [r4h.i.l](https://instagram.com/r4h.i.l)
 - Email : hackerinsiderahil@gmail.com
 
 You can also show your support by giving a ⭐.
