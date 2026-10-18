@@ -30,7 +30,7 @@
 
 -   Lightweight and Easy 2 use, Object-oriented
 -   No need API token
--   Supports  **Sending messages**
+-   Supports  **Sending messages emoji**
 -   Supports  **Getting/fetching messages**
 -   Supports  **Deleting message**
 -   Supports  **_Realtime direct messages listener_** (Comming soon)
@@ -112,7 +112,7 @@ or if you want `Web` API :
 
 ```java
 Instagram4j insta = new Instagram4j("username", "password");  
-var profile = insta.getProfile("username");
+var profile = insta.getProfile("username and mobail nomber");
 profile.follow();
 System.out.print("User Bio : " + profile.bio);
 ```
